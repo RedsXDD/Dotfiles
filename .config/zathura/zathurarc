@@ -1,0 +1,32 @@
+# ------------------------------------------------------------------------ #
+
+# ███████╗ █████╗ ████████╗██╗  ██╗██╗   ██╗██████╗  █████╗ ██████╗  ██████╗
+# ╚══███╔╝██╔══██╗╚══██╔══╝██║  ██║██║   ██║██╔══██╗██╔══██╗██╔══██╗██╔════╝
+#   ███╔╝ ███████║   ██║   ███████║██║   ██║██████╔╝███████║██████╔╝██║
+#  ███╔╝  ██╔══██║   ██║   ██╔══██║██║   ██║██╔══██╗██╔══██║██╔══██╗██║
+# ███████╗██║  ██║   ██║   ██║  ██║╚██████╔╝██║  ██║██║  ██║██║  ██║╚██████╗
+# ╚══════╝╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝
+
+# ------------------------------------------------------------------------ #
+
+# Options:
+set font "JetBrainsMonoNerdFont normal 15"
+set page-padding 1
+set recolor true
+set recolor-reverse-video true
+set sandbox none
+set selection-clipboard clipboard
+set show-hidden true
+set statusbar-basename true
+set statusbar-h-padding 5
+set statusbar-v-padding 5
+set statusbar-home-tilde true
+set statusbar-page-percent true
+set window-icon-document true
+set window-title-home-tilde true
+
+# Mappings:
+map p print
+map r reload
+map R rotate
+map D toggle_page_mode

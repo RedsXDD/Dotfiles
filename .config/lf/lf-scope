@@ -1,0 +1,481 @@
+#!/usr/bin/env sh
+
+# ----------------------------------------------------------- #
+
+# ██╗     ███████╗    ███████╗ ██████╗ ██████╗ ██████╗ ███████╗
+# ██║     ██╔════╝    ██╔════╝██╔════╝██╔═══██╗██╔══██╗██╔════╝
+# ██║     █████╗█████╗███████╗██║     ██║   ██║██████╔╝█████╗
+# ██║     ██╔══╝╚════╝╚════██║██║     ██║   ██║██╔═══╝ ██╔══╝
+# ███████╗██║         ███████║╚██████╗╚██████╔╝██║     ███████╗
+# ╚══════╝╚═╝         ╚══════╝ ╚═════╝ ╚═════╝ ╚═╝     ╚══════╝
+
+# ----------------------------------------------------------- #
+
+#: Dependencies {{{
+# Take note the name of the dependency packages [the ones inside square brackets] only apply to arch based distros.
+# chafa/kitty terminal
+# 7z [p7zip]
+# ar
+# bat
+# bzip2
+# cat
+# catdoc
+# compress [ncompress]
+# convert [imagemagick]
+# cpio
+# djvused [djvulibre]
+# docx2txt
+# epub2txt
+# ffmpeg
+# file
+# fmt
+# glow
+# gnome-epub-thumbnailer
+# gnumeric
+# gpg
+# gs [ghostscript]
+# iso-info [libcdio pkg]
+# less
+# lynx
+# lzip
+# lzop
+# man [man-db pkg]
+# mediainfo
+# objdump
+# odt2txt
+# pdftotext
+# readelf
+# sqlite3
+# stat + readlink + sha256sum + cut (for generating cache files)
+# tar
+# unrar
+# unzip
+# xz
+# msgunfmt
+#: }}}
+#: Main variables {{{
+lf_cache_dir="${XDG_CACHE_HOME:-$HOME/.cache}/lf"
+file="$1"
+file_mimetype="$(file --mime-type -Lb "$file" | tr '[:upper:]' '[:lower:]')"
+file_extension="$(basename "$file" | awk 'BEGIN { FS = "." } {print "."tolower($NF)}')"
+width="$2"
+height="$3"
+x="$4"
+y="$5"
+#: }}}
+#: Main functions {{{
+# Function to print text files:
+bat_or_cat(){
+	# Fallback to cat command if bat is not installed.
+	if ! command -v bat; then
+		cat -n "$file" && return 127
+	fi
+
+	bat --theme ansi --color=always --style=plain --pager=never --terminal-width "$((x - 2))" "$@"
+}
+
+# Function to generate caching files:
+gen_cache(){
+        [ ! -d "$lf_cache_dir" ] && mkdir -p -- "$lf_cache_dir"
+        file="$1"
+        file_extension="$2"
+        printf '%s/thumb-%s.%s' \
+                "$lf_cache_dir" \
+                "$(stat --printf '%n\0%i\0%F\0%s\0%W\0%Y' -- "$(readlink -f -- "$file")" | sha256sum | cut -d' ' -f1)" \
+                "$file_extension"
+}
+
+# Function to display image previews:
+display_image(){
+        image_file="$1"
+	# Display image using chafa on sixel mode when not running kitty:
+	if [ "$TERM" = 'xterm-kitty' ]; then
+		kitty +kitten icat --stdin no --transfer-mode file --place "${width}x${height}@${x}x${y}" "$image_file" </dev/null >/dev/tty 2>/dev/null
+	else
+		chafa -f sixels --polite on --passthrough tmux --animate off -s "$((width - 3))x${height}" "$image_file" 2>/dev/null
+	fi
+}
+#: }}}
+#: Special text previewing {{{
+# Toggle image previewing.
+DISPLAY_IMAGE='1'
+
+# This if statement checks if some certain conditions are met, and disables image previewing for the following file mimetypes, displaying text instead.
+if [ -z "$DISPLAY" ] || [ -n "$TMUX" ] || [ "$ZELLIJ" -eq 0 ] || [ "$TERM" = 'alacritty' ] || [ ! "$DISPLAY_IMAGE" -eq '1' ]; then
+        cache_file="$(gen_cache "$file" 'txt')"
+	case "$file_mimetype" in
+		application/epub+zip | application/x-mobipocket-ebook | application/x-fictionbook+xml)
+			# Fallback to mediainfo if epub2txt isn't installed.
+			if ! command -v epub2txt >/dev/null 2>&1; then
+				mediainfo -f "$file" && return 127
+			fi
+
+			[ ! -f "$cache_file" ] && epub2txt -a "$file" > "$cache_file"
+			cat "$cache_file"
+			return 127
+		;;
+
+		application/pdf)
+			# Fallback to mediainfo if pdftotext isn't installed.
+			if ! command -v pdftotext >/dev/null 2>&1; then
+				mediainfo -f "$file" && return 127
+			fi
+
+			[ ! -f "$cache_file" ] && pdftotext -layout "$file" "$cache_file"
+			cat "$cache_file"
+			return 127
+		;;
+
+		application/postscript)
+			# Fallback to mediainfo if gs isn't installed.
+			if ! command -v gs >/dev/null 2>&1; then
+				mediainfo -f "$file" && return 127
+			fi
+
+			[ ! -f "$cache_file" ] && gs -q -o /dev/stdout -sDEVICE=pdfwrite "$file" | pdftotext -layout - "$cache_file"
+			cat "$cache_file"
+			return 127
+		;;
+
+		image/vnd.djvu)
+			# Fallback to mediainfo if djvused isn't installed.
+			if ! command -v djvused >/dev/null 2>&1; then
+				mediainfo -f "$file" && return 127
+			fi
+
+			[ ! -f "$cache_file" ] && djvused "$file" -e 'print-pure-txt' | fmt -w "${width}" > "$cache_file"
+			cat "$cache_file"
+			return 127
+		;;
+
+		audio/* | image/* | video/* | font/* | application/vnd.ms-opentype) mediainfo -f "$file" && return 127 ;;
+	esac
+fi
+#: }}}
+#: Main previewing {{{
+# Display previews based on file mime-type:
+case "$file_mimetype" in
+	#: TODO {{{
+	application/x-font-pf2) ;; # .pf2 files:
+	#: }}}
+	#: Misc {{{
+	inode/x-empty) printf "\033[7mempty"                                                      ;; # Empty files.
+	application/x-bittorrent) transmission-show "$file"                                       ;; # Torrents.
+	application/x-object) objdump --disassembler-color=on -d "$file"                          ;; # Object files.
+	application/pgp) gpg -d "$file"                                                           ;; # Pgp signature files.
+	application/x-iso*) iso-info --no-header -l "$file"                                       ;; # ISO files.
+	text/html) lynx -width="$x" -display_charset=utf-8 -dump "$file"                          ;; # Html files.
+	text/troff) MAN_KEEP_FORMATTING='true' MANWIDTH="$width" man ./ "$file" | less -RF        ;; # Troff files.
+	text/rtf | application/msword) catdoc "$file"                                             ;; # .rtf/.doc files.
+	*opendocument* | application/vnd.sun.xml.writer) odt2txt "$file"                          ;; # .odt/.ods/.odp/.sxw files.
+	application/vnd.openxmlformats-officedocument.wordprocessingml.document) docx2txt "$file" ;; # .docx files.
+	application/x-gettext-translation) msgunfmt --color --indent "$file"                      ;; # .mo files.
+	application/vnd.ms-excel | application/vnd.openxmlformats-officedocument.spreadsheetml.sheet) ssconvert --export-type=Gnumeric_stf:stf_csv "$file" "fd://1" | bat_or_cat --language=csv ;; # .xls/.xlsx files.
+	#: }}}
+	#: Text files {{{
+	text/plain)
+		# Do extra filtering based on file extension/filename.
+		case "$file_extension" in
+			readme* | .md)
+				# Fallback to bat_or_cat function if glow is not installed.
+				if ! command -v glow >/dev/null 2>&1; then
+					bat_or_cat --language=md "$file" && return 127
+				fi
+
+				# Use pywal colorscheme for glow if it exists, otherwise run glow with default dark theme.
+				[ -f "${XDG_CACHE_HOME:-$HOME/.cache}/wal/colors-glow.json" ] && glow -s "${XDG_CACHE_HOME:-$HOME/.cache}/wal/colors-glow.json" "$file" && return 127
+				glow -s dark "$file"
+			;;
+
+			.jsonc) bat_or_cat --language=json "$file" ;;
+			*) bat_or_cat "$file" ;;
+		esac
+	;;
+
+	# Other text files:
+	text/* | */xml | application/x-shellscript | application/javascript | application/json | application/x-ndjson) bat_or_cat "$file" ;;
+	#: }}}
+	#: Sqlite3 databases {{{
+	application/vnd.sqlite3)
+                cache_file="$(gen_cache "$file" 'txt')"
+		[ ! -f "$cache_file" ] && sqlite3 "$file" '.schema' > "$cache_file"
+		bat_or_cat --language=sql "$cache_file"
+	;;
+	#: }}}
+	#: Binary/flatpak.ref files {{{
+	application/octet-stream | application/vnd.flatpak.ref)
+		# Do extra filtering based on file extension/filename.
+                cache_file="$(gen_cache "$file" 'txt')"
+		[ ! -f "$cache_file" ] &&
+			case "$file_extension" in
+				.lzo) lzop -lv "$file" ;;
+				.snap) snap info "$file" || mediainfo -f "$file" ;;
+				.tzo | .tar*) tar tfv "$file" ;;
+				*) mediainfo -f "$file" ;;
+			esac > "$cache_file"
+		cat "$cache_file"
+	;;
+	#: }}}
+	#: Executable/x-pie-executable/x-sharedlib files (+ appimages) {{{
+	application/x-executable | application/x-pie-executable | application/x-sharedlib)
+		# Do extra filtering based on file extension/filename.
+                cache_file="$(gen_cache "$file" 'txt')"
+		[ ! -f "$cache_file" ] &&
+			case "$file_extension" in
+				.appimage) 7z l "$file" ;;
+				*) readelf -h "$file" ;;
+			esac > "$cache_file"
+		cat "$cache_file"
+	;;
+	#: }}}
+	#: Archives {{{
+	#: .a/.deb archives {{{
+	application/x-archive | application/vnd.debian.binary-package)
+                cache_file="$(gen_cache "$file" 'txt')"
+		[ ! -f "$cache_file" ] && ar t "$file" > "$cache_file"
+		cat "$cache_file"
+	;;
+	#: }}}
+	#: 7z/dmg/rpm/exe archives {{{
+	application/x-7z-compressed | application/zlib | application/x-rpm | application/vnd.microsoft.portable-executable)
+                cache_file="$(gen_cache "$file" 'txt')"
+		[ ! -f "$cache_file" ] && 7z l -p'' "$file" > "$cache_file" # Skip password prompt by provinding an empty password with "-p''".
+		cat "$cache_file"
+	;;
+	#: }}}
+	#: Zstd archives {{{
+	application/zstd)
+		# Do extra filtering based on file extension/filename.
+                cache_file="$(gen_cache "$file" 'txt')"
+		[ ! -f "$cache_file" ] &&
+			case "$file_extension" in
+				.tzst | .tar*) tar tfv "$file" ;;
+				*) zstd -lv "$file" ;;
+			esac > "$cache_file"
+		cat "$cache_file"
+	;;
+	#: }}}
+	#: .Z (Compress) archives {{{
+	application/x-compress)
+		# Do extra filtering based on file extension/filename.
+                cache_file="$(gen_cache "$file" 'txt')"
+		[ ! -f "$cache_file" ] &&
+			case "$file_extension" in
+				.tz | .tar*) tar tfv "$file" ;;
+				*) compress -dc "$file" ;;
+			esac > "$cache_file"
+		cat "$cache_file"
+	;;
+	#: }}}
+	#: Rar archives {{{
+	application/x-rar)
+                cache_file="$(gen_cache "$file" 'txt')"
+		[ ! -f "$cache_file" ] && unrar l "$file" > "$cache_file"
+		cat "$cache_file"
+	;;
+	#: }}}
+	#: Zip/jar/oxt files {{{
+	application/zip | application/java-archive | application/vnd.openofficeorg.extension)
+                cache_file="$(gen_cache "$file" 'txt')"
+		[ ! -f "$cache_file" ] && unzip -l "$file" > "$cache_file"
+		cat "$cache_file"
+	;;
+	#: }}}
+	#: Xz/lzma archives {{{
+	application/x-xz | application/x-lzma)
+		# Do extra filtering based on file extension/filename.
+                cache_file="$(gen_cache "$file" 'txt')"
+		[ ! -f "$cache_file" ] &&
+			case "$file_extension" in
+				.lz | .lzma) xz -dc "$file" ;;
+				.txz | .tar*) tar tfv "$file" ;;
+				*) xz -lv "$file" ;;
+			esac > "$cache_file"
+		cat "$cache_file"
+	;;
+	#: }}}
+	#: Lzip archives {{{
+	application/x-lzip)
+		# Do extra filtering based on file extension/filename.
+                cache_file="$(gen_cache "$file" 'txt')"
+		[ ! -f "$cache_file" ] &&
+			case "$file_extension" in
+				.xz) lzip -lv "$file" ;;
+				.tlz | .tar*) tar tfv "$file" ;;
+				*) lzip -lv "$file" ;;
+			esac > "$cache_file"
+		cat "$cache_file"
+	;;
+	#: }}}
+	#: Cpio Archives {{{
+	application/x-cpio)
+                cache_file="$(gen_cache "$file" 'txt')"
+		[ ! -f "$cache_file" ] && cpio --list --quiet -v < "$file" > "$cache_file"
+		cat "$cache_file"
+	;;
+	#: }}}
+	#: Tar archives {{{
+	application/x-tar)
+                cache_file="$(gen_cache "$file" 'txt')"
+		[ ! -f "$cache_file" ] && tar tfv "$file" > "$cache_file"
+		cat "$cache_file"
+	;;
+	#: }}}
+	#: Bzip2 archives {{{
+	application/x-bzip2)
+		# Do extra filtering based on file extension/filename.
+                cache_file="$(gen_cache "$file" 'txt')"
+		[ ! -f "$cache_file" ] &&
+			case "$file_extension" in
+				.tbz2| .tar*) tar tfv "$file" ;;
+				*) bzip2 -dc "$file" ;;
+			esac > "$cache_file"
+		cat "$cache_file"
+	;;
+	#: }}}
+	#: Gzip archives {{{
+	application/gzip)
+		# Do extra filtering based on file extension/filename.
+                cache_file="$(gen_cache "$file" 'txt')"
+		case "$file_extension" in
+			.gnumeric) ssconvert --export-type=Gnumeric_stf:stf_csv "$file" "fd://1" | bat_or_cat --language=csv ;;
+			.bz2)
+				[ ! -f "$cache_file" ] && gzip -l "$file" > "$cache_file"
+				cat "$cache_file"
+			;;
+			.tgz | .tar*)
+				tar tfv "$file" > "$cache_file"
+				cat "$cache_file"
+			;;
+			*)
+				[ ! -f "$cache_file" ] && gzip -l "$file" > "$cache_file"
+				cat "$cache_file"
+			;;
+		esac
+	;;
+	#: }}}
+	#: }}}
+	#: Document files {{{
+	#: Epub/mobi/fb2 {{{
+	application/epub+zip | application/x-mobipocket-ebook | application/x-fictionbook+xml)
+                cache_file="$(gen_cache "$file" 'jpeg')"
+		[ ! -f "$cache_file" ] && gnome-epub-thumbnailer "$file" "$cache_file"
+		display_image "$cache_file"
+	;;
+	#: }}}
+	#: Pdf documents {{{
+	application/pdf)
+                cache_file="$(gen_cache "$file" 'png')"
+		[ ! -f "$cache_file" ] && gs -q -o "$cache_file" -r200 -sDEVICE=png16 "$file"
+		display_image "$cache_file"
+	;;
+	#: }}}
+	#: Postscript documents {{{
+	application/postscript)
+		cache_file="$(gen_cache "$file" 'png')"
+		[ ! -f "$cache_file" ] && gs -q -o "$cache_file" -r200 -sDEVICE=png16 "$file"
+		display_image "$cache_file"
+	;;
+	#: }}}
+	#: Djvu documents {{{
+	image/vnd.djvu)
+                cache_file="$(gen_cache "$file" 'jpeg')"
+		[ ! -f "$cache_file" ] && djvused "$file" -e 'select 1; save-page-with /dev/stdout' | convert -density 200 - "$cache_file" >/dev/null 2>&1
+		display_image "$cache_file"
+	;;
+	#: }}}
+	#: }}}
+	#: Image files {{{
+	#: Svg images {{{
+	image/svg*)
+		cache_file="$(gen_cache "$file" 'jpeg')"
+		[ ! -f "$cache_file" ] && convert -size "$((x * 10))x$((y + 1000))" "$file" "$cache_file" >/dev/null 2>&1
+		display_image "$cache_file"
+	;;
+	#: }}}
+	#: Av1 images {{{
+	image/avif)
+		cache_file="$(gen_cache "$file" 'jpeg')"
+		[ ! -f "$cache_file" ] && convert "$file" "$cache_file" >/dev/null 2>&1
+		display_image "$cache_file"
+	;;
+	#: }}}
+	#: Other images {{{
+	image/*) display_image "$file" ;;
+	#: }}}
+	#: }}}
+	#: Audio/video files {{{
+	audio/* | video/*)
+		cache_file="$(gen_cache "$file" 'jpeg')"
+		[ ! -f "$cache_file" ] && ffmpeg -y -i "$file" -frames:v 1 "$cache_file" # Use ffmpeg to extract the thumbnail from the file so it can be displayed.
+		[ ! -f "$cache_file" ] && mediainfo -f "$file" && return 127 # Fallback to mediainfo if ffmpeg wasn't able to extract any image from "$file".
+		display_image "$cache_file"
+	;;
+	#: }}}
+	#: .ttf/.otf/.woff/.woff2 font files (+ pywal support!) {{{
+	font/* | application/vnd.ms-opentype)
+		# Function to generate an image from a font file so it can be displayed as a preview.
+		gen_font_preview(){
+			convert -font "$file" \
+				-size "$((x * 10))x$((y + 1000))" \
+				xc:"$bg_color" -fill "$txt_color" \
+				-gravity center \
+				-pointsize "80" \
+				-annotate +0+0 'ABCÇDEFGHIJKLM\nNOPQRSTUVWXYZ\nabcçdefghijklm\nnopqrstuvwxyz\n1234567890\n!?@#£¢$§&%\()[]{}\n_=-+*.,:;\\\/|\n°ºª\`\´~^"' \
+				-flatten "$cache_file" >/dev/null 2>&1
+		}
+
+		# If pywal's colors.sh file exists use it to generate the colors of the converted font image, otherwise fallback to default colors.
+		if [ -f "$HOME/.cache/wal/colors.sh" ]; then
+			. "$HOME/.cache/wal/colors.sh" && pywal='1'
+			bg_color="$background"
+			txt_color="$foreground"
+			cache_file="$lf_cache_dir/thumb-font-pywal.jpeg" # NOTE: caching the final output image isn't important in this case as it would mess up the preview once the user changes the pywal colors.
+		else
+			bg_color="#ffffff"
+			txt_color="#000000"
+			cache_file="$(gen_cache "$file" 'jpeg')"
+		fi
+
+		# If the pywal colors were set, display the image without checking if the cache file exists, as caching would mess up the previewing if the user changed the pywal colorscheme.
+		if [ -n "$pywal" ]; then
+			gen_font_preview
+		else
+			[ ! -f "$cache_file" ] && gen_font_preview
+		fi
+		display_image "$cache_file"
+	;;
+	#: }}}
+	#: Fallback to displaying previews based on file extension/filename {{{
+	*)
+		case "$file_extension" in
+			.ino) batorcat --language=cpp "$file" ;;
+			.war | .ear | .apkg)
+                                cache_file="$(gen_cache "$file" 'txt')"
+				[ ! -f "$cache_file" ] && unzip -l "$file" > "$cache_file"
+				cat "$cache_file"
+			;;
+
+			.cbz | .cbr | .cbt)
+                                cache_file="$(gen_cache "$file" 'jpeg')"
+				comicthumb "$file" "$cache_file" 1024
+				display_image "$cache_file"
+			;;
+
+			*)
+				cat <<- EOF
+				Could not display file "$file"
+				File mimetype: "$file_mimetype"
+				Falling back to mediainfo.
+
+				EOF
+				mediainfo -f "$file"
+			;;
+		esac
+	;;
+	#: }}}
+esac
+return 127 # Nonzero return code required for lf previews to reload.
+#: }}}
+
+# vim:fileencoding=utf-8:foldmethod=marker

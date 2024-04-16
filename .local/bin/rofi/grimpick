@@ -1,0 +1,60 @@
+#!/usr/bin/env sh
+
+killall rofi >/dev/null 2>&1
+
+# Import current theme:
+theme="${XDG_CONFIG_HOME:-$HOME/.config}/rofi/themes/launchers/type-2/style-1.rasi"
+
+output_dir="$HOME/Pictures/screenshots"
+[ ! -d "$output_dir" ] && mkdir -p "$output_dir"
+output_file="$output_dir/$(date '+%d-%m-%Y_%T').png"
+
+opt_1='A selected area (save)'
+opt_2='Active window (save)'
+opt_3='Fullscreen (save)'
+opt_4='All outputs (save)'
+opt_5='A selected area (edit)'
+opt_6='Active window (edit)'
+opt_7='Fullscreen (edit)'
+opt_8='All outputs (edit)'
+opt_9='A selected area (copy)'
+opt_10='Active window (copy)'
+opt_11='Fullscreen (copy)'
+opt_12='All outputs (copy)'
+opt_13='A selected area (copysave)'
+opt_14='Active window (copysave)'
+opt_15='Fullscreen (copysave)'
+opt_16='All outputs (copysave)'
+
+takepic(){ sleep 0.3; grimblast --notify --freeze "$@"; }
+run_rofi(){
+	[ "$(awk '/fullscreen:/ {print $2}' "$theme")" != 'true;' ] && border_setup='window { border: 2px solid; border-color: @border-colour; }'
+
+	printf '%s\n' "$opt_1" "$opt_2" "$opt_3" "$opt_4" "$opt_5" "$opt_6" "$opt_7" "$opt_8" "$opt_9" "$opt_10" "$opt_11" "$opt_12" "$opt_13" "$opt_14" "$opt_15" "$opt_16" |
+		rofi -i -dmenu \
+			-theme "$theme" \
+			-theme-str "configuration { show-icons: false; }
+					$border_setup
+					entry { placeholder: \"Screenshot ...\"; }" \
+			-p ' '
+}
+
+case "$(run_rofi)" in
+	"$opt_1") takepic save area "$output_file"        ;;
+	"$opt_2") takepic save active "$output_file"      ;;
+	"$opt_3") takepic save output "$output_file"      ;;
+	"$opt_4") takepic save screen "$output_file"      ;;
+	"$opt_5") takepic edit area "$output_file"        ;;
+	"$opt_6") takepic edit active "$output_file"      ;;
+	"$opt_7") takepic edit output "$output_file"      ;;
+	"$opt_8") takepic edit screen "$output_file"      ;;
+	"$opt_9") takepic copy area "$output_file"        ;;
+	"$opt_10") takepic copy active "$output_file"     ;;
+	"$opt_11") takepic copy output "$output_file"     ;;
+	"$opt_12") takepic copy screen "$output_file"     ;;
+	"$opt_13") takepic copysave area "$output_file"   ;;
+	"$opt_14") takepic copysave active "$output_file" ;;
+	"$opt_15") takepic copysave output "$output_file" ;;
+	"$opt_16") takepic copysave screen "$output_file" ;;
+	*) exit 1 ;;
+esac

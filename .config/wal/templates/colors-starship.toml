@@ -1,0 +1,347 @@
+# ---------------------------------------------------------- #
+
+# ███████╗████████╗ █████╗ ██████╗ ███████╗██╗  ██╗██╗██████╗
+# ██╔════╝╚══██╔══╝██╔══██╗██╔══██╗██╔════╝██║  ██║██║██╔══██╗
+# ███████╗   ██║   ███████║██████╔╝███████╗███████║██║██████╔╝
+# ╚════██║   ██║   ██╔══██║██╔══██╗╚════██║██╔══██║██║██╔═══╝
+# ███████║   ██║   ██║  ██║██║  ██║███████║██║  ██║██║██║
+# ╚══════╝   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝╚═╝╚═╝
+
+# ---------------------------------------------------------- #
+
+format = """
+[╭](fg:foreground bold)\
+[](bg:background fg:blue)\
+$os\
+$username$hostname\
+[](bg:foreground fg:blue)\
+$directory\
+[](bg:blue fg:foreground)\
+$shell\
+[](bg:foreground fg:blue)\
+$git_branch\
+$git_status\
+[](bg:blue fg:foreground)\
+$aws$azure$buf$c$conda$crystal$dart$elixir$elm$fennel$golang$haskell$haxe$java$julia$kotlin$lua$meson$nim$nodejs$ocaml$perl$php$purescript$python$rlang$ruby$rust$scala$swift$terraform$zig\
+[ ](fg:blue)\
+$line_break\
+[╰─](fg:foreground bold)\
+$cmd_duration$character
+"""
+
+palette = 'pywal'
+
+[palettes.pywal]
+background = '{background}'
+foreground = '{foreground}'
+color1 = '{color1}'
+color2 = '{color2}'
+color3 = '{color3}'
+color4 = '{color4}'
+color5 = '{color5}'
+color6 = '{color6}'
+color7 = '{color7}'
+color8 = '{color8}'
+color9 = '{color9}'
+color10 = '{color10}'
+color11 = '{color11}'
+color12 = '{color12}'
+color13 = '{color13}'
+color14 = '{color14}'
+color15 = '{color15}'
+
+[os]
+disabled = false
+style = "bg:blue fg:background"
+
+[os.symbols]
+Alpaquita = "󰂚 "
+Alpine = " "
+Amazon = " "
+Android = " "
+Arch = " "
+Artix = " "
+CentOS = " "
+Debian = " "
+DragonFly = " "
+Emscripten = " "
+EndeavourOS = " "
+Fedora = " "
+FreeBSD = " "
+Garuda = "󰛓 "
+Gentoo = " "
+HardenedBSD = "󰞌 "
+Illumos = "󰈸 "
+Linux = " "
+Mabox = " "
+Macos = " "
+Manjaro = " "
+Mariner = " "
+MidnightBSD = " "
+Mint = " "
+NetBSD = " "
+NixOS = " "
+OpenBSD = "󰈺 "
+openSUSE = " "
+OracleLinux = "󰌷 "
+Pop = " "
+Raspbian = " "
+Redhat = " "
+RedHatEnterprise = " "
+Redox = "󰀘 "
+Solus = "󰠳 "
+SUSE = " "
+Ubuntu = " "
+Unknown = " "
+Windows = "󰍲 "
+
+[username]
+disabled = false
+show_always = true
+style_user = "bg:blue fg:background bold"
+style_root = "bg:blue fg:background bold"
+format = '[$user]($style)'
+
+[hostname]
+disabled = false
+ssh_only = false
+ssh_symbol = " "
+style = "bg:blue fg:background bold"
+format = '[@$ssh_symbol$hostname ]($style)'
+
+[directory]
+style = "bg:foreground fg:background bold"
+format = "[ 󰉋 $path ]($style)"
+read_only = "󰌾 "
+truncation_length = 3
+truncation_symbol = "…/"
+
+[directory.substitutions]
+'Applications' = ' '
+'Documents' = '󰈙 '
+'Downloads' = ' '
+'Music' = '󰝚 '
+'Pictures' = ' '
+'Videos' = ' '
+
+[shell]
+disabled = false
+bash_indicator = 'bash'
+cmd_indicator = 'cmd'
+elvish_indicator = 'esh'
+fish_indicator = 'fish'
+ion_indicator = 'ion'
+nu_indicator = 'nu'
+powershell_indicator = 'psh'
+tcsh_indicator = 'tsh'
+xonsh_indicator = 'xsh'
+zsh_indicator = 'zsh'
+unknown_indicator = '?sh'
+style = "bg:blue fg:background bold"
+format = "[  $indicator ]($style)"
+
+[git_branch]
+symbol = ""
+style = "bg:foreground fg:background"
+format = '[[ $symbol $branch ](bg:foreground fg:background bold)]($style)'
+
+[git_status]
+style = "bg:foreground fg:background"
+format = '[[($all_status$ahead_behind )](bg:foreground fg:background bold)]($style)'
+
+# --------------------------------------------------------- #
+
+#############
+# Languages #
+#############
+
+[aws]
+symbol = "  "
+style = "bg:blue"
+format = '[[ $symbol($version) ](bg:blue fg:background bold)]($style)'
+
+[azure]
+symbol = "  "
+style = "bg:blue"
+format = '[[ $symbol($version) ](bg:blue fg:background bold)]($style)'
+
+[buf]
+symbol = " "
+style = "bg:blue"
+format = '[[ $symbol($version) ](bg:blue fg:background bold)]($style)'
+
+[c]
+symbol = " "
+style = "bg:blue"
+format = '[[ $symbol($version) ](bg:blue fg:background bold)]($style)'
+
+[conda]
+symbol = " "
+style = "bg:blue"
+format = '[[ $symbol($version) ](bg:blue fg:background bold)]($style)'
+
+[crystal]
+symbol = " "
+style = "bg:blue"
+format = '[[ $symbol($version) ](bg:blue fg:background bold)]($style)'
+
+[dart]
+symbol = " "
+style = "bg:blue"
+format = '[[ $symbol($version) ](bg:blue fg:background bold)]($style)'
+
+[elixir]
+symbol = " "
+style = "bg:blue"
+format = '[[ $symbol($version) ](bg:blue fg:background bold)]($style)'
+
+[elm]
+symbol = " "
+style = "bg:blue"
+format = '[[ $symbol($version) ](bg:blue fg:background bold)]($style)'
+
+[fennel]
+symbol = " "
+style = "bg:blue"
+format = '[[ $symbol($version) ](bg:blue fg:background bold)]($style)'
+
+[golang]
+symbol = " "
+style = "bg:blue"
+format = '[[ $symbol($version) ](bg:blue fg:background bold)]($style)'
+
+[haskell]
+symbol = " "
+style = "bg:blue"
+format = '[[ $symbol($version) ](bg:blue fg:background bold)]($style)'
+
+[haxe]
+symbol = " "
+style = "bg:blue"
+format = '[[ $symbol($version) ](bg:blue fg:background bold)]($style)'
+
+[java]
+symbol = " "
+style = "bg:blue"
+format = '[[ $symbol($version) ](bg:blue fg:background bold)]($style)'
+
+[julia]
+symbol = " "
+style = "bg:blue"
+format = '[[ $symbol($version) ](bg:blue fg:background bold)]($style)'
+
+[kotlin]
+symbol = " "
+style = "bg:blue"
+format = '[[ $symbol($version) ](bg:blue fg:background bold)]($style)'
+
+[lua]
+symbol = " "
+style = "bg:blue"
+format = '[[ $symbol($version) ](bg:blue fg:background bold)]($style)'
+
+[nodejs]
+symbol = " "
+style = "bg:blue"
+format = '[[ $symbol($version) ](bg:blue fg:background bold)]($style)'
+
+[meson]
+symbol = "󰔷 "
+style = "bg:blue"
+format = '[[ $symbol($version) ](bg:blue fg:background bold)]($style)'
+
+[nim]
+symbol = " "
+style = "bg:blue"
+format = '[[ $symbol($version) ](bg:blue fg:background bold)]($style)'
+
+[ocaml]
+symbol = " "
+style = "bg:blue"
+format = '[[ $symbol($version) ](bg:blue fg:background bold)]($style)'
+
+[perl]
+symbol = " "
+style = "bg:blue"
+format = '[[ $symbol($version) ](bg:blue fg:background bold)]($style)'
+
+[php]
+symbol = " "
+style = "bg:blue"
+format = '[[ $symbol($version) ](bg:blue fg:background bold)]($style)'
+
+[purescript]
+symbol = " "
+style = "bg:blue"
+format = '[[ $symbol($version) ](bg:blue fg:background bold)]($style)'
+
+[python]
+symbol = " "
+style = "bg:blue"
+format = '[[ $symbol($version) ](bg:blue fg:background bold)]($style)'
+
+[rlang]
+symbol = "󰟔 "
+style = "bg:blue"
+format = '[[ $symbol($version) ](bg:blue fg:background bold)]($style)'
+
+[ruby]
+symbol = " "
+style = "bg:blue"
+format = '[[ $symbol($version) ](bg:blue fg:background bold)]($style)'
+
+[rust]
+symbol = " "
+style = "bg:blue"
+format = '[[ $symbol($version) ](bg:blue fg:background bold)]($style)'
+
+[scala]
+symbol = " "
+style = "bg:blue"
+format = '[[ $symbol($version) ](bg:blue fg:background bold)]($style)'
+
+[swift]
+symbol = " "
+style = "bg:blue"
+format = '[[ $symbol($version) ](bg:blue fg:background bold)]($style)'
+
+[terraform]
+symbol = " "
+style = "bg:blue"
+format = '[[ $symbol($version) ](bg:blue fg:background bold)]($style)'
+
+[zig]
+symbol = " "
+style = "bg:blue"
+format = '[[ $symbol($version) ](bg:blue fg:background bold)]($style)'
+
+# --------------------------------------------------------- #
+
+[docker_context]
+disabled = true
+symbol = " "
+style = "bg:blue fg:background"
+format = '[[ $symbol( $context) ](bg:blue fg:background bold)]($style)'
+
+[time]
+disabled = true
+time_format = "%R"
+style = "fg:foreground bold"
+format = '[[󰥔 $time ](fg:foreground bold)]($style)'
+
+[cmd_duration]
+disabled = false
+style = "fg:yellow bold"
+format = 'took [$duration]($style) '
+
+[line_break]
+disabled = false
+
+[character]
+disabled = false
+success_symbol = '[❯](bold fg:green)'
+error_symbol = '[󰖭](bold fg:red)'
+vimcmd_symbol = '[❮](bold fg:foreground)'
+vimcmd_visual_symbol = '[❮](bold fg:yellow)'
+vimcmd_replace_symbol = '[❮](bold fg:purple)'
+vimcmd_replace_one_symbol = '[❮](bold fg:purple)'

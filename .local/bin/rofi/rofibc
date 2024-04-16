@@ -1,0 +1,74 @@
+#!/usr/bin/env sh
+
+killall rofi >/dev/null 2>&1
+
+# Import current theme:
+theme="${XDG_CONFIG_HOME:-$HOME/.config}/rofi/themes/launchers/type-2/style-1.rasi"
+result_theme="${XDG_CONFIG_HOME:-$HOME/.config}/rofi/themes/launchers/type-2/style-1.rasi"
+
+# Setup cache file:
+rofibc_cache="${XDG_CACHE_HOME:-$HOME/.cache}/rofi/rofibc"
+[ ! -d "$(dirname "$rofibc_cache")" ] && mkdir -p "$(dirname "$rofibc_cache")"
+[ ! -f "$rofibc_cache" ] && touch "$rofibc_cache"
+
+calc_err_msg='Failed to calculate'
+opt_1='󰆏 Copy result to clipboard'
+opt_2='󰃬 Calculate again'
+opt_3='󰅖 Close'
+
+run_rofi(){
+	[ "$(awk '/fullscreen:/ {print $2}' "$theme")" != 'true;' ] && border_setup='window { border: 2px solid; border-color: @border-colour; }'
+
+	rofi -i -dmenu \
+		-theme "$theme" \
+		-theme-str "configuration { show-icons: false; }
+				entry { placeholder: \"Calculate\"; }
+				$border_setup" \
+		-p '󰃬 ' < "$rofibc_cache"
+	unset border_setup
+}
+
+run_options(){
+	[ "$(awk '/fullscreen:/ {print $2}' "$result_theme")" != 'true;' ] && border_setup='window { border: 2px solid; border-color: @border-colour; }'
+
+	if [ "$result" = "$calc_err_msg" ]; then
+		height='137px'
+		result_str='!>'
+		rofi_opts(){ printf '%s\n' "$opt_2" "$opt_3" ; }
+	else
+		height='180px'
+		result_str='='
+		rofi_opts(){ printf '%s\n' "$opt_1" "$opt_2" "$opt_3" ; }
+	fi
+
+	rofi_opts |
+		rofi -i -dmenu \
+			-theme "$result_theme" \
+			-theme-str "configuration { show-icons: false; }
+					entry { placeholder: \"$result\"; }
+					window { height: $height; }
+					$border_setup" \
+			-p "Result $result_str"
+	unset border_setup
+}
+
+main(){
+	formula="$(run_rofi)"
+	[ -z "$formula" ] && exit 1
+
+	if ! grep -qF "$formula" "$rofibc_cache"; then
+		result="$(echo "$formula" | bc -l 2>/dev/null)"
+		[ -n "$result" ] && echo "$formula = $result" >> "$rofibc_cache" || result="$calc_err_msg"
+		choosen_option="$(run_options)"
+	else
+		result="${formula##* }"
+		choosen_option="$(run_options)"
+	fi
+
+	case "$choosen_option" in
+		"$opt_1") wl-copy "$result" && notify-send -t 2000 'Copied Result' "Successfully copied the result of \"${formula%% *}\" to the clipboard" ;;
+		"$opt_2") main; exit ;;
+		*) exit 1 ;;
+	esac
+}
+main

@@ -1,0 +1,21 @@
+# vim:fileencoding=utf-8:foldmethod=marker:filetype=fish
+
+# FZF config:
+set -x FZF_DEFAULT_OPTS '--cycle --reverse --ansi --border=rounded --no-scrollbar --preview-window=bottom,50%'
+test -z "$DISPLAY" && set -x FZF_DEFAULT_OPTS "$FZF_DEFAULT_OPTS --no-unicode"
+
+if test -z "$DISPLAY"
+	abbr rr 'mpv https://youtu.be/dQw4w9WgXcQ'
+	abbr duf 'duf -style ascii'
+	abbr lsblk 'lsblk -if'
+	abbr bat 'bat --decorations=never --theme=ansi'
+	alias lsd 'lsd --group-directories-first --color=always --icon=never'
+	alias eza 'eza --group-directories-first --color=always'
+else
+	abbr rr 'curl -sL https://raw.githubusercontent.com/keroserene/rickrollrc/master/roll.sh | bash'
+	abbr RR 'mpv https://youtu.be/dQw4w9WgXcQ'
+	abbr lsblk 'lsblk -f'
+	abbr bat 'bat --theme=ansi'
+	alias lsd 'lsd --group-directories-first --color=always --icon=auto'
+	alias eza 'eza --group-directories-first --color=always --icons'
+end

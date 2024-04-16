@@ -1,0 +1,17 @@
+#!/usr/bin/env sh
+
+# Script dependencies: gnutls, tmux, fzf
+
+tmux_sessions="$(tmux ls)"
+sessions_num="$(echo "$tmux_sessions" | wc -l)"
+
+if [ "$sessions_num" -gt 2 ]; then
+	choosen_session="$(echo "$tmux_sessions" | fzf-tmux -p 50% -w 50% --prompt '> Search Tmux Sessions >' | cut -d':' -f1)"
+	[ -n "$choosen_session" ] && tmux attach -t "$choosen_session" || tmux attach
+elif [ "$sessions_num" -eq 1 ]; then
+	tmux attach
+else
+	tmux
+fi
+
+# vim:fileencoding=utf-8:foldmethod=marker

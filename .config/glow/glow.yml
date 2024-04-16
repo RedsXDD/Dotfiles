@@ -1,0 +1,2 @@
+# style name or JSON path (default "auto")
+style: "~/.cache/wal/colors-glow.json"

@@ -1,0 +1,7 @@
+#!/usr/bin/env sh
+
+# Script dependencies: gnutls
+
+[ -f "$(readlink -f -- "$1")" ] && sed -e 's/alias/abbr/g; s/="/ "/g' -e "s/='/ '/g" "$(readlink -f -- "$1")"
+
+# vim:fileencoding=utf-8:foldmethod=marker

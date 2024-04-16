@@ -1,0 +1,77 @@
+# vim:fileencoding=utf-8:foldmethod=marker:filetype=fish
+
+# Neovim abbres:
+if set -q EDITOR
+	abbr v "$EDITOR"
+else
+	for editor in nvim vim vi
+		if command -v "$editor" >/dev/null
+			abbr v "$editor"
+			set -x EDITOR "$editor"
+			break
+		end
+	end
+	unset editor
+end
+abbr sv 'doasedit'
+
+# Improved defaults:
+abbr bc 'bc -lq'
+abbr cal 'cal --color=auto -sy'
+abbr cat 'bat'
+abbr chmod 'chmod --preserve-root -c'
+abbr chown 'sudo chown --preserve-root -c'
+abbr diff 'diff --color=auto -Ebsu'
+abbr dl '\du -shx -- * | sort -rh | head -20'
+abbr egrep 'grep -E'
+abbr fc-cache 'fc-cache -rv'
+abbr fd 'fd --color auto --hidden'
+abbr fgrep 'grep -F'
+abbr free 'free -hwtl'
+abbr grep 'grep --color=auto'
+abbr mpv 'mpv --fs'
+
+# Make mv/cp/ln/rm interactive:
+abbr mv 'mv -vi'
+abbr cp 'cp -rvi'
+abbr ln 'ln -svi'
+abbr rm 'rm -rvI'
+abbr mkdir 'mkdir -pv'
+
+# Alternatives:
+# abbr df 'df -Th'
+abbr df 'duf'
+# abbr du 'du -sh'
+abbr du 'dust'
+# abbr ps 'ps -aux'
+abbr ps 'procs'
+
+# Other abbres:
+# abbr clh 'history -c'
+abbr fzf-tmux '\fzf-tmux -p 50% -w 50%'
+abbr ktmux 'tmux kill-server'
+test -f "$HOME/.local/bin/zel" && abbr zellij 'zel'
+abbr kzel '\zellij kill-all-sessions'
+# abbr sl 'sl -e || clear'
+# abbr dua 'dua i'
+abbr lynx 'lynx -vikeys'
+abbr tty-clock 'tty-clock -sbcC 4 -f "%A, %B %d, %Y"'
+abbr cmatrix 'cmatrix -abC blue -u 3'
+abbr glow 'glow -ap'
+abbr lf 'lfcd'
+abbr info 'info --vi-keys --init-file ~/.config/infokey'
+abbr q 'exit'
+abbr cbonsai 'cbonsai -li'
+
+# Pywal related:
+abbr zathura 'zatp'
+abbr gnuplot 'gplot'
+abbr btop 'ptop'
+abbr cava 'pcava'
+# abbr imv 'pimv -df -t 2'
+
+# Power commands:
+abbr shutdown '\systemctl poweroff'
+abbr reboot '\systemctl reboot'
+abbr suspend '\systemctl suspend'
+abbr hibernate '\systemctl hibernate'

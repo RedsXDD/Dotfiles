@@ -1,0 +1,75 @@
+# --------------------- #
+
+# ██╗███╗   ███╗██╗   ██╗
+# ██║████╗ ████║██║   ██║
+# ██║██╔████╔██║██║   ██║
+# ██║██║╚██╔╝██║╚██╗ ██╔╝
+# ██║██║ ╚═╝ ██║ ╚████╔╝
+# ╚═╝╚═╝     ╚═╝  ╚═══╝
+
+# --------------------- #
+
+[options]
+
+# Default background color:
+background = 1E1E2E
+
+# Suppress built-in key bindings, and specify them explicitly in this config file:
+suppress_default_binds = true
+
+# Default font:
+overlay_font = JetBrainsMonoNerdFont:15
+overlay_text_color = 000000
+overlay_background_color = 89B4FA
+overlay_text_alpha = ff
+overlay_background_alpha = ff
+overlay_position_bottom = true
+
+# Define aliases here. Any arguments passed to an alias are appended to the command:
+[aliases]
+# alias = command to run
+
+# Define some key bindings:
+[binds]
+q = quit
+
+# Image navigation:
+<Shift+less> = prev
+<Shift+greater> = next
+gg = goto 1
+<Shift+G> = goto -1
+
+# Panning:
+j = pan 0 -50
+k = pan 0 50
+h = pan 50 0
+l = pan -50 0
+
+# Zooming:
+<Shift+K> = zoom 1
+<Shift+J> = zoom -1
+<Shift+plus> = zoom 1
+<minus> = zoom -1
+<equal> = zoom actual
+<0> = zoom actual
+
+# Rotate clockwise by 90 degrees:
+<Ctrl+r> = rotate by 90
+
+# Other commands:
+<F11> = fullscreen
+x = close
+r = reset
+o = overlay
+p = exec echo $imv_current_file
+c = center
+s = scaling next
+<Shift+S> = upscaling next
+
+# Gif playback:
+<period> = next_frame
+<space> = toggle_playing
+
+# Slideshow control:
+t = slideshow +1
+<Shift+T> = slideshow -1

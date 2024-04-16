@@ -1,0 +1,37 @@
+{background} - background
+{foreground} - foreground
+{color0} - color0
+{color1} - color1
+{color2} - color2
+{color3} - color3
+{color4} - color4
+{color5} - color5
+{color6} - color6
+{color7} - color7
+{color8} - color8
+{color9} - color9
+{color10} - color 10
+{color11} - color 11
+{color12} - color 12
+{color13} - color 13
+{color14} - color 14
+{color15} - color 15
+
+{background.rgba}
+{foreground.rgba}
+{color0.rgba}
+{color1.rgba}
+{color2.rgba}
+{color3.rgba}
+{color4.rgba}
+{color5.rgba}
+{color6.rgba}
+{color7.rgba}
+{color8.rgba}
+{color9.rgba}
+{color10.rgba}
+{color11.rgba}
+{color12.rgba}
+{color13.rgba}
+{color14.rgba}
+{color15.rgba}

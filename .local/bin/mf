@@ -1,0 +1,27 @@
+#!/usr/bin/env sh
+
+# This script takes a list of file names as arguments.
+# It creates directories for file names ending with a trailing slash,
+# creates files for file names without a trailing slash,
+# and creates directories along with files for file names containing slashes.
+
+# Convert the list of files into a format that xargs can process.
+files="$@"
+filelist="$(echo "$files" | awk '{gsub(/\\ /, "§§"); gsub(/\s+/, "\n"); gsub(/§§/, "\\ ")}1')"
+
+# Use xargs to process each file or directory in the list:
+printf '%s\n' "$filelist" | xargs -ro -I {} sh -c '
+	if echo "{}" | grep -q "/$"; then
+		# Create directory if filename ends with a trailing slash:
+		mkdir -p "{}"
+	else
+		if echo "{}" | grep -q "/"; then
+			# Create directory and file if filename contains a slash:
+			mkdir -p "$(dirname "{}")"
+			touch "{}"
+		else
+			# Create file if filename doesnt contain slashes:
+			touch "{}"
+		fi
+	fi
+'

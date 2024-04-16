@@ -1,0 +1,40 @@
+#!/usr/bin/env sh
+
+# Setup functions & variables:
+base_file="$HOME/.config/rofi_base/url-bookmarks"
+# shellcheck disable=SC1091
+menu(){ rofi -i -dmenu "$@"; }
+
+# Choose an URL:
+url="$(sed '/^#/d; s/#.*//g; /^$/d' "$base_file" | menu -p 'Choose Url')"
+
+if [ -z "$url" ]; then
+ echo 'ERROR: No URL Selected.'; exit 1
+fi
+
+action="$(printf 'Open With Browser''%s\n''Copy Url' | menu -p 'Action' | tr '[:upper:]' '[:lower:]')"
+
+# Exec Action Based on Choice:
+case "$action" in
+ # ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- #
+ 'copy url'*) echo "$url" | xclip -selection clipboard && notify-send -t 2000 "Copied $url To The ClipBoard Successfully." ;;
+ # ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- #
+ 'open with browser'*)
+ browserlist()
+ {
+  cat << EOF
+LibreWolf
+Brave
+Firefox
+EOF
+ }
+  browser="$(browserlist | menu -p 'Select Browser')"
+  browser="$(echo "$browser" | tr '[:upper:]' '[:lower:]')"
+  case "$browser" in
+   '') echo 'ERROR: No Browser Selected.'; exit 1 ;;
+    *) ${browser} "$url" ;;
+  esac
+  # ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- #
+ ;;
+ *) echo 'ERROR: Invalid Action Choice.' && exit 1 ;;
+esac

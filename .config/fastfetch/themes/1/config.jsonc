@@ -1,0 +1,148 @@
+/* ----------------------------------------------------------------------- */
+
+/*
+ * ███████╗ █████╗ ███████╗████████╗███████╗███████╗████████╗ ██████╗██╗  ██╗
+ * ██╔════╝██╔══██╗██╔════╝╚══██╔══╝██╔════╝██╔════╝╚══██╔══╝██╔════╝██║  ██║
+ * █████╗  ███████║███████╗   ██║   █████╗  █████╗     ██║   ██║     ███████║
+ * ██╔══╝  ██╔══██║╚════██║   ██║   ██╔══╝  ██╔══╝     ██║   ██║     ██╔══██║
+ * ██║     ██║  ██║███████║   ██║   ██║     ███████╗   ██║   ╚██████╗██║  ██║
+ * ╚═╝     ╚═╝  ╚═╝╚══════╝   ╚═╝   ╚═╝     ╚══════╝   ╚═╝    ╚═════╝╚═╝  ╚═╝
+ */
+
+/* ----------------------------------------------------------------------- */
+
+{
+	"logo": {
+		// "source": "arch3",
+		// "source": "~/.config/fastfetch/logos/Archlogo.png",
+		// "source": "~/.config/fastfetch/logos/tux.png",
+		// "source": "AmogOS",
+
+		// Comment out if not using images:
+		// "type": "chafa",
+		// "width": 45,
+		// "height": 18,
+	},
+
+	"display": {
+		"binaryPrefix": "si",
+		"separator": "  • "
+	},
+
+	"modules": [
+		{
+			"type": "title",
+			"key": " ",
+			"format": "{1}@{2}",
+			"keyColor": "red"
+		},
+
+		{
+			"type": "os",
+			"key": " ",
+			"keyColor": "green",
+			"format": "{3} {12}"
+		},
+
+		{
+			"type": "kernel",
+			"key": " ",
+			"keyColor": "yellow"
+		},
+
+		{
+			"type": "uptime",
+			"key": " ",
+			"keyColor": "blue"
+		},
+
+		{
+			"type": "packages",
+			"key": " 󰏖",
+			"keyColor": "magenta"
+		},
+
+		{
+			"type": "terminal",
+			"key": " ",
+			"keyColor": "cyan"
+		},
+
+		{
+			"type": "shell",
+			"key": " ",
+			"keyColor": "red"
+		},
+
+		{
+			"type": "display",
+			"key": " ",
+			"keyColor": "green"
+		},
+
+		{
+			"type": "lm",
+			"key": " 󰧨",
+			"keyColor": "yellow",
+			"format": "{1}"
+		},
+
+		{
+			"type": "wm",
+			"key": " ",
+			"keyColor": "blue",
+			"format": "{1}"
+		},
+
+		{
+			"type": "theme",
+			"key": " 󰉼",
+			"keyColor": "magenta"
+		},
+
+		{
+			"type": "icons",
+			"key": " 󰀻",
+			"keyColor": "cyan"
+		},
+
+		{
+			"type": "locale",
+			"key": " ",
+			"keyColor": "red"
+		},
+
+		{
+			"type": "cpu",
+			"key": " ",
+			"keyColor": "green"
+		},
+
+		{
+			"type": "gpu",
+			"key": " 󰍹",
+			"keyColor": "yellow"
+		},
+
+		{
+			"type": "memory",
+			"key": " ",
+			"keyColor": "blue"
+		},
+
+		{
+			"type": "swap",
+			"key": " 󰓡",
+			"keyColor": "magenta"
+		},
+
+		{
+			"type": "custom",
+			"key": " ",
+			"keyColor": "cyan",
+			"format": "\u001b[31m \u001b[32m \u001b[33m \u001b[34m \u001b[35m \u001b[36m \u001b[37m "
+		},
+
+		"break"
+	]
+}

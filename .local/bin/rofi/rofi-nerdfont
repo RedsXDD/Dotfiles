@@ -1,0 +1,23 @@
+#!/usr/bin/env sh
+
+killall rofi >/dev/null 2>&1
+
+# Import current theme:
+theme="${XDG_CONFIG_HOME:-$HOME/.config}/rofi/themes/launchers/type-7/style-1.rasi"
+
+# Cheatsheet file (by groovykiwi at https://github.com/groovykiwi/rofi-nerdfont):
+nerdfont_cheatsheet="${XDG_CONFIG_HOME:-$HOME/.config}/rofi/misc_files/nerdfont_cheatsheet.txt"
+
+run_rofi(){
+	[ "$(awk '/fullscreen:/ {print $2}' "$theme")" != 'true;' ] && border_setup='window { border: 2px solid; border-color: @border-colour; }'
+
+	rofi -i -dmenu \
+		-theme "$theme" \
+		-theme-str "configuration { show-icons: false; }
+				entry { placeholder: \"Select icon ...\"; }
+				$border_setup" \
+		-p ' ' < "$nerdfont_cheatsheet"
+}
+
+icon="$(run_rofi | cut -d' ' -f2)"
+[ -n "$icon" ] && wl-copy "$icon" && notify-send -t 2000 'Copied icon' "Successfully copied the icon \" $icon \" to the clipboard"

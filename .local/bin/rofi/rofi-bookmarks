@@ -1,0 +1,139 @@
+#!/usr/bin/env sh
+
+killall rofi >/dev/null 2>&1
+
+# Import current theme:
+theme="${XGD_CONFIG_HOME:-$HOME/.config}/rofi/themes/launchers/type-7/style-1.rasi"
+actions_theme="${XGD_CONFIG_HOME:-$HOME/.config}/rofi/themes/launchers/type-2/style-1.rasi"
+new_bookmark_theme="${XGD_CONFIG_HOME:-$HOME/.config}/rofi/themes/launchers/type-2/style-1.rasi"
+confirm_theme="${XDG_CONFIG_HOME:-$HOME/.config}/rofi/themes/powermenu/type-1/style-1.rasi"
+
+# Filepaths:
+bookmark_file="${XDG_CONFIG_HOME:-$HOME/.config}/rofi/misc_files/bookmarks.txt"
+
+# Set default browser:
+if [ -z "$BROWSER" ]; then
+	for browser in brave librewolf firefox; do
+		[ -x "$(command -v "$browser")" ] && BROWSER="$browser" && continue
+	done
+fi
+
+opt_1='Select bookmark (type)'
+opt_2='Select bookmark (open)'
+opt_3='Select bookmark (copy)'
+opt_4='Select bookmark (copy & type)'
+opt_5='Add a new bookmark'
+opt_6='Remove a bookmark'
+opt_7='Edit bookmarks file'
+
+actions_rofi(){
+	[ "$(awk '/fullscreen:/ {print $2}' "$theme")" != 'true;' ] && border_setup='window { border: 2px solid; border-color: @border-colour; }'
+
+	printf '%s\n' "$opt_1" "$opt_2" "$opt_3" "$opt_4" "$opt_5" "$opt_6" "$opt_7" |
+		rofi -i -dmenu \
+			-theme "$actions_theme" \
+			-theme-str "configuration { show-icons: false; }
+					entry { placeholder: \"Choose Action ...\"; }
+					$border_setup" \
+			-p ' '
+	unset border_setup
+}
+
+rofi_new_bookmark(){
+	[ "$(awk '/fullscreen:/ {print $2}' "$new_bookmark_theme")" != 'true;' ] && border_setup='window { border: 2px solid; border-color: @border-colour; }'
+
+	rofi -dmenu \
+		-theme "$new_bookmark_theme" \
+		-theme-str "configuration { show-icons: false; }
+				entry { placeholder: \"Type New Bookmark ...\"; }
+				window { height: 5%; }
+				$border_setup" \
+		-p '> ' < /dev/null
+	unset border_setup
+}
+
+run_rofi(){
+	[ "$(awk '/fullscreen:/ {print $2}' "$theme")" != 'true;' ] && border_setup='window { border: 2px solid; border-color: @border-colour; }'
+
+	rofi -i -dmenu \
+		-theme "$theme" \
+		-theme-str "configuration { show-icons: false; }
+				entry { placeholder: \"Choose Bookmark ...\"; }
+				$border_setup" \
+		-p ' ' < "$bookmark_file"
+	unset border_setup
+}
+
+# Ask for confirmation:
+confirm_removal(){
+	printf '%s\n' "$no" "$yes" |
+		rofi -i -dmenu \
+			-theme-str "mainbox { children: [ \"message\", \"listview\" ]; }
+				listview { columns: 2; lines: 1; }
+				element-text { horizontal-align: 0.5; }
+				textbox { horizontal-align: 0.5; }
+				window {
+					border: 2px solid;
+					border-color: @border-colour;
+					location: center;
+					anchor: center;
+					fullscreen: false;
+					width: 250px;
+				}" \
+			-p 'Confirmation' \
+			-mesg 'Remove bookmark?' \
+			-theme "$confirm_theme"
+}
+
+case "$(actions_rofi)" in
+	"$opt_1") wtype "$(run_rofi)" -P 'Return' ;;
+	"$opt_2") run_rofi | xargs -ro "$BROWSER" ;;
+	"$opt_3")
+		choosen_bookmark="$(run_rofi)"
+		[ -n "$choosen_bookmark" ] &&
+			wl-copy "$choosen_bookmark" &&
+			notify-send -t 2000 'Successfully copied bookmark' "The bookmark '$choosen_bookmark'\nwas successfully copied to the clipboard!"
+	;;
+
+	"$opt_4")
+		choosen_bookmark="$(run_rofi)"
+		[ -n "$choosen_bookmark" ] &&
+			wtype "$choosen_bookmark" &&
+			wl-copy "$choosen_bookmark" &&
+			notify-send -t 2000 'Successfully copied bookmark' "The bookmark '$choosen_bookmark'\nwas successfully copied to the clipboard!"
+	;;
+
+	"$opt_5")
+		new_bookmark="$(rofi_new_bookmark)"
+		[ -n "$new_bookmark" ] &&
+			if ! grep -q "$new_bookmark" "$bookmark_file"; then
+				echo "$new_bookmark" >> "$bookmark_file" && notify-send -t 2000 'Bookmark added' "Sucefully added the bookmark\n'$new_bookmark'\nto the bookmarks file"
+			else
+				notify-send -t 2000 'Bookmark already added' "The bookmark '$new_bookmark'\nalready was added to the bookmarks file"
+			fi
+	;;
+
+	"$opt_6")
+		# Configure confirm theme buttons:
+		if [ "$(grep 'USE_BUTTONS' "$confirm_theme" | cut -d'=' -f2)" = 'YES' ]; then
+			yes='󰄬'
+			no='󰅖'
+		else
+			yes='󰄬 Yes'
+			no='󰅖 No'
+		fi
+
+		old_bookmark="$(run_rofi)"
+		if [ -n "$old_bookmark" ] && [ "$(confirm_removal)" = "$yes" ]; then
+			cp -f "$bookmark_file" "${bookmark_file}.bak"
+			new_file="$(grep -v "$old_bookmark" "$bookmark_file")"
+			echo "$new_file" > "$bookmark_file" && notify-send -t 2000 'Bookmark removed' "Sucefully removed the bookmark\n'$old_bookmark'\nfrom the bookmarks file"
+		fi
+	;;
+
+	"$opt_7") "${TERMINAL:-alacritty}" "${EDITOR:-xdg-open}" "$bookmark_file" ;;
+
+	*) exit 1 ;;
+esac
+
+# vim:fileencoding=utf-8:foldmethod=marker

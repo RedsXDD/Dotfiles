@@ -1,0 +1,53 @@
+#!/usr/bin/env sh
+
+killall rofi >/dev/null 2>&1
+
+# Import current theme:
+theme_tags="${XDG_CONFIG_HOME:-$HOME/.config}/rofi/themes/launchers/type-2/style-1.rasi"
+theme_sort="${XDG_CONFIG_HOME:-$HOME/.config}/rofi/themes/launchers/type-2/style-1.rasi"
+
+# Setup output directory:
+walls_dir="$HOME/Pictures/wallpapers/wallhaven"
+[ ! -d "$walls_dir" ] && mkdir -p "$walls_dir"
+
+rofi_tags(){
+	[ "$(awk '/fullscreen:/ {print $2}' "$theme_tags")" != 'true;' ] && border_setup='window { border: 2px solid; border-color: @border-colour; }'
+
+	printf '%s\n' '4k' 'Cyberpunk 2077' 'Japan' 'abstract' 'anime' 'code' 'dark fantasy' 'digital art' 'fantasy girl' 'futuristic' 'minimalism' 'nature' 'pixel art' 'programming' 'sunset' |
+		rofi -i -dmenu \
+			-theme "$theme_tags" \
+			-theme-str "configuration { show-icons: false; }
+					$border_setup
+					entry { placeholder: \"Select Tag ...\"; }" \
+			-p ' '
+	unset border_setup
+}
+
+rofi_sort(){
+	[ "$(awk '/fullscreen:/ {print $2}' "$theme_sort")" != 'true;' ] && border_setup='window { border: 2px solid; border-color: @border-colour; }'
+
+	printf '%s\n' 'Date_added' 'Relevance' 'Random' 'Views' 'Favorites' 'Toplist' |
+		rofi -i -dmenu \
+			-theme "$theme_sort" \
+			-theme-str "configuration { show-icons: false; }
+					$border_setup
+					entry { placeholder: \"Select Tag ...\"; }" \
+			-p ' '
+	unset border_setup
+}
+
+query="$(rofi_tags | sed 's/ /+/g')"
+[ -n "$query" ] && sorting="$(rofi_sort | tr '[:upper:]' '[:lower:]')"
+
+if [ -n "$sorting" ]; then
+	notify-send '🔽 Download Started...'
+
+	i='1'
+	maxpage='5'
+	while [ ! "$i" -gt "$maxpage" ]
+	do
+		curl -s https://wallhaven.cc/api/v1/search\?atleast=1920x1080\&sorting="$sorting"\&q="$query"\&page="$i" | jq '.' | grep -Eoh 'https://w\.wallhaven.cc/full/.*(jpg|png)\b' | xargs -ro -I {} wget -nc -P "$walls_dir" "{}"
+		i="$((i + 1))"
+	done
+	notify-send '✅ Download Finished!'
+fi

@@ -1,0 +1,100 @@
+#!/usr/bin/env sh
+#[ -n "$BROWSER" ] && base_browser="$BROWSER" || base_browser='VimB'
+base_browser='surf'
+base_url='duckduckgo.com'
+
+# Main TODO
+# Url Regex For -u Option.
+# Check for Valid Base_Browser & Base_URL
+# Main Complex Function:
+
+# TODO extra_args
+# TODO incognito
+# TODO newinstance
+
+# Current TODO Options:
+# a) append
+# i) incognito
+# A) Additional Browser Args
+# n) new tabbed instance (Reuse Old with -r ?)
+
+# Finished Options:
+# b) browser
+# u) url
+# h) help
+
+# -------------------------------------------------------------------------- #
+
+# Invalid Options:
+invalid()
+{
+ cat << EOFi
+ Please Write an Invalid Option Page
+EOFi
+}
+
+# Help Page:
+helppage()
+{
+ cat << EOFh
+ Please Write a Help Page
+EOFh
+}
+
+# -------------------------------------------------------------------------- #
+
+# Main Function to Read Arguments.
+case "$1" in
+ '') echo >/dev/null 2>&1 ;;
+ '-h'|'--help') helppage && exit 0 || echo 'Help Page Could Not Be Displayed' && exit 1 ;;
+ *)
+  while getopts 'A:b:u:ain' opt;
+  do
+   case "$opt" in
+    'b') browser="$OPTARG" ;;
+    'u') url="$OPTARG" ;;
+    'A') extra_args="$OPTARG" ;;
+    'a') append='yes' ;;
+    'i') incognito='yes' ;;
+    'n') newinstance='yes' ;;
+    *) echo >/dev/null 2>&1 ;;
+   esac
+  done >/dev/null 2>&1
+ ;;
+esac
+
+# -------------------------------------------------------------------------- #
+
+##################
+# Main Function: #
+##################
+
+# Basics:
+[ -z "$base_browser" ] && base_browser='surf'
+[ -z "$base_url" ] && base_url='duckduckgo.com'
+[ -n "$browser" ] && browser="$(echo "$browser" | tr '[:upper:]' '[:lower:]')" || browser="$(echo "$base_browser" | tr '[:upper:]' '[:lower:]')"
+[ -z "$url" ] && url="$base_url"
+xidfile='/tmp/browtab.xid'
+xid="$(cat "$xidfile" 2>/dev/null)"
+xcheck="$(xprop -id "$xid" 2>/dev/null)"
+
+[ -n "$newinstance" ] && rm -f "$xidfile" >/dev/null 2>&1
+
+case "$browser" in
+ 'surf'|'vimb')
+  # Check if There is an Already Running Instance of BrowTab,
+  # If None Exists Create a New One:
+  if [ -z "$xcheck" ]; then
+   tabbed -dcn browtab -r 2 "${browser}" -e '' "$base_url" >"$xidfile" 2>/dev/null &
+   sleep 0.3
+   xid="$(cat "$xidfile" 2>/dev/null)"
+   browser_id="$(xdotool search --class "$browser" | sort -h | tail -n1)"
+   "${browser}" -e "$xid" "$url" >/dev/null 2>&1 &
+   sleep 0.3
+   xdotool windowkill "$browser_id"
+  # If Theres One, Embend browser into It:
+  else
+   "${browser}" -e "$xid" "$url" >/dev/null 2>&1 &
+  fi
+ ;;
+esac

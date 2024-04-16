@@ -1,0 +1,29 @@
+# vim:fileencoding=utf-8:foldmethod=marker:filetype=fish
+
+# Better sudo & doas:
+abbr sudo 'sudo '
+abbr doas '\doas --'
+
+# Better user switching:
+abbr su '\su -lw DISPLAY'
+
+# No sudo required:
+abbr locale-gen 'sudo locale-gen'
+abbr make 'sudo make'
+abbr mount 'sudo mount'
+abbr passwd 'sudo passwd'
+abbr mandb 'sudo mandb'
+abbr systemctl 'sudo systemctl'
+abbr umount 'sudo umount'
+abbr updatedb 'sudo updatedb'
+abbr useradd 'sudo useradd'
+abbr userdel 'sudo userdel'
+abbr usermod 'sudo usermod'
+abbr grubconf 'sudo grub-mkconfig -o /boot/grub/grub.cfg'
+abbr smartctl 'sudo smartctl'
+
+# Switch between shells:
+# Not recommended to switch default SHELL from bash.
+abbr tobash 'sudo chsh $USER -s /bin/bash && echo "Now log out."'
+abbr tozsh 'sudo chsh $USER -s /bin/zsh && echo "Now log out."'
+abbr tofish 'sudo chsh $USER -s /bin/fish && echo "Now log out."'

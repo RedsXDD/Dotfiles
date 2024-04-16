@@ -1,0 +1,165 @@
+#!/usr/bin/env sh
+
+# __        __   _
+# \ \      / /__| | ___ ___  _ __ ___   ___
+#  \ \ /\ / / _ \ |/ __/ _ \| '_ ` _ \ / _ \
+#   \ V  V /  __/ | (_| (_) | | | | | |  __/
+#    \_/\_/ \___|_|\___\___/|_| |_| |_|\___|
+#  ____                            _
+# |  _ \ _ __ ___  _ __ ___  _ __ | |_ ___
+# | |_) | '__/ _ \| '_ ` _ \| '_ \| __/ __|
+# |  __/| | | (_) | | | | | | |_) | |_\__ \
+# |_|   |_|  \___/|_| |_| |_| .__/ \__|___/
+#                           |_|
+
+# Arguments:
+#model="$(( $random % 3 ))"
+
+# Fetch Method:
+fetch(){ neofetch -L --ascii_distro "$@"; }
+#fetch(){ neofetch --ascii_distro "$@"; }
+
+# Core Functions:
+# Normal Distro List:
+baselist()
+{
+ neofetch --help |\
+ grep -A 1000 '\--ascii_distro' |\
+ sed '/ascii_bold/q ; 1d; s/^\s*//; /^$/d; /small/q; s/.*/&/' |\
+ paste -sd' ' -
+}
+
+# List without Variants:
+listnormal()
+{
+ neofetch --help |\
+ grep -A 1000 '\--ascii_distro' |\
+ sed '/ascii_bold/q ; 1d; s/^\s*//; /^$/d; /small/q; s/.*/&/' |\
+ paste -sd' ' - |\
+ sed "s/\s*have.*//; s/NOTE:\s//; s/Linspire, Linux/Linspire Linux/; s/,\s*/\n/g"
+}
+
+# List with Old Variants:
+listold()
+{
+ neofetch --help |\
+ grep -A 1000 '\--ascii_distro' |\
+ sed '/ascii_bold/q ; 1d; s/^\s*//; /^$/d; /small/q; s/.*/&/' |\
+ paste -sd' ' - |\
+ sed "s/.*ascii//; s/have.*//; s/.*NOTE.\s//; s/,\s*/_old\n/g"
+}
+
+# List with Small Variants:
+listsmall()
+{
+ neofetch --help |\
+ grep -A 1000 '\--ascii_distro' |\
+ sed '/ascii_bold/q ; 1d; s/^\s*//; /^$/d; /small/q; s/.*/&/' |\
+ paste -sd' ' - |\
+ sed "s/.*old//g; s/.*NOTE.\s//; s/\shave.*/_small/; s/,\s*/_small\n/g"
+}
+
+# Distro List with All Variants:
+listall()
+{
+ # List Normal:
+ neofetch --help |\
+ \grep -A 1000 -F -- '--ascii_distro' |\
+ sed '/ascii_bold/q ; 1d; s/^\s*//; /^$/d; /small/q; s/.*/&/' |\
+ paste -sd' ' - |\
+ sed "s/\s*have.*//; s/NOTE:\s//; s/Linspire, Linux/Linspire Linux/; s/,\s*/\n/g"
+
+ # List Old:
+ neofetch --help |\
+ \grep -A 1000 -F -- '--ascii_distro' |\
+ sed '/ascii_bold/q ; 1d; s/^\s*//; /^$/d; /small/q; s/.*/&/' |\
+ paste -sd' ' - |\
+ sed "s/.*ascii//; s/have.*//; s/.*NOTE.\s//; s/,\s*/_old\n/g"
+
+ # List Small:
+ neofetch --help |\
+ \grep -A 1000 -F -- '--ascii_distro' |\
+ sed '/ascii_bold/q ; 1d; s/^\s*//; /^$/d; /small/q; s/.*/&/' |\
+ paste -sd' ' - |\
+ sed "s/.*old//g; s/.*NOTE.\s//; s/\shave.*/_small/; s/,\s*/_small\n/g"
+}
+
+# Execute Functions:
+case "$1" in
+ # --------------------------------------------------------------------------------------------------- #
+ ''|'-r')
+  # Display Distro:
+  distro="$(listall | shuf -n 1)"
+  echo ''; echo "$(tput bold)Displayed Distro: $distro"; echo ''
+  fetch "$distro"
+ ;;
+ # --------------------------------------------------------------------------------------------------- #
+ '-l')
+  tmpfile=$(mktemp /tmp/distros.XXXXXX)
+  trap 'rm "$tmpfile"' 0 1 15
+  (echo ''; echo 'List of Available Distros:'; echo ''; listall; echo '') > "$tmpfile"
+  less "$tmpfile"
+ ;;
+ # --------------------------------------------------------------------------------------------------- #
+ -L)
+  # Determinate List Lenghts:
+  Sall="$(listall | wc -l)"
+  limit="$(( $Sall + 1 ))"
+
+  # Display Distros:
+  i=1
+  until [ "$i" = "$limit" ];
+  do
+   distro=$(listall | sed "$i!d")
+   neofetch -L --ascii_distro "$distro"
+   echo ""
+   echo "$(tput bold)Displayed Distro: $distro"
+   echo ""
+   i=$(( i + 1 ))
+  done
+ ;;
+ # --------------------------------------------------------------------------------------------------- #
+ -P)
+  # Determinate List Lenghts:
+  Sall="$(listall | wc -l)"
+  limit="$(( $Sall + 1 ))"
+
+  # Display Distros:
+  i=1
+  until [ "$i" = "$limit" ];
+  do
+   distro=$(listall | sed "$i!d")
+   clear
+   echo ""
+   echo "$(tput bold)Displayed Distro: $distro"
+   echo ""
+   neofetch -L --ascii_distro "$distro"
+   read pause
+   i=$(( i + 1 ))
+  done
+ ;;
+ # --------------------------------------------------------------------------------------------------- #
+ '-s')
+  distro="$2"
+  echo ''
+  fetch "$2"
+ ;;
+ # --------------------------------------------------------------------------------------------------- #
+ '-h'|'--help')
+  cat <<- EOF
+
+Available Options for The Prompt Command:
+ -h, --help)   Displays this Help Page and Exits.
+
+ -r)           Displays a Random Distro, This is Default Behavior No Option is Specified.
+ -l)           Display a List of Available Distros.
+ -s)           Display an Specific Distro.
+ -L)           Display All Available Distros.
+ -P)           Display All Available Distros in a Paused Fashion.
+
+EOF
+ ;;
+ # --------------------------------------------------------------------------------------------------- #
+ *) echo 'Program Terminated.' && exit 1
+ # --------------------------------------------------------------------------------------------------- #
+esac

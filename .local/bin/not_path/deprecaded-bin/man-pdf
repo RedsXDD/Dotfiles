@@ -1,0 +1,14 @@
+#!/usr/bin/env sh
+
+trap 'rm "$tmpfile" >/dev/null 2>&1; rm /tmp/zathura.stdin* >/dev/null 2>&1' 0 1 15
+menu(){ fzf; }
+# menu(){ rofi -i -dmenu "$@" -p 'Choose manpage to view'; }
+
+if [ -n "$1" ]; then
+	check="$(man -k "$1" 2>/dev/null)" &&
+	[ -n "$check" ] && man -Tpdf "$1" | zathura - && exit 0
+else
+	tmpfile="$(mktemp)"
+	choosen="$(man -k . | menu | cut -d' ' -f1)"
+	[ -n "$choosen" ] && man -Tpdf "$choosen" > "$tmpfile" && zathura "$tmpfile"
+fi

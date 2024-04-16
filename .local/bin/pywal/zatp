@@ -1,0 +1,58 @@
+#!/usr/bin/env sh
+
+# Script dependencies: gnutls, python-pywal, zathura
+# shellcheck disable=1091,2154
+
+zathurarc_file="${XDG_CONFIG_HOME:-$HOME/.config}/zathura/zathurarc"
+[ -f "${XDG_CACHE_HOME:-$HOME/.cache}/wal/colors.sh" ] && . "${XDG_CACHE_HOME:-$HOME/.cache}/wal/colors.sh"
+
+genzathurarc(){
+cat << CONF
+# Colorscheme:
+set default-bg "$background"
+set default-fg "$foreground"
+set recolor-lightcolor "$background"
+set recolor-darkcolor "$foreground"
+
+set completion-bg "$background"
+set completion-fg "$foreground"
+set completion-group-bg "$background"
+set completion-group-fg "$color2"
+set completion-highlight-bg "$color4"
+set completion-highlight-fg "$background"
+
+set inputbar-bg "$color4"
+set inputbar-fg "#000000"
+set statusbar-bg "$color4"
+set statusbar-fg "#000000"
+
+set render-loading-bg "$background"
+set render-loading-fg "$foreground"
+
+set notification-bg "$color4"
+set notification-fg "#000000"
+set notification-error-bg "$color3"
+set notification-error-fg "#000000"
+set notification-warning-bg "$color1"
+set notification-warning-fg "#000000"
+
+set index-bg "$background"
+set index-fg "$foreground"
+set index-active-bg "$foreground"
+set index-active-fg "$background"
+
+set highlight-color "$color4"
+set highlight-fg "$color2"
+set highlight-active-color "$color3"
+CONF
+}
+
+zathura_tmp_dir="$(mktemp -d)"
+zathurarc_tmp="$zathura_tmp_dir/zathurarc"
+trap 'rm -rf "$zathura_tmp_dir"' 0 1 15
+
+[ -f "$zathurarc_file" ] && cp "$zathurarc_file" "$zathurarc_tmp"
+genzathurarc >> "$zathurarc_tmp"
+\zathura --config-dir="$zathura_tmp_dir" "$@"
+
+# vim:fileencoding=utf-8:foldmethod=marker

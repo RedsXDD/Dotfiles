@@ -1,0 +1,13 @@
+#!/bin/sh
+
+# Set base terminal to be run.
+TERMRUN="${TERMINAL:-kitty}"
+
+# Kill previous intances of kalc if there are any.
+killall -q kalc 2>/dev/null
+
+# Wait until the processes have been shut down.
+while pgrep -x display >/dev/null; do sleep 0.1; done
+
+# Run Kalc inside the main terminal.
+$TERMRUN --class kalc -e kalc

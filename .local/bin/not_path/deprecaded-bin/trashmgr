@@ -1,0 +1,83 @@
+#!/usr/bin/env sh
+
+# Make trash directory if it doesn't exist:
+# trash_dir="${XDG_DATA_HOME:-$HOME/.local/share}/Trash"
+trash_dir="$HOME/test_trash"
+trash_info="$trash_dir/info"
+trash_files="$trash_dir/files"
+
+[ ! -d "$trash_dir" ] && mkdir -p -- "$trash_dir" && chmod 700 "$trash_dir"
+[ ! -d "$trash_info" ] && mkdir -- "$trash_info" && chmod 700 "$trash_info"
+[ ! -d "$trash_files" ] && mkdir -- "$trash_files" && chmod 700 "$trash_files"
+
+# trash-put           trash files and directories.
+# trash-empty         empty the trashcan(s).
+# trash-list          list trashed files.
+# trash-restore       restore a trashed file.
+# trash-rm            remove individual files from the trashcan.
+# mv --backup=numbered -v $file $trash/files
+
+encode() {
+	echo "$1" |
+		sed 's/ /%20/g;
+			s/!/%21/g;
+			s/"/%22/g;
+			s/\#/%23/g;
+			s/\$/%24/g;
+			s/\&/%26/g;
+			s/'\''/%27/g;
+			s/(/%28/g;
+			s/)/%29/g;
+			s/\*/%2a/g;
+			s/+/%2b/g;
+			s/,/%2c/g;
+			s/-/%2d/g;
+			s/:/%3a/g;
+			s/;/%3b/g;
+			s//%3e/g;
+			s/?/%3f/g;
+			s/@/%40/g;
+			s/\[/%5b/g;
+			s/\\/%5c/g;
+			s/\]/%5d/g;
+			s/\^/%5e/g;
+			s/_/%5f/g;
+			s/`/%60/g;
+			s/{/%7b/g;
+			s/|/%7c/g;
+			s/}/%7d/g;
+			s/~/%7e/g;
+			s/	/%09/g'
+}
+
+# Read options:
+case "$1" in
+	'') error_no_option='true' ;;
+	'-h' | '--help') ;;
+	'-p' | '--put')
+		# chmod 600 *.trashinfo
+		while [ "$1" ]
+		do
+			shift
+			info_filename="$(basename "$1")"
+			file="$(realpath -s "$1" 2>/dev/null)"
+			[ -n "$file" ] &&
+				if [ -f "$file" -o -d "$file" ]; then
+					echo "$trash_info/$info_filename"
+					echo '[Trash Info]'
+					echo "Path=$(encode "$file")"
+					date +"DeletionDate%FT%T"
+					echo ''
+				else
+					echo 'ERROR: file non-existent'
+				fi
+		done
+	;;
+
+	'-e' | '--empty') ;;
+	'-l' | '--list') ;;
+	'-r' | '--restore') ;;
+	'-R' | '--remove') ;;
+esac
+
+# vim:fileencoding=utf-8:foldmethod=marker

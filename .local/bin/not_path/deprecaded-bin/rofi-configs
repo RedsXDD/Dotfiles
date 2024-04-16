@@ -1,0 +1,101 @@
+#!/usr/bin/env sh
+
+killall rofi >/dev/null 2>&1
+
+# Import current theme:
+theme="${XDG_CONFIG_HOME:-$HOME/.config}/rofi/themes/launchers/type-7/style-1.rasi"
+
+# Fallback opener function.
+fallback_opener(){
+	[ -z "$EDITOR" -a -n "$(whereis vi)" ] && EDITOR='vi'
+	[ -z "$EDITOR" -a -n "$(whereis vim)" ] && EDITOR='vim'
+	[ -z "$EDITOR" -a -n "$(whereis nvim)" ] && EDITOR='nvim'
+	[ -z "$TERMINAL" -a -n "$(whereis kitty)" ] && TERMINAL='kitty'
+	[ -z "$TERMINAL" -a -n "$(whereis alacritty)" ] && TERMINAL='alacritty'
+	[ -z "$TERMINAL" -a -n "$(whereis st)" ] && TERMINAL='st'
+	[ -z "$TERMINAL" -a -n "$(whereis xterm)" ] && TERMINAL='xterm'
+
+	${TERMINAL} -e ${EDITOR} "$@"
+}
+
+# Generate a blacklist for files on a format that can be read by grep:
+blacklist(){
+	cat <<- EOFBc
+		blockbench
+		dolphin_anty
+		brave
+		cryptomator
+		fcitx
+		dconf
+		gimp
+		google
+		gtk
+		htop
+		keepassxc
+		libfm
+		libreoffice
+		mozc
+		nwg-look
+		pulse
+		qt
+		webcord
+		zsh/plugins
+EOFBc
+}
+blacklist="$(blacklist | awk '!/^$/ {gsub(/\s+/, ""); printf("%s\\|",$0)}')" # Remove all empty lines & replace every whitespace/newline with '\|'
+blacklist="${blacklist%%\\|}"                                                # Remove the trailing '\|' from the output.
+
+# Generate a whitelist for files on a format that can be read by grep:
+whitelist(){
+	cat <<- EOFWl
+		bin
+		share/applications
+		share/bindings
+		share/bookmark_files
+EOFWl
+}
+whitelist="$(whitelist | awk '!/^$/ {gsub(/\s+/, ""); printf("%s\\|",$0)}')" # Remove all empty lines & replace every whitespace/newline with '\|'
+whitelist="${whitelist%%\\|}"                                                # Remove the trailing '\|' from the output.
+
+# Generate the list of files that can be edited:
+file_list(){
+	find "$HOME"/.config/* -maxdepth 3 -type f | grep -iv "$blacklist"
+	find "$HOME"/.local/* -maxdepth 3 -type f | grep -i "$whitelist"
+}
+
+run_rofi(){
+	[ "$(awk '/fullscreen:/ {print $2}' "$theme")" != 'true;' ] && border_setup='window { border: 2px solid; border-color: @border-colour; }'
+
+	file_list | sed "s|$HOME|~|g" | sort |
+		rofi -i -dmenu \
+			-theme "$theme" \
+			-theme-str "configuration { show-icons: false; }
+					entry { placeholder: \"Search Files ...\"; }
+					$border_setup" \
+			-p ' '
+}
+
+# If $file is the alacritty's config file then try edit it using alacritty,
+# likewise if the file is kitty's config file try edit it using kitty,
+# otherwise try to open file with the `fallback_opener` function.
+file="$(run_rofi | sed "s|~|$HOME|g")"
+[ -n "$file" ] && [ -f "$file" ] &&
+	case "$file" in
+		*'alacritty.toml')
+			if [ -n "$(whereis alacritty)" ]; then
+				alacritty -e ${EDITOR} "$file"
+			else
+				fallback_opener "$file"
+			fi
+		;;
+
+		*'kitty.conf')
+			if [ -n "$(whereis kitty)" ]; then
+				kitty -e ${EDITOR} "$file"
+			else
+				fallback_opener "$file"
+			fi
+		;;
+
+		*) fallback_opener "$file" ;;
+	esac

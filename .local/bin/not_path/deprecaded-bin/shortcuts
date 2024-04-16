@@ -1,0 +1,8 @@
+#!/usr/bin/env sh
+
+# Edit Cfgs File:
+cfg_file="$HOME/.config/rofi_base/edit-configs"
+
+# Aliases:
+shortcuts_file="$HOME/.config/shell/bz_files/shortcutsrc"
+sed "/^#/d; s/#.*//g; /^$/d; s/\s\+§§\s\+/§§/g" "$cfg_file" | awk -F '§§' '{print "alias "$3"=nvim "$2}' | sed "s/=/='/; s/$/'/" | sort > "$shortcuts_file"

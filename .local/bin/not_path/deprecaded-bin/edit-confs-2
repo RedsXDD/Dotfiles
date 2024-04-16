@@ -1,0 +1,52 @@
+#!/usr/bin/env sh
+
+# Base file:
+base_file="${XDG_DATA_HOME:-$HOME/.local/share}/bookmark_files/edit-configs"
+
+# Display menu:
+menu(){ rofi -p 'Choose file to edit' -i -dmenu "$@"; }
+
+# Function to display various error codes:
+errcode(){
+	# Color Variables:
+	black="$(tput setaf 0)"
+	red="$(tput setaf 1)"
+	green="$(tput setaf 2)"
+	yellow="$(tput setaf 3)"
+	blue="$(tput setaf 4)"
+	magenta="$(tput setaf 5)"
+	cyan="$(tput setaf 6)"
+	white="$(tput setaf 7)"
+	bold="$(tput bold)"
+	reset="$(tput sgr0)"
+	err_txt="${bold}${red}ERROR: ${reset}${bold}"
+	case "$@" in
+		1) echo "${err_txt}no file was choosen" ;;
+		2) echo "${err_txt}the file $file does not exist" ;;
+		3) echo "${err_txt}unable to open file $file" ;;
+	esac
+	exit 1
+}
+
+# Function to open choosen file:
+open_file(){
+	# Default funtion to open the choosen file:
+	fallback_opener(){ "$TERMINAL" -e "$EDITOR" -- "$file" || errcode 3; }
+
+	# If $file is the alacritty's config file then try edit it using alacritty,
+	# likewise if the file is kitty's config file try edit it using kitty,
+	# otherwise try to open file with the `fallback_opener` function.
+	case "$file" in
+		*alacritty.yml) alacritty -e "$EDITOR" "$file" || fallback_opener ;;
+		*kitty.conf) kitty -e "$EDITOR" "$file" || fallback_opener ;;
+		*) fallback_opener ;;
+	esac >/dev/null 2>&1
+}
+
+# Choose file to edit:
+choosen="$(awk -F '§§' '!/^\s*#.*/ && !/^$/ { gsub(/#.*/, ""); print $1 | "sort -u" }' < "$base_file" | menu)"
+
+# Get file path from choosen file:
+file="$(awk -F '§§' "!/^\s*#.*/ && !/^$/ && /$choosen/ { gsub(/#.*/, \"\"); gsub(/\s*/, \"\"); gsub (/~/, \"$HOME\"); print \$2 }" < "$base_file")"
+
+[ ! -f "$file" ] && errcode 2 || open_file

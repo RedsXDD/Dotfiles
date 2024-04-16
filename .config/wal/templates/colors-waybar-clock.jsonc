@@ -1,0 +1,29 @@
+{{
+	"clock": {{
+		"interval": 60,
+		"format": "󰥔 {{:%H:%M}}",
+		"format-alt": "󰸗 {{:%A, %B %d, %Y}}",
+		"tooltip-format": "<span size='9pt' font='JetBrainsMono Nerd Font'>{{calendar}}</span>",
+		"calendar": {{
+			"mode": "month",
+			"mode-mon-col": 3,
+			// "weeks-pos": "right",
+			"on-scroll": 1,
+			"on-click-right": "mode",
+			"format": {{
+				"today"   :"<span background='{foreground}' color='{background}'><b>{{}}</b></span>",
+				"days"    : "<b>{{}}</b>",
+				"weeks"   : "<span color='{color2}'><b>{{}}</b></span>",
+				"weekdays": "<span color='{color3}'><b>{{}}</b></span>",
+				"months"  : "{{}}"
+			}}
+		}},
+		"actions":  {{
+			"on-click-right":    "mode",
+			"on-click-forward":  "tz_up",
+			"on-click-backward": "tz_down",
+			"on-scroll-up":      "shift_up",
+			"on-scroll-down":    "shift_down"
+		}}
+	}}
+}}

@@ -1,0 +1,5 @@
+# vim:fileencoding=utf-8:foldmethod=marker:filetype=sh
+
+alias stow_dots='stow --adopt -d "$HOME/.sources/Reds/dotfiles" -t "$HOME"'
+alias stow_undots='stow -d "$HOME/.sources/Reds/dotfiles" -t "$HOME" -D'
+alias dots='/usr/bin/git --git-dir="$HOME/.sources/Reds/dotfiles/.git" --work-tree="$HOME/.sources/Reds/dotfiles"'

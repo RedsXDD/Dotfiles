@@ -1,0 +1,184 @@
+#!/usr/bin/env sh
+
+function="$1"
+arg1="$2"
+arg2="$3"
+
+#: Help page {{{
+gen_help() {
+cat << EOF
+Please choose what you want to get info about:
+	cheat)
+		A curl based manpage.
+
+	weather)
+		You get the weather information from the location you want.
+
+	dict)
+		Quick dictionary for any word.
+
+	cryptinfo)
+		Some infomation about the cryptocurrency of your choice.
+
+	winfo)
+		(Hyprland) Gather Information of an active window 5 seconds after running the command.
+
+	news)
+		Get some news articles from the topic of your choice.
+
+	get-urls)
+		Outputs only the urls of a given file.
+
+	tinyurl)
+		Shorten an url of your choice.
+
+	ipon)
+		Check your online ip.
+
+	parrot)
+		Displays a dancing parrot.
+
+	runfor)
+		Run forest run!
+
+	emoji-race)
+		Watch an emoji race.
+
+	nyan) Who doesn't love nyan cat?
+	NYAN) Who doesn't love a colored version of nyan cat?
+
+	speedtest)
+		Test your internet speed with curl and speedtest-cli.
+
+	date)
+		Get the current date and time.
+
+	bdate)
+		Same as date but more awesome.
+
+	clock)
+		A clock that ticks every second.
+
+	bclock)
+		Same as clock but more awesome.
+
+	cdown)
+		Countdown from how many seconds you want.
+
+	bcdown)
+		Same as cdown but more awesome.
+
+	colcp)
+		Copies the color code from whatever you click onto your clipboard.
+
+	genqr) Generate a QR code from string.
+	genpw) Generates a password of any choosen lenght
+		( + another number as an argument to get an choosen amount of diff passwords).
+EOF
+}
+help_page(){ gen_help | less; }
+#: }}}
+
+case "$function" in
+	#: General {{{
+	cheat)      curl cheat.sh/"$arg1" ;;
+	ipon)       curl ifconfig.co ;;
+	parrot)     curl parrot.live ;;
+	runfor)     curl ascii.live/forrest ;;
+	dict)       curl dict://dict.org/d:"$arg1" ;;
+	tinyurl)    curl -s https://tinyurl.com/api-create.php?url=http://"$arg1" ;;
+	colcp)      hyprpicker -a || colorpicker --short --one-shot --preview | xclip -selection clipboard ;;
+	date)       figlet -c "$(date +"%T %nOR %n%I:%M:%S %p%n%A -> Day %d %n%B %Y")" | lolcat ;;
+	bdate)      figlet -c "$(date +"%T %nOR %n%I:%M:%S %p%n%A -> Day %d %n%B %Y")" | lolcat ;;
+	get-urls)   grep -aEo '(((http|https|gopher|gemini|ftp|ftps|git)://|www\\.)[a-zA-Z0-9.]*[:;a-zA-Z0-9./+@$&%?$\#=_~-]*)|((magnet:\\?xt=urn:btih:)[a-zA-Z0-9]*)' "$arg1" ;;
+	emoji-race) curl node-web-console.glitch.me ;;
+	nyan)       curl ascii.live/nyan ;;
+	NYAN)       curl https://poptart.spinda.net ;;
+	speedtest)  curl -s https://raw.githubusercontent.com/sivel/speedtest-cli/master/speedtest.py | python - ;;
+	genqr)      curl qrenco.de/"$arg1" ;;
+	weather)    [ -n "$arg1" ] && curl wttr.in/"$arg1" ;;
+	news)       [ -z "$arg1" ] && curl getnews.tech || curl getnews.tech/"$arg1" ;;
+	cryptinfo)  [ -z "$arg1" ] && curl rate.sx || curl rate.sx/"$arg1" ;;
+	#: }}}
+	#: Window info {{{
+	winfo)
+		i='1'
+		until [ "$i" -eq 6 ]
+		do
+			echo "$i"
+			sleep 1
+			i="$((i + 1))"
+		done
+		hyprctl activewindow
+	;;
+	#: }}}
+	#: Normal clock display {{{
+	clock)
+		while true;
+		do
+			clear
+			figlet -c "$(date +"%T %nOR %n%I:%M:%S %p")"
+			sleep 1
+		done
+	;;
+	#: }}}
+	#: Better clock display {{{
+	bclock)
+		while true;
+		do
+			clear
+			figlet -c "$(date +"%T %nOR %n%I:%M:%S %p")" | lolcat
+			sleep 1
+		done
+	;;
+	#: }}}
+	#: Normal countdown display {{{
+	cdown)
+		i="$arg1"
+		until [ "$i" = '-1' ];
+		do
+			clear
+			figlet -c "$i"
+			sleep 1
+			i="$((i - 1 ))"
+		done
+	;;
+	#: }}}
+	#: Better countdown display {{{
+	bcdown)
+		i="$arg1"
+		until [ "$i" = '-1' ];
+		do
+			clear
+			figlet -c "$i" | lolcat
+			sleep 1
+			i="$((i - 1 ))"
+		done
+	;;
+	#: }}}
+	#: Password generator {{{
+	genpw)
+		if [ -z "$arg2" ]; then
+			[ -z "$arg1" ] &&
+				generated_password="$(head /dev/urandom | tr -cd '[:print:]' | head -c 50)" ||
+				generated_password="$(head /dev/urandom | tr -cd '[:print:]' | head -c "$arg1")"
+
+			printf 'Generated Password: %s\n' "$generated_password"
+		else
+			total_passwords="$arg2"; i='1'
+			while [ ! "$i" -gt "$total_passwords" ];
+			do
+				[ -z "$arg1" ] &&
+					generated_password="$(head /dev/urandom | tr -cd '[:print:]' | head -c 50)" ||
+					generated_password="$(head /dev/urandom | tr -cd '[:print:]' | head -c "$arg1")"
+
+				printf 'Generated Password %s: %s\n' "$i" "$generated_password"
+				i="$((i + 1))"
+			done
+		fi
+	;;
+	#: }}}
+	*) help_page ;;
+esac
+
+# vim:fileencoding=utf-8:foldmethod=marker

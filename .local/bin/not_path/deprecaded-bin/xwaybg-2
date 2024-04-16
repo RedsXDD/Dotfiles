@@ -1,0 +1,89 @@
+#!/usr/bin/env sh
+
+mkdir -p "$HOME"/.cache/xwaybg && xway_path="$HOME/.cache/xwaybg"
+reload_file="$xway_path/wallpaper"
+current_bg="$(head -n 1 "$reload_file" 2>/dev/null)"
+
+find_depth='1'
+fallback_img="$HOME/Pictures/wallpapers/black.png"
+
+file_path_regex='^(/[^/ ]*)+/?$'
+img_regex='.*\.(png|jpg|jpeg|webp|bmp|heif)$'
+vid_regex='.*\.(mp4|mov|wmv|flv|avi|webm|mkv|gif)$'
+yt_regex='^(https?://)?(www\.youtube\.com|youtu\.be)/.+$'
+
+# --------------------------------------------------------------------------------------------------- #
+
+# Display Function for various error codes:
+errcode(){
+ case "$@" in
+  '1') echo 'ERROR: The specified path for the -w flag is neither a valid file path or a yt video url' ;;
+  '2') echo 'ERROR: No wall specified' ;;
+  '3') echo 'No valid filetype found in the specified folder' ;;
+ esac
+ exit 1
+}
+
+# --------------------------------------------------------------------------------------------------- #
+
+##################
+# Core Functions #
+##################
+
+# Startup swww if it's not running:
+swww init >/dev/null 2>&1
+
+# Wallpaper changing:
+killsig(){ for i in "$(seq 5)"; do killall 'display' 'mpvpaper' >/dev/null 2>&1; done; unset i; sleep 0.5; }
+fallback(){ [ -z "$(swww query | grep "$fallback_img")" ] && swww img "$fallback_img" --resize crop && sleep 3; }
+mpvcmd(){ [ "$audio" = 'true' ] && mpvpaper -fo "--loop" '*' "$wall" >/dev/null 2>&1 || mpvpaper -fo "--no-audio --loop" '*' "$wall" >/dev/null 2>&1; }
+imgcmd(){ killsig; swww img "$wall" --resize crop; }
+vidcmd(){ fallback; killsig; mpvcmd; }
+
+set_wall(){
+ [ -z "$wall" ] && errcode 2
+ [ -n "$(echo "$wall" | grep -E "$img_regex")" ] && imgcmd
+ [ -n "$(echo "$wall" | grep -E "$vid_regex")" ] && vidcmd
+ mkfile
+ exit 0
+}
+
+mkfile(){
+ # Make reload file
+ if [ -z "$audio" ]; then
+  echo "$wall" > "$reload_file"
+ else
+  echo "$wall" > "$reload_file"
+  echo 'true' >> "$reload_file"
+ fi
+}
+
+# Reload Function:
+reload(){
+ file="$(head -n 1 "$reload_file")"
+ audio="$(tail -n 1 "$reload_file")"
+ if [ "$audio" = 'true' ]; then
+  xwaybg -a "$file"
+ else
+  xwaybg "$file"
+ fi
+ exit 0
+}
+
+# --------------------------------------------------------------------------------------------------- #
+
+while [ "$1" ]; do
+ case "$1" in
+  '-r'|'--reload') reload ;;
+  '-a'|'--audio') audio='true' ;;
+  '-f'|'find_depth') find_depth="$2" ;;
+ esac
+ # Setting this variable inside the while loop makes sure that only the last argument of the script gets matched (in this case we want it to be the path to the wallpaper file/folder)
+ # + it also works with escapped spaces on the file path (e.g. ~/Pictures/wallpapers\ for\ linux/)
+ wall="$1"
+ shift
+done
+
+[ -n "$(echo "$wall" | grep -E "$yt_regex")" ] && vidcmd && mkfile && exit 0
+[ -f "$wall" ] && set_wall
+[ -d "$wall" ] && wall="$(find "$wall" -maxdepth "$find_depth" -type f -regextype posix-extended -regex "$img_regex" -o -regex "$vid_regex" | shuf -n 1)" && set_wall || errcode 3

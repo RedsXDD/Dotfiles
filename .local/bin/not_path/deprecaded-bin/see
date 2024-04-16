@@ -1,0 +1,11 @@
+#!/usr/bin/env sh
+
+#if [ -z "$1" ]; then
+#  mpv --fs *.jpg , *.jpeg , *.png , *.bmp , *.gif , *.tiff , *.heif , *.raw , *.psd , *.mov , *.mkv , *.m4v , *.avi , *.flv , *.mts , *.3gp , *.insv , *.m2ts , *.mp3 , *.mp4 , *.m4a , *.ogg , *.wav , *.aac , *.flac , *.opus , *.vorbis
+#else
+#  mpv --fs "$@"*.jpg , "$@"*.jpeg , "$@"*.png , "$@"*.bmp , "$@"*.gif , "$@"*.tiff , "$@"*.heif , "$@"*.raw , "$@"*.psd , "$@"*.mov , "$@"*.mkv , "$@"*.m4v , "$@"*.avi , "$@"*.flv , "$@"*.mts , "$@"*.3gp , "$@"*.insv , "$@"*.m2ts , "$@"*.mp3 , "$@"*.mp4 , "$@"*.m4a , "$@"*.ogg , "$@"*.wav , "$@"*.aac , "$@"*.flac , "$@"*.opus , "$@"*.vorbis & disown
+#fi
+
+list="$(ls -a "$(pwd)" | grep -E '\.(jpg|jpeg|png|bmp|gif|tiff|heif|raw|psd|mov|mkv|m4v|avi|flv|mts|3gp|insv|m2ts|mp3|mp4|m4a|ogg|wav|aac|flac|opus|vorbis)$')"
+echo "$list"
+

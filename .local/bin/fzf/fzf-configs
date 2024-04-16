@@ -1,0 +1,68 @@
+#!/usr/bin/env sh
+
+# Script dependencies: gnutls, fzf, nvim
+
+# Fallback opener function.
+file_editor(){
+	file="$*"
+	if [ -n "$EDITOR" ]; then
+		"$EDITOR" "$file"
+	else
+		for editor in nvim vim vi; do
+			[ -x "$(command -v "$editor")" ] && "$editor" "$file" && continue
+		done
+	fi
+}
+
+# Generate a blacklist for files on a format that can be read by grep:
+blacklist(){
+	cat <<- EOFBc
+		electron
+		blockbench
+		dolphin_anty
+		brave
+		cryptomator
+		fcitx
+		dconf
+		gimp
+		google
+		gtk
+		htop
+		keepassxc
+		libfm
+		libreoffice
+		mozc
+		nwg-look
+		pulse
+		qt
+		webcord
+		zsh/plugins
+	EOFBc
+}
+blacklist="$(blacklist | awk '!/^$/ {gsub(/\s+/, ""); printf("%s\\|",$0)}')" # Remove all empty lines & replace every whitespace/newline with '\|'
+blacklist="${blacklist%%\\|}"                                                # Remove the trailing '\|' from the output.
+
+# Generate a whitelist for files on a format that can be read by grep:
+whitelist(){
+	cat <<- EOFWl
+		bin
+		share/applications
+		share/bindings
+		share/bookmark_files
+	EOFWl
+}
+whitelist="$(whitelist | awk '!/^$/ {gsub(/\s+/, ""); printf("%s\\|",$0)}')" # Remove all empty lines & replace every whitespace/newline with '\|'
+whitelist="${whitelist%%\\|}"                                                # Remove the trailing '\|' from the output.
+
+# Generate the list of files that can be edited:
+file_list(){
+	find "$HOME"/.config/* -maxdepth 3 -type f | grep -iv "$blacklist"
+	find "$HOME"/.local/* -maxdepth 3 -type f | grep -i "$whitelist"
+	find ~/.bash_profile ~/.bashrc ~/.zshenv
+}
+
+# shellcheck disable=2016
+file="$(file_list | sort | sed "s|$HOME|~|g" | fzf-tmux -p 75% -w 75% --preview 'cat "$(echo {} | sed "s|~|$HOME|g")"' --prompt '> Edit File > ' | sed "s|~|$HOME|g")"
+[ -n "$file" ] && [ -f "$file" ] && file_editor "$file"
+
+# vim:fileencoding=utf-8:foldmethod=marker

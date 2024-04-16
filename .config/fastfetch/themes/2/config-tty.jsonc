@@ -1,0 +1,155 @@
+/* --------------------------------------------------------------------------------------------------- */
+
+/*
+ * ███████╗ █████╗ ███████╗████████╗███████╗███████╗████████╗ ██████╗██╗  ██╗ ████████╗████████╗██╗   ██╗
+ * ██╔════╝██╔══██╗██╔════╝╚══██╔══╝██╔════╝██╔════╝╚══██╔══╝██╔════╝██║  ██║ ╚══██╔══╝╚══██╔══╝╚██╗ ██╔╝
+ * █████╗  ███████║███████╗   ██║   █████╗  █████╗     ██║   ██║     ███████║    ██║      ██║    ╚████╔╝
+ * ██╔══╝  ██╔══██║╚════██║   ██║   ██╔══╝  ██╔══╝     ██║   ██║     ██╔══██║    ██║      ██║     ╚██╔╝
+ * ██║     ██║  ██║███████║   ██║   ██║     ███████╗   ██║   ╚██████╗██║  ██║    ██║      ██║      ██║
+ * ╚═╝     ╚═╝  ╚═╝╚══════╝   ╚═╝   ╚═╝     ╚══════╝   ╚═╝    ╚═════╝╚═╝  ╚═╝    ╚═╝      ╚═╝      ╚═╝
+ */
+
+/* --------------------------------------------------------------------------------------------------- */
+
+{
+	"logo": {
+	//	"color": {
+	//		"1": "36",
+	//		"2": "36"
+	//		// "3": "33",
+	//		// "4": "34",
+	//		// "5": "35",
+	//		// "6": "36",
+	//		// "7": "37",
+	//		// "8": "38",
+	//		// "9": "39"
+	//	},
+
+	"padding": {
+		"top": 1
+	}
+},
+
+	"display": {
+		"binaryPrefix": "si",
+		"separator": " . "
+	},
+
+	"modules": [
+		"break",
+		{
+			"type": "title",
+			"key": "Host     \b",
+			"format": "{1}@{2}",
+			"keyColor": "red"
+		},
+
+		{
+			"type": "os",
+			"key": "Distro   \b",
+			"keyColor": "green",
+			"format": "{3} {12}"
+		},
+
+		{
+			"type": "kernel",
+			"key": "Kernel   \b",
+			"keyColor": "yellow"
+		},
+
+		{
+			"type": "uptime",
+			"key": "Uptime   \b",
+			"keyColor": "blue"
+		},
+
+		{
+			"type": "packages",
+			"key": "Pkgs     \b",
+			"keyColor": "magenta"
+		},
+
+		{
+			"type": "terminal",
+			"key": "Terminal",
+			"keyColor": "cyan"
+		},
+
+		{
+			"type": "shell",
+			"key": "Shell    \b",
+			"keyColor": "red"
+		},
+
+		{
+			"type": "display",
+			"key": "Display  \b",
+			"keyColor": "green"
+		},
+
+		{
+			"type": "lm",
+			"key": "Login    \b",
+			"keyColor": "yellow",
+			"format": "{1}"
+		},
+
+		{
+			"type": "wm",
+			"key": "DE/WM    \b",
+			"keyColor": "blue",
+			"format": "{1}"
+		},
+
+		{
+			"type": "theme",
+			"key": "Theme    \b",
+			"keyColor": "magenta"
+		},
+
+		{
+			"type": "icons",
+			"key": "Icons    \b",
+			"keyColor": "cyan"
+		},
+
+		{
+			"type": "locale",
+			"key": "Locale   \b",
+			"keyColor": "red"
+		},
+
+		{
+			"type": "cpu",
+			"key": "CPU      \b",
+			"keyColor": "green"
+		},
+
+		{
+			"type": "gpu",
+			"key": "GPU      \b",
+			"keyColor": "yellow"
+		},
+
+		{
+			"type": "memory",
+			"key": "Memory   \b",
+			"keyColor": "blue"
+		},
+
+		{
+			"type": "swap",
+			"key": "Swap     \b",
+			"keyColor": "magenta"
+		},
+
+		{
+			"type": "custom",
+			"key": "Palette  \b",
+			"keyColor": "cyan",
+			"format": "\u001b[31m* \u001b[32m* \u001b[33m* \u001b[34m* \u001b[35m* \u001b[36m* \u001b[37m* "
+		},
+
+		"break"
+	]
+}

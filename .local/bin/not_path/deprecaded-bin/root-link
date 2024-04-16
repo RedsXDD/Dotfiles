@@ -1,0 +1,8 @@
+#!/usr/bin/env sh
+
+bz="$HOME/.config/shell/bzrc"
+sudo \ln -sf "$bz" /root/.bashrc
+sudo \ln -sf "$bz" /root/.bash_profile
+sudo \ln -sf "$bz" /root/.zshrc
+sudo \ln -sf "$bz" /root/.zprofile
+

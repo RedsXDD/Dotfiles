@@ -1,0 +1,23 @@
+# vim:fileencoding=utf-8:foldmethod=marker:filetype=sh
+
+# Improved tree command:
+alias tree='tree -aF --dirsfirst --gitignore'
+
+# Default ls:
+# alias ls='ls --group-directories-first --color -A'
+# alias la='ls -1'
+# alias ll='ls -lh'
+
+# Ls to Lsd:
+# alias ls='lsd -A'
+# alias la='lsd -1A'
+# alias ll='lsd -lAh'
+# alias lt='lsd -A --tree --depth 2'
+# alias lT='lsd -A --tree'
+
+# Ls to eza:
+alias ls='eza -a'
+alias la='eza -1a'
+alias ll='eza -lah'
+alias lt='eza --git-ignore -aTL 2'
+alias lT='eza --git-ignore -aT'

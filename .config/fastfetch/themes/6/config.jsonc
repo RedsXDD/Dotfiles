@@ -1,0 +1,105 @@
+/* ----------------------------------------------------------------------- */
+
+/*
+ * ███████╗ █████╗ ███████╗████████╗███████╗███████╗████████╗ ██████╗██╗  ██╗
+ * ██╔════╝██╔══██╗██╔════╝╚══██╔══╝██╔════╝██╔════╝╚══██╔══╝██╔════╝██║  ██║
+ * █████╗  ███████║███████╗   ██║   █████╗  █████╗     ██║   ██║     ███████║
+ * ██╔══╝  ██╔══██║╚════██║   ██║   ██╔══╝  ██╔══╝     ██║   ██║     ██╔══██║
+ * ██║     ██║  ██║███████║   ██║   ██║     ███████╗   ██║   ╚██████╗██║  ██║
+ * ╚═╝     ╚═╝  ╚═╝╚══════╝   ╚═╝   ╚═╝     ╚══════╝   ╚═╝    ╚═════╝╚═╝  ╚═╝
+ */
+
+/* ----------------------------------------------------------------------- */
+
+{
+	"logo": {
+		"source": "~/.config/fastfetch/logos/arch_small.txt",
+		"padding": {
+			"top": 2
+		},
+		"color": {
+			"1": "34"
+		}
+	},
+	"display": {
+		"separator": " ",
+		"color": {
+			"keys": "magenta"
+		},
+		"size": {
+			"ndigits": 0,
+			"maxPrefix": "MB"
+		}
+	},
+	"modules": [
+		{
+			"type": "custom",
+			"key": "\u001b[0m╭───────────╮",
+			"format": " "
+		},
+		{
+			"type": "title",
+			"key": "\u001b[0m│ \u001b[31m\u001b[0;1m  User   │",
+			"keyColor": "white",
+			"format": "\u001b[1;31m{1}"
+		},
+		{
+			"type": "title",
+			"key": "\u001b[0m│ \u001b[33m󰍹\u001b[0;1m  Host   │",
+			"keyColor": "white",
+			"format": "\u001b[1;33m{2}"
+		},
+		{
+			"type": "os",
+			"key": "\u001b[0m│ \u001b[32m\u001b[0;1m  Distro │",
+			"keyColor": "white",
+			"format": "\u001b[1;32m{2} {8}"
+		},
+		{
+			"type": "kernel",
+			"key": "\u001b[0m│ \u001b[36m\u001b[0;1m  Kernel │",
+			"keyColor": "white",
+			"format": "\u001b[1;36m{2}"
+		},
+		{
+			"type": "cpu",
+			"key": "\u001b[0m│ \u001b[34m\u001b[0;1m  CPU    │",
+			"keyColor": "white",
+			"format": "\u001b[1;34m{1}"
+		},
+		{
+			"type": "memory",
+			"key": "\u001b[0m│ \u001b[35m\u001b[0;1m  Memory │",
+			"keyColor": "white",
+			"format": "\u001b[1;35m{1} | {2}"
+		},
+		{
+			"type": "packages",
+			"key": "\u001b[0m│ \u001b[31m󰏖\u001b[0;1m  Pkgs   │",
+			"keyColor": "white",
+			"format": "\u001b[1;31m{1} (pacman)"
+		},
+		{
+			"type": "uptime",
+			"key": "\u001b[0m│ \u001b[33m\u001b[0;1m  Uptime │",
+			"keyColor": "white",
+			"format": "\u001b[1;33m{2} hours, {3} mins"
+		},
+		{
+			"type": "custom",
+			"key": "\u001b[0m├───────────┤",
+			"format": " "
+		},
+		{
+			"type": "custom",
+			"key": "\u001b[0m│ \u001b[0;1m  Colors │",
+			"keyColor": "white",
+			"format": "\u001b[31m \u001b[32m \u001b[33m \u001b[34m \u001b[35m \u001b[36m \u001b[37m "
+		},
+		{
+			"type": "custom",
+			"key": "\u001b[0m╰───────────╯",
+			"format": " "
+		}
+	]
+}

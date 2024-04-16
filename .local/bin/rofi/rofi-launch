@@ -1,0 +1,61 @@
+#!/usr/bin/env sh
+
+show="${1:-drun}"
+killall rofi >/dev/null 2>&1
+
+# Import current theme:
+theme="${XDG_CONFIG_HOME:-$HOME/.config}/rofi/themes/launchers/type-7/style-2.rasi"
+
+# Random theme cuz why not?
+# theme="$(find "${XDG_CONFIG_HOME:-$HOME/.config}/rofi/themes/launchers" -maxdepth 2 -type f -regextype posix-extended -regex '.*\.rasi' | shuf -n1)"
+
+if [ "$(grep 'USE_ICON' "$theme" | cut -d'=' -f2)" = 'YES' ]; then
+	combi_icon=' '
+	drun_icon=' '
+	emoji_icon='󰱫 '
+	filebrowser_icon=' '
+	keys_icon=' '
+	recursivebrowser_icon=' '
+	run_icon=' '
+	ssh_icon=' '
+	window_icon=' '
+	button_setup='button { width: 50px; padding: 8px 8px 8px 13px; }'
+elif [ "$(grep 'USE_TEXT' "$theme" | cut -d'=' -f2)" = 'YES' ]; then
+	combi_icon='Combi'
+	drun_icon='Apps'
+	emoji_icon='Emoji'
+	filebrowser_icon='Files'
+	keys_icon='Keys'
+	recursivebrowser_icon='Recurse'
+	run_icon='Run'
+	ssh_icon='SSH'
+	window_icon='Windows'
+else
+	combi_icon=' Combi'
+	drun_icon=' Apps'
+	emoji_icon='󰱫 Emoji'
+	filebrowser_icon=' Files'
+	keys_icon=' Keys'
+	recursivebrowser_icon=' Recurse'
+	run_icon=' Run'
+	ssh_icon=' SSH'
+	window_icon=' Windows'
+fi
+
+[ "$(awk '/fullscreen:/ {print $2}' "$theme")" != 'true;' ] && border_setup='window { border: 2px solid; border-color: @border-colour; }'
+
+rofi -i -show "$show" \
+	-theme "$theme" \
+	-theme-str "$border_setup
+			$button_setup
+			configuration {
+				display-run:              \"$run_icon\";
+				display-ssh:              \"$ssh_icon\";
+				display-drun:             \"$drun_icon\";
+				display-keys:             \"$keys_icon\";
+				display-combi:            \"$combi_icon\";
+				display-emoji:            \"$emoji_icon\";
+				display-window:           \"$window_icon\";
+				display-filebrowser:      \"$filebrowser_icon\";
+				display-recursivebrowser: \"$recursivebrowser_icon\";
+			}"

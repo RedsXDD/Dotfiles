@@ -1,0 +1,25 @@
+# vim:fileencoding=utf-8:foldmethod=marker:filetype=fish
+
+# Better yt-dlp:
+abbr yt-dlp '\yt-dlp --color=auto --embed-subs --embed-thumbnail --embed-metadata --output "%(title)s [%(id)s].%(ext)s"'
+
+# Yt-dlp audio only:
+abbr yta-aac 'yt-dlp -extract-audio --audio-format aac'
+abbr yta-best 'yt-dlp --extract-audio --audio-format best'
+abbr yta-flac 'yt-dlp --extract-audio --audio-format flac'
+abbr yta-m4a 'yt-dlp --extract-audio --audio-format m4a'
+abbr yta-mp3 'yt-dlp --extract-audio --audio-format mp3'
+abbr yta-opus 'yt-dlp --extract-audio --audio-format opus'
+abbr yta-vorbis 'yt-dlp --extract-audio --audio-format vorbis'
+abbr yta-wav 'yt-dlp --extract-audio --audio-format wav'
+
+# Yt-dlp video:
+abbr ytv-aac 'yt-dlp --audio-format aac'
+abbr ytv-best 'yt-dlp --audio-format best'
+abbr ytv-flac 'yt-dlp --audio-format flac'
+abbr ytv-m4a 'yt-dlp --audio-format m4a'
+abbr ytv-mp3 'yt-dlp --audio-format mp3'
+abbr ytv-opus 'yt-dlp --audio-format opus'
+abbr ytv-vorbis 'yt-dlp --audio-format vorbis'
+abbr ytv-wav 'yt-dlp --audio-format wav'
+abbr ytv-best 'yt-dlp -f bestvideo+bestaudio'

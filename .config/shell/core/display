@@ -1,0 +1,35 @@
+# vim:fileencoding=utf-8:foldmethod=marker:filetype=sh
+
+# FZF config:
+export FZF_DEFAULT_OPTS='--cycle --reverse --ansi --border=rounded --no-scrollbar --preview-window=bottom,50%'
+[ -z "$DISPLAY" ] && export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS --no-unicode"
+
+if [ -z "$DISPLAY" ]; then
+	alias rr='mpv https://youtu.be/dQw4w9WgXcQ'
+	alias duf='duf -style ascii'
+	alias lsblk='lsblk -if'
+	alias bat='bat --decorations=never'
+	alias lsd='lsd --group-directories-first --color=always --icon=never'
+	alias eza='eza --group-directories-first --color=always'
+
+	# Set Pywal color scheme for the TTY.
+	[ -f "${XDG_CACHE_HOME:-$HOME/.cache}/wal/colors-tty.sh" ] && . "${XDG_CACHE_HOME:-$HOME/.cache}/wal/colors-tty.sh"
+
+	# Set fastfetch tty theme.
+	fastfetch_tty_theme="${XDG_CONFIG_HOME:-$HOME/.config}/fastfetch/config-tty.jsonc"
+
+	# Run fastfetch.
+	fastfetch --load-config "$fastfetch_tty_theme"
+
+	# Aliases for clear + fastfetch.
+	alias fastfetch="\fastfetch --load-config $fastfetch_tty_theme"
+	alias cl="clear; \fastfetch --load-config $fastfetch_tty_theme"
+	unset fastfetch_tty_theme
+else
+	alias rr='curl -sL https://raw.githubusercontent.com/keroserene/rickrollrc/master/roll.sh | bash'
+	alias RR='mpv https://youtu.be/dQw4w9WgXcQ'
+	alias lsblk='lsblk -f'
+	alias lsd='lsd --group-directories-first --color=always --icon=auto'
+	alias eza='eza --group-directories-first --color=always --icons'
+	fastfetch && alias cl='clear; fastfetch'
+fi

@@ -1,0 +1,55 @@
+#!/usr/bin/env sh
+
+# Use Generated Menu from DM-Core:
+# shellcheck disable=SC1091
+menu(){ . "$HOME"/.cache/dm-core/menu; }
+base_dir="$HOME/.config/wal/colorschemes"
+
+# Define Lists:
+light_list="$(ls -1A "$base_dir/light")"
+dark_list="$(ls -1A "$base_dir/dark")"
+# shellcheck disable=SC2183
+extra_list="$(printf 'Random_Dark''%s\n''Random_Light''%s\n''Truly_Random')"
+
+# Select Color Scheme:
+choice="$(printf "$extra_list"'%s\n'"$light_list"'%s\n'"$dark_list" | sed 's/\.json.*$//' | menu -p 'Choose Color Scheme')"
+
+# Apply Color Scheme:
+choice="$(echo "$choice" | tr '[:upper:]' '[:lower:]')"
+case "$choice" in
+ '') echo 'ERROR: No Theme Selected.'; exit 1 ;;
+ 'random_dark') theme="$(ls -1A "$base_dir/dark" | shuf -n1 | sed "s|^|$base_dir/dark/|")" ;;
+ 'random_light') theme="$(ls -1A "$base_dir/light" | shuf -n1 | sed "s|^|$base_dir/light/|")" ;;
+ 'truly_random')
+   select="$(seq 1 2 | shuf -n1)"
+   case "$select" in
+    '1') theme="$(ls -1A "$base_dir/dark" | shuf -n1 | sed "s|^|$base_dir/dark/|")" ;;
+    '2') theme="$(ls -1A "$base_dir/light" | shuf -n1 | sed "s|^|$base_dir/light/|")" ;;
+    *) echo 'Program Terminated.' && exit 1
+   esac
+ ;;
+*)
+ case "$choice" in
+ *'dark'*) theme="$(echo "$choice" | sed "s|^|$base_dir/dark/|; s/$/.json/")" ;;
+ *'light'*) theme="$(echo "$choice" | sed "s|^|$base_dir/light/|; s/$/.json/")" ;;
+ esac
+;;
+esac
+
+walls_dir="$HOME/Pictures/wallpapers/all"
+wall="$(
+ls -1A "$walls_dir" |\
+shuf -n1 |\
+sed "s|^|$walls_dir/|")"
+feh --bg-scale "$wall"
+wal --theme "$theme"
+
+# Reload DWM/ST:
+dwmpid="$(pgrep dwm)"; [ -n "$dwmpid" ] && kill -HUP "$dwmpid"
+#killall -USR1 st >/dev/null 2>&1
+
+# Sucessfull Theme Change Notification:
+theme="$(echo "$theme" | awk -F '/' '{print $NF}' | sed s/\.json//g)"
+killall dunst
+dunst &
+notify-send -t 2000 "Sucessfully Changed Theme to:" "$theme"

@@ -1,0 +1,43 @@
+#!/usr/bin/env sh
+
+case "$1" in
+	# ------------------------------------------------------------------ #
+	'fun')
+		echo ""
+		echo "List of Available Commands:"
+		echo ""
+		[ -n "$(pacman -Qq cmatrix 2>>/dev/null)" ] && echo "Cmatrix"
+		[ -n "$(pacman -Qq lolcat 2>>/dev/null)" ] && echo "Lolcat"
+		[ -n "$(pacman -Qq cowsay 2>>/dev/null)" ] && echo "Cowsay"
+		[ -n "$(pacman -Qq figlet 2>>/dev/null)" ] && echo "Figlet"
+		[ -n "$(pacman -Qq fortune 2>>/dev/null)" ] && echo "Fortune"
+		[ -n "$(pacman -Qq genact 2>>/dev/null)" ] && echo "Genact"
+		[ fireworks >/dev/null ] && echo 'Fireworks'
+		[ -n "$(pacman -Qq tty-clock 2>>/dev/null)" ] && echo "TTY-Clock"
+		[ -n "$(pacman -Qq asciiquarium 2>>/dev/null)" ] && echo "AsciiQuarium"
+		[ -n "$(pacman -Qq sl 2>>/dev/null)" ] && echo "Sl/Terminal Train"
+		echo ""
+	;;
+	# ------------------------------------------------------------------ #
+	'wms')
+		set -- \
+			'qtile' \
+			'i3' \
+			'awesome' \
+			'xmonad' \
+			'bspwm'
+
+			for wm in "$@";
+			do
+				[ -n "$(pacman -Qq $wm 2>>/dev/null)" ] && echo "Available wm: $wm"
+			done
+	;;
+	# ------------------------------------------------------------------ #
+	*)
+		cat <<- EOF
+			Please select which type of programs you want to check for avaliability
+			fun) some fun programs like cmatrix and lolcat
+			wms) installed window managers
+EOF
+	;;
+esac

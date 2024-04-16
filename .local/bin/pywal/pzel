@@ -1,0 +1,33 @@
+#!/usr/bin/env sh
+
+# Script dependencies: gnutls, zellij, pywal (optional)
+
+# Path to zellij default config file:
+zellij_config="${XDG_CONFIG_HOME:-$HOME/.config}/zellij/config.kdl"
+
+# Setup temporary file to store the new customized zellij config:
+tmp_zellij_config="$(mktemp)"
+trap 'rm -rf "$tmp_zellij_config" >/dev/null 2>&1' 0 1 15
+
+if [ -n "$DISPLAY" ]; then
+	# Set pywal theming if it's being used, otherwise fallback to default configuration:
+	if [ -d "${XDG_CACHE_HOME:-$HOME/.cache}/wal" ]; then
+		[ -f "${XDG_CACHE_HOME:-$HOME/.cache}/wal/colors-zjstatus.kdl" ] && cp -f "${XDG_CACHE_HOME:-$HOME/.cache}/wal/colors-zjstatus.kdl" "${XDG_CONFIG_HOME:-$HOME/.config}/zellij/layouts/default.kdl"
+		[ -f "${XDG_CACHE_HOME:-$HOME/.cache}/wal/colors-zellij.kdl" ] && cp -f "${XDG_CACHE_HOME:-$HOME/.cache}/wal/colors-zellij.kdl" "${XDG_CONFIG_HOME:-$HOME/.config}/zellij/themes/pywal.kdl"
+	else
+		[ -f "${XDG_CONFIG_HOME:-$HOME/.config}/zellij/layouts/zjstatus.kdl" ] && cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/zellij/layouts/zjstatus.kdl" "${XDG_CONFIG_HOME:-$HOME/.config}/zellij/layouts/default.kdl"
+	fi
+
+	cat "$zellij_config" > "$tmp_zellij_config"
+else
+	# Generate a TTY compatible config for zellij:
+	[ -f "${XDG_CONFIG_HOME:-$HOME/.config}/zellij/layouts/zjstatus-tty.kdl" ] && cp -f "${XDG_CONFIG_HOME:-$HOME/.config}/zellij/layouts/zjstatus-tty.kdl" "${XDG_CONFIG_HOME:-$HOME/.config}/zellij/layouts/default.kdl"
+	sed 's/.*simplified_ui.*false/simplified_ui true/g;
+		s/.*rounded_corners.*true/rounded_corners false/g;
+		s/^\s*theme //g;
+		s/^\s*theme_dir//g' "$zellij_config" > "$tmp_zellij_config"
+fi
+
+zellij --config="$tmp_zellij_config" "$@"
+
+# vim:fileencoding=utf-8:foldmethod=marker

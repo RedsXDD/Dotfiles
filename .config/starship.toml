@@ -1,0 +1,347 @@
+# vim:fileencoding=utf-8:foldmethod=marker
+
+# ---------------------------------------------------------- #
+
+# ███████╗████████╗ █████╗ ██████╗ ███████╗██╗  ██╗██╗██████╗
+# ██╔════╝╚══██╔══╝██╔══██╗██╔══██╗██╔════╝██║  ██║██║██╔══██╗
+# ███████╗   ██║   ███████║██████╔╝███████╗███████║██║██████╔╝
+# ╚════██║   ██║   ██╔══██║██╔══██╗╚════██║██╔══██║██║██╔═══╝
+# ███████║   ██║   ██║  ██║██║  ██║███████║██║  ██║██║██║
+# ╚══════╝   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝╚═╝╚═╝
+
+# ---------------------------------------------------------- #
+
+#: Formatting {{{
+format = """
+$os\
+$username$hostname\
+$shell\
+$git_branch\
+$git_status\
+$aws$azure$buf$bun$c$cobol$conda$crystal$cmake$daml$dart$deno$dotnet$elixir$elm$fennel$golang$gradle$java$julia$kotlin$lua$nodejs$meson$nim$ocaml$opa$perl$php$pulumi$purescript$python$raku$ruby$rust$scala$spack$solidity$swift$terraform$zig\
+$cmd_duration\
+$line_break\
+$directory$character
+"""
+#: }}}
+#: Os {{{
+[os]
+disabled = true
+style = "fg:red bold"
+format = '[\[$symbol\] ]($style)'
+
+[os.symbols]
+Alpaquita = "Alq"
+Alpine = "Alp"
+Amazon = "Amz"
+Android = "Andr"
+Arch = "Arch"
+Artix = "Atx"
+CentOS = "Cent"
+Debian = "Deb"
+DragonFly = "Dfbsd"
+Emscripten = "Emsc"
+EndeavourOS = "Ndev"
+Fedora = "Fed"
+FreeBSD = "Fbsd"
+Garuda = "Garu"
+Gentoo = "Gent"
+HardenedBSD = "Hbsd"
+Illumos = "Lum"
+Linux = "Lnx"
+Mabox = "Mbox"
+Macos = "Mac"
+Manjaro = "Mjo"
+Mariner = "Mrn"
+MidnightBSD = "Mid"
+Mint = "Mint"
+NetBSD = "Nbsd"
+NixOS = "Nix"
+OpenBSD = "Obsd"
+OpenCloudOS = "Ocos"
+openEuler = "Oeul"
+openSUSE = "Osuse"
+OracleLinux = "Orac"
+Pop = "Pop"
+Raspbian = "Rasp"
+Redhat = "Rhl"
+RedHatEnterprise = "Rhel"
+Redox = "Redox"
+Solus = "Sol"
+SUSE = "Suse"
+Ubuntu = "Ubnt"
+Unknown = "Unk"
+Windows = "Win"
+#: }}}
+#: Username & Hostname {{{
+[username]
+disabled = false
+show_always = true
+style_user = "fg:cyan bold"
+style_root = "fg:cyan bold"
+format = '[$user]($style)'
+
+[hostname]
+disabled = false
+ssh_only = false
+ssh_symbol = "ssh:"
+style = "fg:cyan bold"
+format = ' at [$ssh_symbol$hostname ]($style)'
+#: }}}
+#: Shell {{{
+[shell]
+disabled = false
+bash_indicator = 'bash'
+zsh_indicator = 'zsh'
+fish_indicator = 'fish'
+unknown_indicator = '?sh'
+style = "fg:blue bold"
+format = 'using [$indicator ]($style)'
+#: }}}
+#: Git {{{
+[git_commit]
+tag_symbol = " tag "
+
+[git_branch]
+symbol = "git "
+
+[git_status]
+ahead = ">"
+behind = "<"
+diverged = "<>"
+renamed = "r"
+deleted = "x"
+#: }}}
+#: Languages {{{
+[aws]
+style = "fg:green bold"
+symbol = "aws "
+
+[azure]
+style = "fg:green bold"
+symbol = "az "
+
+[buf]
+style = "fg:green bold"
+symbol = "buf "
+
+[bun]
+style = "fg:green bold"
+symbol = "bun "
+
+[c]
+style = "fg:green bold"
+symbol = "C "
+
+[cobol]
+style = "fg:green bold"
+symbol = "cobol "
+
+[conda]
+style = "fg:green bold"
+symbol = "conda "
+
+[crystal]
+style = "fg:green bold"
+symbol = "cr "
+
+[cmake]
+style = "fg:green bold"
+symbol = "cmake "
+
+[daml]
+style = "fg:green bold"
+symbol = "daml "
+
+[dart]
+style = "fg:green bold"
+symbol = "dart "
+
+[deno]
+style = "fg:green bold"
+symbol = "deno "
+
+[dotnet]
+style = "fg:green bold"
+symbol = ".NET "
+
+[elixir]
+style = "fg:green bold"
+symbol = "exs "
+
+[elm]
+style = "fg:green bold"
+symbol = "elm "
+
+[fennel]
+style = "fg:green bold"
+symbol = "fnl "
+
+[golang]
+style = "fg:green bold"
+symbol = "go "
+
+[gradle]
+style = "fg:green bold"
+symbol = "gradle "
+
+[java]
+style = "fg:green bold"
+symbol = "java "
+
+[julia]
+style = "fg:green bold"
+symbol = "jl "
+
+[kotlin]
+style = "fg:green bold"
+symbol = "kt "
+
+[lua]
+style = "fg:green bold"
+symbol = "lua "
+
+[nodejs]
+style = "fg:green bold"
+symbol = "nodejs "
+
+[meson]
+style = "fg:green bold"
+symbol = "meson "
+
+[nim]
+style = "fg:green bold"
+symbol = "nim "
+
+[ocaml]
+style = "fg:green bold"
+symbol = "ml "
+
+[opa]
+style = "fg:green bold"
+symbol = "opa "
+
+[perl]
+style = "fg:green bold"
+symbol = "pl "
+
+[php]
+style = "fg:green bold"
+symbol = "php "
+
+[pulumi]
+style = "fg:green bold"
+symbol = "pulumi "
+
+[purescript]
+style = "fg:green bold"
+symbol = "purs "
+
+[python]
+style = "fg:green bold"
+symbol = "py "
+
+[raku]
+style = "fg:green bold"
+symbol = "raku "
+
+[ruby]
+style = "fg:green bold"
+symbol = "rb "
+
+[rust]
+style = "fg:green bold"
+symbol = "rs "
+
+[scala]
+style = "fg:green bold"
+symbol = "scala "
+
+[spack]
+style = "fg:green bold"
+symbol = "spack "
+
+[solidity]
+style = "fg:green bold"
+symbol = "solidity "
+
+[swift]
+style = "fg:green bold"
+symbol = "swift "
+
+[terraform]
+style = "fg:green bold"
+symbol = "terraform "
+
+[zig]
+style = "fg:green bold"
+symbol = "zig "
+#: }}}
+#: Other {{{
+[docker_context]
+symbol = "docker "
+
+[fossil_branch]
+symbol = "fossil "
+
+[gcloud]
+symbol = "gcp "
+
+[guix_shell]
+symbol = "guix "
+
+[hg_branch]
+symbol = "hg "
+
+[memory_usage]
+symbol = "memory "
+
+[nix_shell]
+symbol = "nix "
+
+[package]
+symbol = "pkg "
+
+[pijul_channel]
+symbol = "pijul "
+
+[sudo]
+symbol = "sudo "
+#: }}}
+#: Time {{{
+[time]
+disabled = true
+time_format = "%R"
+style = "fg:yellow bold"
+format = '[[$time ](fg:yellow bold)]($style)'
+#: }}}
+#: Cmd duration {{{
+[cmd_duration]
+disabled = false
+style = "fg:yellow bold"
+format = 'took [$duration]($style) '
+#: }}}
+#: Directory {{{
+[directory]
+read_only = " ro"
+style = "fg:white bold"
+format = '[$path ]($style)'
+truncation_length = 3
+truncation_symbol = ".../"
+#: }}}
+#: Line break & Character {{{
+[line_break]
+disabled = false
+
+[status]
+symbol = "[x](bold red) "
+
+[character]
+disabled = false
+success_symbol = "[>](bold green)"
+error_symbol = "[x](bold red)"
+vimcmd_symbol = "[<](bold white)"
+vimcmd_visual_symbol = '[<](bold yellow)'
+vimcmd_replace_symbol = '[<](bold magenta)'
+vimcmd_replace_one_symbol = '[<](bold magenta)'
+#: }}}

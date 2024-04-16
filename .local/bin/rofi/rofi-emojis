@@ -1,0 +1,15 @@
+#!/usr/bin/env sh
+
+killall rofi >/dev/null 2>&1
+
+# Import current theme:
+theme="${XDG_CONFIG_HOME:-$HOME/.config}/rofi/themes/launchers/type-7/style-1.rasi"
+
+[ "$(awk '/fullscreen:/ {print $2}' "$theme")" != 'true;' ] && border_setup='window { border: 2px solid; border-color: @border-colour; }'
+
+
+rofi -i -modi "emoji:rofimoji" -show emoji \
+	-theme "$theme" \
+	-theme-str "configuration { display-emoji: \"😎\"; }
+			button { padding: 0px; }
+			$border_setup"

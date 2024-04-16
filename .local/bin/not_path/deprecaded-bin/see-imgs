@@ -1,0 +1,8 @@
+#!/usr/bin/env sh
+
+if [ -z "$1" ]; then
+ mpv *.jpg , *.jpeg , *.png , *.bmp , *.gif , *.tiff , *.heif , *.raw , *.psd
+else
+ mpv "$@"*.jpg , "$@"*.jpeg , "$@"*.png , "$@"*.bmp , "$@"*.gif , "$@"*.tiff , "$@"*.heif , "$@"*.raw , "$@"*.psd
+fi
+

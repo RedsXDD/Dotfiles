@@ -1,0 +1,306 @@
+/* vim:fileencoding=utf-8:foldmethod=marker
+ */
+
+/* ------------------------------------------------------------------------------------------------------------------------- */
+
+/*
+ * ██╗    ██╗ █████╗ ██╗   ██╗██████╗  █████╗ ██████╗     ███████╗████████╗██╗   ██╗██╗     ███████╗    ██████╗███████╗███████╗
+ * ██║    ██║██╔══██╗╚██╗ ██╔╝██╔══██╗██╔══██╗██╔══██╗    ██╔════╝╚══██╔══╝╚██╗ ██╔╝██║     ██╔════╝   ██╔════╝██╔════╝██╔════╝
+ * ██║ █╗ ██║███████║ ╚████╔╝ ██████╔╝███████║██████╔╝    ███████╗   ██║    ╚████╔╝ ██║     █████╗     ██║     ███████╗███████╗
+ * ██║███╗██║██╔══██║  ╚██╔╝  ██╔══██╗██╔══██║██╔══██╗    ╚════██║   ██║     ╚██╔╝  ██║     ██╔══╝     ██║     ╚════██║╚════██║
+ * ╚███╔███╔╝██║  ██║   ██║   ██████╔╝██║  ██║██║  ██║    ███████║   ██║      ██║   ███████╗███████╗██╗╚██████╗███████║███████║
+ *  ╚══╝╚══╝ ╚═╝  ╚═╝   ╚═╝   ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝    ╚══════╝   ╚═╝      ╚═╝   ╚══════╝╚══════╝╚═╝ ╚═════╝╚══════╝╚══════╝
+ */
+
+/* ------------------------------------------------------------------------------------------------------------------------- */
+
+/* Import pywal theme */
+@import url('file:///home/Reds/.cache/wal/colors-waybar.css');
+
+/* Main configuration {{{ */
+* {
+	font-family: JetBrainsMonoNerdFont;
+	font-size: 13px;
+	font-weight: bold;
+	border: none;
+	margin: 0;
+	padding: 0;
+	border-radius: 5px;
+}
+
+window#waybar {
+	background-color: transparent;
+	border-radius: 0;
+	transition-property: background;
+	transition-duration: .2s;
+}
+
+window#waybar.hidden {
+	opacity: 0.2;
+	border-radius: 0;
+}
+
+/*
+ * window#waybar.empty {
+ *     background-color: transparent;
+ * }
+ * window#waybar.solo {
+ *     background-color: #FFFFFF;
+ * }
+ */
+/* }}} */
+/* Tooltip {{{ */
+tooltip {
+	background-color: @background;
+	border: 1px solid mix(@background,black,0.4);
+	border-bottom: 7px solid mix(@background,black,0.5);
+}
+
+tooltip label {
+	color: @foreground;
+	padding: 7px;
+}
+
+label:focus {
+	background-color: @background;
+	border: none;
+}
+/* }}} */
+/* Border setup {{{ */
+#custom-powermenu,
+#window,
+#custom-cava,
+#workspaces button, button,
+#clock,
+#custom-notifications,
+#custom-weather,
+#pulseaudio, #wireplumber,
+#tray,
+#keyboard-state,
+#mpd {
+	box-shadow: 0 0 5px rgb(0, 0, 0);
+	margin: 7px;
+}
+
+#custom-cava,
+#workspaces button, button,
+#mpd.stopped {
+	background-color: @background;
+	border: 1px solid mix(@background,black,0.5);
+	border-bottom: 7px solid mix(@background,black,0.5);
+}
+
+#workspaces button:hover,
+#workspaces button.active,
+#workspaces button.urgent {
+	border: none;
+	border-bottom: 7px solid mix(@background,black,0.5);
+}
+/* }}} */
+/* Modules {{{ */
+/* Left modules */
+/* Window module {{{ */
+#window {
+	background-color: @color4;
+	color: black;
+	padding: 0 7px;
+	border-bottom: 7px solid mix(@color4,black,0.3);
+}
+
+#waybar.empty #window {
+	background-color: transparent;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	box-shadow: none;
+}
+/* }}} */
+/* Cava Module {{{ */
+#custom-cava {
+	color: @color4;
+}
+/* }}} */
+/* Workspace module {{{ */
+/*
+ * #workspaces {
+ * }
+ */
+
+#workspaces button {
+	color: @foreground;
+	padding: 7px;
+}
+
+#workspaces button:hover,
+#workspaces button.active,
+#workspaces button.urgent {
+	color: black;
+}
+
+#workspaces button:hover {
+	background-color: @color6;
+	border-bottom: 7px solid mix(@color6,black,0.3);
+}
+
+#workspaces button.active {
+	background-color: @color4;
+	border-bottom: 7px solid mix(@color4,black,0.3);
+}
+
+#workspaces button.urgent {
+	background-color: @color1;
+	border-bottom: 7px solid mix(@color1,black,0.3);
+}
+/* }}} */
+/* Taskbar module {{{ */
+button {
+	background-color: @background;
+}
+
+button:hover {
+	background-color: @color6;
+	border-bottom: 7px solid mix(@color6,black,0.3);
+}
+
+#taskbar button.active {
+	background-color: @color4;
+	border-bottom: 7px solid mix(@color4,black,0.3);
+}
+
+#taskbar button.empty {
+	background-color: transparent;
+	border-bottom: 7px solid transparent;
+}
+
+/*
+ * #taskbar {
+ * }
+ *
+ * #taskbar button {
+ * }
+ *
+ * #taskbar button.minimized {
+ * }
+ *
+ * #taskbar button.maximized {
+ * }
+ *
+ * #taskbar button.fullscreen {
+ * }
+ */
+/* }}} */
+
+/* Center modules */
+/* Mpd Module {{{ */
+#mpd,
+#mpd.disconnected,
+#mpd.stopped,
+#mpd.paused {
+	padding: 0 7px;
+	color: @background;
+}
+
+#mpd {
+	background-color: @color5;
+	color: black;
+	border-bottom: 7px solid mix(@color5,black,0.3);
+}
+
+#mpd.paused {
+	background-color: @color15;
+	border-bottom: 7px solid mix(@color15,black,0.3);
+}
+
+#mpd.stopped {
+	color: @foreground;
+}
+
+#mpd.disconnected {
+	background-color: @color1;
+	border-bottom: 7px solid mix(@color1,black,0.3);
+}
+/* }}} */
+
+/* Right modules */
+/* Clock module {{{ */
+#clock {
+	background-color: @color4;
+	color: black;
+	padding: 0 7px;
+	border-radius: 5px;
+	border-bottom: 7px solid mix(@color4,black,0.3);
+}
+/* }}} */
+/* Weather module {{{ */
+#custom-weather {
+	background-color: @color6;
+	color: black;
+	padding: 0 7px;
+	border-bottom: 7px solid mix(@color6,black,0.3);
+}
+/* }}} */
+/* Notifications module {{{ */
+#custom-notifications {
+	font-size: 17px;
+	background-color: @color2;
+	color: black;
+	padding: 0 12px 0 10px;
+	border-bottom: 7px solid mix(@color2,black,0.3);
+}
+/* }}} */
+/* Pulseaudio/Wireplumber modules {{{ */
+#pulseaudio,
+#wireplumber {
+	background-color: @color3;
+	border-radius: 5px;
+	color: black;
+	padding: 0 7px;
+	border-bottom: 7px solid mix(@color3,black,0.3);
+}
+
+#pulseaudio.muted,
+#wireplumber.muted {
+	background-color: @color15;
+	color: black;
+	border-bottom: 7px solid mix(@color15,black,0.3);
+}
+/* }}} */
+/* Keyboard state module {{{ */
+#keyboard-state,
+#keyboard-state > label,
+#keyboard-state > label.locked {
+	font-size: 18px;
+}
+
+#keyboard-state {
+	font-size: 25px;
+	background-color: mix(@color1,@color3,0.5);
+	color: black;
+	border-bottom: 7px solid mix(mix(@color1,@color3,0.5),black,0.3);
+}
+
+#keyboard-state > label {
+	padding: 0 10px 0 7px;
+}
+
+#keyboard-state > label.locked {
+	color: white;
+}
+/* }}} */
+/* Tray module {{{ */
+#tray {
+	background-color: @color1;
+	padding: 7px 7px;
+	border-bottom: 7px solid mix(@color1,black,0.3);
+}
+
+#tray > .passive {
+	-gtk-icon-effect: dim;
+}
+
+#tray > .needs-attention {
+	-gtk-icon-effect: highlight;
+	background-color: @color1;
+}
+/* }}} */
+/* }}} */

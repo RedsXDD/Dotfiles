@@ -1,0 +1,148 @@
+#!/usr/bin/env sh
+
+# Setup cache directory:
+cache_dir="${XDG_CACHE_HOME:-$HOME/.cache}/dots"
+[ ! -d "$cache_dir" ] && mkdir -p "$cache_dir"
+
+# Destination folder of the encrypted gpg archive (useful for cloud storage).
+destination_dir="$HOME/MEGAsync/dots"
+
+# Setup date file format:
+date_format="$(date '+%dd-%mm-%Yy_%Hh-%Mm-%Ss')"
+
+# Read given options and create the archives accordingly:
+case "$1" in
+	# Backup dot files:
+	d)
+		# Basic variables:
+		output_tar="$cache_dir/dots_${date_format}.tar.gz" # Path to the generated tar archive.
+		gpg_recipient='encryptor@files.com' # Recipient for gpg encryption (you can generate one with gpg --full-generate-key).
+
+		# Generate a blacklist for files on a format that can be read by grep:
+		blacklist(){
+			cat <<- EOFBc
+				electron
+				blockbench
+				brave
+				cryptomator
+				dconf
+				dolphin_anty
+				gimp
+				google
+				gtk
+				htop
+				ibus
+				keepassxc
+				leap
+				libfm
+				libreoffice
+				mozc
+				nwg-look
+				pki
+				pulse
+				qalculate
+				qt
+				webcord
+				xsettingsd
+			EOFBc
+		}
+		blacklist="$(blacklist | awk '!/^$/ {gsub(/\s+/, ""); printf("%s\\|",$0)}')" # Remove all empty lines & replace every whitespace/newline with '\|'
+		blacklist="${blacklist%%\\|}"                                                # Remove the trailing '\|' from the output.
+
+		# Generate a whitelist for files on a format that can be read by grep:
+		whitelist(){
+			cat <<- EOFWl
+				bin
+				sources/flexipatches-reds
+				sources/suckless-reds
+				share/applications
+				share/bindings
+				share/bookmark_files
+				share/gnupg
+			EOFWl
+		}
+		whitelist="$(whitelist | awk '!/^$/ {gsub(/\s+/, ""); printf("%s\\|",$0)}')" # Remove all empty lines & replace every whitespace/newline with '\|'
+		whitelist="${whitelist%%\\|}"                                                # Remove the trailing '\|' from the output.
+
+		# Cd is needed so that find can create the correct type of output for tar.
+		cd "$HOME" || return
+
+		# Generate a list of files that will get archived and archive them:
+		file_list(){
+			find .config/* -maxdepth 0 | grep -iv "$blacklist"
+			find .local/* -maxdepth 2 | grep -i "$whitelist"
+			find ~/.bash_profile ~/.bashrc ~/.zshenv ~/.librewolf/vnmkhf5p.default-default/chrome/*
+		}
+		file_list | xargs -r tar chvpfz "$output_tar" 2>/dev/null
+
+		# Encrypt final archive with gpg:
+		[ -f "$output_tar" ] && gpg --encrypt --recipient "$gpg_recipient" "$output_tar"
+		[ -n "$destination_dir" ] && mv -f "$output_tar.gpg" "$destination_dir" # Move encrypted archive to $destination_dir if the variable was specified.
+	;;
+
+	# ----------------------------------------------------------------------- #
+
+	# Backup icons:
+	i)
+		# Basic variables:
+		output_tar="$cache_dir/icons_${date_format}.tar.gz"  # Path to the generated tar archive.
+		gpg_recipient='encryptor@files.com'   # Recipient for gpg encryption (you can generate one with gpg --full-generate-key).
+
+		# Generate a whitelist for icons on a format that can be read by grep:
+		whitelist(){
+			cat <<- EOFWi
+				share/icons
+			EOFWi
+		}
+		whitelist="$(whitelist | awk '!/^$/ {gsub(/\s+/, ""); printf("%s\\|",$0)}')" # Remove all empty lines & replace every whitespace/newline with '\|'
+		whitelist="${whitelist%%\\|}"                                                # Remove the trailing '\|' from the output.
+
+		# Cd is needed so that find can create the correct type of output for tar.
+		cd "$HOME" || return
+
+		# Generate a list of files that will get archived and archive them:
+		find .local/* -maxdepth 2 | grep -i "$whitelist" | xargs -r tar chvpfz "$output_tar" 2>/dev/null
+
+		# Encrypt final archive with gpg:
+		[ -f "$output_tar" ] && gpg --encrypt --recipient "$gpg_recipient" "$output_tar"
+		[ -n "$destination_dir" ] && mv -f "$output_tar.gpg" "$destination_dir" # Move encrypted archive to $destination_dir if the variable was specified.
+	;;
+
+	# ----------------------------------------------------------------------- #
+
+	# Backup MC files:
+	m)
+		# Basic variables:
+		output_tar="$cache_dir/mc_${date_format}.tar.gz"     # Path to the generated tar archive.
+		gpg_recipient='encryptor@files.com'   # Recipient for gpg encryption (you can generate one with gpg --full-generate-key).
+
+		# Generate a whitelist for files on a format that can be read by grep:
+		whitelist(){
+			cat <<- EOFWmc
+				extras
+				config
+				g4mespeed
+				mods
+				resourcepacks
+				saves
+				schematics
+				shaderpacks
+				hotbar.nbt
+				options.txt
+				servers.dat
+			EOFWmc
+		}
+		whitelist="$(whitelist | awk '!/^$/ {gsub(/\s+/, ""); printf("%s\\|",$0)}')" # Remove all empty lines & replace every whitespace/newline with '\|'
+		whitelist="${whitelist%%\\|}"                                                # Remove the trailing '\|' from the output.
+
+		# Cd is needed so that find can create the correct type of output for tar.
+		cd "$HOME/.local/share" || return
+
+		# Generate a list of files that will get archived and archive them:
+		find PrismLauncher/instances/* -maxdepth 2 | grep -i "$whitelist" | xargs -r tar chvpfz "$output_tar" 2>/dev/null
+
+		# Encrypt final archive with gpg:
+		[ -f "$output_tar" ] && gpg --encrypt --recipient "$gpg_recipient" "$output_tar"
+		[ -n "$destination_dir" ] && mv -f "$output_tar.gpg" "$destination_dir" # Move encrypted archive to $destination_dir if the variable was specified.
+	;;
+esac

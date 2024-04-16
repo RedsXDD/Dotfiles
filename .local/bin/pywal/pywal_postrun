@@ -1,0 +1,10 @@
+#!/usr/bin/env sh
+
+# [ -n "$(pgrep waybar)" ] && killall -SIGUSR2 waybar || waybar &
+killall waybar cava swaync
+while pgrep -x waybar >/dev/null; do sleep 1; done
+while pgrep -x cava >/dev/null; do sleep 1; done
+while pgrep -x swaync >/dev/null; do sleep 1; done
+waybar & swaync &
+
+[ -n "$TMUX" ] && tmux source-file ~/.config/tmux/tmux.conf

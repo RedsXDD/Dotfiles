@@ -1,0 +1,26 @@
+# Basic configs:
+set isosamples 50
+set hidden3d
+
+# Key, border & grid colors:
+set grid xtics ytics linetype 1 linewidth 1 linecolor rgb '#CDD6F4'
+set border linewidth 3 linecolor rgb '#89B4FA'
+set key textcolor rgb '#CDD6F4'
+
+# Labels:
+set xlabel "X axis" textcolor rgb '#CDD6F4'
+set ylabel "Y axis" textcolor rgb '#CDD6F4'
+set zlabel "Z axis" textcolor rgb '#CDD6F4'
+
+# Set background color:
+set terminal GNUTERM background rgb '#1E1E2E'
+set object rectangle from screen 0,0 to screen 1,1 behind fillcolor rgb '#1E1E2E' fillstyle solid noborder
+
+# Color some lines:
+set linetype 1 linewidth 2 pointtype 6 linecolor rgb '#F5C2E7'
+set linetype 2 linewidth 2 pointtype 6 linecolor rgb '#BAC2DE'
+set linetype 3 linewidth 2 pointtype 6 linecolor rgb '#89B4FA'
+set linetype 4 linewidth 2 pointtype 6 linecolor rgb '#94E2D5'
+set linetype 5 linewidth 2 pointtype 6 linecolor rgb '#A6E3A1'
+set linetype 6 linewidth 2 pointtype 6 linecolor rgb '#F9E2AF'
+set linetype 7 linewidth 2 pointtype 6 linecolor rgb '#F38BA8'

@@ -1,0 +1,8 @@
+#!/usr/bin/env sh
+
+wal_dir="$HOME/Pictures/wallpapers/all"
+getwal(){ wall="$(ls -1A "$wal_dir" | shuf -n1)"; wal -i "$wal_dir/$wall"; }
+
+getwal || error='1'
+[ -z "$error" ] && killall mpvpaper swaybg >/dev/null 2>&1; (swaybg -o '*' -i "$(cat "$HOME/.cache/wal/wal")" &) >/dev/null 2>&1
+# [ -n "$error" ] && mv -v "$wal_dir/$wall" "$HOME/Pictures/wallpapers/no-pywal" && getwal

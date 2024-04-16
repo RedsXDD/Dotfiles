@@ -1,0 +1,115 @@
+#!/usr/bin/env sh
+
+# -------------------------------------------------------------------------------------------------- #
+
+####################
+# Basic Variables: #
+####################
+
+# Reload File:
+reload_file="$HOME/.cache/wallpaper"
+
+# Others:
+find_depth='2'
+fallback_img="$HOME/Pictures/wallpapers/black.png"
+img_regex='.*\.(png|jpg|jpeg|webp|bmp|heif)$'
+vid_regex='.*\.(mp4|mov|wmv|flv|avi|webm|mkv|gif)$'
+yt_regex='^(https?://)?(www\.youtube\.com|youtu\.be)/.+$'
+
+# -------------------------------------------------------------------------------------------------- #
+
+####################
+# Basic Functions: #
+####################
+
+# Create Reload File:
+mkfile(){
+ if [ -z "$audio" ]; then
+  echo "$wall" > "$reload_file"
+ else
+  echo "$wall" > "$reload_file"
+  echo 'true' >> "$reload_file"
+ fi
+ exit 0
+}
+
+# Wallpaper changing:
+killsig(){ for i in "$(seq 5)"; do killall 'display' 'mpvpaper' >/dev/null 2>&1; done; }
+fallback(){ [ -z "$(swww query | awk -F ':' '{print $NF}' | grep "$fallback_img")" ] && swww img "$fallback_img" --resize fit && sleep 3; }
+imgcmd(){ killsig; sleep 0.3; swww img "$wall" --resize crop; }
+mpvcmd(){ fallback; killsig; sleep 0.3; mpvpaper -fo "--no-audio --loop" '*' "$wall" >/dev/null 2>&1; }
+mpvcmda(){ fallback; killsig; sleep 0.3; mpvpaper -fo "--loop" '*' "$wall" >/dev/null 2>&1; }
+
+# Video with/without audio:
+vidset(){ [ -z "$audio" ] && mpvcmd || mpvcmda; }
+
+# Reload Function:
+reload(){
+ file="$(head -n 1 "$reload_file")"
+ audio="$(tail -n 1 "$reload_file")"
+ if [ "$audio" = 'true' ]; then
+  waybg -a "$file"
+ else
+  waybg "$file"
+ fi
+}
+
+# filetype check:
+fload(){ [ -n "$(echo "$wall" | grep -E "$img_regex")" ] && imgcmd && mkfile || [ -n "$(echo "$wall" | grep -E "$vid_regex")" ] && vidset && mkfile; }
+
+# Folder Random File Chooser:
+frandom(){
+ # Find all images and videos inside the specified folder:
+ imgs="$(find "$wall" -maxdepth "$find_depth" -type f -regextype posix-extended -regex "$img_regex")"
+ vids="$(find "$wall" -maxdepth "$find_depth" -type f -regextype posix-extended -regex "$vid_regex")"
+ current="$(head -n 1 "$reload_file")"
+
+ # Fail if no valid filetype is found:
+ [ -z "$imgs" ] && [ -z "$vids" ] && echo 'No valid filetype found in the specified folder' && exit 1
+
+ # Choose a random file (different then the current one loaded) and load it as the wallpaper:
+ wall="$(printf "$imgs"'\n'"$vids" | grep -v "$current" | shuf -n 1)"; fload
+}
+
+# -------------------------------------------------------------------------------------------------- #
+
+##################
+# Get Arguments: #
+##################
+
+while getopts ':ar' opt
+do
+ case "$opt" in
+  a) audio='true' ;;
+  r) reload='true' ;;
+ esac
+done
+
+# -------------------------------------------------------------------------------------------------- #
+
+#############
+# Exection: #
+#############
+
+# Execute Reload Function if it was specified:
+[ -z "$reload" ] && reload
+
+# Check if audio was specified:
+[ -z "$audio" ] && wall="$2" || wall="$1"
+
+# Fail if no file is specified:
+[ -z "$wall" ] && echo 'Please provide some file path or video url.' && exit 1
+
+# Youtube Link:
+[ -n "$(echo "$wall" | grep -aoE "$yt_regex")" ] && vidset && mkfile
+
+# General File:
+[ -f "$wall" ] && fload
+
+# Folder:
+[ -d "$wall" ] && frandom
+
+# Fail if no valid path/url was specified:
+echo 'Please specify a valid file path or video url.' && exit 1
+
+# -------------------------------------------------------------------------------------------------- #

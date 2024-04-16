@@ -1,0 +1,25 @@
+#!/usr/bin/env sh
+
+killall rofi >/dev/null 2>&1
+
+# Import current theme:
+theme="${XDG_CONFIG_HOME:-$HOME/.config}/rofi/themes/launchers/type-7/style-1.rasi"
+
+# Cheatsheet file (by groovykiwi at https://github.com/groovykiwi/rofi-nerdfont):
+kaomoji_list="${XDG_CONFIG_HOME:-$HOME/.config}/rofi/misc_files/kaomoji.txt"
+
+run_rofi(){
+	[ "$(awk '/fullscreen:/ {print $2}' "$theme")" != 'true;' ] && border_setup='window { border: 2px solid; border-color: @border-colour; }'
+
+	rofi -i -dmenu \
+		-theme "$theme" \
+		-theme-str "configuration { show-icons: false; }
+				entry { placeholder: \"Select kaomoji ...\"; }
+				$border_setup" \
+		-p ' ' < "$kaomoji_list"
+}
+
+kaomoji="$(run_rofi | awk -F '﻿' '{print $1}')"
+[ -n "$kaomoji" ] &&
+	wl-copy "$kaomoji" &&
+	notify-send -t 2000 'Copied kaomoji' "Successfully copied the kaomoji \" $kaomoji \" to the clipboard"

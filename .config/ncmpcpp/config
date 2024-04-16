@@ -1,0 +1,230 @@
+# vim:fileencoding=utf-8:foldmethod=marker
+
+# ----------------------------------------------------------- #
+
+# ███╗   ██╗ ██████╗███╗   ███╗██████╗  ██████╗██████╗ ██████╗
+# ████╗  ██║██╔════╝████╗ ████║██╔══██╗██╔════╝██╔══██╗██╔══██╗
+# ██╔██╗ ██║██║     ██╔████╔██║██████╔╝██║     ██████╔╝██████╔╝
+# ██║╚██╗██║██║     ██║╚██╔╝██║██╔═══╝ ██║     ██╔═══╝ ██╔═══╝
+# ██║ ╚████║╚██████╗██║ ╚═╝ ██║██║     ╚██████╗██║     ██║
+# ╚═╝  ╚═══╝ ╚═════╝╚═╝     ╚═╝╚═╝      ╚═════╝╚═╝     ╚═╝
+
+# ----------------------------------------------------------- #
+
+system_encoding = ""
+playlist_disable_highlight_delay = "5"
+message_delay_time = "5"
+
+#: Directories {{{
+ncmpcpp_directory = "~/.config/ncmpcpp"
+lyrics_directory = "~/.config/ncmpcpp/lyrics"
+mpd_music_dir = "~/music"
+#: }}}
+#: Connection {{{
+mpd_host = "localhost"
+mpd_port = "6600"
+mpd_connection_timeout = "5"
+mpd_crossfade_time = "5"
+# random_exclude_pattern = "^(temp|midi_songs).*"
+#: }}}
+#: Visualizer {{{
+audio_output {
+	type   "fifo"
+	name   "ncmpcpp visualizer"
+	path   "/tmp/mpd.fifo"
+	format "44100:16:2"
+}
+
+# visualizer_data_source = "/tmp/mpd.fifo"
+visualizer_output_name = "ncmpcpp visualizer"
+visualizer_in_stereo = "yes"
+# visualizer_sync_interval = "0"
+visualizer_type = "ellipse" # [spectrum, wave, wave_filled, ellipse]
+visualizer_fps = "60"
+# visualizer_autoscale = "no"
+visualizer_look = "●●"
+visualizer_color = "blue, cyan, green, yellow, red, white"
+visualizer_spectrum_smooth_look = "yes"
+# visualizer_spectrum_dft_size = "2"
+# visualizer_spectrum_gain = "10"
+# visualizer_spectrum_hz_min = "20"
+# visualizer_spectrum_hz_max = "20000"
+#: }}}
+#: UI {{{
+#: Formatting {{{
+#: Formatting {{{
+# %l - length
+# %f - filename
+# %D - directory
+# %a - artist
+# %A - album artist
+# %t - title
+# %b - album
+# %y - date
+# %n - track number (01/12 -> 01)
+# %N - full track info (01/12 -> 01/12)
+# %g - genre
+# %c - composer
+# %p - performer
+# %d - disc
+# %C - comment
+# %P - priority
+# $R - begin right alignment
+# 0 - default window color (discards all other colors)
+# 1 - black
+# 2 - red
+# 3 - green
+# 4 - yellow
+# 5 - blue
+# 6 - magenta
+# 7 - cyan
+# 8 - white
+# 9 - end of current color
+# b - bold text
+# u - underline text
+# r - reverse colors
+# a - use alternative character set
+#: }}}
+# browser_playlist_prefix = "$2playlist$9 "
+# browser_sort_mode = "type" # [type, name, mtime, format, "none"]
+# browser_sort_format = "{%a - }{%t}|{%f} {%l}"
+
+# alternative_header_first_line_format = "$b$1$aqqu$/a$9 {%t}|{%f} $1$atqq$/a$9$/b"
+# alternative_header_second_line_format = "{{$4$b%a$/b$9}{ - $7%b$9}{ ($4%y$9)}}|{%D}"
+
+# selected_item_prefix = "$6"
+# selected_item_suffix = "$9"
+# modified_item_prefix = "$3> $9"
+now_playing_prefix = "$b$2$7 "
+now_playing_suffix = "  $/b$8"
+current_item_prefix = "$b$7$/b$3 "
+current_item_suffix = "  $8"
+# current_item_inactive_column_prefix = "$(white)$r"
+# current_item_inactive_column_suffix = "$/r$(end)"
+
+song_columns_list_format = "(50)[]{t|fr:Title} (0)[magenta]{a}"
+song_list_format = " {%t $R   $8%a$8}|{%f $R   $8%l$8} $8"
+song_status_format = "$b$2󰣐 $7 {$b$6$8 %t $6} $7 $8"
+# song_library_format = "{%n - }{%t}|{%f}"
+song_window_title_format = "Now Playing .."
+#: }}}
+# playlist_show_mpd_host = "no"
+# playlist_show_remaining_time = "no"
+# playlist_shorten_total_times = "no"
+# playlist_separate_albums = "no"
+playlist_display_mode = "columns"        #[classic, columns]
+browser_display_mode = "classic"         #[classic, columns]
+search_engine_display_mode = "classic"   #[classic, columns]
+playlist_editor_display_mode = "classic" #[classic, columns]
+
+user_interface = "classic" # [classic, alternative]
+
+autocenter_mode = yes
+centered_cursor = yes
+progressbar_look = "━━━"
+#: }}}
+#: Miscellaneous {{{
+# execute_on_song_change = ""
+# execute_on_player_state_change = ""
+
+# discard_colors_if_item_is_selected = "yes"
+# show_duplicate_tags = "yes"
+# incremental_seeking = "yes"
+# seek_time = "1"
+volume_change_step = "1"
+# data_fetching_delay = "yes"
+
+# media_library_primary_tag = "artist" # [artist, album_artist, date, genre, composer, performer]
+# media_library_albums_split_by_date = "yes"
+# media_library_hide_album_dates = "no"
+
+# default_find_mode = "wrapped" # [wrapped, normal]
+# default_tag_editor_pattern = "%n - %t"
+
+# header_visibility = "yes"
+# statusbar_visibility = "yes"
+
+# connected_message_on_startup = "yes"
+
+titles_visibility = "yes"
+header_text_scrolling = "yes"
+cyclic_scrolling = "yes"
+
+# lyrics_fetchers = "azlyrics, genius, musixmatch, sing365, metrolyrics, justsomelyrics, jahlyrics, plyrics, tekstowo, zeneszoveg, internet"
+# follow_now_playing_lyrics = "no"
+
+# fetch_lyrics_for_current_song_in_background = "no"
+# store_lyrics_in_song_dir = "no"
+# generate_win32_compatible_filenames = "yes"
+
+allow_for_physical_item_deletion = "yes"
+# lastfm_preferred_language = "en"
+# space_add_mode = "add_remove"
+show_hidden_files_in_local_browser = "yes"
+
+# [help, playlist, browser, search_engine, media_library, playlist_editor, tag_editor, outputs, visualizer, clock, lyrics, last_fm]
+# screen_switcher_mode = "playlist, browser"
+
+# startup_screen = "playlist"
+# startup_slave_screen = ""
+# startup_slave_screen_focus = "no"
+
+# locked_screen_width_part = "50"
+# ask_for_locked_screen_width_part = "yes"
+# jump_to_now_playing_song_at_start = "yes"
+# ask_before_clearing_playlists = "yes"
+clock_display_seconds = "yes"
+# display_volume_level = "yes"
+# display_bitrate = "no"
+# display_remaining_time = "no"
+
+# mouse_support = "yes"
+# mouse_list_scroll_whole_page = "no"
+# lines_scrolled = "5"
+
+empty_tag_marker = "<Empty>"
+
+# tags_separator = " | "
+# tag_editor_extended_numeration = "no"
+# media_library_sort_by_mtime = "no"
+# enable_window_title = "yes"
+external_editor = "nvim"
+use_console_editor = "yes"
+#: }}}
+#: Search {{{
+# regular_expressions = perl # [none, basic, extended, perl]
+# ignore_leading_the = no
+# ignore_diacritics = no
+# block_search_constraints_change_if_items_found = yes
+
+default_place_to_search_in = "database" # [database, playlist]
+
+# 1 - use mpd built-in searching (no regexes, pattern matching)
+#
+# 2 - use ncmpcpp searching (pattern matching with support for regexes, but
+#      if your mpd is on a remote machine, downloading big database to process
+#      it can take a while
+#
+# 3 - match only exact values (this mode uses mpd function for searching in
+#      database and local one for searching in current playlist)
+# search_engine_default_search_mode = 1
+#: }}}
+#: Color definitions {{{
+colors_enabled = yes
+color1 = white
+color2 = blue
+# empty_tag_color = cyan
+# header_window_color = default
+# volume_color = default
+# state_line_color = default
+# state_flags_color = default:b
+# main_window_color = yellow
+# progressbar_color = black:b
+# progressbar_elapsed_color = green:b
+# statusbar_color = default
+# statusbar_time_color = default:b
+# player_state_color = default:b
+# alternative_ui_separator_color = black:b
+# window_border_color = green
+# active_window_border = red
+#: }}}

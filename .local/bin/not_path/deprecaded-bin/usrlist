@@ -1,0 +1,3 @@
+#!/usr/bin/env sh
+
+echo ''; echo 'Users in the System:'; echo ''; \cat /etc/passwd | sed '/nologin/d; /git/d; /ntp/d' | awk -F ':' '{print $1}'; echo ''

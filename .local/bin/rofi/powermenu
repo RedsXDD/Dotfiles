@@ -1,0 +1,113 @@
+#!/usr/bin/env sh
+
+killall rofi >/dev/null 2>&1
+
+# Import current theme:
+theme="${XDG_CONFIG_HOME:-$HOME/.config}/rofi/themes/powermenu/type-2/style-2.rasi"
+confirm_theme="${XDG_CONFIG_HOME:-$HOME/.config}/rofi/themes/powermenu/type-1/style-1.rasi"
+
+# Random theme cuz why not?
+# theme="$(find "${XDG_CONFIG_HOME:-$HOME/.config}/rofi/themes/powermenu" -maxdepth 2 -type f -regextype posix-extended -regex '.*\.rasi' | shuf -n1)"
+
+# Setup main ctl function based on init system:
+case "$(readlink -f /sbin/init)" in
+	*'systemd'*) ctl(){ systemctl "$@"; } ;;
+	*) ctl(){ loginctl "$@"; } ;;
+esac
+
+# CMDs
+prompt="Goodbye $USER"
+uptime="$(uptime -p | sed 's/up //g')"
+
+# Options
+if [ "$(grep 'USE_BUTTONS' "$confirm_theme" | cut -d'=' -f2)" = 'YES' ]; then
+	yes='󰄬'
+	no='󰅖'
+else
+	yes='󰄬 Yes'
+	no='󰅖 No'
+fi
+
+if [ "$(grep 'USE_BUTTONS' "$theme" | cut -d'=' -f2)" = 'YES' ]; then
+	shutdown='󰐥'
+	reboot='󰜉'
+	suspend='󰤄'
+	hibernate='󰋊'
+	logout='󰗼'
+	lock='󰌾'
+else
+	shutdown='󰐥 Shutdown'
+	reboot='󰜉 Reboot'
+	suspend='󰤄 Suspend'
+	hibernate='󰋊 Hibernate'
+	logout='󰗼 Logout'
+	lock='󰌾 Lock'
+fi
+
+# Pass variables to rofi dmenu
+run_rofi(){
+	[ "$(awk '/fullscreen:/ {print $2}' "$theme")" != 'true;' ] && border_setup='window { border: 2px solid; border-color: @border-colour; }'
+
+	printf '%s\n' "$shutdown" "$reboot" "$suspend" "$hibernate" "$logout" "$lock" |
+		rofi -i -dmenu \
+			-theme-str "$border_setup" \
+			-p "$prompt" \
+			-mesg "Uptime: $uptime" \
+			-theme "$theme"
+}
+
+# Ask for confirmation
+confirm_exit(){
+	printf '%s\n' "$no" "$yes" |
+		rofi -i -dmenu \
+			-theme-str "mainbox { children: [ \"message\", \"listview\" ]; }
+				listview { columns: 2; lines: 1; }
+				element-text { horizontal-align: 0.5; }
+				textbox { horizontal-align: 0.5; }
+				window {
+					border: 2px solid;
+					border-color: @border-colour;
+					location: center;
+					anchor: center;
+					fullscreen: false;
+					width: 250px;
+				}" \
+			-p 'Confirmation' \
+			-mesg 'Are you Sure?' \
+			-theme "$confirm_theme"
+}
+
+# Actions
+case "$(run_rofi)" in
+	"$shutdown")  [ "$(confirm_exit)" = "$yes" ] && ctl poweroff -i  ;;
+	"$reboot")    [ "$(confirm_exit)" = "$yes" ] && ctl reboot -i    ;;
+	"$hibernate") [ "$(confirm_exit)" = "$yes" ] && ctl hibernate -i ;;
+
+	"$lock")
+		mpc -q pause
+		amixer set Master mute
+		swaylock
+	;;
+
+	"$suspend")
+		if [ "$(confirm_exit)" = "$yes" ]; then
+			mpc -q pause
+			amixer set Master mute
+			ctl suspend -i
+		fi
+	;;
+
+
+	"$logout")
+		[ "$(confirm_exit)" = "$yes" ] &&
+			case "$DESKTOP_SESSION" in
+				'openbox') openbox --exit ;;
+				'bspwm') bspc quit ;;
+				'i3') i3-msg exit ;;
+				'plasma') qdbus org.kde.ksmserver /KSMServer logout 0 0 0 ;;
+				*) loginctl terminate-user "$USER" ;;
+			esac
+	;;
+
+	*) exit 1 ;;
+esac

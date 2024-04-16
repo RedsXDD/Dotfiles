@@ -1,0 +1,9 @@
+# vim:fileencoding=utf-8:foldmethod=marker:filetype=fish
+
+# Git abbres:
+abbr dots '/usr/bin/git --git-dir="$HOME/.sources/dotfiles/" --work-tree="$HOME"'
+abbr da 'dots add'
+abbr dau 'dots add -u'
+abbr dcm 'dots commit'
+abbr dps 'dots push git@github.com:RedsXDD/dotfiles.git'
+abbr dpl 'dots pull'

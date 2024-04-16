@@ -1,0 +1,23 @@
+# vim:fileencoding=utf-8:foldmethod=marker:filetype=fish
+
+# Improved tree command:
+abbr tree 'tree -aF --dirsfirst --gitignore'
+
+# Default ls:
+# abbr ls 'ls --group-directories-first --color -A'
+# abbr la 'ls -1'
+# abbr ll 'ls -lh'
+
+# Ls to Lsd:
+# abbr ls 'lsd -A'
+# abbr la 'lsd -1A'
+# abbr ll 'lsd -lAh'
+# abbr lt 'lsd -A --tree --depth 2'
+# abbr lT 'lsd -A --tree'
+
+# Ls to eza:
+abbr ls 'eza -a'
+abbr la 'eza -1a'
+abbr ll 'eza -lah'
+abbr lt 'eza --git-ignore -aTL 2'
+abbr lT 'eza --git-ignore -aT'

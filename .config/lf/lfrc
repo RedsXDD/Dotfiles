@@ -1,0 +1,1237 @@
+# vim:fileencoding=utf-8:foldmethod=marker
+
+# ------------------------------ #
+
+# ██╗     ███████╗██████╗  ██████╗
+# ██║     ██╔════╝██╔══██╗██╔════╝
+# ██║     █████╗  ██████╔╝██║
+# ██║     ██╔══╝  ██╔══██╗██║
+# ███████╗██║     ██║  ██║╚██████╗
+# ╚══════╝╚═╝     ╚═╝  ╚═╝ ╚═════╝
+
+# ------------------------------ #
+
+#: Options {{{
+# Previewing:
+set previewer '~/.config/lf/lf-scope'
+set cleaner   '~/.config/lf/lf-cleaner'
+
+# Options:
+set hidden true
+set sixel true
+set ignorecase true
+set icons true
+set autoquit true
+set globsearch true
+set mouse true
+set shell sh
+set shellopts '-eu'
+set ifs "\n"
+set incsearch true
+set info size
+set dircounts
+set incfilter
+set period 3
+# set drawbox true
+# set number
+# set relativenumber
+# set wrapscroll true
+
+# Customization options:
+set cursoractivefmt "\033[7;1m"  # Reverse fg -> bg, bold.
+set cursorparentfmt "\033[7;1m"  # Reverse fg -> bg, bold.
+set cursorpreviewfmt "\033[7;1m" # Reverse fg -> bg, bold.
+set errorfmt "\033[7;1;31m"      # Reverse fg -> bg, bold, red.
+# set borderfmt "\033[0;34m"       # Normal style, blue.
+set numberfmt "\033[1;33m"       # Bold, yellow.
+set tagfmt "\033[1;31m"          # Bold, red.
+set promptfmt "\033[32;1m%u@%h\033[0m:\033[34;1m%d\033[0m\033[1m%f\033[0m" # WTF?
+set statfmt "\033[36m%p\033[0m| %c| %u| %g| %s| %t| -> %l"                 # ...
+
+# Give out a warning if lf is running in a nested instance:
+&[ $LF_LEVEL -eq 1 ] || lf -remote "send ${id} echoerr Warning: You're in a nested lf instance!"
+#: }}}
+#: Functions {{{
+#: Lf variables {{{
+# f : Current file selection as a full path.
+# fs : Selected file(s) separated with the value of 'filesep' option as full path(s).
+# fx : Selected file(s) (i.e. 'fs') if there are any selected files, otherwise current file selection (i.e. 'f').
+# id : Id of the running client.
+# PWD : Present working directory.
+# OLDPWD : Initial working directory.
+
+# Command types:
+# :  read            builtin/custom command
+# $  shell           shell command
+# %  shell-pipe      shell command running with the ui
+# !  shell-wait      shell command waiting for key press
+# &  shell-async     shell command running asynchronously
+#: }}}
+#: Basics {{{
+#: Vim-quit commands {{{
+# Quit lf with vim like commands:
+cmd q   ${{ lf -remote "send ${id} quit" }}
+cmd q!  ${{ lf -remote "send ${id} quit" }}
+cmd Q   ${{ lf -remote "send ${id} quit" }}
+cmd Q!  ${{ lf -remote "send ${id} quit" }}
+cmd wq  ${{ lf -remote "send ${id} quit" }}
+cmd Wq  ${{ lf -remote "send ${id} quit" }}
+cmd WQ  ${{ lf -remote "send ${id} quit" }}
+cmd wq! ${{ lf -remote "send ${id} quit" }}
+cmd Wq! ${{ lf -remote "send ${id} quit" }}
+cmd WQ! ${{ lf -remote "send ${id} quit" }}
+#: }}}
+#: One-liners {{{
+# Toggle previews:
+cmd toggle-preview %{{ [ "$lf_preview" = "true" ] && lf -remote "send ${id} :set preview false; set ratios 1:5" || lf -remote "send ${id} :set preview true; set ratios 1:2:3" }}
+
+# Select all files inside a directory:
+cmd select-everthing &{{ lf -remote "send ${id} :unselect; invert" }}
+
+# Follow symlinks:
+cmd follow-link %{{ link="$(readlink -f "$f")"; lf -remote "send ${id} select ${link}" }}
+#: }}}
+#: Parent directory scrolling {{{
+# Scroll to top parent directory.
+cmd scroll-parent-up :{{
+	set dironly true
+	updir; up
+	%[ -d "$f" ] && lf -remote "send $id open"
+	set dironly false
+}}
+
+# Scroll to bottom parent directory.
+cmd scroll-parent-down :{{
+	set dironly true
+	updir; down
+	%[ -d "$f" ] && lf -remote "send $id open"
+	set dironly false
+}}
+#: }}}
+#: Mkfile {{{
+cmd mkfile %{{
+	# This function takes a list of file names as arguments.
+	# It creates directories for file names ending with a trailing slash,
+	# creates files for file names without a trailing slash,
+	# and creates directories along with files for file names containing slashes.
+
+	lf -remote "send ${id} echo ' Enter name for new file(s) or directory(ies) (dirs end with a \"/\"): '"
+	read -r files
+
+	# Convert the list of files into a format that xargs can process.
+	filelist="$(echo "$files" | awk '{gsub(/\\ /, "§§"); gsub(/\s+/, "\n"); gsub(/§§/, "\ ")}1' 2>/dev/null)"
+
+	# Use xargs to process each file or directory in the list:
+	printf '%s\n' "$filelist" | xargs -ro -I {} sh -c '
+		if echo "{}" | grep -q "/$"; then
+			# Create directory if filename ends with a trailing slash:
+			mkdir -p "{}"
+		else
+			if echo "{}" | grep -q "/"; then
+				# Create directory and file if filename contains a slash:
+				mkdir -p "$(dirname "{}")"
+				touch "{}"
+			else
+				# Create file if filename doesnt contain slashes:
+				touch "{}"
+			fi
+		fi
+	'
+}}
+#: }}}
+#: Mkscript {{{
+cmd mkscript %{{
+	gen_script(){
+	cat <<- EOF_mkscript
+	#!/usr/bin/env sh
+
+	# Script dependencies: gnutls
+
+	# vim:fileencoding=utf-8:foldmethod=marker
+	EOF_mkscript
+	}
+
+	printf ' Script script_name: '; read script_name
+	[ -z "$script_name" ] && lf -remote "send ${id} echoerr 'No script_name given!'" && exit 1
+	gen_script > "$script_name" && chmod 755 "$script_name" && lf -remote "send ${id} select ${script_name}"
+}}
+#: }}}
+#: Chmod {{{
+cmd chmod %{{
+	# Get new perms:
+	lf -remote "send ${id} echo ' New perms: '"
+	read perms
+	chmod -v "$perms" $fx
+	lf -remote "send ${id} :redraw; reload"
+}}
+#: }}}
+#: Sed-rename {{{
+cmd sed-rename ${{
+	sedcmd="$@" # Sed options.
+	[ "$sedcmd" = 's///g' ] && lf -remote "send ${id} echoerr Sed renaming cancelled." && exit 1
+	mv "$f" "$(dirname "$f")/$(printf '%s' "$(basename "$f")" | sed "$sedcmd")"
+	lf -remote "send ${id} :redraw; reload"
+}}
+#: }}}
+#: Delfiles {{{
+cmd delfiles %{{
+	lf -remote "send ${id} echo ' Delete selected files? (y/n) '"; read ans
+
+	# TODO 'test test2' is not a removable filename
+	# Only remove files if user choose to do so, otherwise exit.
+	case "$(echo "$ans" | tr '[:upper:]' '[:lower:]')" in
+		'y' | 'yes') printf '%s\n' "$fx" | xargs -ro rm -rf ;;
+		*) lf -remote "send ${id} echoerr User choose to not delete files." && exit 1 ;;
+	esac
+}}
+#: }}}
+#: }}}
+#: Visual selections {{{
+# Dependency function for 'select-range'.
+# This dependency function is needed because, sometimes 'select-range' will leave the first and last files from the perfommed selection unselect.
+# In other to fix this you need to if they are selected among all the other selected files, and if not you manually toggle them.
+# Thats what this function does, but just combining it to the main 'select-range' function won't work as lf first waits for 'select-range' to
+# finish before updating the list of currently selected files, that's why this function is called separatedly after 'select-range' is done.
+cmd check-selection %{{
+	selection_file='/tmp/lf-select-range'
+	first_file="$(head -n1 "$selection_file" | sed 's/ /\\ /g')"
+	last_file="$(dirname "$f")/$(basename "$f" | sed 's/ /\\ /g')"
+	[ -z "$(echo "$fs" | grep -P "$first_file")" ] && lf -remote "send ${id} :toggle ${first_file} ${last_file}; redraw"
+	rm -f "$selection_file"
+}}
+
+# Main selection function:
+cmd select-range ${{
+	selection_file='/tmp/lf-select-range'
+	selection_start(){
+		echo "$(dirname "$f")/$(basename "$f")" > "$selection_file"
+		echo "$id" >> "$selection_file"
+		lf -remote "send ${id} :toggle"
+	}
+	[ ! -f "$selection_file" ] && selection_start && exit
+	first_file="$(head -n1 "$selection_file" | sed 's/ /\\ /g')"
+	last_file="$(dirname "$f")/$(basename "$f" | sed 's/ /\\ /g')"
+
+	#  This part restarts the selection if it happens on different lf instances:
+	previous_id="$(tail -n1 "$selection_file")"; current_id="$(echo "$id")"
+	[ "$previous_id" != "$current_id" ] && selection_start && exit
+
+	# This part prevents two selections from happening on different directories:
+	selection_dir="$(dirname "$first_file")"; current_dir="$(dirname "$f")"
+	[ "$selection_dir" != "$current_dir" ] && lf -remote "send ${id} echoerr Selection not happening on the same directories!" && exit 1
+
+	# Perform selection:
+	lf -remote "send ${id} :select ${first_file}; invert-below ;select ${last_file}; invert-below; check-selection"
+}}
+
+# Wrapper around the 'select-range' that allows for vim like motion selections:
+cmd motion-select %{{
+	case "$1" in
+		'top')       lf -remote "send ${id} :select-range; top; select-range"       ;;
+		'bottom')    lf -remote "send ${id} :select-range; bottom; select-range"    ;;
+		'high')      lf -remote "send ${id} :select-range; high; select-range"      ;;
+		'middle')    lf -remote "send ${id} :select-range; middle; select-range"    ;;
+		'low')       lf -remote "send ${id} :select-range; low; select-range"       ;;
+		'half-down') lf -remote "send ${id} :select-range; half-down; select-range" ;;
+		'half-up')   lf -remote "send ${id} :select-range; half-up; select-range"   ;;
+		'page-down') lf -remote "send ${id} :select-range; page-down; select-range" ;;
+		'page-up')   lf -remote "send ${id} :select-range; page-up; select-range"   ;;
+	esac
+}}
+#: }}}
+#: Paste to dir {{{
+cmd paste-to-dir %{{
+	# Read mode and files:
+	if [ -f "${XDG_DATA_HOME:-$HOME/.local/share}/lf/files" ]; then
+		trap 'rm "${XDG_DATA_HOME:-$HOME/.local/share}/lf/files"' 0 1 15
+		mode="$(head -n1 "${XDG_DATA_HOME:-$HOME/.local/share}/lf/files")"
+		files="$(tail -n +2 "${XDG_DATA_HOME:-$HOME/.local/share}/lf/files")"
+		[ -z "$files" ] && lf -remote "send ${id} echoerr No files for paste-to-dir!" && exit 1
+	else
+		lf -remote "send ${id} echoerr No files for paste-to-dir!" && exit 1
+	fi
+
+	# Specify paste directory:
+	lf -remote "send ${id} echo ' Directory name: '"; read paste_directory
+	[ -z "$paste_directory" ] && lf -remote "send ${id} echoerr No directory name specified for mkdir!" && exit 1 # Exit if no folder was specified.
+
+	paste_directory="$(echo "$paste_directory" | sed "s|^~|$HOME|")" # Format user string, replacing ~ on the beginning of the text with the user's /home directory.
+	[ ! -d "$paste_directory" ] && mkdir -p -- "$paste_directory"    # Create specified directory if it doesn't exist.
+
+	case "$mode" in
+		'copy') printf '%s\n' "$files" | xargs -ro -I{} cp -arv "{}" "$paste_directory" ;; # When items are selected for copy they will be copied over to the newly created dir.
+		'move') printf '%s\n' "$files" | xargs -ro -I{} mv "{}" "$paste_directory"      ;; # When items are selected for move they will be moved over to the newly created dir.
+	esac
+	lf -remote "send ${id} echo 'Files pasted to ${paste_directory}'"
+	lf -remote "send ${id} :select ${paste_directory}; clear"
+}}
+#: }}}
+#: Paste as symlink {{{
+cmd paste-link %{{
+	# Read mode and files:
+	if [ -f "${XDG_DATA_HOME:-$HOME/.local/share}/lf/files" ]; then
+		trap 'rm "${XDG_DATA_HOME:-$HOME/.local/share}/lf/files"' 0 1 15
+		mode="$(head -n1 "${XDG_DATA_HOME:-$HOME/.local/share}/lf/files")"
+		files="$(tail -n +2 "${XDG_DATA_HOME:-$HOME/.local/share}/lf/files")"
+		[ -z "$files" ] && lf -remote "send ${id} echoerr No files to link!" && exit 1
+	else
+		lf -remote "send ${id} echoerr No files to link!" && exit 1
+	fi
+
+	case "$mode" in
+		'copy') printf '%s\n' "$files" | xargs -ro -I {} ln -sr -t . "{}" ;; # When items are selected for copy they will be symbolically linked with a soft link.
+		'move') printf '%s\n' "$files" | xargs -ro -I {} ln -t . "{}"     ;; # When items are selected for move they will be symbolically linked with a hard link.
+	esac
+	lf -remote "send clear"
+}}
+#: }}}
+#: Bulk renaming {{{
+cmd bulk-rename ${{
+	tmp_old="$(mktemp)"
+	tmp_new="$(mktemp)"
+	trap 'rm "$tmp_old" "$tmp_new"' 0 1 15
+
+	# Write the name of all selected files to both temporary files:
+	files="$(printf '%s\n' "$fx" | xargs -ro basename -a)"
+	printf '%s\n' "$files" > "$tmp_old"
+	printf '%s\n' "$files" > "$tmp_new"
+
+	if [ -n "$EDITOR" ]; then
+		"$EDITOR" "$tmp_new"
+	else
+		for editor in nvim vim vi; do
+			"$editor" "$tmp_new" && continue
+		done
+		lf -remote "send ${id} echoerr Unable to bulk rename, no valid editor set!" && exit 1
+	fi
+
+	# Exit if no changes have been made, otherwise perform renaming.
+	if cmp "$tmp_new" "$tmp_old" >/dev/null 2>&1; then
+		lf -remote "send ${id} echoerr No changes made." && exit 1
+	else
+		# Exit if some line was deleted when wrinting new file names:
+		[ "$(wc -l < "$tmp_new")" -ne "$(wc -l < "$tmp_old")" ] && lf -remote "send ${id} The amount of lines MUST stay the same when bulk renaming!" && exit 1
+
+		# Change the file names based on the changes made to 'tmp_new':
+		paste "$tmp_old" "$tmp_new" |
+			while IFS= read -r filenames
+			do
+				old_name="$(printf '%s' "$filenames" | cut -f1)"
+				new_name="$(printf '%s' "$filenames" | cut -f2)"
+				[ "$old_name" = "$new_name" -o -e "$new_name" ] && continue
+				mv -- "$old_name" "$new_name"
+			done
+		lf -remote "send ${id} :unselect; redraw; reload"
+	fi
+}}
+#: }}}
+#: Mkarchive {{{
+cmd mkarchive %{{
+	archive_type="$1"
+	case "$archive_type" in
+		'7z')
+			if [ -z "$fs" ]; then
+				# If single file, create a 7z archive with the same name.
+				archive_name="$(basename "$f").7z"
+				7z a "$archive_name" "$(basename "$f")"
+				lf -remote "send ${id} select ${archive_name}"
+			else
+				# If multiple files, prompt for archive name or use a temporary one.
+				lf -remote "send ${id} echo ' Archive name: '"; read name
+				[ -n "$name" ] && archive_name="$(basename "$name").7z" || archive_name="$(mktemp archive-XXXXXXXXXX.7z)" && rm -rf "$archive_name"
+				7z a "$archive_name" $(basename -a $fx) || rm -rf "$archive_name" && exit 1 # Create archive or exit on failure.
+				lf -remote "send ${id} select ${archive_name}"
+			fi
+		;;
+
+		'zip')
+			if [ -z "$fs" ]; then
+				# If single file, create a zip archive with the same name.
+				archive_name="$(basename "$f").zip"
+				zip "$archive_name" "$(basename "$f")"
+				lf -remote "send ${id} select ${archive_name}"
+			else
+				# If multiple files, prompt for archive name or use a temporary one.
+				lf -remote "send ${id} echo ' Archive name: '"; read name
+				[ -n "$name" ] && archive_name="$(basename "$name").zip" || archive_name="$(mktemp archive-XXXXXXXXXX.zip)" && rm -rf "$archive_name"
+				zip -r "$archive_name" $(basename -a $fx) || rm -rf "$archive_name" && exit 1 # Create archive or exit on failure.
+				lf -remote "send ${id} select ${archive_name}"
+			fi
+		;;
+
+		'rar')
+			if [ -z "$fs" ]; then
+				# If single file, create a rar archive with the same name.
+				archive_name="$(basename "$f").rar"
+				rar a "$archive_name" "$(basename "$f")"
+				lf -remote "send ${id} select ${archive_name}"
+			else
+				# If multiple files, prompt for archive name or use a temporary one.
+				lf -remote "send ${id} echo ' Archive name: '"; read name
+				[ -n "$name" ] && archive_name="$(basename "$name").rar" || archive_name="$(mktemp archive-XXXXXXXXXX.rar)" && rm -rf "$archive_name"
+			 	rar a "$archive_name" $(basename -a $fx) || rm -rf "$archive_name" && exit 1 # Create archive or exit on failure.
+				lf -remote "send ${id} select ${archive_name}"
+			fi
+		;;
+
+		'cpio')
+			if [ -z "$fs" ]; then
+				# If single file, create a cpio archive with the same name.
+				archive_name="$(basename "$f").cpio"
+				# Check if the file is a directory, then archive its contents; otherwise, archive the file itself.
+				[ -d "$f" ] && find "$(basename "$f")" | cpio -ov > "$archive_name" || basename "$f" | cpio -ov > "$archive_name"
+				lf -remote "send ${id} select ${archive_name}"
+			else
+				# If multiple files, prompt for archive name or use a temporary one.
+				lf -remote "send ${id} echo ' Archive name: '"; read name
+				[ -n "$name" ] && archive_name="$(basename "$name").cpio" || archive_name="$(mktemp archive-XXXXXXXXXX.cpio)" && rm -rf "$archive_name"
+				# Create cpio archive with the specified or temporary name from the selected files.
+				find $(basename -a $fx) | cpio -ov > "$archive_name"
+				lf -remote "send ${id} select ${archive_name}"
+			fi
+		;;
+
+		'tar')
+			if [ -z "$fs" ]; then
+        			# If single file, create a tar archive with the same name.
+				archive_name="$(basename "$f").tar"
+				tar chvpf "$archive_name" "$(basename "$f")"
+				lf -remote "send ${id} select ${archive_name}"
+			else
+        			# If multiple files, prompt for archive name or use a temporary one.
+				lf -remote "send ${id} echo ' Archive name: '"; read name
+				[ -n "$name" ] && archive_name="$(basename "$name").tar" || archive_name="$(mktemp archive-XXXXXXXXXX.tar)" && rm -rf "$archive_name"
+				tar chvpf "$archive_name" $(basename -a $fx) || rm -rf "$archive_name" && exit 1 # Create archive or exit on failure.
+				lf -remote "send ${id} select ${archive_name}"
+			fi
+		;;
+
+		'targz')
+			if [ -z "$fs" ]; then
+        			# If single file, create a tar.gz archive with the same name.
+				archive_name="$(basename "$f").tar.gz"
+				tar chvpfz "$archive_name" "$(basename "$f")"
+				lf -remote "send ${id} select ${archive_name}"
+			else
+        			# If multiple files, prompt for archive name or use a temporary one.
+				lf -remote "send ${id} echo ' Archive name: '"; read name
+				[ -n "$name" ] && archive_name="$(basename "$name").tar.gz" || archive_name="$(mktemp archive-XXXXXXXXXX.tar.gz)" && rm -rf "$archive_name"
+				tar chvpfz "$archive_name" $(basename -a $fx) || rm -rf "$archive_name" && exit 1 # Create archive or exit on failure.
+				lf -remote "send ${id} select ${archive_name}"
+			fi
+		;;
+
+		'tarbz2')
+			if [ -z "$fs" ]; then
+        			# If single file, create a tar.bz2 archive with the same name.
+				archive_name="$(basename "$f").tar.bz2"
+				tar chvpfj "$archive_name" "$(basename "$f")"
+				lf -remote "send ${id} select ${archive_name}"
+			else
+        			# If multiple files, prompt for archive name or use a temporary one.
+				lf -remote "send ${id} echo ' Archive name: '"; read name
+				[ -n "$name" ] && archive_name="$(basename "$name").tar.bz2" || archive_name="$(mktemp archive-XXXXXXXXXX.tar.bz2)" && rm -rf "$archive_name"
+				tar chvpfj "$archive_name" $(basename -a $fx) || rm -rf "$archive_name" && exit 1 # Create archive or exit on failure.
+				lf -remote "send ${id} select ${archive_name}"
+			fi
+		;;
+
+		'tarzstd')
+			if [ -z "$fs" ]; then
+        			# If single file, create a tar.zst archive with the same name.
+				archive_name="$(basename "$f").tar.zst"
+				tar --zstd -chvpf "$archive_name" "$(basename "$f")"
+				lf -remote "send ${id} select ${archive_name}"
+			else
+        			# If multiple files, prompt for archive name or use a temporary one.
+				lf -remote "send ${id} echo ' Archive name: '"; read name
+				[ -n "$name" ] && archive_name="$(basename "$name").tar.zst" || archive_name="$(mktemp archive-XXXXXXXXXX.tar.zst)" && rm -rf "$archive_name"
+				tar --zstd -chvpf "$archive_name" $(basename -a $fx) || rm -rf "$archive_name" && exit 1 # Create archive or exit on failure.
+				lf -remote "send ${id} select ${archive_name}"
+			fi
+		;;
+
+		'tarcompress')
+			if [ -z "$fs" ]; then
+        			# If single file, create a tar.Z archive with the same name.
+				archive_name="$(basename "$f").tar.Z"
+				tar chvpfZ "$archive_name" "$(basename "$f")"
+				lf -remote "send ${id} select ${archive_name}"
+			else
+        			# If multiple files, prompt for archive name or use a temporary one.
+				lf -remote "send ${id} echo ' Archive name: '"; read name
+				[ -n "$name" ] && archive_name="$(basename "$name").tar.Z" || archive_name="$(mktemp archive-XXXXXXXXXX.tar.Z)" && rm -rf "$archive_name"
+				tar chvpfZ "$archive_name" $(basename -a $fx) || rm -rf "$archive_name" && exit 1 # Create archive or exit on failure.
+				lf -remote "send ${id} select ${archive_name}"
+			fi
+		;;
+
+		'tarxz')
+			if [ -z "$fs" ]; then
+        			# If single file, create a tar.xz archive with the same name.
+				archive_name="$(basename "$f").tar.xz"
+				tar chvpfJ "$archive_name" "$(basename "$f")"
+				lf -remote "send ${id} select ${archive_name}"
+			else
+        			# If multiple files, prompt for archive name or use a temporary one.
+				lf -remote "send ${id} echo ' Archive name: '"; read name
+				[ -n "$name" ] && archive_name="$(basename "$name").tar.xz" || archive_name="$(mktemp archive-XXXXXXXXXX.tar.xz)" && rm -rf "$archive_name"
+				tar chvpfJ "$archive_name" $(basename -a $fx) || rm -rf "$archive_name" && exit 1 # Create archive or exit on failure.
+				lf -remote "send ${id} select ${archive_name}"
+			fi
+		;;
+
+		'tarlzma')
+			if [ -z "$fs" ]; then
+        			# If single file, create a tar.lzma archive with the same name.
+				archive_name="$(basename "$f").tar.lzma"
+				tar --lzma -chvpf "$archive_name" "$(basename "$f")"
+				lf -remote "send ${id} select ${archive_name}"
+			else
+        			# If multiple files, prompt for archive name or use a temporary one.
+				lf -remote "send ${id} echo ' Archive name: '"; read name
+				[ -n "$name" ] && archive_name="$(basename "$name").tar.lzma" || archive_name="$(mktemp archive-XXXXXXXXXX.tar.lzma)" && rm -rf "$archive_name"
+				tar --lzma -chvpf "$archive_name" $(basename -a $fx) || rm -rf "$archive_name" && exit 1 # Create archive or exit on failure.
+				lf -remote "send ${id} select ${archive_name}"
+			fi
+		;;
+
+		'tarlzop')
+			if [ -z "$fs" ]; then
+        			# If single file, create a tar.lzo archive with the same name.
+				archive_name="$(basename "$f").tar.lzo"
+				tar --lzop -chvpf "$archive_name" "$(basename "$f")"
+				lf -remote "send ${id} select ${archive_name}"
+			else
+        			# If multiple files, prompt for archive name or use a temporary one.
+				lf -remote "send ${id} echo ' Archive name: '"; read name
+				[ -n "$name" ] && archive_name="$(basename "$name").tar.lzo" || archive_name="$(mktemp archive-XXXXXXXXXX.tar.lzo)" && rm -rf "$archive_name"
+				tar --lzop -chvpf "$archive_name" $(basename -a $fx) || rm -rf "$archive_name" && exit 1 # Create archive or exit on failure.
+				lf -remote "send ${id} select ${archive_name}"
+			fi
+		;;
+
+		'tarlzip')
+			if [ -z "$fs" ]; then
+        			# If single file, create a tar.lz archive with the same name.
+				archive_name="$(basename "$f").tar.lz"
+				tar --lzip -chvpf "$archive_name" "$(basename "$f")"
+				lf -remote "send ${id} select ${archive_name}"
+			else
+        			# If multiple files, prompt for archive name or use a temporary one.
+				lf -remote "send ${id} echo ' Archive name: '"; read name
+				[ -n "$name" ] && archive_name="$(basename "$name").tar.lz" || archive_name="$(mktemp archive-XXXXXXXXXX.tar.lz)" && rm -rf "$archive_name"
+				tar --lzip -chvpf "$archive_name" $(basename -a $fx) || rm -rf "$archive_name" && exit 1 # Create archive or exit on failure.
+				lf -remote "send ${id} select ${archive_name}"
+			fi
+		;;
+
+		'gzip')
+			# Check if multiple files selected, gzip is not suitable for multiple files.
+			[ -n "$fs" ] && lf -remote "send ${id} echoerr Gzip won't archive multiple files the way you expect, it's recommend to use tar instead." && exit 1
+			# Check if the selected file is a directory, gzip doesn't support directory compression.
+			[ -d "$f" ] && lf -remote "send ${id} echoerr Gzip is unable to archive directories, it's recommended to use tar instead." && exit 1
+			file="$(basename "$f")"
+			# Compress the file using gzip, and keep the original file.
+			gzip --keep "$file"
+			lf -remote "send ${id} select ${file}.gz"
+		;;
+
+		'bzip2')
+			# Check if multiple files selected, bzip2 is not suitable for multiple files.
+			[ -n "$fs" ] && lf -remote "send ${id} echoerr Bzip2 won't archive multiple files the way you expect, it's recommend to use tar instead." && exit 1
+			# Check if the selected file is a directory, bzip2 doesn't support directory compression.
+			[ -d "$f" ] && lf -remote "send ${id} echoerr Bzip2 is unable to archive directories, it's recommended to use tar instead." && exit 1
+			file="$(basename "$f")"
+			# Compress the file using bzip2, and keep the original file.
+			bzip2 --keep "$file"
+			lf -remote "send ${id} select ${file}.bz2"
+		;;
+
+		'zstd')
+			# Check if multiple files selected, zstd is not suitable for multiple files.
+			[ -n "$fs" ] && lf -remote "send ${id} echoerr Zstd won't archive multiple files the way you expect, it's recommend to use tar instead." && exit 1
+			# Check if the selected file is a directory, zstd doesn't support directory compression.
+			[ -d "$f" ] && lf -remote "send ${id} echoerr Zstd is unable to archive directories, it's recommended to use tar instead." && exit 1
+			file="$(basename "$f")"
+			# Compress the file using zstd, and keep the original file.
+			zstd --keep "$file"
+			lf -remote "send ${id} select ${file}.zst"
+		;;
+
+		'compress')
+			# Check if multiple files selected, compress is not suitable for multiple files.
+			[ -n "$fs" ] && lf -remote "send ${id} echoerr Compress won't archive multiple files the way you expect, it's recommend to use tar instead." && exit 1
+			# Check if the selected file is a directory, compress doesn't support directory compression.
+			[ -d "$f" ] && lf -remote "send ${id} echoerr Compress is unable to archive directories, it's recommended to use tar instead." && exit 1
+			file="$(basename "$f")"
+			# Compress the file using compress, and keep the original file.
+			compress -k "$file"
+			lf -remote "send ${id} select ${file}.Z"
+		;;
+
+		'ar')
+			# Check if multiple files selected, ar is not suitable for multiple files.
+			[ -n "$fs" ] && lf -remote "send ${id} echoerr Ar won't archive multiple files the way you expect." && exit 1
+			# Check if the selected file is a directory, ar doesn't support directory compression.
+			[ -d "$f" ] && lf -remote "send ${id} echoerr Ar is unable to archive directories." && exit 1
+			file="$(basename "$f")"
+			# Compress the file using ar, and keep the original file.
+			ar rs "$file.a" "$file"
+			lf -remote "send ${id} select ${file}.a"
+		;;
+
+		'xz')
+			# Check if multiple files selected, xz is not suitable for multiple files.
+			[ -n "$fs" ] && lf -remote "send ${id} echoerr Xz won't archive multiple files the way you expect, it's recommend to use tar instead." && exit 1
+			# Check if the selected file is a directory, xz doesn't support directory compression.
+			[ -d "$f" ] && lf -remote "send ${id} echoerr Xz is unable to archive directories, it's recommended to use tar instead." && exit 1
+			file="$(basename "$f")"
+			# Compress the file using xz, and keep the original file.
+			xz --keep "$file"
+			lf -remote "send ${id} select ${file}.xz"
+		;;
+
+		'lzma')
+			# Check if multiple files selected, lzma is not suitable for multiple files.
+			[ -n "$fs" ] && lf -remote "send ${id} echoerr Lzma won't archive multiple files the way you expect, it's recommend to use tar instead." && exit 1
+			# Check if the selected file is a directory, lzma doesn't support directory compression.
+			[ -d "$f" ] && lf -remote "send ${id} echoerr Lzma is unable to archive directories, it's recommended to use tar instead." && exit 1
+			file="$(basename "$f")"
+			# Compress the file using lzma, and keep the original file.
+			xz --format=lzma --keep "$file"
+			lf -remote "send ${id} select ${file}.lzma"
+		;;
+
+		'lzip')
+			# Check if multiple files selected, lzip is not suitable for multiple files.
+			[ -n "$fs" ] && lf -remote "send ${id} echoerr Lzip won't archive multiple files the way you expect, it's recommend to use tar instead." && exit 1
+			# Check if the selected file is a directory, lzip doesn't support directory compression.
+			[ -d "$f" ] && lf -remote "send ${id} echoerr Lzip is unable to archive directories, it's recommended to use tar instead." && exit 1
+			file="$(basename "$f")"
+			# Compress the file using lzip, and keep the original file.
+			lzip --keep "$file"
+			lf -remote "send ${id} select ${file}.lz"
+		;;
+
+		'lzop')
+			# Check if multiple files selected, lzop is not suitable for multiple files.
+			[ -n "$fs" ] && lf -remote "send ${id} echoerr Lzop won't archive multiple files the way you expect, it's recommend to use tar instead." && exit 1
+			# Check if the selected file is a directory, lzop doesn't support directory compression.
+			[ -d "$f" ] && lf -remote "send ${id} echoerr Lzop is unable to archive directories, it's recommended to use tar instead." && exit 1
+			file="$(basename "$f")"
+			# Compress the file using lzop, and keep the original file.
+			lzop --keep "$file"
+			lf -remote "send ${id} select ${file}.lzo"
+		;;
+
+		*) lf -remote "send ${id} echoerr Invalid argument for mkarchive!"
+	esac && lf -remote "send ${id} :redraw; reload"
+}}
+#: }}}
+#: Archive extraction {{{
+cmd exarchive ${{
+	file="$(readlink -f -- "$f")"
+	extracted_dir="$(mktemp -d ${file}-extracted-XXXXXXXXXX)"
+	case "$(file --mime-type -Lb "$file" | tr '[:upper:]' '[:lower:]')" in
+		#application/x-lzip) ;;
+		#application/gzip) ;;
+
+		application/x-xz | application/x-lzma)
+			case "$(basename "$file" | tr '[:upper:]' '[:lower:]')" in
+				*.lz | *.lzma) xz -d "$file" ;;
+				*.txz | *.tar*) tar tfv "$file" ;;
+				*) xz -d "$file" ;;
+			esac
+		;;
+
+		#application/octet-stream) ;;
+
+		*)
+			tar xvf "$file" --directory="$extracted_dir" || 7z x "$file" -o"$extracted_dir"
+		;;
+	esac
+	# # Print all selected files, replacing newlines with ';'.
+	# file_list="$(echo "$fx" | tr '\n' ';')"
+
+	# # Loop through all files in the list until the list is empty:
+	# while [ "$file_list" ]
+	# do
+	# 	# Get current file by deleting everything after ';' on the file list.
+	# 	file="${file_list%%;*}"
+
+	# 	# If the list does not contain any items besides the previously renamed item exit the while loop by setting list to an empty string.
+	# 	# Otherwise delete all previous items on the list and continue.
+	# 	[ "$file_list" = "$file" ] && file_list='' || file_list="${file_list#*;}"
+
+	# 	# Create a directory for all extracted archives, extracting them afterwards:
+	# 	extracted_dir="$(mktemp -d ${file}-extracted-XXXXXXXXXX)"
+	# 	case "$(basename "$file" | tr '[:upper:]' '[:lower:]')" in
+	# 		*.tbz2 | *.tgz | *.txz | *.tlz | *.tlzo | *.tar*) tar xvf "$file" --directory="$extracted_dir" || 7z x "$file" -o"$extracted_dir" ;;
+	# 		*.lz) lzip --keep -d "$file" && mv "${file%.*}" "$extracted_dir" ;;
+	# 		*.lzo) lzop -d "$file" && mv "${file%.*}" "$extracted_dir" ;;
+	# 		*) 7z x "$file" -o"$extracted_dir" ;;
+	# 	esac
+	# done
+}}
+#: }}}
+#: Open files {{{
+#cmd open ${{
+#	file="$(readlink -f "$f")"
+#	case "$(file --mime-type -Lb "$file" | tr '[:upper:]' '[:lower:]')" in
+#
+#		text/* | application/json | application/x-ndjson | application/javascript | inode/x-empty | application/pgp-encrypted)
+#				"$EDITOR" "$file"; exit 1
+#				nvim "$file"; exit 1
+#				vim "$file"; exit 1
+#				vi "$file"; exit 1
+#				lf -remote "send ${id} Unable to open file." && exit 1
+#		;;
+#
+#		application/x-executable)
+#			case "$(basename "$file" | tr '[:upper:]' '[:lower:]')" in
+#				*.appimage) setsid -f dolphin "$file" >/dev/null 2>&1 ;;
+#			esac
+#		;;
+#
+#		*) setsid -f "$OPENER" "$file" >/dev/null 2>&1 ;;
+#	esac
+#}}
+
+cmd open ${{
+	file="$(readlink -f "$f")"  # Get the full path of the file.
+
+	# Determine the MIME type of the file, and open it accordinly:
+	case "$(file --mime-type -Lb "$file" | tr '[:upper:]' '[:lower:]')" in
+		image/x-xcf)
+			# Open XCF images in GIMP
+			setsid -f gimp "$file" >/dev/null 2>&1
+		;;
+
+		image/svg+xml)
+			# Display SVG images
+			display -- "$file"
+		;;
+
+		audio/* | video/x-ms-asf)
+			# Open audio and ASF video files in mpv without audio display
+			setsid -f mpv --audio-display=no "$file" >/dev/null 2>&1
+		;;
+
+		video/*)
+			# Open other video files in mpv
+			setsid -f mpv "$file" >/dev/null 2>&1
+		;;
+
+		text/* | application/json | application/x-ndjson | application/javascript | inode/x-empty | application/pgp-encrypted)
+			# Open text files and certain application files in the default editor
+			"$EDITOR" "$file" || nvim "$file" || vim "$file" || vi "$file" || (lf -remote "send ${id} Unable to open file." && exit 1)
+		;;
+
+		application/x-executable)
+			case "$(basename "$file" | tr '[:upper:]' '[:lower:]')" in
+				*.appimage)
+					# Open AppImage files in Dolphin
+					setsid -f dolphin "$file" >/dev/null 2>&1
+				;;
+			esac
+		;;
+
+		*)
+			# Open other files using the default opener
+			setsid -f "$OPENER" "$file" >/dev/null 2>&1
+		;;
+	esac
+}}
+
+#: }}}
+#: Paginate files {{{
+cmd open-in-pager ${{
+	file="$(readlink -f "$f")"  # Get the full path of the file
+
+	# Remove '-F' option from default less options if it was specified:
+	LESS="$(echo "$LESS" | sed 's/F\|-F\s\+\|--quit-if-one-screen//g')"
+
+	# Define a custom pager function using bat as default pager:
+	pager(){ bat --theme ansi --color=always --style=plain --pager "less $LESS" "$@" || less; }
+
+	# Determine the MIME type of the file and paginate it accordinly:
+	case "$(file --mime-type -Lb "$file" | tr '[:upper:]' '[:lower:]')" in
+		application/x-gettext-translation)
+			# Display gettext translation files using msgunfmt.
+			msgunfmt --color --indent "$file" | pager
+		;;
+
+		*opendocument* | application/vnd.sun.xml.writer)
+			# Display OpenDocument files using odt2txt.
+			odt2txt "$file" | pager
+		;;
+
+		application/epub+zip | application/x-mobipocket-ebook | application/x-fictionbook+xml)
+			# Display epub files using epub2txt.
+			epub2txt -a "$file" | pager
+		;;
+
+		application/pdf)
+			# Display PDF files using pdftotext.
+			pdftotext -layout "$file" /dev/stdout | pager
+		;;
+
+		application/postscript)
+			# Convert PostScript files to PDF and then display using pdftotext.
+			gs -q -o /dev/stdout -sDEVICE=pdfwrite "$file" | pdftotext -layout - /dev/stdout | pager
+		;;
+
+		application/vnd.ms-excel | application/vnd.openxmlformats-officedocument.spreadsheetml.sheet)
+			# Convert Excel files to CSV using ssconvert and display using pager.
+			ssconvert --export-type=Gnumeric_stf:stf_csv "$file" 'fd://1' 2>/dev/null | pager --language=csv
+		;;
+
+		application/vnd.openxmlformats-officedocument.wordprocessingml.document)
+			# Display Word document files using docx2txt.
+			docx2txt "$file" | pager
+		;;
+
+		application/vnd.sqlite3)
+			# Display SQLite database schema using sqlite3.
+			sqlite3 "$file" '.schema' | pager --language=sql
+		;;
+
+		application/x-7z* | application/x-rar | application/zip | application/java-archive | application/x-lzma | application/x-xz | application/x-cpio | application/x-archive | application/x-tar | application/x-bzip2 | application/zlib | application/x-rpm | application/vnd.debian.binary-package | application/vnd.microsoft.portable-executable)
+			# Display archive contents using tar or 7z.
+			(tar tfv "$file" 2>/dev/null || 7z l -p'' "$file") | pager
+		;;
+
+		application/x-iso*)
+			# Display ISO image contents using iso-info.
+			iso-info --no-header -l "$file" | pager
+		;;
+
+		application/x-object)
+			# Display object files disassembled using objdump.
+			objdump --disassembler-color=on -d "$file" | pager
+		;;
+
+		image/vnd.djvu)
+			# Convert DjVu files to plain text using djvused and display using pager.
+			djvused "$file" -e 'print-pure-txt' | fmt | pager
+		;;
+
+		inode/directory)
+			# Display directory contents using ls.
+			ls --group-directories-first --color -lA "$file" | pager
+		;;
+
+		inode/x-empty)
+			# Notify if the file is empty.
+			lf -remote "send ${id} echoerr The file $file is empty." && exit 1
+		;;
+
+		text/rtf | application/msword)
+			# Convert RTF and Word files to plain text using catdoc and display using pager.
+			catdoc "$file" | pager
+		;;
+
+		text/troff)
+			# Display troff files using man.
+			MAN_KEEP_FORMATTING='true' man ./ "$file" 2>/dev/null
+		;;
+
+		application/x-bittorrent)
+			# Display BitTorrent files using transmission-show.
+			transmission-show "$file" | pager
+		;;
+
+		text/* | */xml | application/x-shellscript | application/javascript | application/json | application/x-ndjson)
+			# Display text files using pager.
+			pager "$file"
+		;;
+
+		application/octet-stream | application/vnd.flatpak.ref)
+			case "$(basename "$file" | tr '[:upper:]' '[:lower:]')" in
+				*.lzo)
+					# Display LZO files using lzop.
+					lzop -lv "$file"
+				;;
+
+				*.snap)
+					# Display Snap files using snap info or mediainfo.
+					snap info "$file" || mediainfo -f "$file"
+				;;
+
+				*.tzo | *.tar*)
+					# Display TAR files using tar.
+					tar tfv "$file"
+				;;
+
+				*)
+					# Display other files using mediainfo.
+					mediainfo -f "$file"
+				;;
+			esac | pager
+		;;
+
+		application/gzip)
+			case "$(basename "$file" | tr '[:upper:]' '[:lower:]')" in
+				*.gnumeric)
+					# Convert Gnumeric files to CSV using ssconvert and display using pager.
+					ssconvert --export-type=Gnumeric_stf:stf_csv "$file" "fd://1" | pager --language=csv
+				;;
+
+				*.gz)
+					# Display gzip files information using gzip.
+					gzip -l "$file" | pager
+				;;
+
+				*.tgz | *.tar.gz)
+					# Display tar.gz files using tar.
+					tar tfv "$file" | pager
+				;;
+
+				*)
+					# Display other gzip files using 7z.
+					7z l -p'' "$file" | pager
+				;;
+			esac
+		;;
+
+		application/x-executable | application/x-pie-executable | application/x-sharedlib)
+			case "$(basename "$file" | tr '[:upper:]' '[:lower:]')" in
+				*.appimage)
+					# Display AppImage files using 7z.
+					7z l "$file"
+				;;
+
+				*)
+					# Display other executable files using readelf.
+					readelf -h "$file"
+				;;
+			esac | pager
+		;;
+
+		*)
+			# Display unknown file types using mediainfo.
+			mediainfo -f "$file" | pager
+		;;
+	esac
+}}
+#: }}}
+#: GPG functions {{{
+# Encrypt files with recipient.
+cmd gpg-rep-encrypt %{{
+	lf -remote "send ${id} echo ' Recipient: '"; read recipient
+ 	[ -z "$recipient" ] && lf -remote "send ${id} echoerr No recipient specified!" && exit 1
+ 	gpg --encrypt --sign --local-user "$recipient" --recipient "$recipient" "$f" && lf -remote "send ${id} select ${f}.gpg"
+}}
+
+# Encrypt files with a password.
+cmd gpg-pass-encrypt %{{
+	gpg --cipher-algo AES256 --symmetric "$f" && lf -remote "send ${id} select ${f}.gpg"
+}}
+
+# Decrypt files.
+cmd gpg-decrypt ${{
+	case "$f" in
+		*.gpg) gpg --decrypt "$f" > "${f%.gpg}" ;;
+		*) gpg --decrypt "$f" > "$(basename "$f")-decrypted" ;;
+	esac
+}}
+
+# Verify signed files.
+cmd gpg-verify ${{
+	gpg --verify "$f"
+	printf "Press enter to continue"; read pause; echo ''
+}}
+
+# Encode input into a binary file with an integrated signature.
+cmd gpg-sign %{{
+	lf -remote "send ${id} echo ' Recipient: '"; read recipient
+	[ -z "$recipient" ] && lf -remote "send ${id} echoerr No recipient specified!" && exit 1
+	gpg --sign --local-user "$recipient" "$f" && lf -remote "send ${id} select ${f}.gpg"
+}}
+
+# Wrap input in plaintext signature.
+cmd gpg-clear-sign %{{
+	lf -remote "send ${id} echo ' Recipient: '"; read recipient
+	[ -z "$recipient" ] && lf -remote "send ${id} echoerr No recipient specified!" && exit 1
+	gpg --clear-sign --local-user "$recipient" "$f" && lf -remote "send ${id} select ${f}.asc"
+}}
+
+# Create binary file with detached signature from input.
+cmd gpg-detach-sign %{{
+	lf -remote "send ${id} echo ' Recipient: '"; read recipient
+	[ -z "$recipient" ] && lf -remote "send ${id} echoerr No recipient specified!" && exit 1
+	gpg --detach-sign --local-user "$recipient" "$f" && lf -remote "send ${id} select ${f}.sig"
+}}
+#: }}}
+#: Trash-cli functions {{{
+cmd trash_empty %trash-empty
+cmd trash_restore ${{ trash-restore }}
+cmd trash_put ${{
+	files=$(printf "$fx" | tr '\n' ';')
+	while [ "$files" ]; do
+		# extract the substring from start of string up to delimiter.
+		# this is the first "element" of the string.
+		file=${files%%;*}
+
+		trash-put "$(basename "$file")"
+		# if there's only one element left, set `files` to an empty string.
+		# this causes us to exit this `while` loop.
+		# else, we delete the first "element" of the string from files, and move onto the next.
+		if [ "$files" = "$file" ]; then
+			files=''
+		else
+			files="${files#*;}"
+		fi
+	done
+}}
+#: }}}
+#: }}}
+## #: TODO {{{
+## # Rename file when pasting it:
+## cmd paste-rename ${{
+## 	mode="$(head -n 1 "${XDG_DATA_HOME:-$HOME/.local/share}/lf/files")"
+## 	files="$(tail -n +2 "${XDG_DATA_HOME:-$HOME/.local/share}/lf/files")"
+##
+## 	# Print all selected files, replacing newlines with ';'.
+## 	file_list="$(echo "$files" | tr '\n' ';')"
+##
+## 	# Loop through all files in the list until the list is empty:
+## 	while [ "$file_list" ]
+## 	do
+## 		# Get current file by deleting everything after ';' on the file list.
+## 		file="${file_list%%;*}"
+##
+## 		# If the list does not contain any items besides the previously renamed item exit the while loop by setting list to an empty string.
+## 		# Otherwise delete all previous items on the list and continue.
+## 		[ "$file_list" = "$file" ] && file_list='' || file_list="${file_list#*;}"
+##
+## 		old_name="$(basename "$file")"
+## 	 	while [ -z "${new_name:-}" ]
+## 	 	do
+## 	 		printf "%s => " "$old_name"
+## 	 		read -r new_name
+## 	 	done
+##
+## 	 	case "$mode" in
+## 	 		'copy') cp -n "$old_name" ./"$new_name" ;;
+## 	 		'move') mv -n "$old_name" ./"$new_name" ;;
+## 	 	esac
+## 	done
+##
+## 	lf -remote "send ${id} :clear; load"
+##
+## 	# for old_name in "$(tail -n +2 "${XDG_DATA_HOME:-$HOME/.local/share}/lf/files")"
+## 	# do
+## 	# 	while [ -z "${new_name:-}" ]
+## 	# 	do
+## 	# 		printf "%s => " "$old_name"
+## 	# 		read -r new_name
+## 	# 	done
+##
+## 	# 	case "$mode" in
+## 	# 		'copy') cp -n "$old_name" ./"$new_name" ;;
+## 	# 		'move') mv -n "$old_name" ./"$new_name" ;;
+## 	# 	esac
+## 	# done
+##
+## 	# lf -remote 'send clear'
+## 	# lf -remote 'send load'
+## }}
+## map pr paste-rename
+#: Other {{{
+# cmd cut-add %{{
+# 	files=$(lf -remote load | tail -n +2)
+# 	newline=$'\n'
+#
+# 	# change to $fx to add current file when no toggled
+# 	# files exist.
+# 	if [ -n "$files" ]; then
+# 	    new_files=$(echo "$files${newline}$fs" | sort | uniq)
+# 	else
+# 	    new_files=$fs
+# 	fi
+# 	# remove empty lines from the file list, because they keep messing
+# 	# up the selection.
+# 	new_files=$(echo "$new_files" | sed --quiet -e '/^$/d' -e 'p')
+#
+# 	lf -remote "save${newline}move${newline}${new_files}${newline}"
+# 	lf -remote "send $id unselect"
+# 	lf -remote "send $id sync"
+# }}
+# map cp cut-add
+
+# cmd cut-remove %{{
+# 	files=$(lf -remote load)
+# 	operation=$(echo "$files" | head -n1)
+#
+# 	if [ "$operation" != "move" ]; then
+# 		lf -remote "send $id echoerr no files in cut list."
+# 		exit 1
+# 	fi
+#
+# 	files=$(echo "$files" | tail -n +2)
+# 	newline="$(printf '%s\n')"
+#
+# 	# change to $fx to remove current file when no toggled
+# 	# files exist.
+# 	if [ -n "$files" ]; then
+# 		# here we want all files in $files that aren't in $fs, making sure
+# 		# that none of the entries in $fs are included, even when they aren't
+# 		# in $files. To do this we concatenate $files and $fs (twice), printing
+# 		# only the uniqe lines.
+# 		new_files=$(echo "$files$newline$fs$newline$fs" | sort | uniq -u)
+# 	else
+# 	    new_files=$files
+# 	fi
+# 	new_files=$(echo "$new_files" | sed --quiet -e '/^$/d' -e 'p')
+#
+# 	lf -remote "save${newline}move${newline}${new_files}${newline}"
+# 	lf -remote "send $id unselect${newline}send $id sync"
+# }}
+# map cP cut-remove
+#: }}}
+#: }}}
+#: Unmap keys {{{
+map "'"
+map '"'
+map <c-l>
+map <c-r>
+map <c-e>
+map <c-y>
+map F
+map c
+map d
+map e
+map f
+map i
+map m
+map p
+map r
+map u
+map v
+map t
+map w
+#: }}}
+#: Mappings {{{
+#: Command maps (cmaps) {{{
+# Enable zsh like tab completion.
+cmap <tab> cmd-menu-complete
+cmap <backtab> cmd-menu-complete-back
+#: }}}
+# General mappings:
+map <c-r> :reload; redraw
+map <esc> :clear; unselect; &rm '/tmp/lf-select-range'
+map <c-l> open-in-pager
+
+# Enable mouse support:
+map <m-down> down
+map <m-up> up
+map <m-1> open
+map <m-2> updir
+
+# Mappings to change wallpaper with custom waybg script:
+map bm ${{ waybg "$f" }}
+map ba ${{ waybg -a "$f" }}
+map bpm ${{ waybg "$f" && wal -o pywal_postrun -i "$(head -n1 ~/.cache/waybg/wallpaper)"}}
+map bpa ${{ waybg -a "$f" && wal -o pywal_postrun -i "$(head -n1 ~/.cache/waybg/wallpaper)"}}
+
+# Trash-cli bindings:
+# map dd delfiles
+map dd trash_put
+map dr trash_restore
+map de trash_empty
+
+# Mappings for basic file management:
+map x cut
+map mf mkfile
+map ms mkscript
+
+# "Paste" mappings:
+map pp paste
+map pl paste-link
+map pd paste-to-dir
+
+# Movement mappings:
+map K :toggle; up
+map J :toggle; down
+map <c-k> scroll-parent-up
+map <c-j> scroll-parent-down
+map <a-k> scroll-up
+map <a-j> scroll-down
+map gl follow-link
+
+# "Toggle" mappings:
+map zi set icons!
+map zp toggle-preview
+map zb :set drawbox!
+map zd :set dironly!
+
+# "Find" mappings:
+map ff find
+map fF find-back
+map ft filter
+map fg push :glob-select<space>
+map fG push :glob-unselect<space>
+
+# Mappings for gpg:
+map agr gpg-rep-encrypt
+map agp gpg-pass-encrypt
+map agD gpg-decrypt
+map agv gpg-verify
+map ags gpg-sign
+map agc gpg-clear-sign
+map agd gpg-detach-sign
+
+# Mapping to change file attributes:
+map ch chmod
+map cb bulk-rename
+map ci :rename                           # rename: foo|.txt
+map ca :rename; cmd-right                # rename: foo.|txt
+map cI :rename; cmd-home                 # rename: |foo.txt
+map cA :rename; cmd-end                  # rename: foo.txt|
+map ce :rename; cmd-delete-end           # rename foo|
+map cw :rename; cmd-delete-home          # rename: |.txt
+map cW :rename; cmd-end; cmd-delete-home # rename: |
+map cs push :sed-rename<space>s///g<left><left><left> # Sed renaming.
+
+# Visual mode mappings:
+map V select-everthing
+map vv invert
+map vV invert-below
+map vr select-range
+map vG motion-select bottom
+map vH motion-select high
+map vM motion-select middle
+map vL motion-select low
+map vd motion-select half-down
+map vu motion-select half-up
+map vf motion-select page-down
+map vb motion-select page-up
+map vgg motion-select top
+
+# Archive management:
+map ax exarchive
+map m7 mkarchive 7z
+map mz mkarchive zip
+map mr mkarchive rar
+map mc mkarchive cpio
+map mg mkarchive gzip
+map mb mkarchive bzip2
+map mZ mkarchive zstd
+map mC mkarchive compress
+map ma mkarchive ar
+map mx mkarchive xz
+map mla mkarchive lzma
+map mlo mkarchive lzop
+map mlz mkarchive lzip
+map mta mkarchive tar
+map mtg mkarchive targz
+map mtb mkarchive tarbz2
+map mtZ mkarchive tarzstd
+map mtC mkarchive tarcompress
+map mtx mkarchive tarxz
+map mtla mkarchive tarlzma
+map mtlo mkarchive tarlzop
+map mtlz mkarchive tarlzip
+#: }}}

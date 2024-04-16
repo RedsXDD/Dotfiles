@@ -1,0 +1,1 @@
+regexSearch: bad_expression: Found a closing ) with no corresponding opening parenthesis.  The error occurred while parsing the regular expression: '>>>HERE>>>)'.

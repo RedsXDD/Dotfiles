@@ -1,0 +1,157 @@
+// vim:fileencoding=utf-8:foldmethod=marker:filetype=scss
+
+layout {{
+	tab_template name="ui" {{
+		pane size=1 borderless=true {{
+			plugin location="zellij:tab-bar"
+		}}
+		children // The position of this entry in the code defines the position of the status bar (top/bottom).
+	}}
+	//: Swap layout "Vertical"
+	swap_tiled_layout name="VERTICAL" {{
+		ui max_panes=5 {{
+			pane split_direction="vertical" {{
+				pane
+				pane {{ children; }}
+			}}
+		}}
+		ui max_panes=8 {{
+			pane split_direction="vertical" {{
+				pane {{ children; }}
+				pane {{ pane; pane; pane; pane; }}
+			}}
+		}}
+		ui max_panes=12 {{
+			pane split_direction="vertical" {{
+				pane {{ children; }}
+				pane {{ pane; pane; pane; pane; }}
+				pane {{ pane; pane; pane; pane; }}
+			}}
+		}}
+	}}
+	//: Swap layout "Horizontal"
+	swap_tiled_layout name="HORIZONTAL" {{
+	 	ui max_panes=5 {{
+	 		pane
+	 		pane
+	 	}}
+		ui max_panes=8 {{
+			pane {{
+				pane split_direction="vertical" {{ children; }}
+				pane split_direction="vertical" {{ pane; pane; pane; pane; }}
+			}}
+		}}
+		ui max_panes=12 {{
+			pane {{
+				pane split_direction="vertical" {{ children; }}
+				pane split_direction="vertical" {{ pane; pane; pane; pane; }}
+				pane split_direction="vertical" {{ pane; pane; pane; pane; }}
+			}}
+		}}
+	}}
+	//: Swap layout "Stacked"
+	swap_tiled_layout name="STACKED" {{
+		ui min_panes=5 {{
+			pane split_direction="vertical" {{
+				pane
+				pane stacked=true {{ children; }}
+			}}
+		}}
+	}}
+	//: Swap layout "Staggered"
+	swap_floating_layout name="STAGGERED" {{
+		floating_panes
+	}}
+	//: Swap layout "Enlarged"
+	swap_floating_layout name="ENLARGED" {{
+		floating_panes max_panes=10 {{
+			pane {{ x "5%"; y 1; width "90%"; height "90%"; }}
+			pane {{ x "5%"; y 2; width "90%"; height "90%"; }}
+			pane {{ x "5%"; y 3; width "90%"; height "90%"; }}
+			pane {{ x "5%"; y 4; width "90%"; height "90%"; }}
+			pane {{ x "5%"; y 5; width "90%"; height "90%"; }}
+			pane {{ x "5%"; y 6; width "90%"; height "90%"; }}
+			pane {{ x "5%"; y 7; width "90%"; height "90%"; }}
+			pane {{ x "5%"; y 8; width "90%"; height "90%"; }}
+			pane {{ x "5%"; y 9; width "90%"; height "90%"; }}
+			pane focus=true {{ x 10; y 10; width "90%"; height "90%"; }}
+		}}
+	}}
+	//: Swap layout "Spread"
+	swap_floating_layout name="SPREAD" {{
+		floating_panes max_panes=1 {{
+			pane {{y "50%"; x "50%"; }}
+		}}
+		floating_panes max_panes=2 {{
+			pane {{ x "1%"; y "25%"; width "45%"; }}
+			pane {{ x "50%"; y "25%"; width "45%"; }}
+		}}
+		floating_panes max_panes=3 {{
+			pane focus=true {{ y "55%"; width "45%"; height "45%"; }}
+			pane {{ x "1%"; y "1%"; width "45%"; }}
+			pane {{ x "50%"; y "1%"; width "45%"; }}
+		}}
+		floating_panes max_panes=4 {{
+			pane {{ x "1%"; y "55%"; width "45%"; height "45%"; }}
+			pane focus=true {{ x "50%"; y "55%"; width "45%"; height "45%"; }}
+			pane {{ x "1%"; y "1%"; width "45%"; height "45%"; }}
+			pane {{ x "50%"; y "1%"; width "45%"; height "45%"; }}
+		}}
+	}}
+	default_tab_template {{
+		pane size=1 borderless=true {{
+			plugin location="file:$HOME/.config/zellij/plugins/zjstatus.wasm" {{
+				hide_frame_for_single_pane "false"
+
+				// Zjstatus border options:
+				border_enabled  "false"
+				border_char     "─"
+				border_format   "#[fg=blue]{{char}}"
+				border_position "bottom"
+
+				// Main status bar configuration:
+				format_left   "{{mode}}#[bg={foreground},fg={background},bold] {{session}}#[bg={background},fg={foreground}]"
+				format_center "{{tabs}}"
+				format_right  "#[bg={background},fg=green,bold]{{swap_layout}} #[bg={background},fg={foreground}]#[bg={foreground},fg={background},bold]{{datetime}}#[bg=blue,fg={background},bold]  #[bg={background},fg=blue]"
+				format_space  ""
+
+				datetime        "#[bg={foreground},fg={background},bold]{{format}} "
+				datetime_format "%a, %d %b %Y %H:%M"
+				datetime_timezone "Brazil/East"
+
+				// Mode configuration:
+				mode_normal       "#[bg={background},fg=blue]#[bg=blue,fg={background},bold]󰮊 {{name}} "
+				mode_locked       "#[bg={background},fg=red]#[bg=red,fg={background},bold]󰮊 {{name}} "
+				mode_tmux         "#[bg={background},fg=red]#[bg=red,fg={background},bold]󰮊 {{name}} "
+				mode_scroll       "#[bg={background},fg=green]#[bg=green,fg={background},bold]󰮊 {{name}} "
+				mode_enter_search "#[bg={background},fg=green]#[bg=green,fg={background},bold]󰮊 {{name}} "
+				mode_search       "#[bg={background},fg=green]#[bg=green,fg={background},bold]󰮊 {{name}} "
+				mode_rename_tab   "#[bg={background},fg=magenta]#[bg=magenta,fg={background},bold]󰮊 {{name}} "
+				mode_rename_pane  "#[bg={background},fg=magenta]#[bg=magenta,fg={background},bold]󰮊 {{name}} "
+				mode_pane         "#[bg={background},fg=cyan]#[bg=cyan,fg={background},bold]󰮊 {{name}} "
+				mode_tab          "#[bg={background},fg=cyan]#[bg=cyan,fg={background},bold]󰮊 {{name}} "
+				mode_session      "#[bg={background},fg=cyan]#[bg=cyan,fg={background},bold]󰮊 {{name}} "
+				mode_move         "#[bg={background},fg=yellow]#[bg=yellow,fg={background},bold]󰮊 {{name}} "
+				mode_resize       "#[bg={background},fg=yellow]#[bg=yellow,fg={background},bold]󰮊 {{name}} "
+				mode_prompt       "#[bg={background},fg=yellow]#[bg=yellow,fg={background},bold]󰮊 {{name}} "
+
+				// General tab formatting options:
+				tab_separator            "#[bg={background},fg={background}] "
+				tab_sync_indicator       " "
+				tab_fullscreen_indicator "󰍋 "
+				tab_floating_indicator   "⬚ "
+
+				// Formatting for inactive tabs:
+				tab_normal            "#[bg={background},fg={foreground},bold] {{index}}"
+				tab_normal_sync       "#[bg={background},fg={foreground},bold]{{sync_indicator}}{{index}}"
+				tab_normal_fullscreen "#[bg={background},fg={foreground},bold]{{fullscreen_indicator}}{{index}}"
+
+				// Formatting for active tabs:
+				tab_active            "#[bg={background},fg={foreground}]#[bg={foreground},fg={background},bold]{{floating_indicator}}{{name}} #[bg=green,fg={background},bold] {{index}}#[bg={background},fg=green]"
+				tab_active_sync       "#[bg={background},fg={foreground}]#[bg={foreground},fg={background},bold]{{sync_indicator}}{{name}} #[bg=green,fg={background},bold] {{index}}#[bg={background},fg=green]"
+				tab_active_fullscreen "#[bg={background},fg={foreground}]#[bg={foreground},fg={background},bold]{{fullscreen_indicator}}{{name}} #[bg=green,fg={background},bold] {{index}}#[bg={background},fg=green]"
+			}}
+		}}
+		children // The position of this entry in the code defines the position of the status bar (top/bottom).
+	}}
+}}

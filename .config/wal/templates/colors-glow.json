@@ -1,0 +1,199 @@
+{{
+	"document": {{
+		"block_prefix": "\n",
+		"block_suffix": "\n",
+		"color": "{foreground}",
+		"margin": 2
+	}},
+	"block_quote": {{
+		"indent": 1,
+		"indent_token": "│ "
+	}},
+	"paragraph": {{}},
+	"list": {{
+		"level_indent": 2
+	}},
+	"heading": {{
+		"block_suffix": "\n",
+		"color": "{foreground}",
+		"bold": true
+	}},
+	"h1": {{
+		"prefix": "▓▓▓ ",
+		"suffix": " ",
+		"color": "{color1}",
+		"bold": true
+	}},
+	"h2": {{
+		"prefix": "▓▓▓▓ ",
+		"color": "{color3}"
+	}},
+	"h3": {{
+		"prefix": "▓▓▓▓▓ ",
+		"color": "{color3}"
+	}},
+	"h4": {{
+		"prefix": "▓▓▓▓▓▓ ",
+		"color": "{color2}"
+	}},
+	"h5": {{
+		"prefix": "▓▓▓▓▓▓▓ ",
+		"color": "{color4}"
+	}},
+	"h6": {{
+		"prefix": "▓▓▓▓▓▓▓▓ ",
+		"color": "{color5}"
+	}},
+	"text": {{}},
+	"strikethrough": {{
+		"crossed_out": true
+	}},
+	"emph": {{
+		"italic": true
+	}},
+	"strong": {{
+		"bold": true
+	}},
+	"hr": {{
+		"color": "{color15}",
+		"format": "\n--------\n"
+	}},
+	"item": {{
+		"block_prefix": "• "
+	}},
+	"enumeration": {{
+		"block_prefix": ". "
+	}},
+	"task": {{
+		"ticked": "[✓] ",
+		"unticked": "[ ] "
+	}},
+	"link": {{
+		"color": "{color4}",
+		"underline": true
+	}},
+	"link_text": {{
+		"color": "{color5}",
+		"bold": true
+	}},
+	"image": {{
+		"color": "{color4}",
+		"underline": true
+	}},
+	"image_text": {{
+		"color": "{color5}",
+		"format": "Image: {{{{.text}}}} →"
+	}},
+	"code": {{
+		"prefix": " ",
+		"suffix": " ",
+		"color": "{color1}",
+		"background_color": "{color8}"
+	}},
+	"code_block": {{
+		"color": "{color8}",
+		"margin": 2,
+		"chroma": {{
+			"text": {{
+				"color": "{foreground}"
+			}},
+			"error": {{
+				"color": "{foreground}",
+				"background_color": "{color1}"
+			}},
+			"comment": {{
+				"color": "{color15}"
+			}},
+			"comment_preproc": {{
+				"color": "{color4}"
+			}},
+			"keyword": {{
+				"color": "{color6}"
+			}},
+			"keyword_reserved": {{
+				"color": "{color6}"
+			}},
+			"keyword_namespace": {{
+				"color": "{color3}"
+			}},
+			"keyword_type": {{
+				"color": "{color3}"
+			}},
+			"operator": {{
+				"color": "{color4}"
+			}},
+			"punctuation": {{
+				"color": "{color7}"
+			}},
+			"name": {{
+				"color": "{color5}"
+			}},
+			"name_builtin": {{
+				"color": "{color3}"
+			}},
+			"name_tag": {{
+				"color": "{color6}"
+			}},
+			"name_attribute": {{
+				"color": "{color3}"
+			}},
+			"name_class": {{
+				"color": "{color3}"
+			}},
+			"name_constant": {{
+				"color": "{color3}"
+			}},
+			"name_decorator": {{
+				"color": "{color5}"
+			}},
+			"name_exception": {{}},
+			"name_function": {{
+				"color": "{color4}"
+			}},
+			"name_other": {{}},
+			"literal": {{}},
+			"literal_number": {{
+				"color": "{color3}"
+			}},
+			"literal_date": {{}},
+			"literal_string": {{
+				"color": "{color2}"
+			}},
+			"literal_string_escape": {{
+				"color": "{color5}"
+			}},
+			"generic_deleted": {{
+				"color": "{color1}"
+			}},
+			"generic_emph": {{
+				"color": "{foreground}",
+				"italic": true
+			}},
+			"generic_inserted": {{
+				"color": "{color2}"
+			}},
+			"generic_strong": {{
+				"color": "{foreground}",
+				"bold": true
+			}},
+			"generic_subheading": {{
+				"color": "{color4}"
+			}},
+			"background": {{
+				"background_color": "{color8}"
+			}}
+		}}
+	}},
+	"table": {{
+		"center_separator": "┼",
+		"column_separator": "│",
+		"row_separator": "─"
+	}},
+	"definition_list": {{}},
+	"definition_term": {{}},
+	"definition_description": {{
+		"block_prefix": "\n🠶 "
+	}},
+	"html_block": {{}},
+	"html_span": {{}}
+}}

@@ -1,0 +1,17 @@
+#!/usr/bin/env sh
+
+# Script dependencies: gnutls, fzf, arch-wiki-docs, xdg-utils, lynx(some browser).
+
+wikidir='/usr/share/doc/arch-wiki/html/en'
+[ -z "$DISPLAY" ] && opener='lynx' || opener="${BROWSER:-xdg-open}"
+
+fzf_cmd(){
+	find "$wikidir" -type f -iname '*.html' |
+		awk -F '/' -v n=8 'BEGIN{OFS="/"} {gsub(/\.html/, ""); for (i=n; i<=NF; i++) printf "%s%s", $i, (i<NF ? OFS : ORS)}' | # This huge awk command is just a fancier way of doing `cut -d'/' -f8- | sed 's/.html//g'`
+		sort | fzf-tmux -p 50% -w 50% --prompt '> Search docs >'
+}
+
+doc="$(fzf_cmd)"
+[ -n "$doc" ] && "$opener" "${wikidir}/${doc}.html"
+
+# vim:fileencoding=utf-8:foldmethod=marker

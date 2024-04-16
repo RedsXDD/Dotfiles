@@ -1,0 +1,92 @@
+/* ------------------------------------------------------------ */
+
+/*
+ * ██╗    ██╗██╗      ██████╗  ██████╗  ██████╗ ██╗   ██╗████████╗
+ * ██║    ██║██║     ██╔═══██╗██╔════╝ ██╔═══██╗██║   ██║╚══██╔══╝
+ * ██║ █╗ ██║██║     ██║   ██║██║  ███╗██║   ██║██║   ██║   ██║
+ * ██║███╗██║██║     ██║   ██║██║   ██║██║   ██║██║   ██║   ██║
+ * ╚███╔███╔╝███████╗╚██████╔╝╚██████╔╝╚██████╔╝╚██████╔╝   ██║
+ *  ╚══╝╚══╝ ╚══════╝ ╚═════╝  ╚═════╝  ╚═════╝  ╚═════╝    ╚═╝
+ */
+
+/* ------------------------------------------------------------ */
+
+/* Import pywal theme */
+@import url('file:///home/Reds/.cache/wal/colors-wlogout.css');
+
+window {
+	font-family: JetBrainsMonoNerdFont;
+	font-size: 16pt;
+	color: @color4;
+	background-color: transparent;
+}
+
+button {
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: 25%;
+	border: none;
+	border-radius: 40px;
+	background-color: @background;
+	margin: 5px;
+	transition: box-shadow 0.3s ease-in-out, background-color 0.3s ease-in-out;
+	border-bottom: 7px solid mix(@background,black,0.3);
+	opacity: 0.7;
+}
+
+button:hover {
+	background-color: @color6;
+	border-bottom: 7px solid mix(@color6,black,0.3);
+}
+
+button:focus {
+	background-color: @color4;
+	color: black;
+	border-bottom: 7px solid mix(@color4,black,0.3);
+}
+
+/* -------------------------------------------------------- */
+
+#lock {
+	background-image: image(url("./icons/lock.png"));
+}
+#lock:focus {
+	background-image: image(url("./icons/lock-hover.png"));
+}
+
+#logout {
+	background-image: image(url("./icons/logout.png"));
+}
+#logout:focus {
+	background-image: image(url("./icons/logout-hover.png"));
+}
+
+#suspend {
+	background-image: image(url("./icons/sleep.png"));
+}
+#suspend:focus {
+	background-image: image(url("./icons/sleep-hover.png"));
+}
+
+#hibernate {
+	background-image: image(url("./icons/hibernate.png"));
+}
+#hibernate:focus {
+	background-image: image(url("./icons/hibernate-hover.png"));
+}
+
+#shutdown {
+	background-image: image(url("./icons/power.png"));
+}
+#shutdown:focus {
+	background-image: image(url("./icons/power-hover.png"));
+}
+
+#reboot {
+	background-image: image(url("./icons/restart.png"));
+}
+#reboot:focus {
+	background-image: image(url("./icons/restart-hover.png"));
+}
+
+/* -------------------------------------------------------- */

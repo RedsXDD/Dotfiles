@@ -1,0 +1,13 @@
+# vim:fileencoding=utf-8:foldmethod=marker:filetype=sh
+
+up(){
+	local d=""
+	local limit="$1"
+
+	# Default to limit of 1.
+	[ -z "$limit" -o "$limit" -le 0 ] && local limit=1
+	for ((i=1; i<=limit; i++)); do local d="../$d"; done; unset i
+
+	# Perform cd. Show error if cd fails.
+	if ! builtin cd "$d"; then echo "Couldn't go up $limit dirs."; fi
+}

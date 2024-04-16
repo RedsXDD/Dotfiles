@@ -1,0 +1,15 @@
+#!/usr/bin/env sh
+
+# Script dependencies: gnutls, python-pywal, imv
+# shellcheck disable=1091,2154
+
+imv_config="${XDG_CONFIG_HOME:-$HOME/.config}/imv/config"
+[ -f "${XDG_CACHE_HOME:-$HOME/.cache}/wal/colors.sh" ] && . "${XDG_CACHE_HOME:-$HOME/.cache}/wal/colors.sh"
+
+tmp="$(mktemp)"
+[ -f "$imv_config" ] && cp "$imv_config" "$tmp"
+sed "s|background =.*|background = ${background###}|g; s|overlay_background_color =.*|overlay_background_color = ${color4###}|g" "$imv_config" > "$tmp"
+mv "$tmp" "$imv_config"
+\imv "$@"
+
+# vim:fileencoding=utf-8:foldmethod=marker

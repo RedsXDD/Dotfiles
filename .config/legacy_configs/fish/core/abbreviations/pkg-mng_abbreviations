@@ -1,0 +1,17 @@
+# vim:fileencoding=utf-8:foldmethod=marker:filetype=fish
+
+# Pacman/paru abbres:
+abbr p 'pacman --color=auto'
+abbr sp 'sudo pacman --color=auto'
+abbr pp 'paru --color=auto'
+abbr fp 'fzf-paru'
+
+# Remove/list orphaned packages:
+abbr pc 'paru -Qqd | paru -Rsu --print -'
+abbr pcl 'sudo pacman -Rusnv $(paru -Qdtq)'
+
+# Get the fastest mirrors:
+abbr mirror 'sudo reflector -f 30 -l 30 --number 10 --verbose --save /etc/pacman.d/mirrorlist && sudo pacman -Syy'
+abbr mirrord 'sudo reflector --latest 50 --number 20 --sort delay --verbose --save /etc/pacman.d/mirrorlist && sudo pacman -Syy'
+abbr mirrors 'sudo reflector --latest 50 --number 20 --sort score --verbose --save /etc/pacman.d/mirrorlist && sudo pacman -Syy'
+abbr mirrora 'sudo reflector --latest 50 --number 20 --sort age --verbose --save /etc/pacman.d/mirrorlist && sudo pacman -Syy'
