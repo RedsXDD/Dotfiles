@@ -3,39 +3,50 @@
 alias lfi='cdi && lfcd'
 lfcd(){
 	# Define basic variables:
-	arguments="$@"
+	arguments="$*"
 	main_lfrc="${XDG_CONFIG_HOME:-$HOME/.config}/lf/lfrc"
 	tmp_lfrc="$(mktemp)"
 	exited_path="$(mktemp)"
 
-	cleanup(){
+	#shellcheck disable=1091,2317
+	postrun(){
+		unset -f postrun
+
 		[ -f "${XDG_CONFIG_HOME:-$HOME/.config}/lf/lf-cleaner" ] && . "${XDG_CONFIG_HOME:-$HOME/.config}/lf/lf-cleaner" # Useful for cleaning image previews.
 		rm -rf "$tmp_lfrc" "$exited_path" >/dev/null 2>&1
-        	unset arguments main_lfrc tmp_lfrc exited_path cleanup main zoxide_query last_directory
+        	unset arguments main_lfrc tmp_lfrc exited_path zoxide_query
+
+		# Change directory to last visited directory if the directory exists and is different from the current directory.
+		if [ -f "$exited_path" ]; then
+			local last_directory
+			last_directory="$(< "$exited_path")"
+			[ -d "$last_directory" ] && [ "$last_directory" != "$(pwd)" ] && builtin cd "$last_directory" || return 1
+		fi
 	}
-	trap 'cleanup' 0 1 15
+	trap 'postrun' 0 1 15
+
+	lf_cmd(){
+		unset -f lf_cmd
+		\lf -config "$tmp_lfrc" -last-dir-path="$exited_path" "$@"
+	}
 
 	main(){
+		unset -f main
+
 		# Change the temporary lfrc file depending if lf is being ran on a tty environment or not.
 		[ -n "$DISPLAY" ] && cp "$main_lfrc" "$tmp_lfrc"
 		[ -z "$DISPLAY" ] && sed "s/set\s\+icons\s\+true/set icons false/g" "$main_lfrc" > "$tmp_lfrc"
 
-		[ -z "$arguments" ] && \lf -config "$tmp_lfrc" -last-dir-path="$exited_path" && return
-		[ -d "$arguments" ] && \lf -config "$tmp_lfrc" -last-dir-path="$exited_path" "$arguments" && return
+		[ -z "$arguments" ] && lf_cmd && return
+		[ -d "$arguments" ] && lf_cmd "$arguments" && return
 
-		command -v zoxide >/dev/null 2>&1 && zoxide_query="$(zoxide query "$@" 2>/dev/null)"
-		[ -z "$zoxide_query" ] && \lf -config "$tmp_lfrc" -last-dir-path="$exited_path" "$arguments" && return
-		[ -d "$zoxide_query" ] && builtin cd "$zoxide_query" && \lf -config "$tmp_lfrc" -last-dir-path="$exited_path" && return
+		command -v zoxide >/dev/null 2>&1 && zoxide_query="$(zoxide query -- "$@" 2>/dev/null)"
+		[ -z "$zoxide_query" ] && lf_cmd "$arguments" && return
+		[ -d "$zoxide_query" ] && builtin cd "$zoxide_query" && lf_cmd && return
 
 		if [ -d "$arguments" ] || [ -f "$arguments" ]; then
 			\lf -config "$tmp_lfrc" -last-dir-path="$exited_path" "$arguments"
 		fi
 	}
 	main "$@"
-
-	# Change directory to last visited directory if the directory exists and is different from the current directory.
-	if [ -f "$exited_path" ]; then
-		last_directory="$(< "$exited_path")"
-		[ -d "$last_directory" ] && [ "$last_directory" != "$(pwd)" ] && builtin cd "$last_directory"
-	fi
 }
