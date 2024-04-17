@@ -25,7 +25,7 @@ setw -g clock-mode-colour color4                # Clock mode.
 setw -g mode-style "bg=color0,fg=color5,bold"   # Copy mode.
 set -g pane-border-style "fg=$foreground_color" # Default pane border color.
 set -g pane-active-border-style fg=color4       # Active pane border color.
-set -g status-style "bg=$background_color,fg=$txt_color,bold" # Default status bar style.
+set -g status-style "bg=$background_color,fg=$foreground_color,bold" # Default status bar style.
 
 # Message status bar style:
 set -g message-style         "#{?pane_active,bg=color3,bg=$background_color},fg=$txt_color,bold"
