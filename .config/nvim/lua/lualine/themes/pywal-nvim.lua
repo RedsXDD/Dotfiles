@@ -33,6 +33,11 @@ pywal.command = {
 }
 
 pywal.replace = {
+	a = { bg = colors.color2, fg = colors.background, gui = "bold" },
+	z = { bg = colors.color2, fg = colors.background, gui = "bold" },
+}
+
+pywal.terminal = {
 	a = { bg = colors.color3, fg = colors.background, gui = "bold" },
 	z = { bg = colors.color3, fg = colors.background, gui = "bold" },
 }
