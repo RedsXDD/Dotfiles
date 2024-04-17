@@ -22,16 +22,14 @@ return {
 		local clue = require("mini.clue")
 
 		clue.requires_clue = function(required, clues)
-			local M = { clues }
-
 			if required and type(required) == "string" then
 				local success, _ = pcall(require, required)
 				if not success then
 					return false
+				else
+					return { clues }
 				end
 			end
-
-			return M
 		end
 
 		clue.setup({
@@ -78,12 +76,25 @@ return {
 				-- Lsp:
 				clue.requires_clue("lspconfig", { mode = "n", keys = "<Leader>l", desc = "+LSP" }),
 
+				-- Noice:
+				clue.requires_clue("noice", { mode = "n", keys = "<Leader>gn", desc = "+Noice" }),
+
+				-- Mini.map:
+				clue.requires_clue("mini.map", { mode = "n", keys = "<Leader>m", desc = "+MiniMap" }),
+
+				-- Mini.surround:
+				clue.requires_clue("mini.surround", {
+					{ mode = "n", keys = "<Leader>s", desc = "+Surround" },
+					{ mode = "x", keys = "<Leader>s", desc = "+Surround" },
+				}),
+
 				-- Gitsigns:
 				clue.requires_clue("gitsigns", {
 					{ mode = "n", keys = "<Leader>gh", desc = "+Gitsigns" },
 					{ mode = "x", keys = "<Leader>gh", desc = "+Gitsigns" },
 				}),
 
+				-- Mini.bracketed:
 				clue.requires_clue("mini.bracketed", {
 					{ mode = "n", keys = "]b", postkeys = "]" },
 					{ mode = "n", keys = "]w", postkeys = "]" },
@@ -99,12 +110,6 @@ return {
 					{ mode = "n", keys = "<Leader>fl", desc = "+LSP" },
 					{ mode = "n", keys = "<Leader>fL", desc = "+List" }
 				}),
-
-				-- Mini.map:
-				clue.requires_clue("mini.map", { mode = "n", keys = "<Leader>m", desc = "+MiniMap" }),
-
-				-- Noice:
-				clue.requires_clue("noice", { mode = "n", keys = "<Leader>gn", desc = "+Noice" }),
 
 				clue.gen_clues.builtin_completion(),
 				clue.gen_clues.g(),
