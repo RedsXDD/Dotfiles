@@ -124,8 +124,7 @@ end
 o.list = true
 if vim.env.DISPLAY ~= nil then
 	o.listchars = {
-		-- tab = "» ",
-		tab = "│ ", -- Simulates indentblankline.nvim plugin.
+		tab = "» ",
 		trail = "·",
 		nbsp = "␣",
 		extends = "▸",
