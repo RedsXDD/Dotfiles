@@ -4,25 +4,7 @@ return {
 	"echasnovski/mini.files",
 	dependencies = { "nvim-tree/nvim-web-devicons" },
 	-- NOTE: This init function allows the plugin to be lazy loaded without breaking the netrw hijack functionality.
-	init = function()
-		vim.g.loaded_netrwPlugin = 1
-		vim.g.loaded_netrw = 1
-
-		local group_name = "augroup_mini_files_netrw_hijack"
-		local augroup = vim.api.nvim_create_augroup(group_name, { clear = true })
-
-		vim.api.nvim_create_autocmd("VimEnter", {
-			desc = "Auto open mini.files when loading a directory.",
-			group = augroup,
-			callback = function(args)
-				local f = vim.fn.expand("%:p")
-				if vim.fn.isdirectory(f) ~= 0 then
-					require("mini.files").open()
-					vim.api.nvim_clear_autocmds({ group = group_name })
-				end
-			end,
-		})
-	end,
+		--: Main keymappings {{{
 	--stylua: ignore start
 	keys = function()
 		local M = {}
@@ -45,6 +27,29 @@ return {
 		return M
 	end,
 	--stylua: ignore end
+	--: }}}
+	-- init = function() {{{
+	init = function()
+		vim.g.loaded_netrwPlugin = 1
+		vim.g.loaded_netrw = 1
+
+		local group_name = "augroup_mini_files_netrw_hijack"
+		local augroup = vim.api.nvim_create_augroup(group_name, { clear = true })
+
+		vim.api.nvim_create_autocmd("VimEnter", {
+			desc = "Auto open mini.files when loading a directory.",
+			group = augroup,
+			callback = function(args)
+				local f = vim.fn.expand("%:p")
+				if vim.fn.isdirectory(f) ~= 0 then
+					require("mini.files").open()
+					vim.api.nvim_clear_autocmds({ group = group_name })
+				end
+			end,
+		})
+	end,
+	--: }}}
+	--: config = function() {{{
 	config = function()
 		--: Window options {{{
 		-- Set window options:
@@ -159,4 +164,5 @@ return {
 		})
 		--: }}}
 	end,
+	--: }}}
 }
