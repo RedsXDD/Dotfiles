@@ -13,7 +13,7 @@ return {
 			end, { expr = true })
 		end
 
-		return {
+		local M = {
 			resize = {
 				timing = animate.gen_timing.linear({ duration = 100, unit = "total" }),
 			},
@@ -30,5 +30,7 @@ return {
 				}),
 			},
 		}
+
+		return M
 	end,
 }
