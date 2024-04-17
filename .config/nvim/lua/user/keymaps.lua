@@ -85,7 +85,6 @@ map({ "n", "v" }, "<Leader>tc", ":setlocal formatoptions-=cro<CR>", "Enable auto
 map({ "n", "v" }, "<Leader>tC", ":setlocal formatoptions=cro<CR>", "Disable auto commenting.")
 --: }}}
 --: Misc {{{
-map({ "n", "v" }, "<Leader>g$", ":!clear && shellcheck %<CR>", "Analyse current file with shell check.")
 map("n", "<Leader>gs", ":s///g<Left><Left><Left>", "Replace string on the current line.")
 map("n", "<Leader>gS", ":%s///g<Left><Left><Left>", "Replace string on the whole file.")
 map("v", "<Leader>gs", ":s///g<Left><Left><Left>", "Replace on selected text.")
