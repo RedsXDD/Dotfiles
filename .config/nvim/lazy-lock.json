@@ -22,6 +22,7 @@
   "mini.extra": { "branch": "main", "commit": "482a873a9948bb4d027edc95aed44af82dc93ba4" },
   "mini.files": { "branch": "main", "commit": "fca93a4eb3d7aa240239d56b48f1dc400f53ff67" },
   "mini.hipatterns": { "branch": "main", "commit": "0a72439dbded766af753a3e7ec0a5b21d0f8ada0" },
+  "mini.indentscope": { "branch": "main", "commit": "a8274b6ea2d868198d27bd91a31ed5ea3a6a5744" },
   "mini.notify": { "branch": "main", "commit": "f347e3facc67732f0782b97c506bf1146012b15f" },
   "mini.pairs": { "branch": "main", "commit": "04f58f2545ed80ac3b52dd4826e93f33e15b2af6" },
   "mini.pick": { "branch": "main", "commit": "9738a3b9b1841c6afaff4e3538490670a848172d" },
