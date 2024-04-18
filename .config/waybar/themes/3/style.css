@@ -103,7 +103,7 @@ label:focus {
 #workspaces button {
 	background: inherit;
 	color: @foreground;
-	padding: 0 8px 0 6px;
+	padding: 0 10px 0 6px;
 }
 
 #workspaces button:hover,
