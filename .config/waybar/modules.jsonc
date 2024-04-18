@@ -270,7 +270,7 @@
 		"tooltip": false,
 		"format": "󰏖 {}",
 		"interval": 3600,
-		"exec": "pacman -Qu | wc -l"
+		"exec": "checkupdates | wc -l" // Requires pacman-contrib package.
 	},
 	// }}}
 	// Temperature module {{{
