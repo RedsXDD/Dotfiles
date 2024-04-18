@@ -23,11 +23,14 @@ return {
 				"neo-tree",
 			},
 			sections = {
-				lualine_a = { "mode" },
+				lualine_a = {
+					{ "mode", separator = { left = "" }, padding = { left = 0, right = 1 }, },
+				},
 				lualine_b = {
 					"branch",
 					{
 						"diff",
+						padding = { left = 1, right = 0 },
 						symbols = {
 							added = icons.git.added,
 							modified = icons.git.modified,
@@ -62,31 +65,71 @@ return {
 							hint = icons.diagnostics.Hint,
 						},
 					},
-					"filename"
+					"filename",
 				},
 				lualine_x = {},
-				lualine_y = { "filetype", "encoding", "fileformat" },
-				lualine_z = {
+				lualine_y = {
+					{ "filetype", padding = { left = 0, right = 1 } },
+					"encoding",
+					{ "fileformat", padding = { left = 1, right = 1 } },
 					{ "progress", padding = { left = 1, right = 1 } },
-					{ "location", padding = { left = 0, right = 1 } },
+				},
+				lualine_z = {
+					{ "location", separator = { right = "" }, padding = { left = 0, right = 0 } },
 				},
 			},
 		}
-
-		-- Set separators icons that are TTY compatible.
-		if vim.env.DISPLAY ~= nil then
-			M.options.section_separators = { left = "", right = "" }
-			-- M.options.component_separators = { left = "", right = "" },
-			M.options.component_separators = "│"
-		else
-			M.options.section_separators = ""
-			M.options.component_separators = "|"
-		end
 
 		return M
 	end,
 	config = function(_, opts)
 		vim.opt.laststatus = 3
+
+		-- Set separators icons that are TTY compatible.
+		local options = opts.options
+		local sections = opts.sections
+		if vim.env.DISPLAY ~= nil then
+			options.section_separators = { left = "", right = "" }
+			options.component_separators = "│"
+		else
+			options.section_separators = ""
+			options.component_separators = "|"
+
+			local a = sections.lualine_a
+			for _, comp in ipairs(a) do
+				if comp[1] == "mode" then
+					comp.separator = { left = "", right = "" }
+					comp.padding = { left = 1, right = 1 }
+					break
+				end
+			end
+
+			local b = sections.lualine_b
+			for _, comp in ipairs(b) do
+				if comp[1] == "diff" then
+					comp.padding = { left = 1, right = 1 }
+					break
+				end
+			end
+
+			local y = sections.lualine_y
+			for _, comp in ipairs(y) do
+				if comp[1] == "filetype" then
+					comp.padding = { left = 1, right = 1 }
+					break
+				end
+			end
+
+			local z = sections.lualine_z
+			for _, comp in ipairs(z) do
+				if comp[1] == "location" then
+					comp.separator = { left = "" }
+					comp.padding = { left = 1, right = 1 }
+					break
+				end
+			end
+		end
+
 		require("lualine").setup(opts)
 	end,
 }
