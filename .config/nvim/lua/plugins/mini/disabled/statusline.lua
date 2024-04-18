@@ -13,11 +13,9 @@ return {
 				statusline.section_location_modified = function(args)
 					-- Use virtual column number to allow update when past last column
 					if statusline.is_truncated(args.trunc_width) then
-						return "%l│%2v"
+						return "%l:%L"
 					end
-
-					-- Use `virtcol()` to correctly handle multi-byte characters
-					return '%l:%L:%p%%│%1v:%-1{virtcol("$") - 1}'
+					return ' %p%% │ %l:%L'
 				end
 
 				--stylua: ignore start
