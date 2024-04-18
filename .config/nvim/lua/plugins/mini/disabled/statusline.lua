@@ -28,7 +28,7 @@ return {
 					if statusline.is_truncated(args.trunc_width) then
 						return "%l:%L"
 					end
-					return ' %p%% │ %l:%L'
+					return ' %p%% | %l:%L'
 				end
 
 				--stylua: ignore start

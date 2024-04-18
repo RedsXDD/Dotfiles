@@ -14,6 +14,7 @@ return {
 				theme = "pywal-nvim",
 				icons_enabled = true,
 				always_divide_middle = true,
+				component_separators = "|",
 				disabled_filetypes = { statusline = { "dashboard", "alpha", "starter" } },
 			},
 			extensions = {
@@ -90,10 +91,8 @@ return {
 		local sections = opts.sections
 		if vim.env.DISPLAY ~= nil then
 			options.section_separators = { left = "", right = "" }
-			options.component_separators = "│"
 		else
 			options.section_separators = ""
-			options.component_separators = "|"
 
 			local a = sections.lualine_a
 			for _, comp in ipairs(a) do
