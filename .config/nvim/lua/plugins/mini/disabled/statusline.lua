@@ -10,6 +10,19 @@ return {
 			active = function()
 				local statusline = require("mini.statusline")
 
+				statusline.section_filename_modified = function(args)
+					-- In terminal always use plain name
+					if vim.bo.buftype == 'terminal' then
+						return '%t'
+					elseif statusline.is_truncated(args.trunc_width) then
+						-- File name with 'truncate', 'modified', 'readonly' flags
+						-- Use relative path if truncated
+						return '%f%m%r'
+					else
+						-- add spacing. if not truncated
+						return '%f %m %r'
+					end
+				end
 				statusline.section_location_modified = function(args)
 					-- Use virtual column number to allow update when past last column
 					if statusline.is_truncated(args.trunc_width) then
@@ -22,7 +35,7 @@ return {
 				local mode, mode_hl  = statusline.section_mode({ trunc_width = 120 })
 				local git            = statusline.section_git({ trunc_width = 75 }) -- requires gitsigns plugin.
 				local diagnostics    = statusline.section_diagnostics({ trunc_width = 75 })
-				local filename       = statusline.section_filename({ trunc_width = 140 })
+				local filename       = statusline.section_filename_modified({ trunc_width = 140 })
 				local fileinfo       = statusline.section_fileinfo({ trunc_width = 120 })
 				local search         = statusline.section_searchcount({ trunc_width = 75 })
 				local location       = statusline.section_location_modified({ trunc_width = 75 })
