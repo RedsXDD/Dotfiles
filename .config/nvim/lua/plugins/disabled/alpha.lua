@@ -26,8 +26,7 @@ return {
 			[[    █████████ ██████████ █████████ █████ █████ ████ █████   ]],
 			[[  ███████████ ███    ███ █████████ █████ █████ ████ █████  ]],
 			[[ ██████  █████████████████████ ████ █████ █████ ████ ██████ ]],
-			[[]],
-			padding_header .. [[TIP: To exit Neovim, just run $sudo rm -rf /*]]
+			'', padding_header .. [[TIP: To exit Neovim, just run $sudo rm -rf /*]]
 		}
 
 		dashboard.section.footer.val = function()
