@@ -40,10 +40,10 @@ return {
 			update_in_insert = false,
 			signs = {
 				text = {
-					[vim.diagnostic.severity.ERROR] = " ",
-					[vim.diagnostic.severity.WARN] = " ",
-					[vim.diagnostic.severity.HINT] = " ",
-					[vim.diagnostic.severity.INFO] = " ",
+					[vim.diagnostic.severity.ERROR] = require("user.icons").icons.diagnostics.Error,
+					[vim.diagnostic.severity.WARN]  = require("user.icons").icons.diagnostics.Warn,
+					[vim.diagnostic.severity.HINT]  = require("user.icons").icons.diagnostics.Hint,
+					[vim.diagnostic.severity.INFO]  = require("user.icons").icons.diagnostics.Info,
 				},
 			},
 			virtual_text = {
