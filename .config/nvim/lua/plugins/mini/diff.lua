@@ -11,13 +11,9 @@ return {
 			-- Default: 'number' if line numbers are enabled, 'sign' otherwise.
 			style = vim.go.number and 'number' or 'sign',
 			signs = {
-				-- add = "▎",
-				-- change = "▎",
-				-- delete = "",
-
-				add = "+",
-				change = "~",
-				delete = "-",
+				add     = require("user.icons").icons.gitsigns.add,
+				change  = require("user.icons").icons.gitsigns.change,
+				delete  = require("user.icons").icons.gitsigns.delete,
 			},
 			priority = vim.highlight.priorities.user - 1, -- Priority of used visualization extmarks.
 		},

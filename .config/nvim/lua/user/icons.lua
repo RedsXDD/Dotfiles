@@ -1,8 +1,21 @@
 local M = {}
 
 M.icons = {
-	misc = {
-		dots = "󰇘",
+	misc = { dots = "󰇘" },
+	gitsigns = {
+		add = "▎",
+		change = "▎",
+		delete = "",
+		topdelete = "",
+		changedelete = "▎",
+		untracked = "▎",
+
+		-- add = "+",
+		-- change = "~",
+		-- delete = "-",
+		-- topdelete = "^",
+		-- changedelete = "<",
+		-- untracked = "?",
 	},
 	dap = {
 		Stopped             = { "󰁕 ", "DiagnosticWarn", "DapStoppedLine" },
