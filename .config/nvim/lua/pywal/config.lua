@@ -56,7 +56,8 @@ M.highlights_base = function (colors)
 		SpellCap                  = { fg = colors.color3, undercurl = true },
 		SpellLocal                = { fg = colors.color4, undercurl = true },
 		SpellRare                 = { fg = colors.color5, undercurl = true },
-		StatusLine                = { bg = colors.foreground, fg = colors.background },
+		-- StatusLine                = { bg = colors.foreground, fg = colors.background }, -- Mini.statusline highlights.
+		StatusLine                = { bg = colors.background, fg = colors.foreground }, -- Lualine highlights.
 		StatusLineNC              = { bg = colors.color8 },
 		StatusLineTerm            = { link = "StatusLine" },
 		StatusLineTermNC          = { link = "StatusLine" },
