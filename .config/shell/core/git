@@ -2,6 +2,6 @@
 
 alias stow_dots='stow --adopt -d "$HOME/.sources/Reds/dotfiles" -t "$HOME"'
 alias stow_undots='stow -d "$HOME/.sources/Reds/dotfiles" -t "$HOME" -D'
-# alias dots='/usr/bin/git --git-dir="$HOME/.sources/Reds/dotfiles/.git" --work-tree="$HOME/.sources/Reds/dotfiles"'
+alias dots='/usr/bin/git --git-dir="$HOME/.sources/Reds/dotfiles/.git" --work-tree="$HOME/.sources/Reds/dotfiles"'
 alias lg='lazygit'
-alias dots='lazygit -p "$HOME/.sources/Reds/dotfiles"'
+alias lgd='lazygit -p "$HOME/.sources/Reds/dotfiles"'
