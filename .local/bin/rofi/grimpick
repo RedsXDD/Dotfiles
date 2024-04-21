@@ -26,7 +26,7 @@ opt_14='Active window (copysave)'
 opt_15='Fullscreen (copysave)'
 opt_16='All outputs (copysave)'
 
-takepic(){ sleep 0.4; grimblast --notify --freeze "$@"; }
+takepic(){ sleep 1; grimblast --notify --freeze "$@"; }
 run_rofi(){
 	[ "$(awk '/fullscreen:/ {print $2}' "$theme")" != 'true;' ] && border_setup='window { border: 2px solid; border-color: @border-colour; }'
 
