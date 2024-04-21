@@ -5,46 +5,51 @@
 
 zathurarc_file="${XDG_CONFIG_HOME:-$HOME/.config}/zathura/zathurarc"
 [ -f "${XDG_CACHE_HOME:-$HOME/.cache}/wal/colors.sh" ] && . "${XDG_CACHE_HOME:-$HOME/.cache}/wal/colors.sh"
+if [ -f "${XDG_CACHE_HOME:-$HOME/.cache}/wal/colors-putty.reg" ]; then
+	rgba_color4="rgba("$(grep 'Colour14' "${XDG_CACHE_HOME:-$HOME/.cache}/wal/colors-putty.reg" | sed 's/.*="//g; s/"\s\+;.*//g')",0.5)"
+	rgba_color3="rgba("$(grep 'Colour12' "${XDG_CACHE_HOME:-$HOME/.cache}/wal/colors-putty.reg" | sed 's/.*="//g; s/"\s\+;.*//g')",0.5)"
+	rgba_color2="rgba("$(grep 'Colour10' "${XDG_CACHE_HOME:-$HOME/.cache}/wal/colors-putty.reg" | sed 's/.*="//g; s/"\s\+;.*//g')",0.5)"
+fi
 
 genzathurarc(){
-cat << CONF
-# Colorscheme:
-set default-bg "$background"
-set default-fg "$foreground"
-set recolor-lightcolor "$background"
-set recolor-darkcolor "$foreground"
+	cat <<- CONF
+	# Colorscheme:
+	set default-bg "$background"
+	set default-fg "$foreground"
+	set recolor-lightcolor "$background"
+	set recolor-darkcolor "$foreground"
 
-set completion-bg "$background"
-set completion-fg "$foreground"
-set completion-group-bg "$background"
-set completion-group-fg "$color2"
-set completion-highlight-bg "$color4"
-set completion-highlight-fg "$background"
+	set completion-bg "$background"
+	set completion-fg "$foreground"
+	set completion-group-bg "$background"
+	set completion-group-fg "$color2"
+	set completion-highlight-bg "$color4"
+	set completion-highlight-fg "$background"
 
-set inputbar-bg "$color4"
-set inputbar-fg "#000000"
-set statusbar-bg "$color4"
-set statusbar-fg "#000000"
+	set inputbar-bg "$color4"
+	set inputbar-fg "$background"
+	set statusbar-bg "$color4"
+	set statusbar-fg "$background"
 
-set render-loading-bg "$background"
-set render-loading-fg "$foreground"
+	set render-loading-bg "$background"
+	set render-loading-fg "$foreground"
 
-set notification-bg "$color4"
-set notification-fg "#000000"
-set notification-error-bg "$color3"
-set notification-error-fg "#000000"
-set notification-warning-bg "$color1"
-set notification-warning-fg "#000000"
+	set notification-bg "$color4"
+	set notification-fg "$background"
+	set notification-error-bg "$color3"
+	set notification-error-fg "$background"
+	set notification-warning-bg "$color1"
+	set notification-warning-fg "$background"
 
-set index-bg "$background"
-set index-fg "$foreground"
-set index-active-bg "$foreground"
-set index-active-fg "$background"
+	set index-bg "$background"
+	set index-fg "$foreground"
+	set index-active-bg "$foreground"
+	set index-active-fg "$background"
 
-set highlight-color "$color4"
-set highlight-fg "$color2"
-set highlight-active-color "$color3"
-CONF
+	set highlight-color "$rgba_color4"
+	set highlight-fg "$rgba_color2"
+	set highlight-active-color "$rgba_color3"
+	CONF
 }
 
 zathura_tmp_dir="$(mktemp -d)"
