@@ -1,7 +1,7 @@
 return {
 	"echasnovski/mini.statusline",
 	dependencies = { "nvim-tree/nvim-web-devicons" },
-	event = { "BufReadPost", "BufNewFile" },
+	event = { "BufReadPost", "BufNewFile", "BufUnload" },
 	opts = {
 		use_icons = true,
 		set_vim_settings = false,
