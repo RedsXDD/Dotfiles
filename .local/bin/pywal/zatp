@@ -6,9 +6,24 @@
 zathurarc_file="${XDG_CONFIG_HOME:-$HOME/.config}/zathura/zathurarc"
 [ -f "${XDG_CACHE_HOME:-$HOME/.cache}/wal/colors.sh" ] && . "${XDG_CACHE_HOME:-$HOME/.cache}/wal/colors.sh"
 if [ -f "${XDG_CACHE_HOME:-$HOME/.cache}/wal/colors-putty.reg" ]; then
-	rgba_color4="rgba("$(grep 'Colour14' "${XDG_CACHE_HOME:-$HOME/.cache}/wal/colors-putty.reg" | sed 's/.*="//g; s/"\s\+;.*//g')",0.5)"
-	rgba_color3="rgba("$(grep 'Colour12' "${XDG_CACHE_HOME:-$HOME/.cache}/wal/colors-putty.reg" | sed 's/.*="//g; s/"\s\+;.*//g')",0.5)"
-	rgba_color2="rgba("$(grep 'Colour10' "${XDG_CACHE_HOME:-$HOME/.cache}/wal/colors-putty.reg" | sed 's/.*="//g; s/"\s\+;.*//g')",0.5)"
+	# rgba_background="$(printf 'rgba(%s,0.5)' "$(grep 'Colour2' "${XDG_CACHE_HOME:-$HOME/.cache}/wal/colors-putty.reg" | sed 's/.*="//g; s/"\s\+;.*//g')")"
+	# rgba_foreground="$(printf 'rgba(%s,0.5)' "$(grep 'Colour0' "${XDG_CACHE_HOME:-$HOME/.cache}/wal/colors-putty.reg" | sed 's/.*="//g; s/"\s\+;.*//g')")"
+	# rgba_color0="$(printf 'rgba(%s,0.5)' "$(grep 'Colour6' "${XDG_CACHE_HOME:-$HOME/.cache}/wal/colors-putty.reg" | sed 's/.*="//g; s/"\s\+;.*//g')")"
+	# rgba_color1="$(printf 'rgba(%s,0.5)' "$(grep 'Colour8' "${XDG_CACHE_HOME:-$HOME/.cache}/wal/colors-putty.reg" | sed 's/.*="//g; s/"\s\+;.*//g')")"
+	rgba_color2="$(printf 'rgba(%s,0.5)' "$(grep 'Colour10' "${XDG_CACHE_HOME:-$HOME/.cache}/wal/colors-putty.reg" | sed 's/.*="//g; s/"\s\+;.*//g')")"
+	rgba_color3="$(printf 'rgba(%s,0.5)' "$(grep 'Colour12' "${XDG_CACHE_HOME:-$HOME/.cache}/wal/colors-putty.reg" | sed 's/.*="//g; s/"\s\+;.*//g')")"
+	rgba_color4="$(printf 'rgba(%s,0.5)' "$(grep 'Colour14' "${XDG_CACHE_HOME:-$HOME/.cache}/wal/colors-putty.reg" | sed 's/.*="//g; s/"\s\+;.*//g')")"
+	# rgba_color5="$(printf 'rgba(%s,0.5)' "$(grep 'Colour16' "${XDG_CACHE_HOME:-$HOME/.cache}/wal/colors-putty.reg" | sed 's/.*="//g; s/"\s\+;.*//g')")"
+	# rgba_color6="$(printf 'rgba(%s,0.5)' "$(grep 'Colour18' "${XDG_CACHE_HOME:-$HOME/.cache}/wal/colors-putty.reg" | sed 's/.*="//g; s/"\s\+;.*//g')")"
+	# rgba_color7="$(printf 'rgba(%s,0.5)' "$(grep 'Colour20' "${XDG_CACHE_HOME:-$HOME/.cache}/wal/colors-putty.reg" | sed 's/.*="//g; s/"\s\+;.*//g')")"
+	# rgba_color8="$(printf 'rgba(%s,0.5)' "$(grep 'Colour20' "${XDG_CACHE_HOME:-$HOME/.cache}/wal/colors-putty.reg" | sed 's/.*="//g; s/"\s\+;.*//g')")"
+	# rgba_color9="$(printf 'rgba(%s,0.5)' "$(grep 'Colour9' "${XDG_CACHE_HOME:-$HOME/.cache}/wal/colors-putty.reg" | sed 's/.*="//g; s/"\s\+;.*//g')")"
+	# rgba_color10="$(printf 'rgba(%s,0.5)' "$(grep 'Colour10' "${XDG_CACHE_HOME:-$HOME/.cache}/wal/colors-putty.reg" | sed 's/.*="//g; s/"\s\+;.*//g')")"
+	# rgba_color11="$(printf 'rgba(%s,0.5)' "$(grep 'Colour13' "${XDG_CACHE_HOME:-$HOME/.cache}/wal/colors-putty.reg" | sed 's/.*="//g; s/"\s\+;.*//g')")"
+	# rgba_color12="$(printf 'rgba(%s,0.5)' "$(grep 'Colour15' "${XDG_CACHE_HOME:-$HOME/.cache}/wal/colors-putty.reg" | sed 's/.*="//g; s/"\s\+;.*//g')")"
+	# rgba_color13="$(printf 'rgba(%s,0.5)' "$(grep 'Colour17' "${XDG_CACHE_HOME:-$HOME/.cache}/wal/colors-putty.reg" | sed 's/.*="//g; s/"\s\+;.*//g')")"
+	# rgba_color14="$(printf 'rgba(%s,0.5)' "$(grep 'Colour19' "${XDG_CACHE_HOME:-$HOME/.cache}/wal/colors-putty.reg" | sed 's/.*="//g; s/"\s\+;.*//g')")"
+	# rgba_color15="$(printf 'rgba(%s,0.5)' "$(grep 'Colour21' "${XDG_CACHE_HOME:-$HOME/.cache}/wal/colors-putty.reg" | sed 's/.*="//g; s/"\s\+;.*//g')")"
 fi
 
 gen_theme(){
