@@ -6,7 +6,7 @@
 cava_config="${XDG_CONFIG_HOME:-$HOME/.config}/cava/config"
 
 if [ -z "$DISPLAY" ]; then
-	gen_config(){
+	gen_theme(){
 		cat <<- CONF_NO_DISPLAY
 		[color]
 
@@ -27,7 +27,7 @@ if [ -z "$DISPLAY" ]; then
 else
 	[ -f "${XDG_CACHE_HOME:-$HOME/.cache}/wal/colors.sh" ] && . "${XDG_CACHE_HOME:-$HOME/.cache}/wal/colors.sh"
 
-	gen_config(){
+	gen_theme(){
 		cat <<- CONF_DISPLAY
 		[color]
 
@@ -51,7 +51,7 @@ cava_tmp="$(mktemp)"
 trap 'rm -rf "$cava_tmp"' 0 1 15
 
 [ -f "$cava_config" ] && cat "$cava_config" > "$cava_tmp"
-gen_config >> "$cava_tmp"
+gen_theme >> "$cava_tmp"
 cava -p "$cava_tmp"
 
 # vim:fileencoding=utf-8:foldmethod=marker

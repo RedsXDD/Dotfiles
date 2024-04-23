@@ -6,7 +6,7 @@
 gnuplot_config="${XDG_CONFIG_HOME:-$HOME/.config}/gnuplot/gnuplotrc"
 [ -f "${XDG_CACHE_HOME:-$HOME/.cache}/wal/colors.sh" ] && . "${XDG_CACHE_HOME:-$HOME/.cache}/wal/colors.sh"
 
-gen_config(){
+gen_theme(){
 	cat <<- CONF
 	# Basic configs:
 	set isosamples 50
@@ -37,7 +37,7 @@ gen_config(){
 	CONF
 }
 
-gen_config > "$gnuplot_config"
+gen_theme > "$gnuplot_config"
 \gnuplot "$@"
 
 # vim:fileencoding=utf-8:foldmethod=marker

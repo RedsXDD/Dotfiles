@@ -11,7 +11,7 @@ if [ -f "${XDG_CACHE_HOME:-$HOME/.cache}/wal/colors-putty.reg" ]; then
 	rgba_color2="rgba("$(grep 'Colour10' "${XDG_CACHE_HOME:-$HOME/.cache}/wal/colors-putty.reg" | sed 's/.*="//g; s/"\s\+;.*//g')",0.5)"
 fi
 
-genzathurarc(){
+gen_theme(){
 	cat <<- CONF
 	# Colorscheme:
 	set default-bg "$background"
@@ -57,7 +57,7 @@ zathurarc_tmp="$zathura_tmp_dir/zathurarc"
 trap 'rm -rf "$zathura_tmp_dir"' 0 1 15
 
 [ -f "$zathurarc_file" ] && cp "$zathurarc_file" "$zathurarc_tmp"
-genzathurarc >> "$zathurarc_tmp"
+gen_theme >> "$zathurarc_tmp"
 \zathura --config-dir="$zathura_tmp_dir" "$@"
 
 # vim:fileencoding=utf-8:foldmethod=marker
