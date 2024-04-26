@@ -1,5 +1,3 @@
--- vim:fileencoding=utf-8:foldmethod=marker
-
 return {
 	{
 		"hrsh7th/nvim-cmp",
@@ -31,7 +29,6 @@ return {
 			require("luasnip.loaders.from_vscode").lazy_load()
 
 			cmp.setup({
-				--: Completion options {{{
 				completion = { completeopt = "menuone,longest,preview" },
 				snippet = {
 					expand = function(args)
@@ -50,8 +47,6 @@ return {
 					ghost_text = false,
 					native_menu = false,
 				},
-				--: }}}
-				--: Mappings {{{
 				mapping = cmp.mapping.preset.insert({
 					["<C-k>"] = cmp.mapping.select_prev_item(),
 					["<C-j>"] = cmp.mapping.select_next_item(),
@@ -80,10 +75,8 @@ return {
 						end
 					end, { "i", "s" }),
 				}),
-				--: }}}
-				--: Formatting {{{
 				formatting = {
-					fields = { "abbr", "kind", "menu" },
+					fields = { "kind", "abbr", "menu" },
 					format = function(entry, vim_item)
 						-- Kind icons.
 						vim_item.kind = string.format("%s", kind_icons[vim_item.kind])
@@ -97,8 +90,6 @@ return {
 						return vim_item
 					end,
 				},
-				--: }}}
-				--: Completion sources {{{
 				sources = cmp.config.sources({
 					{ name = "nvim_lua" },
 					{ name = "nvim_lsp" },
@@ -106,7 +97,6 @@ return {
 					{ name = "buffer" },
 					{ name = "path" },
 				}),
-				--: }}}
 			})
 		end,
 	},
