@@ -3,7 +3,7 @@
 killall rofi >/dev/null 2>&1
 
 # Import current theme:
-theme="${XDG_CONFIG_HOME:-$HOME/.config}/rofi/themes/powermenu/type-2/style-2.rasi"
+theme="${XDG_CONFIG_HOME:-$HOME/.config}/rofi/themes/powermenu/type-1/style-1.rasi"
 confirm_theme="${XDG_CONFIG_HOME:-$HOME/.config}/rofi/themes/powermenu/type-1/style-1.rasi"
 
 # Random theme cuz why not?
@@ -50,7 +50,13 @@ run_rofi(){
 
 	printf '%s\n' "$shutdown" "$reboot" "$suspend" "$hibernate" "$logout" "$lock" |
 		rofi -i -dmenu \
-			-theme-str "$border_setup" \
+			-theme-str "$border_setup
+				button selected         { text-color: @background; }
+				element normal.urgent   { text-color: @background; }
+				element normal.active   { text-color: @background; }
+				element selected.normal { text-color: @background; }
+				element selected.urgent { text-color: @background; }
+				element selected.active { text-color: @background; }" \
 			-p "$prompt" \
 			-mesg "Uptime: $uptime" \
 			-theme "$theme"
