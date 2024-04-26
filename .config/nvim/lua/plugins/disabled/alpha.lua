@@ -1,5 +1,3 @@
--- vim:fileencoding=utf-8:foldmethod=marker
-
 return {
 	"goolord/alpha-nvim",
 	event = "VimEnter",

@@ -1,5 +1,3 @@
--- vim:fileencoding=utf-8:foldmethod=marker
-
 return {
 	"nvim-lualine/lualine.nvim",
 	dependencies = { "nvim-tree/nvim-web-devicons" },

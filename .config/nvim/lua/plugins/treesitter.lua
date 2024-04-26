@@ -1,5 +1,3 @@
--- vim:fileencoding=utf-8:foldmethod=marker
-
 return {
 	"nvim-treesitter/nvim-treesitter",
 	dependencies = { "nvim-treesitter/nvim-treesitter-textobjects" },
