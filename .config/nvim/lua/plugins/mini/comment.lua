@@ -4,9 +4,9 @@ return {
 		"nvim-treesitter/nvim-treesitter",
 		{ "JoosepAlviste/nvim-ts-context-commentstring", opts = { enable_autocmd = false } },
 	},
-	--stylua: ignore start
-	keys = { { "gc", mode = { "n", "x" }, desc = "Comment" }, },
-	--stylua: ignore end
+	keys = {
+		{ "gc", mode = { "n", "x" }, desc = "Comment" },
+	},
 	opts = {
 		options = {
 			ignore_blank_line = true,
