@@ -135,6 +135,7 @@ label:focus {
 #workspaces button.active,
 #workspaces button.urgent {
 	color: black;
+	padding: 8px;
 }
 
 #workspaces button:hover {
