@@ -30,7 +30,7 @@ return {
 
 					-- Word with case.
 					e = { { "%u[%l%d]+%f[^%l%d]", "%f[%S][%l%d]+%f[^%l%d]", "%f[%P][%l%d]+%f[^%l%d]", "^[%l%d]+%f[^%l%d]", }, "^().*()$", },
-					--
+
 					-- Whole buffer, similar to `gg` and 'G' motion.
 					g = function()
 						local from = { line = 1, col = 1 }
