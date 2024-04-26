@@ -8,10 +8,8 @@ return {
 	},
 	branch = "v3.x",
 	cmd = "Neotree",
-	--stylua: ignore start
 	keys = { { "<leader>gf", function() require("neo-tree.command").execute({ toggle = true, dir = vim.uv.cwd() }) end, desc = "Open Neotree." } },
-	--stylua: ignore end
-	-- NOTE: This init function allows the plugin to be lazy loaded without breaking the netrw hijack functionality.
+	-- NOTE: The init function allows the plugin to be lazy loaded without breaking the netrw hijack functionality.
 	init = function()
 		vim.g.loaded_netrwPlugin = 1
 		vim.g.loaded_netrw = 1

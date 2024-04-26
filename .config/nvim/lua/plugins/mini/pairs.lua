@@ -1,15 +1,15 @@
 return {
 	"echasnovski/mini.pairs",
-	--stylua: ignore start
 	keys = {
+		--stylua: ignore start
 		{ "'", mode = { "i" } }, { '"', mode = { "i" } }, { "`", mode = { "i" } },
 		{ "(", mode = { "i" } }, { ")", mode = { "i" } },
 		{ "[", mode = { "i" } }, { "]", mode = { "i" } },
 		{ "{", mode = { "i" } }, { "}", mode = { "i" } },
 		{ "<", mode = { "i" } }, { ">", mode = { "i" } },
 		{ "<Leader>tp", function() vim.g.minipairs_disable = not vim.g.minipairs_disable end, mode = { "n", "x" }, desc = "Toggle Mini.pairs." },
+		--stylua: ignore end
 	},
-	--stylua: ignore end
 	opts = {
 		modes = { insert = true, command = true, terminal = false },
 

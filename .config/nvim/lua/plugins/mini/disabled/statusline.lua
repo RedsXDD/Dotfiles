@@ -31,7 +31,6 @@ return {
 					return ' %p%% | %l:%L'
 				end
 
-				--stylua: ignore start
 				local mode, mode_hl  = statusline.section_mode({ trunc_width = 120 })
 				local git            = statusline.section_git({ trunc_width = 75 }) -- requires gitsigns plugin.
 				local diagnostics    = statusline.section_diagnostics({ trunc_width = 75 })
@@ -40,6 +39,7 @@ return {
 				local search         = statusline.section_searchcount({ trunc_width = 75 })
 				local location       = statusline.section_location_modified({ trunc_width = 75 })
 
+				--stylua: ignore start
 				return statusline.combine_groups({
 					{ hl = mode_hl,                 strings = { mode } },
 					{ hl = "MiniStatuslineDevinfo", strings = { git } },

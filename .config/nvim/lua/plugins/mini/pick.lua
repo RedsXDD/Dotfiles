@@ -1,7 +1,6 @@
 return {
 	"echasnovski/mini.pick",
 	dependencies = { "echasnovski/mini.extra" },
-	--stylua: ignore start
 	keys = function()
 		local M = {}
 
@@ -13,6 +12,7 @@ return {
 			table.insert(M, keymap_table)
 		end
 
+		--stylua: ignore start
 		-- Main keymaps:
 		pick_map("<Leader>fb", function() pick.builtin.buffers() end, "Search buffers.")
 		pick_map("<Leader>ff", function() pick.builtin.files()   end, "Find files on CWD.")
@@ -58,10 +58,10 @@ return {
 		pick_map("<Leader>fLl", function() extra.pickers.list({ scope = "location-list" }) end, "Search location list.")
 		pick_map("<Leader>fLj", function() extra.pickers.list({ scope = "jumplist" })      end, "Search jumplist.")
 		pick_map("<Leader>fLc", function() extra.pickers.list({ scope = "changelist" })    end, "Search changelist.")
+		--stylua: ignore end
 
 		return M
 	end,
-	--stylua: ignore end
 	opts = {
 		mappings = {
 			caret_left = "<Left>",

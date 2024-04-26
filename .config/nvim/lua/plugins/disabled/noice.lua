@@ -6,7 +6,6 @@ return {
 			"rcarriga/nvim-notify",
 		},
 		event = "VeryLazy",
-		--stylua: ignore start
 		keys = function()
 			local M = {}
 
@@ -24,21 +23,18 @@ return {
 				table.insert(M, keymap_table)
 			end
 
-			noice_map("c", "<S-Enter>", function() noice.redirect(vim.fn.getcmdline()) end,
-				"Redirect Cmdline")
-			noice_map("n", "<Leader>gnl", function() noice.cmd("last") end, "Noice Last Message")
-			noice_map("n", "<Leader>gnh", function() noice.cmd("history") end, "Noice History")
-			noice_map("n", "<Leader>gna", function() noice.cmd("all") end, "Noice All")
-			noice_map("n", "<Leader>gnd", function() noice.cmd("dismiss") end, "Dismiss All")
-
-			noice_lsp_map("<C-f>", function() if not noice_lsp.scroll(4) then return "<C-f>" end end,
-				"Scroll Forward")
-			noice_lsp_map("<C-b>", function() if not noice_lsp.scroll(-4) then return "<C-b>" end end,
-				"Scroll Backward")
+			--stylua: ignore start
+			noice_map("c", "<S-Enter>", function() noice.redirect(vim.fn.getcmdline()) end,            "Redirect Cmdline")
+			noice_map("n", "<Leader>gnl", function() noice.cmd("last") end,                            "Noice Last Message")
+			noice_map("n", "<Leader>gnh", function() noice.cmd("history") end,                         "Noice History")
+			noice_map("n", "<Leader>gna", function() noice.cmd("all") end,                             "Noice All")
+			noice_map("n", "<Leader>gnd", function() noice.cmd("dismiss") end,                         "Dismiss All")
+			noice_lsp_map("<C-f>", function() if not noice_lsp.scroll(4) then return "<C-f>" end end,  "Scroll Forward")
+			noice_lsp_map("<C-b>", function() if not noice_lsp.scroll(-4) then return "<C-b>" end end, "Scroll Backward")
+			--stylua: ignore end
 
 			return M
 		end,
-		--stylua: ignore end
 		opts = {
 			lsp = {
 				override = {
