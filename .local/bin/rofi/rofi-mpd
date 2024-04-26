@@ -69,7 +69,12 @@ run_rofi(){
 			-theme-str "$border_setup
 					listview { columns: $list_col; lines: $list_row; }
 					prompt { text-color: @background; }
+					button selected         { text-color: @background; }
+					element normal.urgent   { text-color: @background; }
+					element normal.active   { text-color: @background; }
 					element selected.normal { text-color: @background; }
+					element selected.urgent { text-color: @background; }
+					element selected.active { text-color: @background; }
 					textbox-prompt-colon {
 						str: \"󰝚\";
 						padding: 10px 19px 10px 13px;

@@ -12,4 +12,10 @@ rofi -i -modi "emoji:rofimoji" -show emoji \
 	-theme "$theme" \
 	-theme-str "configuration { display-emoji: \"😎\"; }
 			button { padding: 0px; }
+			button selected         { text-color: @background; }
+			element normal.urgent   { text-color: @background; }
+			element normal.active   { text-color: @background; }
+			element selected.normal { text-color: @background; }
+			element selected.urgent { text-color: @background; }
+			element selected.active { text-color: @background; }
 			$border_setup"

@@ -59,6 +59,12 @@ run_rofi(){
 		-theme "$theme" \
 		-theme-str "configuration { show-icons: false; }
 				entry { placeholder: \"Choose Bookmark ...\"; }
+				button selected         { text-color: @background; }
+				element normal.urgent   { text-color: @background; }
+				element normal.active   { text-color: @background; }
+				element selected.normal { text-color: @background; }
+				element selected.urgent { text-color: @background; }
+				element selected.active { text-color: @background; }
 				$border_setup" \
 		-p ' ' < "$bookmark_file"
 	unset border_setup

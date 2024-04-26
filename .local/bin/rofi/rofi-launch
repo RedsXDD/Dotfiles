@@ -48,6 +48,12 @@ rofi -i -show "$show" \
 	-theme "$theme" \
 	-theme-str "$border_setup
 			$button_setup
+			button selected         { text-color: @background; }
+			element normal.urgent   { text-color: @background; }
+			element normal.active   { text-color: @background; }
+			element selected.normal { text-color: @background; }
+			element selected.urgent { text-color: @background; }
+			element selected.active { text-color: @background; }
 			configuration {
 				display-run:              \"$run_icon\";
 				display-ssh:              \"$ssh_icon\";
