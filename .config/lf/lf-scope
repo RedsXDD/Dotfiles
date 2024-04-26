@@ -159,17 +159,17 @@ case "$file_mimetype" in
 	application/x-font-pf2) ;; # .pf2 files:
 	#: }}}
 	#: Misc {{{
-	inode/x-empty) printf "\033[7mempty"                                                      ;; # Empty files.
-	application/x-bittorrent) transmission-show "$file"                                       ;; # Torrents.
-	application/x-object) objdump --disassembler-color=on -d "$file"                          ;; # Object files.
-	application/pgp) gpg -d "$file"                                                           ;; # Pgp signature files.
-	application/x-iso*) iso-info --no-header -l "$file"                                       ;; # ISO files.
-	text/html) lynx -width="$x" -display_charset=utf-8 -dump "$file"                          ;; # Html files.
-	text/troff) MAN_KEEP_FORMATTING='true' MANWIDTH="$width" man ./ "$file" | less -RF        ;; # Troff files.
-	text/rtf | application/msword) catdoc "$file"                                             ;; # .rtf/.doc files.
-	*opendocument* | application/vnd.sun.xml.writer) odt2txt "$file"                          ;; # .odt/.ods/.odp/.sxw files.
-	application/vnd.openxmlformats-officedocument.wordprocessingml.document) docx2txt "$file" ;; # .docx files.
-	application/x-gettext-translation) msgunfmt --color --indent "$file"                      ;; # .mo files.
+	inode/x-empty) printf "\033[7mempty"                                                                  ;; # Empty files.
+	application/x-bittorrent) transmission-show "$file"                                                   ;; # Torrents.
+	application/x-object) objdump --disassembler-color=on -d "$file"                                      ;; # Object files.
+	application/pgp) gpg -d "$file"                                                                       ;; # Pgp signature files.
+	application/x-iso*) iso-info --no-header -l "$file"                                                   ;; # ISO files.
+	text/html) lynx -width="$x" -display_charset=utf-8 -dump "$file"                                      ;; # Html files.
+	text/troff) MAN_KEEP_FORMATTING='true' MANWIDTH="$width" man ./ "$file" | less -RF                    ;; # Troff files.
+	text/rtf | application/msword) catdoc "$file"                                                         ;; # .rtf/.doc files.
+	*opendocument* | application/vnd.sun.xml.writer) odt2txt "$file"                                      ;; # .odt/.ods/.odp/.sxw files.
+	application/vnd.openxmlformats-officedocument.wordprocessingml.document) docx2txt "$file" /dev/stdout ;; # .docx files.
+	application/x-gettext-translation) msgunfmt --color --indent "$file"                                  ;; # .mo files.
 	application/vnd.ms-excel | application/vnd.openxmlformats-officedocument.spreadsheetml.sheet) ssconvert --export-type=Gnumeric_stf:stf_csv "$file" "fd://1" | bat_or_cat --language=csv ;; # .xls/.xlsx files.
 	#: }}}
 	#: Text files {{{
