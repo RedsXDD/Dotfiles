@@ -1,5 +1,3 @@
--- vim:fileencoding=utf-8:foldmethod=marker
-
 return {
 	{
 		"nvim-telescope/telescope.nvim",
@@ -16,8 +14,6 @@ return {
 		},
 		branch = "0.1.x",
 		cmd = "Telescope",
-		--: Keymappings {{{
-		--stylua: ignore start
 		keys = function()
 			local M = {}
 
@@ -28,6 +24,7 @@ return {
 				table.insert(M, keymap_table)
 			end
 
+			--stylua: ignore start
 			-- Misc:
 			tele_map("<Leader>?",  function() builtin.keymaps()                                       end, "Search keymaps.")
 			tele_map("<Leader>fr", function() builtin.resume()                                        end, "Search resumes.")
@@ -75,13 +72,12 @@ return {
 			tele_map("<Leader>fLQ",  function() builtin.quickfixhistory() end, "Search quickfix list history.")
 			tele_map("<Leader>fLl",  function() builtin.loclist()         end, "Search location list.")
 			tele_map("<Leader>fLj",  function() builtin.jumplist()        end, "Search jumplist.")
+			--stylua: ignore end
 
 			return M
 		end,
-		--stylua: ignore end
-		--: }}}
 		config = function()
-			--: Main variables/functions {{{
+			-- Main variables/functions:
 			local telescope = require("telescope")
 			local builtin = require("telescope.builtin")
 			local themes = require("telescope.themes")
@@ -99,7 +95,7 @@ return {
 				return string.format("%s\t\t%s", tail, parent)
 			end
 
-			-- Function to disable binary previewing
+			-- Function to disable binary previewing:
 			local new_maker = function(filepath, bufnr, opts)
 				filepath = vim.fn.expand(filepath)
 				Job:new({
@@ -118,8 +114,7 @@ return {
 					end,
 				}):sync()
 			end
-			--: }}}
-			--: Setup function {{{
+
 			telescope.setup({
 				file_ignore_patterns = { "%.git/." },
 				defaults = {
@@ -253,6 +248,5 @@ return {
 			pcall(telescope.load_extension, "noice")
 			pcall(telescope.load_extension, "ui-select")
 		end,
-		--: }}}
 	},
 }
