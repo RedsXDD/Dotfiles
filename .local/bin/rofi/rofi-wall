@@ -7,7 +7,7 @@ killall rofi >/dev/null 2>&1
 # Import current theme:
 theme="${XDG_CONFIG_HOME:-$HOME/.config}/rofi/themes/launchers/type-6/style-1.rasi"
 
-wallpapers_dir="${1:-$HOME/Pictures/wallpapers/anime}"
+wallpapers_dir="${1:-$HOME/Pictures/wallpapers/wallhaven}"
 rofi_cmd(){
 	[ "$(awk '/fullscreen:/ {print $2}' "$theme")" != 'true;' ] && border_setup='window { border: 2px solid; border-color: @border-colour; }'
 
@@ -26,7 +26,13 @@ rofi_cmd(){
 			-theme "$theme" \
 			-theme-str "configuration { show-icons: true; }
 							$border_setup
-							window { width: 75%; height: 80%; }
+							button selected         { text-color: @background; }
+							element normal.urgent   { text-color: @background; }
+							element normal.active   { text-color: @background; }
+							element selected.normal { text-color: @background; }
+							element selected.urgent { text-color: @background; }
+							element selected.active { text-color: @background; }
+							window { width: 75%; }
 							element { orientation: vertical; }
 							element-text { horizontal-align: 0.5; }
 							element-icon { size: 6.0000em; }
