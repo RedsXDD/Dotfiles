@@ -1,18 +1,15 @@
--- vim:fileencoding=utf-8:foldmethod=marker
-
 return {
 	"echasnovski/mini.files",
 	dependencies = { "nvim-tree/nvim-web-devicons" },
-	-- NOTE: This init function allows the plugin to be lazy loaded without breaking the netrw hijack functionality.
-		--: Main keymappings {{{
-	--stylua: ignore start
 	keys = function()
 		local M = {}
 
 		local files = require("mini.files")
 
 		local files_toggle = function(path, use_lastest)
-			if not files.close() then files.open(path, use_lastest) end
+			if not files.close() then
+				files.open(path, use_lastest)
+			end
 		end
 
 		local files_map = function(keys, func, desc)
@@ -20,15 +17,14 @@ return {
 			table.insert(M, keymap_table)
 		end
 
-		files_map("<Leader>gf", function() files_toggle(vim.uv.cwd(), true) end, "Open Mini.files on CWD.")
-		files_map("<Leader>gF", function() files_toggle(vim.api.nvim_buf_get_name(0), true) end,
-			"Open Mini.files (Directory of current file).")
+		--stylua: ignore start
+		files_map("<Leader>gf", function() files_toggle(vim.uv.cwd(), true)                 end, "Open Mini.files on CWD.")
+		files_map("<Leader>gF", function() files_toggle(vim.api.nvim_buf_get_name(0), true) end, "Open Mini.files (Directory of current file).")
+		--stylua: ignore end
 
 		return M
 	end,
-	--stylua: ignore end
-	--: }}}
-	-- init = function() {{{
+	-- NOTE: The init function allows the plugin to be lazy loaded without breaking the netrw hijack functionality.
 	init = function()
 		vim.g.loaded_netrwPlugin = 1
 		vim.g.loaded_netrw = 1
@@ -48,11 +44,36 @@ return {
 			end,
 		})
 	end,
-	--: }}}
-	--: config = function() {{{
-	config = function()
-		--: Window options {{{
-		-- Set window options:
+	opts = {
+		mappings = {
+			close = "q",
+			go_in = "<C-l>",
+			go_in_plus = "<CR>", -- Close explorer after opening file.
+			go_out = "<C-h>",
+			go_out_plus = "",
+			reset = "<BS>",
+			reveal_cwd = "@",
+			show_help = "?",
+			synchronize = "=",
+			trim_left = "<",
+			trim_right = ">",
+		},
+		options = {
+			permanent_delete = false, -- Whether to delete permanently or move into module-specific trash.
+			use_as_default_explorer = true, -- Whether to use for editing directories.
+		},
+		windows = {
+			max_number = math.huge, -- Maximum number of windows to show side by side.
+			preview = true, -- Whether to show preview of file/directory under cursor.
+			width_focus = 50, -- Width of focused window.
+			width_nofocus = 15, -- Width of non-focused window.
+			width_preview = 80, -- Width of preview window.
+		},
+	},
+	config = function(_, opts)
+		local files = require("mini.files")
+
+		-- Window options:
 		vim.api.nvim_create_autocmd("User", {
 			pattern = "MiniFilesWindowOpen",
 			callback = function(args)
@@ -61,8 +82,8 @@ return {
 				vim.api.nvim_win_set_config(win_id, { border = "rounded" })
 			end,
 		})
-		--: }}}
-		--: Toggle dotfiles {{{
+
+		-- Toggle dotfiles:
 		local show_dotfiles = true
 
 		local filter_show = function(fs_entry)
@@ -86,8 +107,8 @@ return {
 				vim.keymap.set("n", "g.", toggle_dotfiles, { buffer = buf_id, desc = "Toggle dotfiles displaying." })
 			end,
 		})
-		--: }}}
-		--: Open files in splits {{{
+
+		-- Open files in splits:
 		local map_split = function(buf_id, keys, direction)
 			local split_function = function()
 				-- Make new window and set it as target.
@@ -111,14 +132,14 @@ return {
 				local buf_id = args.data.buf_id
 
 				-- Tweak keys to your liking
-				map_split(buf_id, "<Leader>gs", "belowright horizontal")
-				map_split(buf_id, "<Leader>gv", "belowright vertical")
-				map_split(buf_id, "<Leader>_", "belowright horizontal")
-				map_split(buf_id, "<Leader>-", "belowright vertical")
+				map_split(buf_id, "gs", "belowright horizontal")
+				map_split(buf_id, "gv", "belowright vertical")
+				map_split(buf_id, "_",  "belowright horizontal")
+				map_split(buf_id, "-",  "belowright vertical")
 			end,
 		})
-		--: }}}
-		--: Set current working directory {{{
+
+		-- Set current working directory:
 		local files_set_cwd = function(path)
 			-- Works only if cursor is on the valid file system entry.
 			local cur_entry_path = files.get_fs_entry().path
@@ -129,40 +150,11 @@ return {
 		vim.api.nvim_create_autocmd("User", {
 			pattern = "MiniFilesBufferCreate",
 			callback = function(args)
-				vim.keymap.set("n", "<Leader>g,", files_set_cwd, { buffer = args.data.buf_id })
+				vim.keymap.set("n", "g,", files_set_cwd, { buffer = args.data.buf_id })
 			end,
 		})
-		--: }}}
-		--: Setup function {{{
-		local files = require("mini.files")
 
-		files.setup({
-			mappings = {
-				close = "q",
-				go_in = "<C-l>",
-				go_in_plus = "<CR>", -- Close explorer after opening file.
-				go_out = "<C-h>",
-				go_out_plus = "",
-				reset = "<BS>",
-				reveal_cwd = "@",
-				show_help = "?",
-				synchronize = "=",
-				trim_left = "<",
-				trim_right = ">",
-			},
-			options = {
-				permanent_delete = false, -- Whether to delete permanently or move into module-specific trash.
-				use_as_default_explorer = true, -- Whether to use for editing directories.
-			},
-			windows = {
-				max_number = math.huge, -- Maximum number of windows to show side by side.
-				preview = true, -- Whether to show preview of file/directory under cursor.
-				width_focus = 50, -- Width of focused window.
-				width_nofocus = 15, -- Width of non-focused window.
-				width_preview = 80, -- Width of preview window.
-			},
-		})
-		--: }}}
+		-- Setup function:
+		files.setup(opts)
 	end,
-	--: }}}
 }
