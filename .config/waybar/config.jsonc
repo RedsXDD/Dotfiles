@@ -14,15 +14,15 @@
 {
 	"layer": "top",
 	"position": "top",
-	"margin": 10,
 	"include": ["${XDG_CONFIG_HOME:-$HOME/.config}/waybar/modules.jsonc"],
 
 	"modules-left": [
-		"mpd",
+		"hyprland/window",
+		"custom/cava",
 		"hyprland/workspaces"
 	],
 	"modules-center": [
-		"hyprland/window",
+		"mpd"
 	],
 	"modules-right": [
 		"clock",
@@ -30,6 +30,6 @@
 		"custom/notifications",
 		"wireplumber",
 		"keyboard-state",
-		"tray",
-	],
+		"tray"
+	]
 }
