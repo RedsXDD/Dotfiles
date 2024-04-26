@@ -22,7 +22,7 @@
 		"tooltip": false,
 		"format": " {}",
 		"on-click": "$TERMINAL -e cava",
-		"exec": "sleep 1 && cava -p ${XDG_CONFIG_HOME:-$HOME/.config}/waybar/cava_waybar.conf | sed -u 's/;/ /g; s/0/▁/g; s/1/▂/g; s/2/▃/g; s/3/▄/g; s/4/▅/g; s/5/▆/g; s/6/▇/g; s/7/█/g;'"
+		"exec": "sleep 1 && cava -p ${XDG_CONFIG_HOME:-$HOME/.config}/waybar/themes/shared/cava_waybar.conf | sed -u 's/;/ /g; s/0/▁/g; s/1/▂/g; s/2/▃/g; s/3/▄/g; s/4/▅/g; s/5/▆/g; s/6/▇/g; s/7/█/g;'"
     	},
 	// }}}
 	// Workspaces module {{{
@@ -199,13 +199,12 @@
 	"keyboard-state": {
 		"numlock": true,
 		"capslock": true,
-		"scrolllock": false,
+		"scrolllock": true,
 		"format": {
 		 	"numlock": "󰎠 {icon}",
 		 	"capslock": "󰌌 {icon}",
-		 	"scrolllock": "Scroll {icon}"
+		 	"scrolllock": "󱕒 {icon}"
 		},
-
 		"format-icons": {
 			"locked": "",
 			"unlocked": ""
@@ -218,9 +217,6 @@
 		"spacing": 5
 	},
 	// }}}
-
-/* Unused modules */
-
 	// Powermenu module {{{
 	"custom/powermenu": {
 		"tooltip": false,
