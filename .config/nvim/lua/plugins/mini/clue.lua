@@ -3,8 +3,8 @@ return {
 	-- NOTE: Setting mini.bracketed as a dependency allows mini.clue to
 	-- always load bracketed's clues even when a non bracket key triggers the lazy loading of mini.clue.
 	dependencies = { { "echasnovski/mini.bracketed", opts = {} } },
-	--stylua: ignore start
 	keys = {
+		--stylua: ignore start
 		{ "<C-r>",    mode = { "i", "c" } },
 		{ "<C-x>",    mode = { "i" } },
 		{ "<C-w>",    mode = { "n" } },
@@ -16,14 +16,14 @@ return {
 		{ "z",        mode = { "n", "x" } },
 		{ "[",        mode = { "n", "x" } },
 		{ "]",        mode = { "n", "x" } },
+		--stylua: ignore end
 	},
-	--stylua: ignore end
 	config = function()
 		local clue = require("mini.clue")
 
-		clue.requires_clue = function(required, clues)
-			if required and type(required) == "string" then
-				local success, _ = pcall(require, required)
+		clue.mkclue_with_dependency = function(dependency, clues)
+			if dependency and type(dependency) == "string" then
+				local success, _ = pcall(require, dependency)
 				if not success then
 					return false
 				else
@@ -74,28 +74,28 @@ return {
 				{ mode = "x", keys = "<Leader>g", desc = "+Misc" },
 
 				-- Lsp:
-				clue.requires_clue("lspconfig", { mode = "n", keys = "<Leader>l", desc = "+LSP" }),
+				clue.mkclue_with_dependency("lspconfig", { mode = "n", keys = "<Leader>l", desc = "+LSP" }),
 
 				-- Noice:
-				clue.requires_clue("noice", { mode = "n", keys = "<Leader>gn", desc = "+Noice" }),
+				clue.mkclue_with_dependency("noice", { mode = "n", keys = "<Leader>gn", desc = "+Noice" }),
 
 				-- Mini.map:
-				clue.requires_clue("mini.map", { mode = "n", keys = "<Leader>m", desc = "+MiniMap" }),
+				clue.mkclue_with_dependency("mini.map", { mode = "n", keys = "<Leader>m", desc = "+MiniMap" }),
 
 				-- Mini.surround:
-				clue.requires_clue("mini.surround", {
+				clue.mkclue_with_dependency("mini.surround", {
 					{ mode = "n", keys = "<Leader>s", desc = "+Surround" },
 					{ mode = "x", keys = "<Leader>s", desc = "+Surround" },
 				}),
 
 				-- Gitsigns:
-				clue.requires_clue("gitsigns", {
+				clue.mkclue_with_dependency("gitsigns", {
 					{ mode = "n", keys = "<Leader>gh", desc = "+Gitsigns" },
 					{ mode = "x", keys = "<Leader>gh", desc = "+Gitsigns" },
 				}),
 
 				-- Mini.bracketed:
-				clue.requires_clue("mini.bracketed", {
+				clue.mkclue_with_dependency("mini.bracketed", {
 					{ mode = "n", keys = "]b", postkeys = "]" },
 					{ mode = "n", keys = "]w", postkeys = "]" },
 					{ mode = "n", keys = "[b", postkeys = "[" },
@@ -103,7 +103,7 @@ return {
 				}),
 
 				-- Mini.pick:
-				clue.requires_clue("mini.pick", {
+				clue.mkclue_with_dependency("mini.pick", {
 					{ mode = "n", keys = "<Leader>f", desc = "+MiniPick" },
 					{ mode = "n", keys = "<Leader>fg", desc = "+Grep" },
 					{ mode = "n", keys = "<Leader>fG", desc = "+Git" },
