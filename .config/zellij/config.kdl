@@ -499,11 +499,17 @@ keybinds clear-defaults=true{
 //: }}}
 //: Default plugin startup {{{
 plugins {
-	tab-bar         { path "tab-bar"; }
-	status-bar      { path "status-bar"; }
-	strider         { path "strider"; }
-	compact-bar     { path "compact-bar"; }
-	session-manager { path "session-manager"; }
+    tab-bar location="zellij:tab-bar"
+    status-bar location="zellij:status-bar"
+    strider location="zellij:strider"
+    compact-bar location="zellij:compact-bar"
+    session-manager location="zellij:session-manager"
+    welcome-screen location="zellij:session-manager" {
+        welcome_screen true
+    }
+    filepicker location="zellij:strider" {
+        cwd "/"
+    }
 }
 //: }}}
 
@@ -531,7 +537,7 @@ on_force_close "detach"
 // simplified_ui true
 // default_shell "fish"
 // default_cwd ""
-pane_frames false
+// pane_frames false
 // auto_layout false
 styled_underlines true
 session_serialization true
