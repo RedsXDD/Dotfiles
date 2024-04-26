@@ -1,10 +1,7 @@
--- vim:fileencoding=utf-8:foldmethod=marker
-
 return {
 	"echasnovski/mini.starter",
 	event = "VimEnter",
 	config = function()
-		--: Main variables/functions {{{
 		local starter = require("mini.starter")
 		local padding = string.rep(" ", 13) -- Padding to center sections and actions.
 
@@ -29,10 +26,9 @@ return {
 		local new_section = function(name, action, section)
 			return { name = name, action = action, section = padding .. section }
 		end
-		--: }}}
-		--: Modified function `MiniStarter.sections.recent_files()` {{{
+
 		--stylua: ignore start
-		-- This is MiniStarter's default "recentfiles" function taken directly from the source code.
+		-- This is a modified version of MiniStarter's default "recentfiles" function taken directly from the source code.
 		-- It had to be copied over because otherwise the section padding couldn't be modified to make it aligned with all other sections from the `new_section` function.
 		starter.sections.recent_files_modified = function(n, current_dir, show_path)
 			n = n or 5
@@ -80,10 +76,9 @@ return {
 			end
 		end
 		--stylua: ignore end
-		--: }}}
-		--: Modified function `MiniStarter.sections.sessions()` {{{
+
 		--stylua: ignore start
-		-- This is MiniStarter's default "sessions" function taken directly from the source code.
+		-- This is modified version of MiniStarter's default "sessions" function taken directly from the source code.
 		-- It had to be copied over because otherwise the section padding couldn't be modified to make it aligned with all other sections from the `new_section` function.
 		starter.sections.sessions_modified = function(n, recent)
 			n = n or 5
@@ -134,8 +129,7 @@ return {
 			end
 		end
 		--stylua: ignore end
-		--: }}}
-		--: Setup function {{{
+
 		starter.setup({
 			evaluate_single = true,
 			header = header,
@@ -175,12 +169,11 @@ return {
 				new_section("󰈬 Live Grep",    [[lua require("mini.pick").builtin.grep_live()]], "Actions"),
 				new_section("󰒲 Lazy",         "Lazy",              "Actions"),
 				new_section("◍ Mason",        "Mason",             "Actions"),
-				starter.sections.recent_files_modified(5, false),
-				starter.sections.recent_files_modified(5, true),
+				starter.sections.recent_files_modified(5, false, false),
+				starter.sections.recent_files_modified(5, true, false),
 				starter.sections.sessions_modified(5, true)
 				--stylua: ignore end
 			},
 		})
-		--: }}}
 	end,
 }
