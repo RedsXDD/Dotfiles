@@ -1121,7 +1121,7 @@ map bpm ${{ waybg "$f" && wal -o pywal_postrun -i "$(head -n1 ~/.cache/waybg/wal
 map bpa ${{ waybg -a "$f" && wal -o pywal_postrun -i "$(head -n1 ~/.cache/waybg/wallpaper)"}}
 
 # Trash-cli bindings:
-map dD delfiles
+# map dD delfiles
 map dd trash_put
 map dr trash_restore
 map de trash_empty
