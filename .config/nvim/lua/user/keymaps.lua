@@ -31,10 +31,26 @@ end
 --: General {{{
 map("n", "<Esc>", ":noh<CR><Esc>", "Clear highlighted searches.")
 map("v", ".", ":norm .<CR>", "Perform dot commands over visual blocks.")
-map({ "n", "v" }, "n", "nzz", "Center the cursor when moving to the next match during a search.")
-map({ "n", "v" }, "N", "Nzz", "Center the cursor when moving to the previous match during a search.")
 map({ "n", "v" }, "j", "gj", "Remap j to gj for better movement on warped lines.")
 map({ "n", "v" }, "k", "gk", "Remap k to gk for better movement on warped lines.")
+
+-- Automatically center cursor.
+-- local has_animate, animate =
+if pcall(require, "mini.animate")then
+	map("", "n",     "<Cmd>lua vim.cmd('normal! n');     require('mini.animate').execute_after('scroll', 'normal! zvzz')<CR>", "Center the cursor when moving to the next match during a search.")
+	map("", "N",     "<Cmd>lua vim.cmd('normal! N');     require('mini.animate').execute_after('scroll', 'normal! zvzz')<CR>", "Center the cursor when moving to the previous match during a search.")
+	map("", "<C-d>", "<Cmd>lua vim.cmd('normal! <C-d>'); require('mini.animate').execute_after('scroll', 'normal! zvzz')<CR>", "Center the cursor when moving a half page down.")
+	map("", "<C-u>", "<Cmd>lua vim.cmd('normal! <C-u>'); require('mini.animate').execute_after('scroll', 'normal! zvzz')<CR>", "Center the cursor when moving a half page up.")
+	map("", "<C-f>", "<Cmd>lua vim.cmd('normal! <C-f>'); require('mini.animate').execute_after('scroll', 'normal! zvzz')<CR>", "Center the cursor when moving a page down.")
+	map("", "<C-b>", "<Cmd>lua vim.cmd('normal! <C-b>'); require('mini.animate').execute_after('scroll', 'normal! zvzz')<CR>", "Center the cursor when moving a page up.")
+else
+	map({ "n", "v" }, "n", "nzvzz",         "Center the cursor when moving to the next match during a search.")
+	map({ "n", "v" }, "N", "Nzvzz",         "Center the cursor when moving to the previous match during a search.")
+	map({ "n", "v" }, "<C-d>", "<C-d>zvzz", "Center the cursor when moving a half page down.")
+	map({ "n", "v" }, "<C-u>", "<C-u>zvzz", "Center the cursor when moving a half page up.")
+	map({ "n", "v" }, "<C-f>", "<C-f>zvzz", "Center the cursor when moving a page down.")
+	map({ "n", "v" }, "<C-b>", "<C-b>zvzz", "Center the cursor when moving a page up.")
+end
 
 -- Move lines around with Alt + arrow keys:
 map("n", "<A-S-J>", ":m .+1<CR>==",        "Move the current line down.")
