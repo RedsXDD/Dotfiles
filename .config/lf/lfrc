@@ -314,7 +314,7 @@ cmd bulk-rename ${{
 }}
 #: }}}
 #: Mkarchive {{{
-cmd mkarchive %{{
+cmd mkarchive ${{
 	archive_type="$1"
 	case "$archive_type" in
 		'7z')
