@@ -34,7 +34,7 @@ return {
 
 		clue.setup({
 			window = {
-				delay = 300, -- Delay in ms.
+				delay = 0, -- Delay in ms.
 				scroll_up = "<C-k>",
 				scroll_down = "<C-j>",
 				config = {
