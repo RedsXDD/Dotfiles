@@ -32,11 +32,11 @@ run_options(){
 	[ "$(awk '/fullscreen:/ {print $2}' "$result_theme")" != 'true;' ] && border_setup='window { border: 2px solid; border-color: @border-colour; }'
 
 	if [ "$result" = "$calc_err_msg" ]; then
-		height='137px'
+		height='13.3%'
 		result_str='!>'
 		rofi_opts(){ printf '%s\n' "$opt_2" "$opt_3" ; }
 	else
-		height='180px'
+		height='17.41%'
 		result_str='='
 		rofi_opts(){ printf '%s\n' "$opt_1" "$opt_2" "$opt_3" ; }
 	fi
