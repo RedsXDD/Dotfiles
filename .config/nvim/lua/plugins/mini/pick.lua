@@ -30,12 +30,9 @@ return {
 		pick_map("<Leader>fs", function() extra.pickers.spellsuggest() end, "Search spell suggestions.")
 
 		-- Grep:
-		pick_map("<Leader>fgg", function() pick.builtin.grep()      end, "Grep for files on CWD.")
-		pick_map("<Leader>fgl", function() pick.builtin.grep_live() end, "Live grep for files on CWD.")
-		pick_map("<Leader>fgw", function()
-			local word = vim.fn.expand("<cWORD>")
-			pick.builtin.grep({ pattern = word })
-		end, "Search string under cursor (Current buffer).")
+		pick_map("<Leader>fgg", function() pick.builtin.grep()                                       end, "Grep for files on CWD.")
+		pick_map("<Leader>fgl", function() pick.builtin.grep_live()                                  end, "Live grep for files on CWD.")
+		pick_map("<Leader>fgw", function() pick.builtin.grep({ pattern = vim.fn.expand("<cWORD>") }) end, "Search string under cursor (Current buffer).")
 
 		-- Git:
 		pick_map("<Leader>fGb", function() extra.pickers.git_branches() end, "Search git branches.")
@@ -63,6 +60,10 @@ return {
 		return M
 	end,
 	opts = {
+		options = {
+			content_from_bottom = true,
+			use_cache = true,
+		},
 		mappings = {
 			caret_left = "<Left>",
 			caret_right = "<Right>",
