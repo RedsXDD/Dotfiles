@@ -160,7 +160,7 @@ map({ "n", "v" }, "<C-S-Right>", "<C-W>L", "Move split window to the right.")
 -- Buffer management:
 map({ "n", "v" }, "<Leader>bb", "<C-w>T", "Break split into a new tab.")
 map({ "n", "v" }, "<Leader>bc", ":badd ", "Open a new buffer.")
-map({ "n", "v" }, "<Leader>bx", ":bdelete<CR>:bprev<CR>", "Close current buffer.")
+map({ "n", "v" }, "<Leader>bx", ":w!<CR>:bdelete<CR>:bprev<CR>", "Close current buffer.")
 map({ "n", "v" }, "<Leader>bC", ":tabnew ", "Open a new tab.")
 map({ "n", "v" }, "<Leader>bX", ":tabc<CR>", "Close current tab.")
 map({ "n", "v" }, "<Leader>.", ":tabn<CR>", "Move to the next tab.")
