@@ -9,7 +9,7 @@ theme="${XDG_CONFIG_HOME:-$HOME/.config}/rofi/themes/launchers/type-6/style-1.ra
 
 wallpapers_dir="${1:-$HOME/Pictures/wallpapers/wallhaven}"
 rofi_cmd(){
-	[ "$(awk '/fullscreen:/ {print $2}' "$theme")" != 'true;' ] && border_setup='window { border: 2px solid; border-color: @border-colour; }'
+	[ "$(awk '/fullscreen:/ {print $2}' "$theme")" != 'true;' ] && border_setup='window { border: 0px solid; border-color: @border-colour; }'
 
 	# Use find to search for files in the specified directory ($wallpapers_dir) with a maximum depth of 1 (i.e., only in the specified directory, not subdirectories), and of type 'f' (regular files).
 	find "$wallpapers_dir" -maxdepth 1 -type f |

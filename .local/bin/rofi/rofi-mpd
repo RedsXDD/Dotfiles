@@ -61,7 +61,7 @@ esac
 
 # Pass variables to rofi dmenu
 run_rofi(){
-	[ "$(awk '/fullscreen:/ {print $2}' "$theme")" != 'true;' ] && border_setup='window { border: 2px solid; border-color: @border-colour; }'
+	[ "$(awk '/fullscreen:/ {print $2}' "$theme")" != 'true;' ] && border_setup='window { border: 0px solid; border-color: @border-colour; }'
 
 	# shellcheck disable=SC2086
 	printf '%s\n' "$opt_1" "$opt_2" "$opt_3" "$opt_4" "$opt_5" "$opt_6" |

@@ -28,7 +28,7 @@ opt_16='All outputs (copysave)'
 
 takepic(){ sleep 1; grimblast --notify --freeze "$@"; }
 run_rofi(){
-	[ "$(awk '/fullscreen:/ {print $2}' "$theme")" != 'true;' ] && border_setup='window { border: 2px solid; border-color: @border-colour; }'
+	[ "$(awk '/fullscreen:/ {print $2}' "$theme")" != 'true;' ] && border_setup='window { border: 0px solid; border-color: @border-colour; }'
 
 	printf '%s\n' "$opt_1" "$opt_2" "$opt_3" "$opt_4" "$opt_5" "$opt_6" "$opt_7" "$opt_8" "$opt_9" "$opt_10" "$opt_11" "$opt_12" "$opt_13" "$opt_14" "$opt_15" "$opt_16" |
 		rofi -i -dmenu \

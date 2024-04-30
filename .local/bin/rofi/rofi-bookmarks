@@ -27,7 +27,7 @@ opt_6='Remove a bookmark'
 opt_7='Edit bookmarks file'
 
 actions_rofi(){
-	[ "$(awk '/fullscreen:/ {print $2}' "$theme")" != 'true;' ] && border_setup='window { border: 2px solid; border-color: @border-colour; }'
+	[ "$(awk '/fullscreen:/ {print $2}' "$theme")" != 'true;' ] && border_setup='window { border: 0px solid; border-color: @border-colour; }'
 
 	printf '%s\n' "$opt_1" "$opt_2" "$opt_3" "$opt_4" "$opt_5" "$opt_6" "$opt_7" |
 		rofi -i -dmenu \
@@ -40,7 +40,7 @@ actions_rofi(){
 }
 
 rofi_new_bookmark(){
-	[ "$(awk '/fullscreen:/ {print $2}' "$new_bookmark_theme")" != 'true;' ] && border_setup='window { border: 2px solid; border-color: @border-colour; }'
+	[ "$(awk '/fullscreen:/ {print $2}' "$new_bookmark_theme")" != 'true;' ] && border_setup='window { border: 0px solid; border-color: @border-colour; }'
 
 	rofi -dmenu \
 		-theme "$new_bookmark_theme" \
@@ -53,7 +53,7 @@ rofi_new_bookmark(){
 }
 
 run_rofi(){
-	[ "$(awk '/fullscreen:/ {print $2}' "$theme")" != 'true;' ] && border_setup='window { border: 2px solid; border-color: @border-colour; }'
+	[ "$(awk '/fullscreen:/ {print $2}' "$theme")" != 'true;' ] && border_setup='window { border: 0px solid; border-color: @border-colour; }'
 
 	rofi -i -dmenu \
 		-theme "$theme" \
@@ -79,7 +79,7 @@ confirm_removal(){
 				element-text { horizontal-align: 0.5; }
 				textbox { horizontal-align: 0.5; }
 				window {
-					border: 2px solid;
+					border: 0px solid;
 					border-color: @border-colour;
 					location: center;
 					anchor: center;

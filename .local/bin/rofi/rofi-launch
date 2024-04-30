@@ -42,7 +42,7 @@ else
 	window_icon=' Windows'
 fi
 
-[ "$(awk '/fullscreen:/ {print $2}' "$theme")" != 'true;' ] && border_setup='window { border: 2px solid; border-color: @border-colour; }'
+[ "$(awk '/fullscreen:/ {print $2}' "$theme")" != 'true;' ] && border_setup='window { border: 0px solid; border-color: @border-colour; }'
 
 rofi -i -show "$show" \
 	-theme "$theme" \

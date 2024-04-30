@@ -17,7 +17,7 @@ opt_2='󰃬 Calculate again'
 opt_3='󰅖 Close'
 
 run_rofi(){
-	[ "$(awk '/fullscreen:/ {print $2}' "$theme")" != 'true;' ] && border_setup='window { border: 2px solid; border-color: @border-colour; }'
+	[ "$(awk '/fullscreen:/ {print $2}' "$theme")" != 'true;' ] && border_setup='window { border: 0px solid; border-color: @border-colour; }'
 
 	rofi -i -dmenu \
 		-theme "$theme" \
@@ -29,7 +29,7 @@ run_rofi(){
 }
 
 run_options(){
-	[ "$(awk '/fullscreen:/ {print $2}' "$result_theme")" != 'true;' ] && border_setup='window { border: 2px solid; border-color: @border-colour; }'
+	[ "$(awk '/fullscreen:/ {print $2}' "$result_theme")" != 'true;' ] && border_setup='window { border: 0px solid; border-color: @border-colour; }'
 
 	if [ "$result" = "$calc_err_msg" ]; then
 		height='13.3%'
