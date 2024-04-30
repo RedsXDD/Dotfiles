@@ -23,7 +23,7 @@ return {
 			callback = function(args)
 				local f = vim.fn.expand("%:p")
 				if vim.fn.isdirectory(f) ~= 0 then
-					require("neo-tree.command")
+					require("neo-tree.command").execute({ toggle = true, dir = vim.uv.cwd() })
 					vim.api.nvim_clear_autocmds({ group = group_name })
 				end
 			end,

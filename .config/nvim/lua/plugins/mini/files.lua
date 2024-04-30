@@ -145,10 +145,11 @@ return {
 			group = augroup,
 			callback = function(args)
 				if vim.fn.argc(-1) == 1 then
+					local files = require("mini.files")
 					local stat = vim.uv.fs_stat(vim.fn.argv(0))
 					if stat and stat.type == "directory" then
-						require("mini.files").setup(plugin_opts())
-						require("mini.files").open()
+						files.setup(plugin_opts())
+						files.open(vim.uv.cwd(), true)
 					end
 				end
 
