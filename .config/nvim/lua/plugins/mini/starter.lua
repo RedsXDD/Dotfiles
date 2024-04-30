@@ -17,7 +17,7 @@ return {
 			"\n" .. padding .. [[TIP: To exit Neovim, just run $sudo rm -rf /*]]
 		}, "\n")
 
-		local footer = (function()
+		local footer = function()
 			-- NOTE: This timer is needed because, without it, the time delay displayed for the loading of neovim plugins is always 0ms,
 			-- as the call of the require("mini.starter").refresh() function is needed in order for the right delay to be displayed on the footer.
 			-- NOTE: The call to the require("mini.starter").refresh() function is only needed when opening neovim on a terminal.
@@ -29,15 +29,13 @@ return {
 					return
 				end
 				n_milliseconds = n_milliseconds + 1
-				require("mini.starter").refresh()
+				starter.refresh()
 			end))
 
-			return function()
-				local stats = require("lazy").stats()
-				local ms = (math.floor(stats.startuptime * 100 + 0.5) / 100)
-				return padding .. "󱐋 Neovim loaded " .. stats.count .. " plugins in " .. ms .. "ms"
-			end
-		end)()
+			local stats = require("lazy").stats()
+			local ms = (math.floor(stats.startuptime * 100 + 0.5) / 100)
+			return padding .. "󱐋 Neovim loaded " .. stats.count .. " plugins in " .. ms .. "ms"
+		end
 
 		starter.new_section = function(name, action, section)
 			return { name = name, action = action, section = padding .. section }
