@@ -17,13 +17,29 @@ return {
 			"\n" .. padding .. [[TIP: To exit Neovim, just run $sudo rm -rf /*]]
 		}, "\n")
 
-		local footer = function()
-			local stats = require("lazy").stats()
-			local ms = (math.floor(stats.startuptime * 100 + 0.5) / 100)
-			return padding .. "󱐋 Neovim loaded " .. stats.count .. " plugins in " .. ms .. "ms"
-		end
+		local footer = (function()
+			-- NOTE: This timer is needed because, without it, the time delay displayed for the loading of neovim plugins is always 0ms,
+			-- as the call of the require("mini.starter").refresh() function is needed in order for the right delay to be displayed on the footer.
+			-- NOTE: The call to the require("mini.starter").refresh() function is only needed when opening neovim on a terminal.
+			local n_milliseconds = 0
+			local timer = vim.loop.new_timer()
+			timer:start(0, 1, vim.schedule_wrap(function() -- Start the timer with an interval of 0 milliseconds and a repeat interval of 1 millisecond.
+				if vim.bo.filetype ~= 'starter' or n_milliseconds == 1 then
+					timer:stop()
+					return
+				end
+				n_milliseconds = n_milliseconds + 1
+				require("mini.starter").refresh()
+			end))
 
-		local new_section = function(name, action, section)
+			return function()
+				local stats = require("lazy").stats()
+				local ms = (math.floor(stats.startuptime * 100 + 0.5) / 100)
+				return padding .. "󱐋 Neovim loaded " .. stats.count .. " plugins in " .. ms .. "ms"
+			end
+		end)()
+
+		starter.new_section = function(name, action, section)
 			return { name = name, action = action, section = padding .. section }
 		end
 
@@ -142,11 +158,11 @@ return {
 			},
 			items = {
 				--stylua: ignore start
-				new_section(" New File",    "ene | startinsert", "Actions"),
-				new_section("󰅚 Quit Neovim", "qa!",               "Actions"),
+				starter.new_section(" New File",    "ene | startinsert", "Actions"),
+				starter.new_section("󰅚 Quit Neovim", "qa!",               "Actions"),
 				--stylua: ignore end
 
-				new_section("󰉋 Open File Explorer", function()
+				starter.new_section("󰉋 Open File Explorer", function()
 					local has_neo_tree, neo_tree = pcall(require, "neo-tree")
 					local has_mini_files, mini_files = pcall(require, "mini.files")
 
@@ -163,12 +179,12 @@ return {
 				end, "Actions"),
 
 				--stylua: ignore start
-				new_section("󰮊 List Buffers", [[lua require("mini.pick").builtin.buffers()]],   "Actions"),
-				new_section(" Recent Files", [[lua require("mini.extra").pickers.oldfiles()]], "Actions"),
-				new_section("󰱼 Find Files",   [[lua require("mini.pick").builtin.files()]],     "Actions"),
-				new_section("󰈬 Live Grep",    [[lua require("mini.pick").builtin.grep_live()]], "Actions"),
-				new_section("󰒲 Lazy",         "Lazy",              "Actions"),
-				new_section("◍ Mason",        "Mason",             "Actions"),
+				starter.new_section("󰮊 List Buffers", [[lua require("mini.pick").builtin.buffers()]],   "Actions"),
+				starter.new_section(" Recent Files", [[lua require("mini.extra").pickers.oldfiles()]], "Actions"),
+				starter.new_section("󰱼 Find Files",   [[lua require("mini.pick").builtin.files()]],     "Actions"),
+				starter.new_section("󰈬 Live Grep",    [[lua require("mini.pick").builtin.grep_live()]], "Actions"),
+				starter.new_section("󰒲 Lazy",         "Lazy",              "Actions"),
+				starter.new_section("◍ Mason",        "Mason",             "Actions"),
 				starter.sections.recent_files_modified(5, false, false),
 				starter.sections.recent_files_modified(5, true, false),
 				starter.sections.sessions_modified(5, true)
