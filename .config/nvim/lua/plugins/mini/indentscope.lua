@@ -2,11 +2,16 @@ return {
 	"echasnovski/mini.indentscope",
 	event = { "BufReadPost", "BufNewFile" },
 	init = function()
+		local group_name = "augroup_mini_indentscope_disable"
+		local augroup = vim.api.nvim_create_augroup(group_name, { clear = true })
 		vim.api.nvim_create_autocmd("FileType", {
+			desc = "Auto disabled mini.indentscope when opening certain filetypes.",
+			group = augroup,
 			pattern = {
 				"help",
 				"alpha",
 				"dashboard",
+				"Starter",
 				"starter",
 				"neo-tree",
 				"Trouble",
@@ -19,6 +24,7 @@ return {
 			},
 			callback = function()
 				vim.b.miniindentscope_disable = true
+				vim.api.nvim_clear_autocmds({ group = group_name })
 			end,
 		})
 	end,
