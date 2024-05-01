@@ -8,7 +8,9 @@ return {
 	},
 	branch = "v3.x",
 	cmd = "Neotree",
-	keys = { { "<leader>gf", function() require("neo-tree.command").execute({ toggle = true, dir = vim.uv.cwd() }) end, desc = "Open Neotree." } },
+	keys = {
+		{ "<Leader>gf", function() require("neo-tree.command").execute({ toggle = true, dir = vim.uv.cwd() }) end, desc = "Open Neotree on CWD." },
+	},
 	-- NOTE: The init function allows the plugin to be lazy loaded without breaking the netrw hijack functionality.
 	init = function()
 		vim.g.loaded_netrwPlugin = 1
