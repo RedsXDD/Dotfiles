@@ -241,10 +241,10 @@ return {
 				end, actions_section),
 
 				--stylua: ignore start
-				starter.new_section("󰮊 List Buffers", [[lua require("mini.pick").builtin.buffers()]],   actions_section),
-				starter.new_section(" Recent Files", [[lua require("mini.extra").pickers.oldfiles()]], actions_section),
-				starter.new_section("󰱼 Find Files",   [[lua require("mini.pick").builtin.files()]],     actions_section),
-				starter.new_section("󰈬 Live Grep",    [[lua require("mini.pick").builtin.grep_live()]], actions_section),
+				starter.new_section("󰮊 List Buffers", [[lua require("lazy").load({ plugins = "mini.pick" }); require("mini.pick").builtin.buffers()]],   actions_section),
+				starter.new_section(" Recent Files", [[lua require("lazy").load({ plugins = "mini.pick" }); require("mini.extra").pickers.oldfiles()]], actions_section),
+				starter.new_section("󰱼 Find Files",   [[lua require("lazy").load({ plugins = "mini.pick" }); require("mini.pick").builtin.files()]],     actions_section),
+				starter.new_section("󰈬 Live Grep",    [[lua require("lazy").load({ plugins = "mini.pick" }); require("mini.pick").builtin.grep_live()]], actions_section),
 				starter.new_section("󰒲 Lazy",         "Lazy",                                           actions_section),
 				starter.new_section("◍ Mason",        "Mason",                                          actions_section),
 				starter.sections.recent_files_modified(5, false, false),
