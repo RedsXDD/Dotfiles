@@ -151,7 +151,7 @@ return {
 			header = header,
 			footer = footer,
 			content_hooks = {
-				starter.gen_hook.adding_bullet(padding .. "░ ", true),
+				starter.gen_hook.adding_bullet(padding .. "░ ", false),
 				starter.gen_hook.indexing("all", { "Actions" }), -- Use numbers to index items.
 				starter.gen_hook.aligning("center", "center"),
 				starter.gen_hook.padding(6, 0),
