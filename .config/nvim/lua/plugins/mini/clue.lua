@@ -1,8 +1,8 @@
 return {
 	"echasnovski/mini.clue",
-	-- NOTE: Setting mini.bracketed as a dependency allows mini.clue to
-	-- always load bracketed's clues even when a non bracket key triggers the lazy loading of mini.clue.
-	dependencies = { { "echasnovski/mini.bracketed", opts = {} } },
+	dependencies = {
+		{ "echasnovski/mini.bracketed", opts = {} }, -- NOTE: Setting `mini.bracketed` as a dependency is needed to load it's clues correctly.
+	},
 	keys = {
 		--stylua: ignore start
 		{ "<C-r>",    mode = { "i", "c" } },
@@ -66,49 +66,211 @@ return {
 			},
 			clues = {
 				-- General:
-				{ mode = "n", keys = "<Leader>b", desc = "+Buffers & Tabs" },
-				{ mode = "x", keys = "<Leader>b", desc = "+Buffers & Tabs" },
-				{ mode = "n", keys = "<Leader>t", desc = "+Toggles" },
-				{ mode = "x", keys = "<Leader>t", desc = "+Toggles" },
-				{ mode = "n", keys = "<Leader>g", desc = "+Misc" },
-				{ mode = "x", keys = "<Leader>g", desc = "+Misc" },
-
-				-- Lsp:
-				clue.mkclue_with_dependency("lspconfig", { mode = "n", keys = "<Leader>l", desc = "+LSP" }),
+				{ mode = "n", keys = "<Leader>b", desc = "Buffers & Tabs" },
+				{ mode = "x", keys = "<Leader>b", desc = "Buffers & Tabs" },
+				{ mode = "n", keys = "<Leader>t", desc = "Toggles" },
+				{ mode = "x", keys = "<Leader>t", desc = "Toggles" },
+				{ mode = "n", keys = "<Leader>g", desc = "Misc" },
+				{ mode = "x", keys = "<Leader>g", desc = "Misc" },
 
 				-- Noice:
-				clue.mkclue_with_dependency("noice", { mode = "n", keys = "<Leader>gn", desc = "+Noice" }),
+				clue.mkclue_with_dependency("noice", { mode = "n", keys = "<Leader>gn", desc = "Noice" }),
+
+				-- Lsp:
+				clue.mkclue_with_dependency("lspconfig", {
+					{ mode = "n", keys = "<Leader>l", desc = "LSP" },
+					{ mode = "n", keys = "]d", postkeys = "]" },
+					{ mode = "n", keys = "]D", postkeys = "]" },
+					{ mode = "n", keys = "[d", postkeys = "[" },
+					{ mode = "n", keys = "[D", postkeys = "[" },
+					{ mode = "x", keys = "]d", postkeys = "]" },
+					{ mode = "x", keys = "]D", postkeys = "]" },
+					{ mode = "x", keys = "[d", postkeys = "[" },
+					{ mode = "x", keys = "[D", postkeys = "[" },
+				}),
 
 				-- Mini.map:
-				clue.mkclue_with_dependency("mini.map", { mode = "n", keys = "<Leader>m", desc = "+MiniMap" }),
+				clue.mkclue_with_dependency("mini.map", { mode = "n", keys = "<Leader>m", desc = "MiniMap" }),
+
+				-- Mini.comment:
+				clue.mkclue_with_dependency("mini.comment", {
+					{ mode = "n", keys = "<Leader>c", desc = "Comment" },
+					{ mode = "x", keys = "<Leader>c", desc = "Comment" },
+				}),
 
 				-- Mini.surround:
 				clue.mkclue_with_dependency("mini.surround", {
-					{ mode = "n", keys = "<Leader>s", desc = "+Surround" },
-					{ mode = "x", keys = "<Leader>s", desc = "+Surround" },
+					{ mode = "n", keys = "<Leader>s", desc = "Surround" },
+					{ mode = "x", keys = "<Leader>s", desc = "Surround" },
+				}),
+
+				-- Mini.diff:
+				clue.mkclue_with_dependency("mini.diff", {
+					{ mode = "n", keys = "<Leader>d", desc = "MiniDiff" },
+					{ mode = "n", keys = "]h", postkeys = "]" },
+					{ mode = "n", keys = "]H", postkeys = "]" },
+					{ mode = "n", keys = "[h", postkeys = "[" },
+					{ mode = "n", keys = "[H", postkeys = "[" },
+					{ mode = "x", keys = "]h", postkeys = "]" },
+					{ mode = "x", keys = "]H", postkeys = "]" },
+					{ mode = "x", keys = "[h", postkeys = "[" },
+					{ mode = "x", keys = "[H", postkeys = "[" },
 				}),
 
 				-- Gitsigns:
 				clue.mkclue_with_dependency("gitsigns", {
-					{ mode = "n", keys = "<Leader>gh", desc = "+Gitsigns" },
-					{ mode = "x", keys = "<Leader>gh", desc = "+Gitsigns" },
+					{ mode = "n", keys = "<Leader>gh", desc = "Gitsigns" },
+					{ mode = "x", keys = "<Leader>gh", desc = "Gitsigns" },
+					{ mode = "n", keys = "]h", postkeys = "]" },
+					{ mode = "n", keys = "]H", postkeys = "]" },
+					{ mode = "n", keys = "[h", postkeys = "[" },
+					{ mode = "n", keys = "[H", postkeys = "[" },
+					{ mode = "x", keys = "]h", postkeys = "]" },
+					{ mode = "x", keys = "]H", postkeys = "]" },
+					{ mode = "x", keys = "[h", postkeys = "[" },
+					{ mode = "x", keys = "[H", postkeys = "[" },
 				}),
 
 				-- Mini.bracketed:
 				clue.mkclue_with_dependency("mini.bracketed", {
+					-- Jump betwheen buffers.
 					{ mode = "n", keys = "]b", postkeys = "]" },
-					{ mode = "n", keys = "]w", postkeys = "]" },
+					{ mode = "n", keys = "]B", postkeys = "]" },
 					{ mode = "n", keys = "[b", postkeys = "[" },
+					{ mode = "n", keys = "[B", postkeys = "[" },
+					{ mode = "x", keys = "]b", postkeys = "]" },
+					{ mode = "x", keys = "]B", postkeys = "]" },
+					{ mode = "x", keys = "[b", postkeys = "[" },
+					{ mode = "x", keys = "[B", postkeys = "[" },
+
+					-- Jump betwheen comments.
+					{ mode = "n", keys = "]c", postkeys = "]" },
+					{ mode = "n", keys = "]C", postkeys = "]" },
+					{ mode = "n", keys = "[c", postkeys = "[" },
+					{ mode = "n", keys = "[C", postkeys = "[" },
+					{ mode = "x", keys = "]c", postkeys = "]" },
+					{ mode = "x", keys = "]C", postkeys = "]" },
+					{ mode = "x", keys = "[c", postkeys = "[" },
+					{ mode = "x", keys = "[C", postkeys = "[" },
+
+					-- Jump betwheen conflicts.
+					{ mode = "n", keys = "]x", postkeys = "]" },
+					{ mode = "n", keys = "]X", postkeys = "]" },
+					{ mode = "n", keys = "[x", postkeys = "[" },
+					{ mode = "n", keys = "[X", postkeys = "[" },
+					{ mode = "x", keys = "]x", postkeys = "]" },
+					{ mode = "x", keys = "]X", postkeys = "]" },
+					{ mode = "x", keys = "[x", postkeys = "[" },
+					{ mode = "x", keys = "[X", postkeys = "[" },
+
+					-- Jump betwheen files.
+					{ mode = "n", keys = "]f", postkeys = "]" },
+					{ mode = "n", keys = "]F", postkeys = "]" },
+					{ mode = "n", keys = "[f", postkeys = "[" },
+					{ mode = "n", keys = "[F", postkeys = "[" },
+					{ mode = "x", keys = "]f", postkeys = "]" },
+					{ mode = "x", keys = "]F", postkeys = "]" },
+					{ mode = "x", keys = "[f", postkeys = "[" },
+					{ mode = "x", keys = "[F", postkeys = "[" },
+
+					-- Jump betwheen indentation.
+					{ mode = "n", keys = "]i", postkeys = "]" },
+					{ mode = "n", keys = "]I", postkeys = "]" },
+					{ mode = "n", keys = "[i", postkeys = "[" },
+					{ mode = "n", keys = "[I", postkeys = "[" },
+					{ mode = "x", keys = "]i", postkeys = "]" },
+					{ mode = "x", keys = "]I", postkeys = "]" },
+					{ mode = "x", keys = "[i", postkeys = "[" },
+					{ mode = "x", keys = "[I", postkeys = "[" },
+
+					-- Jump betwheen jumps from jump-list.
+					{ mode = "n", keys = "]j", postkeys = "]" },
+					{ mode = "n", keys = "]J", postkeys = "]" },
+					{ mode = "n", keys = "[j", postkeys = "[" },
+					{ mode = "n", keys = "[J", postkeys = "[" },
+					{ mode = "x", keys = "]j", postkeys = "]" },
+					{ mode = "x", keys = "]J", postkeys = "]" },
+					{ mode = "x", keys = "[j", postkeys = "[" },
+					{ mode = "x", keys = "[J", postkeys = "[" },
+
+					-- Jump betwheen locations from location-list.
+					{ mode = "n", keys = "]l", postkeys = "]" },
+					{ mode = "n", keys = "]L", postkeys = "]" },
+					{ mode = "n", keys = "[l", postkeys = "[" },
+					{ mode = "n", keys = "[L", postkeys = "[" },
+					{ mode = "x", keys = "]l", postkeys = "]" },
+					{ mode = "x", keys = "]L", postkeys = "]" },
+					{ mode = "x", keys = "[l", postkeys = "[" },
+					{ mode = "x", keys = "[L", postkeys = "[" },
+
+					-- Jump betwheen old files.
+					{ mode = "n", keys = "]o", postkeys = "]" },
+					{ mode = "n", keys = "]O", postkeys = "]" },
+					{ mode = "n", keys = "[o", postkeys = "[" },
+					{ mode = "n", keys = "[O", postkeys = "[" },
+					{ mode = "x", keys = "]o", postkeys = "]" },
+					{ mode = "x", keys = "]O", postkeys = "]" },
+					{ mode = "x", keys = "[o", postkeys = "[" },
+					{ mode = "x", keys = "[O", postkeys = "[" },
+
+					-- Jump betwheen quickfixes from quickfix-list.
+					{ mode = "n", keys = "]q", postkeys = "]" },
+					{ mode = "n", keys = "]Q", postkeys = "]" },
+					{ mode = "n", keys = "[q", postkeys = "[" },
+					{ mode = "n", keys = "[Q", postkeys = "[" },
+					{ mode = "x", keys = "]q", postkeys = "]" },
+					{ mode = "x", keys = "]Q", postkeys = "]" },
+					{ mode = "x", keys = "[q", postkeys = "[" },
+					{ mode = "x", keys = "[Q", postkeys = "[" },
+
+					-- Jump betwheen tree-sitter node and parents.
+					{ mode = "n", keys = "]t", postkeys = "]" },
+					{ mode = "n", keys = "]T", postkeys = "]" },
+					{ mode = "n", keys = "[t", postkeys = "[" },
+					{ mode = "n", keys = "[T", postkeys = "[" },
+					{ mode = "x", keys = "]t", postkeys = "]" },
+					{ mode = "x", keys = "]T", postkeys = "]" },
+					{ mode = "x", keys = "[t", postkeys = "[" },
+					{ mode = "x", keys = "[T", postkeys = "[" },
+
+					-- Jump betwheen undo states.
+					{ mode = "n", keys = "]u", postkeys = "]" },
+					{ mode = "n", keys = "]U", postkeys = "]" },
+					{ mode = "n", keys = "[u", postkeys = "[" },
+					{ mode = "n", keys = "[U", postkeys = "[" },
+					{ mode = "x", keys = "]u", postkeys = "]" },
+					{ mode = "x", keys = "]U", postkeys = "]" },
+					{ mode = "x", keys = "[u", postkeys = "[" },
+					{ mode = "x", keys = "[U", postkeys = "[" },
+
+					-- Jump betwheen windows.
+					{ mode = "n", keys = "]w", postkeys = "]" },
+					{ mode = "n", keys = "]W", postkeys = "]" },
 					{ mode = "n", keys = "[w", postkeys = "[" },
+					{ mode = "n", keys = "[W", postkeys = "[" },
+					{ mode = "x", keys = "]w", postkeys = "]" },
+					{ mode = "x", keys = "]W", postkeys = "]" },
+					{ mode = "x", keys = "[w", postkeys = "[" },
+					{ mode = "x", keys = "[W", postkeys = "[" },
+
+					-- Jump betwheen yank selection replacing latest put region.
+					{ mode = "n", keys = "]y", postkeys = "]" },
+					{ mode = "n", keys = "]Y", postkeys = "]" },
+					{ mode = "n", keys = "[y", postkeys = "[" },
+					{ mode = "n", keys = "[Y", postkeys = "[" },
+					{ mode = "x", keys = "]y", postkeys = "]" },
+					{ mode = "x", keys = "]Y", postkeys = "]" },
+					{ mode = "x", keys = "[y", postkeys = "[" },
+					{ mode = "x", keys = "[Y", postkeys = "[" },
 				}),
 
 				-- Mini.pick:
 				clue.mkclue_with_dependency("mini.pick", {
-					{ mode = "n", keys = "<Leader>f", desc = "+MiniPick" },
-					{ mode = "n", keys = "<Leader>fg", desc = "+Grep" },
-					{ mode = "n", keys = "<Leader>fG", desc = "+Git" },
-					{ mode = "n", keys = "<Leader>fl", desc = "+LSP" },
-					{ mode = "n", keys = "<Leader>fL", desc = "+List" }
+					{ mode = "n", keys = "<Leader>f", desc = "MiniPick" },
+					{ mode = "n", keys = "<Leader>fg", desc = "Grep" },
+					{ mode = "n", keys = "<Leader>fG", desc = "Git" },
+					{ mode = "n", keys = "<Leader>fl", desc = "LSP" },
+					{ mode = "n", keys = "<Leader>fL", desc = "List" },
 				}),
 
 				clue.gen_clues.builtin_completion(),
