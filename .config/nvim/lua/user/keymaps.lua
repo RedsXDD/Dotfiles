@@ -44,12 +44,12 @@ if pcall(require, "mini.animate")then
 	map("", "<C-f>", "<Cmd>lua vim.cmd('normal! <C-f>'); require('mini.animate').execute_after('scroll', 'normal! zvzz')<CR>", "Center the cursor when moving a page down.")
 	map("", "<C-b>", "<Cmd>lua vim.cmd('normal! <C-b>'); require('mini.animate').execute_after('scroll', 'normal! zvzz')<CR>", "Center the cursor when moving a page up.")
 else
-	map({ "n", "v" }, "n", "nzvzz",         "Center the cursor when moving to the next match during a search.")
-	map({ "n", "v" }, "N", "Nzvzz",         "Center the cursor when moving to the previous match during a search.")
-	map({ "n", "v" }, "<C-d>", "<C-d>zvzz", "Center the cursor when moving a half page down.")
-	map({ "n", "v" }, "<C-u>", "<C-u>zvzz", "Center the cursor when moving a half page up.")
-	map({ "n", "v" }, "<C-f>", "<C-f>zvzz", "Center the cursor when moving a page down.")
-	map({ "n", "v" }, "<C-b>", "<C-b>zvzz", "Center the cursor when moving a page up.")
+	map("", "n", "nzvzz",         "Center the cursor when moving to the next match during a search.")
+	map("", "N", "Nzvzz",         "Center the cursor when moving to the previous match during a search.")
+	map("", "<C-d>", "<C-d>zvzz", "Center the cursor when moving a half page down.")
+	map("", "<C-u>", "<C-u>zvzz", "Center the cursor when moving a half page up.")
+	map("", "<C-f>", "<C-f>zvzz", "Center the cursor when moving a page down.")
+	map("", "<C-b>", "<C-b>zvzz", "Center the cursor when moving a page up.")
 end
 
 -- Move lines around with Alt + arrow keys:
