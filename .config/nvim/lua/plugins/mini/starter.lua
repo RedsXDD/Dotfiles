@@ -15,13 +15,13 @@ return {
 
 		local actions_section_set_icon = function() -- Set icon only when not running Neovim on a TTY.
 			if vim.env.DISPLAY ~= nil then
-				return "󱓞 Actions"
+				return "󱓞 "
 			else
-				return "Actions"
+				return ""
 			end
 		end
 
-		local actions_section = actions_section_set_icon()
+		local actions_section = actions_section_set_icon() .. "Actions"
 		starter.new_section = function(name, action, section)
 			return { name = name, action = action, section = padding .. section }
 		end
