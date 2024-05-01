@@ -26,18 +26,37 @@ return {
 			return { name = name, action = action, section = padding .. section }
 		end
 
-		local header = table.concat({
-			[[                                                                     ]],
-			[[       ████ ██████           █████      ██                     ]],
-			[[      ███████████             █████                             ]],
-			[[      █████████ ███████████████████ ███   ███████████   ]],
-			[[     █████████  ███    █████████████ █████ ██████████████   ]],
-			[[    █████████ ██████████ █████████ █████ █████ ████ █████   ]],
-			[[  ███████████ ███    ███ █████████ █████ █████ ████ █████  ]],
-			[[ ██████  █████████████████████ ████ █████ █████ ████ ██████ ]],
-			"\n" .. padding .. [[TIP: To exit Neovim, just run $sudo rm -rf /*]]
-		}, "\n")
+		-- Setup header text:
+		local header = [[]]
+		if vim.env.DISPLAY ~= nil then
+			header = table.concat({
+				[[                                                                     ]],
+				[[       ████ ██████           █████      ██                     ]],
+				[[      ███████████             █████                             ]],
+				[[      █████████ ███████████████████ ███   ███████████   ]],
+				[[     █████████  ███    █████████████ █████ ██████████████   ]],
+				[[    █████████ ██████████ █████████ █████ █████ ████ █████   ]],
+				[[  ███████████ ███    ███ █████████ █████ █████ ████ █████  ]],
+				[[ ██████  █████████████████████ ████ █████ █████ ████ ██████ ]],
+			}, "\n")
+		else
+			header = table.concat({
+				[[      ___           ___           ___           ___                       ___      ]],
+				[[     /\__\         /\  \         /\  \         /\__\          ___        /\__\     ]],
+				[[    /::|  |       /::\  \       /::\  \       /:/  /         /\  \      /::|  |    ]],
+				[[   /:|:|  |      /:/\:\  \     /:/\:\  \     /:/  /          \:\  \    /:|:|  |    ]],
+				[[  /:/|:|  |__   /::\~\:\  \   /:/  \:\  \   /:/__/  ___      /::\__\  /:/|:|__|__  ]],
+				[[ /:/ |:| /\__\ /:/\:\ \:\__\ /:/__/ \:\__\  |:|  | /\__\  __/:/\/__/ /:/ |::::\__\ ]],
+				[[ \/__|:|/:/  / \:\~\:\ \/__/ \:\  \ /:/  /  |:|  |/:/  / /\/:/  /    \/__/~~/:/  / ]],
+				[[     |:/:/  /   \:\ \:\__\    \:\  /:/  /   |:|__/:/  /  \::/__/           /:/  /  ]],
+				[[     |::/  /     \:\ \/__/     \:\/:/  /     \::::/__/    \:\__\          /:/  /   ]],
+				[[     /:/  /       \:\__\        \::/  /       ~~~~         \/__/         /:/  /    ]],
+				[[     \/__/         \/__/         \/__/                                   \/__/     ]],
+			}, "\n")
+		end
+		header = table.concat({ header, "\n" .. padding .. [[TIP: To exit Neovim, just run $sudo rm -rf /*]] }, "\n")
 
+		-- Setup footer text:
 		local footer_set_icon = function ()
 			if vim.env.DISPLAY ~= nil then
 				return "󱐋 "
@@ -45,20 +64,18 @@ return {
 				return ""
 			end
 		end
+
 		local footer = (function()
 			-- NOTE: This timer is needed because, without it, the time delay displayed for the loading of neovim plugins is always 0ms,
 			-- as the call of the require("mini.starter").refresh() function is needed in order for the right delay to be displayed on the footer.
 			-- NOTE: The call to the require("mini.starter").refresh() function is only needed when opening neovim on a terminal.
-			local n_milliseconds = 0
-			local timer = vim.loop.new_timer()
-			timer:start(0, 1, vim.schedule_wrap(function() -- Start the timer with an interval of 0 milliseconds and a repeat with an interval of 1 millisecond.
-				if n_milliseconds == 1 or vim.bo.filetype ~= 'starter' then
-					timer:stop()
-					return
+			local delay = 1
+			vim.wait(delay, vim.schedule_wrap(function()
+				if vim.bo.filetype ~= "starter" then
+					return false
 				end
-				n_milliseconds = n_milliseconds + 1
 				starter.refresh()
-			end))
+			end), delay, true)
 
 			return function()
 				local stats = require("lazy").stats()
@@ -82,14 +99,14 @@ return {
 			if not vim.is_callable(show_path) then error("`show_path` should be boolean or callable.") end
 
 			return function()
-				local icon = function() -- Set icon only when not running Neovim on a TTY.
+				local section_icon = function() -- Set icon only when not running Neovim on a TTY.
 					if vim.env.DISPLAY ~= nil then
 						return "󰥔 "
 					else
 						return ""
 					end
 				end
-				local section = string.format(padding .. icon() .. "Recent Files%s", -- Added text padding and icon compared to original source code.
+				local section = string.format(padding .. section_icon() .. "Recent Files%s", -- Added text padding and icon compared to original source code.
 					current_dir and " (Current directory)" or "")
 
 				-- Use only actual readable files
@@ -113,10 +130,17 @@ return {
 
 				-- Create items
 				local items = {}
+				local item_icon = function() -- Set icon only when not running Neovim on a TTY.
+					if vim.env.DISPLAY ~= nil then
+						return " "
+					else
+						return ""
+					end
+				end
 				for _, f in ipairs(vim.list_slice(files, 1, n)) do
 					local name = vim.fn.fnamemodify(f, ":t") .. show_path(f)
 					-- Added a nice `` icon for all itens compared to original source code.
-					table.insert(items, { action = "edit " .. f, name = " " .. name, section = section })
+					table.insert(items, { action = "edit " .. f, name = item_icon() .. name, section = section })
 				end
 
 				return items
@@ -190,7 +214,7 @@ return {
 			footer = footer,
 			content_hooks = {
 				starter.gen_hook.adding_bullet(padding .. gen_hook_adding_bullet_set_icon(), false),
-				starter.gen_hook.indexing("all", { actions_section }), -- Use numbers to index items.
+				starter.gen_hook.indexing("all", {}), -- Use numbers to index items.
 				starter.gen_hook.aligning("center", "center"),
 				starter.gen_hook.padding(6, 0),
 			},
