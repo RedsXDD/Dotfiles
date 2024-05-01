@@ -5,6 +5,27 @@ return {
 		local starter = require("mini.starter")
 		local padding = string.rep(" ", 13) -- Padding to center sections and actions.
 
+		local gen_hook_adding_bullet_set_icon = function()
+			if vim.env.DISPLAY ~= nil then
+				return "░ "
+			else
+				return ""
+			end
+		end
+
+		local actions_section_set_icon = function() -- Set icon only when not running Neovim on a TTY.
+			if vim.env.DISPLAY ~= nil then
+				return "󱓞 Actions"
+			else
+				return "Actions"
+			end
+		end
+
+		local actions_section = actions_section_set_icon()
+		starter.new_section = function(name, action, section)
+			return { name = name, action = action, section = padding .. section }
+		end
+
 		local header = table.concat({
 			[[                                                                     ]],
 			[[       ████ ██████           █████      ██                     ]],
@@ -17,6 +38,13 @@ return {
 			"\n" .. padding .. [[TIP: To exit Neovim, just run $sudo rm -rf /*]]
 		}, "\n")
 
+		local footer_set_icon = function ()
+			if vim.env.DISPLAY ~= nil then
+				return "󱐋 "
+			else
+				return ""
+			end
+		end
 		local footer = (function()
 			-- NOTE: This timer is needed because, without it, the time delay displayed for the loading of neovim plugins is always 0ms,
 			-- as the call of the require("mini.starter").refresh() function is needed in order for the right delay to be displayed on the footer.
@@ -35,13 +63,9 @@ return {
 			return function()
 				local stats = require("lazy").stats()
 				local ms = (math.floor(stats.startuptime * 100 + 0.5) / 100)
-				return padding .. "󱐋 Neovim loaded " .. stats.count .. " plugins in " .. ms .. "ms"
+				return padding .. footer_set_icon() .. "Neovim loaded " .. stats.count .. " plugins in " .. ms .. "ms"
 			end
 		end)()
-
-		starter.new_section = function(name, action, section)
-			return { name = name, action = action, section = padding .. section }
-		end
 
 		--stylua: ignore start
 		-- This is a modified version of MiniStarter's default "recentfiles" function taken directly from the source code.
@@ -58,7 +82,14 @@ return {
 			if not vim.is_callable(show_path) then error("`show_path` should be boolean or callable.") end
 
 			return function()
-				local section = string.format(padding .. "Recent Files%s", -- Added the `padding ..` part compared to the original source code.
+				local icon = function() -- Set icon only when not running Neovim on a TTY.
+					if vim.env.DISPLAY ~= nil then
+						return "󰥔 "
+					else
+						return ""
+					end
+				end
+				local section = string.format(padding .. icon() .. "Recent Files%s", -- Added text padding and icon compared to original source code.
 					current_dir and " (Current directory)" or "")
 
 				-- Use only actual readable files
@@ -101,7 +132,14 @@ return {
 			if recent == nil then recent = true end
 
 			return function()
-				local section = padding .. "Sessions" -- Added local variable with padding compared to original source code.
+				local icon = function() -- Set icon only when not running Neovim on a TTY.
+					if vim.env.DISPLAY ~= nil then
+						return "󰍹 "
+					else
+						return ""
+					end
+				end
+				local section = padding .. icon() .. "Sessions" -- Added text padding and icon compared to original source code.
 
 				if _G.MiniSessions == nil then
 					return { { name = [['mini.sessions' is not set up]], action = '', section = section } }
@@ -151,15 +189,15 @@ return {
 			header = header,
 			footer = footer,
 			content_hooks = {
-				starter.gen_hook.adding_bullet(padding .. "░ ", false),
-				starter.gen_hook.indexing("all", { "Actions" }), -- Use numbers to index items.
+				starter.gen_hook.adding_bullet(padding .. gen_hook_adding_bullet_set_icon(), false),
+				starter.gen_hook.indexing("all", { actions_section }), -- Use numbers to index items.
 				starter.gen_hook.aligning("center", "center"),
 				starter.gen_hook.padding(6, 0),
 			},
 			items = {
 				--stylua: ignore start
-				starter.new_section(" New File",    "ene | startinsert", "Actions"),
-				starter.new_section("󰅚 Quit Neovim", "qa!",               "Actions"),
+				starter.new_section(" New File",    "ene | startinsert", actions_section),
+				starter.new_section("󰅚 Quit Neovim", "qa!",               actions_section),
 				--stylua: ignore end
 
 				starter.new_section("󰉋 Open File Explorer", function()
@@ -176,15 +214,15 @@ return {
 						vim.cmd([[Lex]])
 						return
 					end
-				end, "Actions"),
+				end, actions_section),
 
 				--stylua: ignore start
-				starter.new_section("󰮊 List Buffers", [[lua require("mini.pick").builtin.buffers()]],   "Actions"),
-				starter.new_section(" Recent Files", [[lua require("mini.extra").pickers.oldfiles()]], "Actions"),
-				starter.new_section("󰱼 Find Files",   [[lua require("mini.pick").builtin.files()]],     "Actions"),
-				starter.new_section("󰈬 Live Grep",    [[lua require("mini.pick").builtin.grep_live()]], "Actions"),
-				starter.new_section("󰒲 Lazy",         "Lazy",              "Actions"),
-				starter.new_section("◍ Mason",        "Mason",             "Actions"),
+				starter.new_section("󰮊 List Buffers", [[lua require("mini.pick").builtin.buffers()]],   actions_section),
+				starter.new_section(" Recent Files", [[lua require("mini.extra").pickers.oldfiles()]], actions_section),
+				starter.new_section("󰱼 Find Files",   [[lua require("mini.pick").builtin.files()]],     actions_section),
+				starter.new_section("󰈬 Live Grep",    [[lua require("mini.pick").builtin.grep_live()]], actions_section),
+				starter.new_section("󰒲 Lazy",         "Lazy",                                           actions_section),
+				starter.new_section("◍ Mason",        "Mason",                                          actions_section),
 				starter.sections.recent_files_modified(5, false, false),
 				starter.sections.recent_files_modified(5, true, false),
 				starter.sections.sessions_modified(5, true)
