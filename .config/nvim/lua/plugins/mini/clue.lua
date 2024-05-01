@@ -152,10 +152,6 @@ return {
 					{ mode = "n", keys = "]B", postkeys = "]" },
 					{ mode = "n", keys = "[b", postkeys = "[" },
 					{ mode = "n", keys = "[B", postkeys = "[" },
-					{ mode = "x", keys = "]b", postkeys = "]" },
-					{ mode = "x", keys = "]B", postkeys = "]" },
-					{ mode = "x", keys = "[b", postkeys = "[" },
-					{ mode = "x", keys = "[B", postkeys = "[" },
 
 					-- Jump betwheen comments.
 					{ mode = "n", keys = "]c", postkeys = "]" },
@@ -182,10 +178,6 @@ return {
 					{ mode = "n", keys = "]F", postkeys = "]" },
 					{ mode = "n", keys = "[f", postkeys = "[" },
 					{ mode = "n", keys = "[F", postkeys = "[" },
-					{ mode = "x", keys = "]f", postkeys = "]" },
-					{ mode = "x", keys = "]F", postkeys = "]" },
-					{ mode = "x", keys = "[f", postkeys = "[" },
-					{ mode = "x", keys = "[F", postkeys = "[" },
 
 					-- Jump betwheen indentation.
 					{ mode = "n", keys = "]i", postkeys = "]" },
@@ -202,40 +194,24 @@ return {
 					{ mode = "n", keys = "]J", postkeys = "]" },
 					{ mode = "n", keys = "[j", postkeys = "[" },
 					{ mode = "n", keys = "[J", postkeys = "[" },
-					{ mode = "x", keys = "]j", postkeys = "]" },
-					{ mode = "x", keys = "]J", postkeys = "]" },
-					{ mode = "x", keys = "[j", postkeys = "[" },
-					{ mode = "x", keys = "[J", postkeys = "[" },
 
 					-- Jump betwheen locations from location-list.
 					{ mode = "n", keys = "]l", postkeys = "]" },
 					{ mode = "n", keys = "]L", postkeys = "]" },
 					{ mode = "n", keys = "[l", postkeys = "[" },
 					{ mode = "n", keys = "[L", postkeys = "[" },
-					{ mode = "x", keys = "]l", postkeys = "]" },
-					{ mode = "x", keys = "]L", postkeys = "]" },
-					{ mode = "x", keys = "[l", postkeys = "[" },
-					{ mode = "x", keys = "[L", postkeys = "[" },
 
 					-- Jump betwheen old files.
 					{ mode = "n", keys = "]o", postkeys = "]" },
 					{ mode = "n", keys = "]O", postkeys = "]" },
 					{ mode = "n", keys = "[o", postkeys = "[" },
 					{ mode = "n", keys = "[O", postkeys = "[" },
-					{ mode = "x", keys = "]o", postkeys = "]" },
-					{ mode = "x", keys = "]O", postkeys = "]" },
-					{ mode = "x", keys = "[o", postkeys = "[" },
-					{ mode = "x", keys = "[O", postkeys = "[" },
 
 					-- Jump betwheen quickfixes from quickfix-list.
 					{ mode = "n", keys = "]q", postkeys = "]" },
 					{ mode = "n", keys = "]Q", postkeys = "]" },
 					{ mode = "n", keys = "[q", postkeys = "[" },
 					{ mode = "n", keys = "[Q", postkeys = "[" },
-					{ mode = "x", keys = "]q", postkeys = "]" },
-					{ mode = "x", keys = "]Q", postkeys = "]" },
-					{ mode = "x", keys = "[q", postkeys = "[" },
-					{ mode = "x", keys = "[Q", postkeys = "[" },
 
 					-- Jump betwheen tree-sitter node and parents.
 					{ mode = "n", keys = "]t", postkeys = "]" },
@@ -252,30 +228,18 @@ return {
 					{ mode = "n", keys = "]U", postkeys = "]" },
 					{ mode = "n", keys = "[u", postkeys = "[" },
 					{ mode = "n", keys = "[U", postkeys = "[" },
-					{ mode = "x", keys = "]u", postkeys = "]" },
-					{ mode = "x", keys = "]U", postkeys = "]" },
-					{ mode = "x", keys = "[u", postkeys = "[" },
-					{ mode = "x", keys = "[U", postkeys = "[" },
 
 					-- Jump betwheen windows.
 					{ mode = "n", keys = "]w", postkeys = "]" },
 					{ mode = "n", keys = "]W", postkeys = "]" },
 					{ mode = "n", keys = "[w", postkeys = "[" },
 					{ mode = "n", keys = "[W", postkeys = "[" },
-					{ mode = "x", keys = "]w", postkeys = "]" },
-					{ mode = "x", keys = "]W", postkeys = "]" },
-					{ mode = "x", keys = "[w", postkeys = "[" },
-					{ mode = "x", keys = "[W", postkeys = "[" },
 
 					-- Jump betwheen yank selection replacing latest put region.
 					{ mode = "n", keys = "]y", postkeys = "]" },
 					{ mode = "n", keys = "]Y", postkeys = "]" },
 					{ mode = "n", keys = "[y", postkeys = "[" },
 					{ mode = "n", keys = "[Y", postkeys = "[" },
-					{ mode = "x", keys = "]y", postkeys = "]" },
-					{ mode = "x", keys = "]Y", postkeys = "]" },
-					{ mode = "x", keys = "[y", postkeys = "[" },
-					{ mode = "x", keys = "[Y", postkeys = "[" },
 				}),
 
 				-- Mini.pick:
