@@ -1,6 +1,7 @@
 return {
 	"echasnovski/mini.pick",
 	dependencies = { "echasnovski/mini.extra" },
+	cmd = "Pick",
 	keys = function()
 		local M = {}
 
@@ -59,47 +60,65 @@ return {
 
 		return M
 	end,
-	opts = {
-		options = {
-			content_from_bottom = true,
-			use_cache = true,
-		},
-		mappings = {
-			caret_left = "<Left>",
-			caret_right = "<Right>",
+	opts = function()
+		local win_config = function() -- Function to center mini.pick on screen.
+			local height = math.floor(0.618 * vim.o.lines)
+			local width = math.floor(0.618 * vim.o.columns)
+			return {
+				border = "rounded",
+				anchor = "NW", height = height, width = width,
+				row = math.floor(0.5 * (vim.o.lines - height)),
+				col = math.floor(0.5 * (vim.o.columns - width)),
+			}
+		end
 
-			choose = "<CR>",
-			choose_in_split = "<C-s>",
-			choose_in_vsplit = "<C-v>",
-			choose_in_tabpage = "<C-t>",
-			choose_marked = "<M-CR>",
+		return {
+			window = {
+				config = win_config(),
+				prompt_cursor = "▏",
+				prompt_prefix = "> ",
+			},
+			options = {
+				content_from_bottom = true,
+				use_cache = true,
+			},
+			mappings = {
+				caret_left = "<Left>",
+				caret_right = "<Right>",
 
-			delete_char = "<BS>",
-			delete_char_right = "<Del>",
-			delete_left = "<C-u>",
-			delete_word = "<C-w>",
+				choose = "<CR>",
+				choose_in_split = "<C-s>",
+				choose_in_vsplit = "<C-v>",
+				choose_in_tabpage = "<C-t>",
+				choose_marked = "<M-CR>",
 
-			mark = "<C-x>",
-			mark_all = "<C-a>",
+				delete_char = "<BS>",
+				delete_char_right = "<Del>",
+				delete_left = "<C-u>",
+				delete_word = "<C-w>",
 
-			move_up = "<C-k>",
-			move_down = "<C-j>",
-			move_start = "<C-g>",
+				mark = "<C-x>",
+				mark_all = "<C-a>",
 
-			paste = "<C-S-v>",
+				move_up = "<C-k>",
+				move_down = "<C-j>",
+				move_start = "<C-g>",
 
-			refine = "<C-Space>",
-			refine_marked = "<M-Space>",
+				paste = "<C-S-v>",
 
-			scroll_down = "<C-f>",
-			scroll_up = "<C-b>",
-			scroll_left = "<C-h>",
-			scroll_right = "<C-l>",
+				refine = "<C-Space>",
+				refine_marked = "<M-Space>",
 
-			stop = "<Esc>",
+				scroll_down = "<C-f>",
+				scroll_up = "<C-b>",
+				scroll_left = "<C-h>",
+				scroll_right = "<C-l>",
 
-			toggle_info = "<S-Tab>",
-			toggle_preview = "<Tab>",
-		},
-	},
+				stop = "<Esc>",
+
+				toggle_info = "<S-Tab>",
+				toggle_preview = "<Tab>",
+			},
+		}
+	end,
 }
