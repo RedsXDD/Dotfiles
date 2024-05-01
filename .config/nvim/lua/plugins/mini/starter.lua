@@ -17,14 +17,14 @@ return {
 			"\n" .. padding .. [[TIP: To exit Neovim, just run $sudo rm -rf /*]]
 		}, "\n")
 
-		local footer = function()
+		local footer = (function()
 			-- NOTE: This timer is needed because, without it, the time delay displayed for the loading of neovim plugins is always 0ms,
 			-- as the call of the require("mini.starter").refresh() function is needed in order for the right delay to be displayed on the footer.
 			-- NOTE: The call to the require("mini.starter").refresh() function is only needed when opening neovim on a terminal.
 			local n_milliseconds = 0
 			local timer = vim.loop.new_timer()
-			timer:start(0, 1, vim.schedule_wrap(function() -- Start the timer with an interval of 0 milliseconds and a repeat interval of 1 millisecond.
-				if vim.bo.filetype ~= 'starter' or n_milliseconds == 1 then
+			timer:start(0, 1, vim.schedule_wrap(function() -- Start the timer with an interval of 0 milliseconds and a repeat with an interval of 1 millisecond.
+				if n_milliseconds == 1 or vim.bo.filetype ~= 'starter' then
 					timer:stop()
 					return
 				end
@@ -32,10 +32,12 @@ return {
 				starter.refresh()
 			end))
 
-			local stats = require("lazy").stats()
-			local ms = (math.floor(stats.startuptime * 100 + 0.5) / 100)
-			return padding .. "󱐋 Neovim loaded " .. stats.count .. " plugins in " .. ms .. "ms"
-		end
+			return function()
+				local stats = require("lazy").stats()
+				local ms = (math.floor(stats.startuptime * 100 + 0.5) / 100)
+				return padding .. "󱐋 Neovim loaded " .. stats.count .. " plugins in " .. ms .. "ms"
+			end
+		end)()
 
 		starter.new_section = function(name, action, section)
 			return { name = name, action = action, section = padding .. section }
