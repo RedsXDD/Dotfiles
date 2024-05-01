@@ -5,7 +5,7 @@ return {
 	config = function()
 		local alpha = require("alpha")
 		local dashboard = require("alpha.themes.dashboard")
-		local padding_header = string.rep(" ", 13)
+		local padding = string.rep(" ", 13)
 
 		dashboard.config.opts.margin = 0
 		dashboard.config.opts.noautocmd = true
@@ -24,7 +24,7 @@ return {
 			[[    █████████ ██████████ █████████ █████ █████ ████ █████   ]],
 			[[  ███████████ ███    ███ █████████ █████ █████ ████ █████  ]],
 			[[ ██████  █████████████████████ ████ █████ █████ ████ ██████ ]],
-			'', padding_header .. [[TIP: To exit Neovim, just run $sudo rm -rf /*]]
+			'', padding .. [[TIP: To exit Neovim, just run $sudo rm -rf /*]]
 		}
 
 		dashboard.section.footer.val = function()
