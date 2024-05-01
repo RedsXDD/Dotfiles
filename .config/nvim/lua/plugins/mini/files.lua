@@ -1,6 +1,4 @@
 local plugin_opts = function()
-	local files = require("mini.files")
-
 	-- Window options:
 	vim.api.nvim_create_autocmd("User", {
 		pattern = "MiniFilesWindowOpen",
@@ -22,7 +20,7 @@ local plugin_opts = function()
 	local toggle_dotfiles = function()
 		show_dotfiles = not show_dotfiles
 		local new_filter = show_dotfiles and filter_show or filter_hide
-		files.refresh({ content = { filter = new_filter } })
+		require("mini.files").refresh({ content = { filter = new_filter } })
 	end
 
 	vim.api.nvim_create_autocmd("User", {
@@ -38,12 +36,12 @@ local plugin_opts = function()
 		local split_function = function()
 			-- Make new window and set it as target.
 			local new_target_window
-			vim.api.nvim_win_call(files.get_target_window(), function()
+			vim.api.nvim_win_call(require("mini.files").get_target_window(), function()
 				vim.cmd(direction .. " split")
 				new_target_window = vim.api.nvim_get_current_win()
 			end)
 
-			files.set_target_window(new_target_window)
+			require("mini.files").set_target_window(new_target_window)
 		end
 
 		-- Adding `desc` will result into `show_help` entries.
@@ -67,7 +65,7 @@ local plugin_opts = function()
 	-- Set current working directory:
 	local files_set_cwd = function(path)
 		-- Works only if cursor is on the valid file system entry.
-		local cur_entry_path = files.get_fs_entry().path
+		local cur_entry_path = require("mini.files").get_fs_entry().path
 		local cur_directory = vim.fs.dirname(cur_entry_path)
 		vim.fn.chdir(cur_directory)
 	end
@@ -133,11 +131,11 @@ return {
 
 		return M
 	end,
+	opts = plugin_opts(),
 	init = function() -- NOTE: The init function allows the plugin to be lazy loaded without breaking the netrw hijack functionality.
 		vim.g.loaded_netrwPlugin = 1
 		vim.g.loaded_netrw = 1
 
-		local files = require("mini.files")
 		local group_name = "augroup_mini_files_netrw_hijack"
 		local augroup = vim.api.nvim_create_augroup(group_name, { clear = true })
 		vim.api.nvim_create_autocmd("VimEnter", {
@@ -145,6 +143,7 @@ return {
 			group = augroup,
 			callback = function(args)
 				if vim.fn.argc(-1) == 1 then
+					local files = require("mini.files")
 					local stat = vim.uv.fs_stat(vim.fn.argv(0))
 					if stat and stat.type == "directory" then
 						files.setup(plugin_opts())
@@ -156,5 +155,4 @@ return {
 			end,
 		})
 	end,
-	opts = plugin_opts(),
 }
