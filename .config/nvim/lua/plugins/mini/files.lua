@@ -81,9 +81,9 @@ local plugin_opts = function()
 		windows = {
 			max_number = math.huge, -- Maximum number of windows to show side by side.
 			preview = true, -- Whether to show preview of file/directory under cursor.
-			width_focus = 50, -- Width of focused window.
+			width_focus = 25, -- Width of focused window.
 			width_nofocus = 15, -- Width of non-focused window.
-			width_preview = 80, -- Width of preview window.
+			width_preview = 120, -- Width of preview window.
 		},
 		options = {
 			permanent_delete = false, -- Whether to delete permanently or move into module-specific trash.
@@ -125,8 +125,8 @@ return {
 		end
 
 		--stylua: ignore start
-		files_map("<Leader>gf", function() files_toggle(vim.uv.cwd(), true)                 end, "Open Mini.files on CWD.")
-		files_map("<Leader>gF", function() files_toggle(vim.api.nvim_buf_get_name(0), true) end, "Open Mini.files (Directory of current file).")
+		files_map("<Leader>gf", function() files_toggle(vim.api.nvim_buf_get_name(0), true) end, "Open Mini.files on directory of current file.")
+		files_map("<Leader>gF", function() files_toggle(vim.uv.cwd(), true)                 end, "Open Mini.files on CWD.")
 		--stylua: ignore end
 
 		return M
