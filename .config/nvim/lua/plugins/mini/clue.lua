@@ -131,6 +131,20 @@ return {
 					{ mode = "x", keys = "[H", postkeys = "[" },
 				}),
 
+				-- Jump betwheen brackets.
+				{ mode = "n", keys = "])", desc = "Jump to next `)`" },
+				{ mode = "n", keys = "]]", desc = "Jump to next `]`" },
+				{ mode = "n", keys = "]}", desc = "Jump to next `}`" },
+				{ mode = "n", keys = "[(", desc = "Jump to previous `(`" },
+				{ mode = "n", keys = "[[", desc = "Jump to previous `[`" },
+				{ mode = "n", keys = "[{", desc = "Jump to previous `{`" },
+				{ mode = "x", keys = "])", desc = "Jump to next `)`" },
+				{ mode = "x", keys = "]]", desc = "Jump to next `]`" },
+				{ mode = "x", keys = "]}", desc = "Jump to next `}`" },
+				{ mode = "x", keys = "[(", desc = "Jump to previous `(`" },
+				{ mode = "x", keys = "[[", desc = "Jump to previous `[`" },
+				{ mode = "x", keys = "[{", desc = "Jump to previous `{`" },
+
 				-- Mini.bracketed:
 				clue.mkclue_with_dependency("mini.bracketed", {
 					-- Jump betwheen buffers.
