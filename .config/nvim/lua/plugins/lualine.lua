@@ -3,11 +3,9 @@ return {
 	dependencies = { "nvim-tree/nvim-web-devicons" },
 	event = { "BufReadPost", "BufNewFile", "BufUnload" },
 	opts = function()
-		local M = {}
-
 		local icons = require("user.icons").icons
 
-		M = {
+		return {
 			options = {
 				theme = "pywal-nvim",
 				icons_enabled = true,
@@ -26,10 +24,14 @@ return {
 					{ "mode", separator = { left = "" }, padding = { left = 0, right = 1 }, },
 				},
 				lualine_b = {
-					"branch",
+					{ "filetype" },
+					"filesize",
+					{ "filename", padding = { left = 1, right = 0 }, },
+				},
+				lualine_c = {
+					{ "branch" },
 					{
 						"diff",
-						padding = { left = 1, right = 0 },
 						symbols = {
 							added = icons.git.added,
 							modified = icons.git.modified,
@@ -53,8 +55,6 @@ return {
 							end
 						end,
 					},
-				},
-				lualine_c = {
 					{
 						"diagnostics",
 						symbols = {
@@ -64,69 +64,61 @@ return {
 							hint = icons.diagnostics.Hint,
 						},
 					},
-					"filename",
 				},
 				lualine_x = {},
 				lualine_y = {
-					{ "filetype", padding = { left = 0, right = 1 } },
-					"encoding",
-					{ "fileformat", padding = { left = 1, right = 1 } },
+					{ "encoding", padding = { left = 0, right = 1 } },
+					{ "fileformat", icons_enabled = false, padding = { left = 1, right = 1 } },
 					{ "progress", padding = { left = 1, right = 1 } },
 				},
 				lualine_z = {
-					{ "location", separator = { right = "" }, padding = { left = 0, right = 0 } },
+					{ "location", separator = { right = "" }, padding = { left = 1, right = 0 } },
 				},
 			},
 		}
-
-		return M
 	end,
 	config = function(_, opts)
-		vim.opt.laststatus = 3
-
-		-- Set separators icons that are TTY compatible.
+		local lualine = require("lualine")
 		local options = opts.options
 		local sections = opts.sections
+
+		-- Create a configuration that's TTY compatible.
 		if vim.env.DISPLAY ~= nil then
 			options.section_separators = { left = "", right = "" }
 		else
 			options.section_separators = ""
 
-			local a = sections.lualine_a
-			for _, comp in ipairs(a) do
-				if comp[1] == "mode" then
-					comp.separator = { left = "", right = "" }
-					comp.padding = { left = 1, right = 1 }
-					break
-				end
-			end
+			-- Define a map of component names that need to be modified to their corresponding sections:
+			local component_map = {
+				["mode"] = sections.lualine_a,
+				["filetype"] = sections.lualine_b,
+				["filename"] = sections.lualine_b,
+				["branch"] = sections.lualine_c,
+				["encoding"] = sections.lualine_y,
+				["location"] = sections.lualine_z
+			}
 
-			local b = sections.lualine_b
-			for _, comp in ipairs(b) do
-				if comp[1] == "diff" then
-					comp.padding = { left = 1, right = 1 }
-					break
-				end
-			end
-
-			local y = sections.lualine_y
-			for _, comp in ipairs(y) do
-				if comp[1] == "filetype" then
-					comp.padding = { left = 1, right = 1 }
-					break
-				end
-			end
-
-			local z = sections.lualine_z
-			for _, comp in ipairs(z) do
-				if comp[1] == "location" then
-					comp.separator = { left = "" }
-					comp.padding = { left = 1, right = 1 }
-					break
+			for comp_name, section in pairs(component_map) do
+				for _, comp in ipairs(section) do
+					if comp[1] == comp_name then
+						if comp_name == "mode" then
+							comp.separator = { left = "", right = "" }
+							comp.padding = { left = 1, right = 1 }
+						elseif comp_name == "filetype" or comp_name == "filename" or comp_name == "encoding" then
+							comp.icons_enabled = false
+							comp.padding = { left = 1, right = 1 }
+						elseif comp_name == "branch" then
+							comp.icons_enabled = false
+						elseif comp_name == "location" then
+							comp.separator = { left = "" }
+							comp.padding = { left = 1, right = 1 }
+						end
+						break
+					end
 				end
 			end
 		end
 
-		require("lualine").setup(opts)
+		lualine.setup(opts)
 	end,
 }
