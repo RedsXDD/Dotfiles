@@ -125,8 +125,8 @@ return {
 		end
 
 		--stylua: ignore start
-		files_map("<Leader>gf", function() files_toggle(vim.api.nvim_buf_get_name(0), true) end, "Open Mini.files on directory of current file.")
-		files_map("<Leader>gF", function() files_toggle(vim.uv.cwd(), true)                 end, "Open Mini.files on CWD.")
+		files_map("<Leader>gf", function() files_toggle(vim.uv.cwd(), true)                 end, "Open Mini.files on CWD.")
+		files_map("<Leader>gF", function() files_toggle(vim.api.nvim_buf_get_name(0), true) end, "Open Mini.files on directory of current file.")
 		--stylua: ignore end
 
 		return M
