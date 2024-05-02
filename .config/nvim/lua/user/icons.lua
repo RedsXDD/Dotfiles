@@ -91,7 +91,7 @@ set_icons("telescope", {
 	selection_caret = "  ",
 }, {
 	prompt_prefix = " [?] ",
-	selection_caret = " => ",
+	selection_caret = " -> ",
 })
 
 set_icons("pick", {
@@ -99,7 +99,7 @@ set_icons("pick", {
 	prompt_prefix = " ",
 }, {
 	prompt_cursor = "_",
-	prompt_prefix = "> ",
+	prompt_prefix = "-> ",
 })
 
 set_icons("diagnostics", {
