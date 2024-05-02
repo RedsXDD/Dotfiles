@@ -20,6 +20,7 @@ local function set_icons(table_name, normal_icons, tty_icons)
 end
 
 set_icons("misc", { dots = "󰇘" }, { dots = "..." })
+
 set_icons("listchars", {
 	tab = "» ",
 	trail = "·",
@@ -64,6 +65,16 @@ set_icons("dap", {
 	LogPoint            = ".>",
 })
 
+set_icons("mason", {
+	installed = "✓",
+	pending = "➜",
+	uninstalled = "✗",
+}, {
+	installed = "*",
+	pending = ">",
+	uninstalled = "X",
+})
+
 set_icons("diagnostics", {
 	Error = " ",
 	Warn  = " ",
@@ -100,6 +111,48 @@ set_icons("gitsigns", {
 	topdelete = "^",
 	changedelete = "<",
 	untracked = "?",
+})
+
+set_icons("starter", {
+	footer = "󱐋 ",
+	bullet = "░ ",
+	recent_files = " ",
+	sections = {
+		actions = "󱓞 ",
+		recent_files = "󰥔 ",
+		session = "󰍹 ",
+	},
+	actions = {
+		new_file      = " ",
+		quit          = "󰅚 ",
+		file_explorer = "󰉋 ",
+		list_buffers  = "󰮊 ",
+		recent_files  = " ",
+		find_files    = "󰱼 ",
+		live_grep     = "󰈬 ",
+		lazy          = "󰒲 ",
+		mason         = " ",
+	},
+}, {
+	footer = "=> ",
+	bullet = "* ",
+	recent_files = "",
+	sections = {
+		actions = "",
+		recent_files = "",
+		session = "",
+	},
+	actions = {
+		new_file      = "",
+		quit          = "",
+		file_explorer = "",
+		list_buffers  = "",
+		recent_files  = "",
+		find_files    = "",
+		live_grep     = "",
+		lazy          = "",
+		mason         = "",
+	},
 })
 
 set_icons("kinds", {
