@@ -87,7 +87,7 @@ case "$function" in
 	runfor)     curl ascii.live/forrest ;;
 	dict)       curl dict://dict.org/d:"$arg1" ;;
 	tinyurl)    curl -s https://tinyurl.com/api-create.php?url=http://"$arg1" ;;
-	colcp)      hyprpicker -a || colorpicker --short --one-shot --preview | xclip -selection clipboard ;;
+	colcp)      hyprpicker -a | wl-copy || colorpicker --short --one-shot --preview | xclip -selection clipboard ;;
 	date)       figlet -c "$(date +"%T %nOR %n%I:%M:%S %p%n%A -> Day %d %n%B %Y")" | lolcat ;;
 	bdate)      figlet -c "$(date +"%T %nOR %n%I:%M:%S %p%n%A -> Day %d %n%B %Y")" | lolcat ;;
 	get-urls)   grep -aEo '(((http|https|gopher|gemini|ftp|ftps|git)://|www\\.)[a-zA-Z0-9.]*[:;a-zA-Z0-9./+@$&%?$\#=_~-]*)|((magnet:\\?xt=urn:btih:)[a-zA-Z0-9]*)' "$arg1" ;;
