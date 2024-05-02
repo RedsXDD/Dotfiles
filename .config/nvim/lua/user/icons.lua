@@ -2,24 +2,28 @@ local M = {}
 M.icons = {}
 
 --[[
-	NOTE: The `set_icons` function creates a table inside M.icons with the name given from the `table_name` argument.
-	The table `table_name` either:
-		- Contains a set of icons for when neovim is not opened on a TTY enviroment
-		- Contains a set strings of text that are TTY compatible for when neovim is opened on a TTY enviroment
+NOTE: The `set_icons` function creates a table inside M.icons with the name given from the `table_name` argument.
+The table `table_name` either:
+- Contains a set of icons for when neovim is not opened on a TTY enviroment
+- Contains a set strings of text that are TTY compatible for when neovim is opened on a TTY enviroment
 --]]
 local function set_icons(table_name, normal_icons, tty_icons)
-    local icons_table = {}
-
-    if vim.env.DISPLAY ~= nil then
-        icons_table = normal_icons
-    else
-        icons_table = tty_icons
-    end
-
-    M.icons[table_name] = icons_table
+	if vim.env.DISPLAY ~= nil then
+		M.icons[table_name] = normal_icons
+	else
+		M.icons[table_name] = tty_icons
+	end
 end
 
-set_icons("misc", { dots = "󰇘" }, { dots = "..." })
+set_icons("misc", {
+	dots = "󰇘",
+	indent = "│",
+	border = "rounded",
+}, {
+	dots = "...",
+	indent = "|",
+	border = { "+", "-" ,"+", "|", "+", "-", "+", "|" },
+})
 
 set_icons("listchars", {
 	tab = "» ",
@@ -38,17 +42,24 @@ set_icons("listchars", {
 set_icons("fillchars", {
 	foldopen = "",
 	foldclose = "",
-	fold = " ",
-	foldsep = " ",
+	fold = "·",
+	foldsep = "│",
 	diff = "╱",
 	eob = " ",
 }, {
 	foldopen = "-",
 	foldclose = ">",
-	fold = " ",
-	foldsep = " ",
+	fold = "-",
+	foldsep = "|",
 	diff = "/",
 	eob = " ",
+	horiz = "-",
+	horizup = "-",
+	horizdown = "-",
+	vert = "|",
+	vertleft = "|",
+	vertright = "|",
+	verthoriz = "+",
 })
 
 set_icons("dap", {
@@ -75,6 +86,22 @@ set_icons("mason", {
 	uninstalled = "X",
 })
 
+set_icons("telescope", {
+	prompt_prefix = "  ",
+	selection_caret = "  ",
+}, {
+	prompt_prefix = " [?] ",
+	selection_caret = " => ",
+})
+
+set_icons("pick", {
+	prompt_cursor = "▏",
+	prompt_prefix = " ",
+}, {
+	prompt_cursor = "_",
+	prompt_prefix = "> ",
+})
+
 set_icons("diagnostics", {
 	Error = " ",
 	Warn  = " ",
@@ -92,9 +119,9 @@ set_icons("git", {
 	modified = " ",
 	removed  = " ",
 }, {
-	added    = "A",
-	modified = "M",
-	removed  = "R",
+	added    = "[+]",
+	modified = "[~]",
+	removed  = "[-]",
 })
 
 set_icons("gitsigns", {
