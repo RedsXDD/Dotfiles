@@ -13,7 +13,7 @@ return {
 			table.insert(M, keymap_table)
 		end
 
-		--stylua: ignore start
+		-- stylua: ignore start
 		-- Main keymaps:
 		pick_map("<Leader>fb", function() pick.builtin.buffers() end, "Search buffers.")
 		pick_map("<Leader>ff", function() pick.builtin.files()   end, "Find files on CWD.")
@@ -56,16 +56,19 @@ return {
 		pick_map("<Leader>fLl", function() extra.pickers.list({ scope = "location-list" }) end, "Search location list.")
 		pick_map("<Leader>fLj", function() extra.pickers.list({ scope = "jumplist" })      end, "Search jumplist.")
 		pick_map("<Leader>fLc", function() extra.pickers.list({ scope = "changelist" })    end, "Search changelist.")
-		--stylua: ignore end
+		-- stylua: ignore end
 
 		return M
 	end,
 	opts = function()
+		local border_style = require("user.icons").icons.misc.border
+		local icons = require("user.icons").icons.pick
+
 		local win_config = function() -- Function to center mini.pick on screen.
 			local height = math.floor(0.618 * vim.o.lines)
 			local width = math.floor(0.618 * vim.o.columns)
 			return {
-				border = "rounded",
+				border = border_style,
 				anchor = "NW", height = height, width = width,
 				row = math.floor(0.5 * (vim.o.lines - height)),
 				col = math.floor(0.5 * (vim.o.columns - width)),
@@ -75,8 +78,8 @@ return {
 		return {
 			window = {
 				config = win_config(),
-				prompt_cursor = "▏",
-				prompt_prefix = "> ",
+				prompt_cursor = icons.prompt_cursor,
+				prompt_prefix = icons.prompt_prefix,
 			},
 			options = {
 				content_from_bottom = true,
