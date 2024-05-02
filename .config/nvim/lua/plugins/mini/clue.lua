@@ -4,7 +4,7 @@ return {
 		{ "echasnovski/mini.bracketed", opts = {} }, -- NOTE: Setting `mini.bracketed` as a dependency is needed to load it's clues correctly.
 	},
 	keys = {
-		--stylua: ignore start
+		-- stylua: ignore start
 		{ "<C-r>",    mode = { "i", "c" } },
 		{ "<C-x>",    mode = { "i" } },
 		{ "<C-w>",    mode = { "n" } },
@@ -16,10 +16,11 @@ return {
 		{ "z",        mode = { "n", "x" } },
 		{ "[",        mode = { "n", "x" } },
 		{ "]",        mode = { "n", "x" } },
-		--stylua: ignore end
+		-- stylua: ignore end
 	},
 	config = function()
 		local clue = require("mini.clue")
+		local border_style = require("user.icons").icons.misc.border
 
 		clue.mkclue_with_dependency = function(dependency, clues)
 			if dependency and type(dependency) == "string" then
@@ -39,7 +40,7 @@ return {
 				scroll_down = "<C-j>",
 				config = {
 					width = "auto",
-					border = "rounded",
+					border = border_style,
 				},
 			},
 			triggers = {

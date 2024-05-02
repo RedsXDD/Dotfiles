@@ -2,7 +2,7 @@ return {
 	"echasnovski/mini.notify",
 	event = { "BufReadPost", "BufNewFile" },
 	opts = {
-		lsp_progress = { enable = false },
-		window = { config = { border = "rounded" } },
+		lsp_progress = { enable = true },
+		window = { config = { border = require("user.icons").icons.misc.border } },
 	},
 }

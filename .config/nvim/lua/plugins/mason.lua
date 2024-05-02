@@ -8,6 +8,7 @@ return {
 	cmd = "Mason",
 	build = ":MasonUpdate",
 	config = function()
+		local border_style = require("user.icons").icons.misc.border
 		local icons = require("user.icons").icons.mason
 		local mason = require("mason")
 		local mason_lspconfig = require("mason-lspconfig")
@@ -17,7 +18,7 @@ return {
 			log_level = vim.log.levels.INFO,
 			max_concurrent_installers = 4,
 			ui = {
-				border = "rounded",
+				border = border_style,
 				icons = {
 					package_installed = icons.installed,
 					package_pending = icons.pending,

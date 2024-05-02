@@ -1,11 +1,13 @@
 local plugin_opts = function()
+	local border_style = require("user.icons").icons.misc.border
+
 	-- Window options:
 	vim.api.nvim_create_autocmd("User", {
 		pattern = "MiniFilesWindowOpen",
 		callback = function(args)
 			local win_id = args.data.win_id
 			-- vim.wo[win_id].winblend = 90 -- Window opacity.
-			vim.api.nvim_win_set_config(win_id, { border = "rounded" })
+			vim.api.nvim_win_set_config(win_id, { border = border_style })
 		end,
 	})
 
@@ -124,10 +126,10 @@ return {
 			table.insert(M, keymap_table)
 		end
 
-		--stylua: ignore start
+		-- stylua: ignore start
 		files_map("<Leader>gf", function() files_toggle(vim.uv.cwd(), true)                 end, "Open Mini.files on CWD.")
 		files_map("<Leader>gF", function() files_toggle(vim.api.nvim_buf_get_name(0), true) end, "Open Mini.files on directory of current file.")
-		--stylua: ignore end
+		-- stylua: ignore end
 
 		return M
 	end,

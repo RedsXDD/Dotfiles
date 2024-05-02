@@ -55,7 +55,7 @@ return {
 			float = {
 				focusable = false,
 				style = "minimal",
-				border = "rounded",
+				border = require("user.icons").icons.misc.border,
 				source = "always",
 				header = "",
 				prefix = "",
