@@ -31,8 +31,6 @@ return {
 	opts = {
 		draw = { animation = function() return 1 end },
 		options = { try_as_border = true },
-		-- symbol = "▏",
-		symbol = "│",
-		-- symbol = "┊",
+		symbol = require("user.icons").icons.misc.indent
 	},
 }
