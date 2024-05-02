@@ -1,6 +1,5 @@
 return {
 	"echasnovski/mini.animate",
-	module = false,
 	event = "CursorMoved",
 	opts = function()
 		local animate = require("mini.animate")
