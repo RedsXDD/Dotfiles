@@ -51,16 +51,7 @@ for _, mode in ipairs({ "n", "i", "v" }) do
 end
 --: Automatically center cursor {{{
 local center_map = function(keys, desc)
-	local center_action = ""
-
-	-- Integrate cursor centering with mini.animate
-	if not pcall(require, "mini.animate") then
-		center_action = "zvzz"
-	else
-		center_action = [[<Cmd>lua require("mini.animate").execute_after("scroll", "normal! zvzz")<CR>]]
-	end
-
-	vim.keymap.set("", keys, keys .. center_action, { noremap = true, silent = true, desc = "" .. desc })
+	vim.keymap.set("", keys, keys .. "zvzz", { noremap = true, silent = true, desc = "" .. desc })
 end
 
 center_map("n",     "Center cursor when moving to the next match during a search.")
