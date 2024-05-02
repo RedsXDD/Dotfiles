@@ -11,14 +11,17 @@
 
 -- ---------------------------------------------------------------------------------------------- --
 
--- Modes:
-	-- "n" = normal mode.
-	-- "v" = visual mode.
-	-- "x" = visual block mode.
-	-- "i" = insert mode.
-	-- "c" = command mode.
-	-- "t" = terminal mode.
+--[[
+	-- Modes:
+	"n" = normal mode.
+	"v" = visual mode.
+	"x" = visual block mode.
+	"i" = insert mode.
+	"c" = command mode.
+	"t" = terminal mode.
+]]
 
+--: Main functions {{{
 local map = function(modes, keys, func, desc)
 	vim.keymap.set(modes, keys, func, { noremap = true, desc = "" .. desc })
 end
@@ -26,7 +29,6 @@ end
 local pum_map = function(keys, func, desc)
 	vim.keymap.set("i", keys, func, { noremap = true, expr = true, desc = "" .. desc })
 end
-
 --: }}}
 --: General {{{
 map("n", "<Esc>", ":noh<CR><Esc>", "Clear highlighted searches.")
@@ -34,25 +36,42 @@ map("v", ".", ":norm .<CR>", "Perform dot commands over visual blocks.")
 map({ "n", "v" }, "j", "gj", "Remap j to gj for better movement on warped lines.")
 map({ "n", "v" }, "k", "gk", "Remap k to gk for better movement on warped lines.")
 
--- Automatically center cursor.
--- local has_animate, animate =
-if pcall(require, "mini.animate")then
-	map("", "n",     "<Cmd>lua vim.cmd('normal! n');     require('mini.animate').execute_after('scroll', 'normal! zvzz')<CR>", "Center the cursor when moving to the next match during a search.")
-	map("", "N",     "<Cmd>lua vim.cmd('normal! N');     require('mini.animate').execute_after('scroll', 'normal! zvzz')<CR>", "Center the cursor when moving to the previous match during a search.")
-	map("", "<C-d>", "<Cmd>lua vim.cmd('normal! <C-d>'); require('mini.animate').execute_after('scroll', 'normal! zvzz')<CR>", "Center the cursor when moving a half page down.")
-	map("", "<C-u>", "<Cmd>lua vim.cmd('normal! <C-u>'); require('mini.animate').execute_after('scroll', 'normal! zvzz')<CR>", "Center the cursor when moving a half page up.")
-	map("", "<C-f>", "<Cmd>lua vim.cmd('normal! <C-f>'); require('mini.animate').execute_after('scroll', 'normal! zvzz')<CR>", "Center the cursor when moving a page down.")
-	map("", "<C-b>", "<Cmd>lua vim.cmd('normal! <C-b>'); require('mini.animate').execute_after('scroll', 'normal! zvzz')<CR>", "Center the cursor when moving a page up.")
-else
-	map("", "n", "nzvzz",         "Center the cursor when moving to the next match during a search.")
-	map("", "N", "Nzvzz",         "Center the cursor when moving to the previous match during a search.")
-	map("", "<C-d>", "<C-d>zvzz", "Center the cursor when moving a half page down.")
-	map("", "<C-u>", "<C-u>zvzz", "Center the cursor when moving a half page up.")
-	map("", "<C-f>", "<C-f>zvzz", "Center the cursor when moving a page down.")
-	map("", "<C-b>", "<C-b>zvzz", "Center the cursor when moving a page up.")
+-- Replace commands:
+map("n", "<Leader>gs", ":s///g<Left><Left><Left>", "Replace string on the current line.")
+map("n", "<Leader>gS", ":%s///g<Left><Left><Left>", "Replace string on the whole file.")
+map("v", "<Leader>gs", ":s///g<Left><Left><Left>", "Replace on selected text.")
+map("v", "<Leader>gS", ":s///g<Left><Left><Left>", "Replace on selected text.")
+
+-- Remap left/down/up/right.
+for _, mode in ipairs({ "n", "i", "v" }) do
+	map(mode, "<Up>", "<C-y>",    "Scroll up.")
+	map(mode, "<Down>", "<C-e>",  "Scroll down.")
+	map(mode, "<Left>", "<S-{>",  "Move to the start of previous block.")
+	map(mode, "<Right>", "<S-}>", "Move to the end of next block.")
+end
+--: Automatically center cursor {{{
+local center_map = function(keys, desc)
+	local center_action = ""
+
+	-- Integrate cursor centering with mini.animate
+	if not pcall(require, "mini.animate") then
+		center_action = "zvzz"
+	else
+		center_action = [[<Cmd>lua require("mini.animate").execute_after("scroll", "normal! zvzz")<CR>]]
+	end
+
+	vim.keymap.set("", keys, keys .. center_action, { noremap = true, silent = true, desc = "" .. desc })
 end
 
--- Move lines around with Alt + arrow keys:
+center_map("n",     "Center cursor when moving to the next match during a search.")
+center_map("N",     "Center cursor when moving to the previous match during a search.")
+center_map("G",     "Center cursor when moving to the last line of buffer.")
+center_map("<C-d>", "Center cursor when moving a half page down.")
+center_map("<C-u>", "Center cursor when moving a half page up.")
+center_map("<C-f>", "Center cursor when moving a page down.")
+center_map("<C-b>", "Center cursor when moving a page up.")
+--: }}}
+--: Move lines around with Alt + H/J/K/L {{{
 map("n", "<A-S-J>", ":m .+1<CR>==",        "Move the current line down.")
 map("n", "<A-S-K>", ":m .-2<CR>==",        "Move the current line up.")
 map("n", "<A-S-H>", "<<",                  "Move the current line to the left.")
@@ -67,16 +86,8 @@ map("v", "<A-S-H>", "<gv",                 "Move selected lines to the left.")
 map("v", "<A-S-L>", ">gv",                 "Move selected lines to the right.")
 map("v", "<",       "<gv",                 "Move selected lines to the left.")
 map("v", ">",       ">gv",                 "Move selected lines to the right.")
-
--- Remap shift + left/down/up/right.
-for _, mode in ipairs({ "n", "v", "i" }) do
-	map(mode, "<Up>", "<C-y>",    "Scroll up.")
-	map(mode, "<Down>", "<C-e>",  "Scroll down.")
-	map(mode, "<Left>", "<S-{>",  "Move to the start of previous block.")
-	map(mode, "<Right>", "<S-}>", "Move to the end of next block.")
-end
-
--- Closing compaction in insert mode:
+--: }}}
+--: Auto close pairs {{{
 -- Replaced by "https://github.com/windwp/nvim-autopairs".
 -- map("i", [[']], "''<Left>", "")
 -- map("i", [["]], '""<Left>', "")
@@ -85,6 +96,7 @@ end
 -- map("i", '{', '{}<Left>', "")
 -- map("i", '<', '<><Left>', "")
 -- map("i", '/*', '/**/<Left><Left>', "")
+--: }}}
 --: }}}
 --: Clipboard management {{{
 map({ "n", "v" }, "<Leader>y", '"*y', "Copy to primary clipboard.")
@@ -100,30 +112,8 @@ map({ "n", "v" }, "<Leader>tl", ":set cursorline! cursorcolumn!<CR>", "Toggle Cu
 map({ "n", "v" }, "<Leader>tc", ":setlocal formatoptions-=cro<CR>", "Enable auto commenting.")
 map({ "n", "v" }, "<Leader>tC", ":setlocal formatoptions=cro<CR>", "Disable auto commenting.")
 --: }}}
---: Misc {{{
-map("n", "<Leader>gs", ":s///g<Left><Left><Left>", "Replace string on the current line.")
-map("n", "<Leader>gS", ":%s///g<Left><Left><Left>", "Replace string on the whole file.")
-map("v", "<Leader>gs", ":s///g<Left><Left><Left>", "Replace on selected text.")
---: }}}
 --: Complete menu {{{
 --stylua: ignore start
--- This keymap function auto selects the first item of the complete menu when Ctrl-n is pressed.
--- NOTE: This function only sets a keymap when the option `completeopt` has the option `longest` on it.
--- That's because that option changes the behaviour of the complete menu so that it no longer auto selects the first item in the completion list.
-local pum_map_autoselect = function()
-	local completeopts = vim.opt.completeopt:get()
-	local opts = {
-		noremap = true,
-		expr = true,
-		desc = "Auto open & select first item on completion menu."
-	}
-
-	if vim.tbl_contains(completeopts, "longest") then
-		vim.keymap.set("i", "<C-n>", function() return vim.fn.pumvisible() == 1 and "<C-n>" or [[<C-n><C-r>=pumvisible() ? "\<lt>C-n>" : ""<CR>]] end, opts)
-	end
-end
-pum_map_autoselect()
-
 -- General completion mappings.
 pum_map("<Tab>",   function() return vim.fn.pumvisible() == 1 and "<C-n>" or "<Tab>"   end, "Navigate completion menu down with tab.")
 pum_map("<S-Tab>", function() return vim.fn.pumvisible() == 1 and "<C-p>" or "<S-Tab>" end, "Navigate completion menu up with Shift-tab.")
@@ -131,6 +121,15 @@ pum_map("<C-c>",   function() return vim.fn.pumvisible() == 1 and "<C-e>" or "<C
 pum_map("<Left>",  function() return vim.fn.pumvisible() == 1 and "<C-e>" or "<Left>"  end, "Cancel completion menu with Left arrow.")
 pum_map("<Right>", function() return vim.fn.pumvisible() == 1 and "<C-y>" or "<Right>" end, "Select completion menu item with right arrow.")
 pum_map("<CR>",    function() return vim.fn.pumvisible() == 1 and "<C-y>" or "<CR>"    end, "Select completion menu item with enter.")
+
+-- This keymap auto selects the first item of the complete menu when Ctrl-n is pressed.
+-- NOTE: This keymap is only set when the option `completeopt` has the option `longest` on it, as that option changes the behaviour of the complete menu so that it no longer auto selects the first item in the completion list.
+local complete_opts = vim.opt.completeopt:get()
+if vim.tbl_contains(complete_opts, "longest") then
+	pum_map("<C-n>", function()
+		return vim.fn.pumvisible() == 1 and "<C-n>" or [[<C-n><C-r>=pumvisible() ? "\<lt>C-n>" : ""<CR>]]
+	end, "Auto open & select first item on completion menu.")
+end
 --stylua: ignore end
 --: }}}
 --: Split management {{{
