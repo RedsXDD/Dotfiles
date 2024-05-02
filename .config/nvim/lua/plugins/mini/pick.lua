@@ -1,6 +1,6 @@
 return {
 	"echasnovski/mini.pick",
-	dependencies = { "echasnovski/mini.extra" },
+	dependencies = { "echasnovski/mini.extra", opts = {} },
 	cmd = "Pick",
 	keys = function()
 		local M = {}
