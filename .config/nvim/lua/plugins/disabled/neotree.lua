@@ -32,7 +32,7 @@ return {
 		})
 	end,
 	opts = {
-		popup_border_style = "rounded",
+		popup_border_style = require("user.icons").icons.misc.border,
 		enable_git_status = true,
 		enable_diagnostics = true,
 		sort_case_insensitive = true,
