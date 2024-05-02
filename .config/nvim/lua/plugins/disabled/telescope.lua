@@ -85,6 +85,12 @@ return {
 			local action_layout = require("telescope.actions.layout")
 			local previewers = require("telescope.previewers")
 			local Job = require("plenary.job")
+			local icons = require("user.icons").icons.telescope
+
+			-- Load telescope extensions:
+			pcall(telescope.load_extension, "fzf")
+			pcall(telescope.load_extension, "noice")
+			pcall(telescope.load_extension, "ui-select")
 
 			local function formattedName(_, path)
 				local tail = vim.fs.basename(path)
@@ -119,8 +125,8 @@ return {
 				file_ignore_patterns = { "%.git/." },
 				defaults = {
 					preview = false,
-					prompt_prefix = "  ",
-					selection_caret = "  ",
+					prompt_prefix = icons.prompt_prefix,
+					selection_caret = icons.selection_caret,
 					file_ignore_patterns = { "node_modules", "package-lock.json" },
 					initial_mode = "insert",
 					select_strategy = "reset",
@@ -244,9 +250,6 @@ return {
 					},
 				},
 			})
-			pcall(telescope.load_extension, "fzf")
-			pcall(telescope.load_extension, "noice")
-			pcall(telescope.load_extension, "ui-select")
 		end,
 	},
 }
