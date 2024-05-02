@@ -21,16 +21,11 @@
 	"t" = terminal mode.
 ]]
 
---: Main functions {{{
+--: General {{{
 local map = function(modes, keys, func, desc)
 	vim.keymap.set(modes, keys, func, { noremap = true, desc = "" .. desc })
 end
 
-local pum_map = function(keys, func, desc)
-	vim.keymap.set("i", keys, func, { noremap = true, expr = true, desc = "" .. desc })
-end
---: }}}
---: General {{{
 map("n", "<Esc>", ":noh<CR><Esc>", "Clear highlighted searches.")
 map("v", ".", ":norm .<CR>", "Perform dot commands over visual blocks.")
 map({ "n", "v" }, "j", "gj", "Remap j to gj for better movement on warped lines.")
@@ -104,6 +99,10 @@ map({ "n", "v" }, "<Leader>tc", ":setlocal formatoptions-=cro<CR>", "Enable auto
 map({ "n", "v" }, "<Leader>tC", ":setlocal formatoptions=cro<CR>", "Disable auto commenting.")
 --: }}}
 --: Complete menu {{{
+local pum_map = function(keys, func, desc)
+	vim.keymap.set("i", keys, func, { noremap = true, expr = true, desc = "" .. desc })
+end
+
 --stylua: ignore start
 -- General completion mappings.
 pum_map("<Tab>",   function() return vim.fn.pumvisible() == 1 and "<C-n>" or "<Tab>"   end, "Navigate completion menu down with tab.")
