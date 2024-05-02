@@ -1,15 +1,25 @@
 return {
 	"echasnovski/mini.pairs",
-	keys = {
-		--stylua: ignore start
-		{ "'", mode = { "i" } }, { '"', mode = { "i" } }, { "`", mode = { "i" } },
-		{ "(", mode = { "i" } }, { ")", mode = { "i" } },
-		{ "[", mode = { "i" } }, { "]", mode = { "i" } },
-		{ "{", mode = { "i" } }, { "}", mode = { "i" } },
-		{ "<", mode = { "i" } }, { ">", mode = { "i" } },
-		{ "<Leader>tp", function() vim.g.minipairs_disable = not vim.g.minipairs_disable end, mode = { "n", "x" }, desc = "Toggle Mini.pairs." },
-		--stylua: ignore end
-	},
+	event = "CmdlineEnter",
+	keys = function()
+		local M = {}
+
+		local lazy_load_keys = { "'", '"', "`", "´", "(", ")", "[", "]", "{", "}", "<", ">" }
+		for _, key in ipairs(lazy_load_keys) do
+			table.insert(M, { key, mode = { "i" } })
+		end
+
+		local pairs_map = function(modes, keys, func, desc)
+			local keymap_table = { keys, func, mode = modes, noremap = true, desc = "" .. desc }
+			table.insert(M, keymap_table)
+		end
+
+		pairs_map({ "n", "x" }, "<Leader>tp", function()
+			vim.g.minipairs_disable = not vim.g.minipairs_disable
+		end, "Toggle Mini.pairs.")
+
+		return M
+	end,
 	opts = {
 		modes = { insert = true, command = true, terminal = false },
 
@@ -29,10 +39,11 @@ return {
 			[")"] = { action = "close", pair = "()", neigh_pattern = "[^\\]." },
 			["]"] = { action = "close", pair = "[]", neigh_pattern = "[^\\]." },
 			["}"] = { action = "close", pair = "{}", neigh_pattern = "[^\\]." },
-			[">"] = { action = "close", pair = "<>", register = { cr = false } },
+			[">"] = { action = "close", pair = "<>", neigh_pattern = "[^\\].", register = { cr = false } },
 
 			['"'] = { action = "closeopen", pair = '""', neigh_pattern = "[^\\].", register = { cr = false } },
 			["'"] = { action = "closeopen", pair = "''", neigh_pattern = "[^%a\\].", register = { cr = false } },
+			["´"] = { action = "closeopen", pair = "``", neigh_pattern = "[^\\´].", register = { cr = false } },
 			["`"] = { action = "closeopen", pair = "``", neigh_pattern = "[^\\`].", register = { cr = false } },
 		},
 	},
