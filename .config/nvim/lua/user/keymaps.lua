@@ -99,28 +99,49 @@ map({ "n", "v" }, "<Leader>tc", ":setlocal formatoptions-=cro<CR>", "Enable auto
 map({ "n", "v" }, "<Leader>tC", ":setlocal formatoptions=cro<CR>", "Disable auto commenting.")
 --: }}}
 --: Complete menu {{{
-local pum_map = function(keys, func, desc)
-	vim.keymap.set("i", keys, func, { noremap = true, expr = true, desc = "" .. desc })
+local pum_map = function(keys, pum_action, normal_action, desc)
+	vim.keymap.set("i", keys, function()
+		return vim.fn.pumvisible() == 1 and pum_action or normal_action
+	end, { noremap = true, expr = true, desc = "" .. desc })
 end
 
 --stylua: ignore start
 -- General completion mappings.
-pum_map("<Tab>",   function() return vim.fn.pumvisible() == 1 and "<C-n>" or "<Tab>"   end, "Navigate completion menu down with tab.")
-pum_map("<S-Tab>", function() return vim.fn.pumvisible() == 1 and "<C-p>" or "<S-Tab>" end, "Navigate completion menu up with Shift-tab.")
-pum_map("<C-c>",   function() return vim.fn.pumvisible() == 1 and "<C-e>" or "<C-c>"   end, "Cancel completion menu with Ctrl-c.")
-pum_map("<Left>",  function() return vim.fn.pumvisible() == 1 and "<C-e>" or "<Left>"  end, "Cancel completion menu with Left arrow.")
-pum_map("<Right>", function() return vim.fn.pumvisible() == 1 and "<C-y>" or "<Right>" end, "Select completion menu item with right arrow.")
-pum_map("<CR>",    function() return vim.fn.pumvisible() == 1 and "<C-y>" or "<CR>"    end, "Select completion menu item with enter.")
+pum_map("<Tab>",   "<C-n>", "<Tab>",   "Navigate completion menu down with tab.")
+pum_map("<S-Tab>", "<C-p>", "<S-Tab>", "Navigate completion menu up with Shift-tab.")
+pum_map("<C-c>",   "<C-e>", "<C-c>",   "Cancel completion menu with Ctrl-c.")
+pum_map("<Left>",  "<C-e>", "<Left>",  "Cancel completion menu with Left arrow.")
+pum_map("<Right>", "<C-y>", "<Right>", "Select completion menu item with right arrow.")
+--stylua: ignore end
 
 -- This keymap auto selects the first item of the complete menu when Ctrl-n is pressed.
 -- NOTE: This keymap is only set when the option `completeopt` has the option `longest` on it, as that option changes the behaviour of the complete menu so that it no longer auto selects the first item in the completion list.
 local complete_opts = vim.opt.completeopt:get()
 if vim.tbl_contains(complete_opts, "longest") then
-	pum_map("<C-n>", function()
-		return vim.fn.pumvisible() == 1 and "<C-n>" or [[<C-n><C-r>=pumvisible() ? "\<lt>C-n>" : ""<CR>]]
-	end, "Auto open & select first item on completion menu.")
+	pum_map("<C-n>", "<C-n>", [[<C-n><C-r>=pumvisible() ? "\<lt>C-n>" : ""<CR>]], "Auto open & select first item on completion menu.")
 end
---stylua: ignore end
+
+-- Select completion menu item with enter.
+local cr_keys = {
+	['cr']        = vim.api.nvim_replace_termcodes('<CR>', true, true, true),
+	['ctrl-y']    = vim.api.nvim_replace_termcodes('<C-y>', true, true, true),
+	['ctrl-y_cr'] = vim.api.nvim_replace_termcodes('<C-y><CR>', true, true, true),
+}
+
+_G.cr_action = function()
+	if vim.fn.pumvisible() ~= 0 then
+		-- If popup is visible, confirm selected item or add new line otherwise
+		local item_selected = vim.fn.complete_info()['selected'] ~= -1
+		return item_selected and cr_keys['ctrl-y'] or cr_keys['ctrl-y_cr']
+	else
+		-- If popup is not visible, use plain `<CR>`. You might want to customize
+		-- according to other plugins. For example, to use 'mini.pairs', replace
+		-- next line with `return require('mini.pairs').cr()`
+		return cr_keys['cr']
+	end
+end
+
+vim.keymap.set("i", "<CR>", "v:lua._G.cr_action()", { noremap = true, expr = true, desc = "Select completion menu item with enter." })
 --: }}}
 --: Split management {{{
 -- Create splits:
