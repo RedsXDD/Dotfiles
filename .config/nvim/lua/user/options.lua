@@ -93,6 +93,9 @@ o.foldcolumn = "1"                          -- Enable fold columns.
 -- o.foldlevelstart = 99                       -- Sets `foldlevel` when starting to edit another buffer in a window.
 -- o.foldnestmax = 3                           -- Sets the maximum nesting of folds for the "indent" and "syntax" methods.
 -- o.foldminlines = 1                          -- Sets the number of screen lines above which a fold can be displayed closed.
+o.list = true                                       -- Sets how neovim will display certain whitespace characters in the editor.
+o.listchars = require("user.icons").icons.listchars -- Characters used for certain whitespace characters.
+o.fillchars = require("user.icons").icons.fillchars -- Characters to fill the statuslines, vertical separators and special lines in the window.
 o.undolevels = 10000
 o.swapfile = true                           -- Creates a swap file.
 o.undofile = true                           -- Creates a undo file.
@@ -106,36 +109,7 @@ o.shortmess:append({ W = true, I = true, c = true, C = true })
 o.complete:append(",kspell")              -- Enable auto complete with spell checking.
 o.formatoptions:remove({ "c", "r", "o" }) -- Don"t insert comments on newlines.
 o.runtimepath:remove("/usr/share/vim/vimfiles") -- Separate vim plugins from neovim in case vim still in use.
-o.fillchars = {
-	foldopen = "",
-	foldclose = "",
-	fold = " ",
-	foldsep = " ",
-	diff = "╱",
-	eob = " ",
-}
 
 if vim.fn.has("nvim-0.10") == 1 then
-  o.smoothscroll = true
-end
-
--- Sets how neovim will display certain whitespace in the editor.
--- + Set listchars option based if you"re on a tty or not:
-o.list = true
-if vim.env.DISPLAY ~= nil then
-	o.listchars = {
-		tab = "» ",
-		trail = "·",
-		nbsp = "␣",
-		extends = "▸",
-		precedes = "◂"
-	}
-else
-	o.listchars = {
-		tab = "- ",
-		trail = ".",
-		nbsp = "_",
-		extends = ">",
-		precedes = "<"
-	}
+	o.smoothscroll = true
 end
