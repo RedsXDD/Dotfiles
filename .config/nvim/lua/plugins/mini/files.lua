@@ -1,5 +1,6 @@
 local plugin_opts = function()
 	local border_style = require("user.icons").icons.misc.border
+	local prefix_icon = require("user.icons").icons.mini_files.content.prefix
 
 	-- Window options:
 	vim.api.nvim_create_autocmd("User", {
@@ -80,6 +81,7 @@ local plugin_opts = function()
 	})
 
 	return {
+		content = { prefix = prefix_icon },
 		windows = {
 			max_number = math.huge, -- Maximum number of windows to show side by side.
 			preview = true, -- Whether to show preview of file/directory under cursor.
