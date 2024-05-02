@@ -8,6 +8,7 @@ return {
 	cmd = "Mason",
 	build = ":MasonUpdate",
 	config = function()
+		local icons = require("user.icons").icons.mason
 		local mason = require("mason")
 		local mason_lspconfig = require("mason-lspconfig")
 		local mason_tool_installer = require("mason-tool-installer")
@@ -18,9 +19,9 @@ return {
 			ui = {
 				border = "rounded",
 				icons = {
-					package_installed = "✓",
-					package_pending = "➜",
-					package_uninstalled = "✗",
+					package_installed = icons.installed,
+					package_pending = icons.pending,
+					package_uninstalled = icons.uninstalled,
 				},
 			},
 		})

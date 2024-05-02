@@ -4,24 +4,9 @@ return {
 	config = function()
 		local starter = require("mini.starter")
 		local padding = string.rep(" ", 13) -- Padding to center sections and actions.
+		local icons = require("user.icons").icons.starter
 
-		local gen_hook_adding_bullet_set_icon = function()
-			if vim.env.DISPLAY ~= nil then
-				return "░ "
-			else
-				return ""
-			end
-		end
-
-		local actions_section_set_icon = function() -- Set icon only when not running Neovim on a TTY.
-			if vim.env.DISPLAY ~= nil then
-				return "󱓞 "
-			else
-				return ""
-			end
-		end
-
-		local actions_section = actions_section_set_icon() .. "Actions"
+		local actions_section = icons.sections.actions .. "Actions"
 		starter.new_section = function(name, action, section)
 			return { name = name, action = action, section = padding .. section }
 		end
@@ -56,15 +41,6 @@ return {
 		end
 		header = table.concat({ header, "\n" .. padding .. [[TIP: To exit Neovim, just run $sudo rm -rf /*]] }, "\n")
 
-		-- Setup footer text:
-		local footer_set_icon = function ()
-			if vim.env.DISPLAY ~= nil then
-				return "󱐋 "
-			else
-				return ""
-			end
-		end
-
 		local footer = (function()
 			-- NOTE: This timer is needed because, without it, the time delay displayed for the loading of neovim plugins is always 0ms,
 			-- as the call of the require("mini.starter").refresh() function is needed in order for the right delay to be displayed on the footer.
@@ -80,7 +56,7 @@ return {
 			return function()
 				local stats = require("lazy").stats()
 				local ms = (math.floor(stats.startuptime * 100 + 0.5) / 100)
-				return padding .. footer_set_icon() .. "Neovim loaded " .. stats.count .. " plugins in " .. ms .. "ms"
+				return padding .. icons.footer .. "Neovim loaded " .. stats.count .. " plugins in " .. ms .. "ms"
 			end
 		end)()
 
@@ -99,14 +75,7 @@ return {
 			if not vim.is_callable(show_path) then error("`show_path` should be boolean or callable.") end
 
 			return function()
-				local section_icon = function() -- Set icon only when not running Neovim on a TTY.
-					if vim.env.DISPLAY ~= nil then
-						return "󰥔 "
-					else
-						return ""
-					end
-				end
-				local section = string.format(padding .. section_icon() .. "Recent Files%s", -- Added text padding and icon compared to original source code.
+				local section = string.format(padding .. icons.sections.recent_files .. "Recent Files%s", -- Added text padding and icon compared to original source code.
 					current_dir and " (Current directory)" or "")
 
 				-- Use only actual readable files
@@ -130,17 +99,10 @@ return {
 
 				-- Create items
 				local items = {}
-				local item_icon = function() -- Set icon only when not running Neovim on a TTY.
-					if vim.env.DISPLAY ~= nil then
-						return " "
-					else
-						return ""
-					end
-				end
 				for _, f in ipairs(vim.list_slice(files, 1, n)) do
 					local name = vim.fn.fnamemodify(f, ":t") .. show_path(f)
 					-- Added a nice `` icon for all itens compared to original source code.
-					table.insert(items, { action = "edit " .. f, name = item_icon() .. name, section = section })
+					table.insert(items, { action = "edit " .. f, name = icons.recent_files .. name, section = section })
 				end
 
 				return items
@@ -156,14 +118,7 @@ return {
 			if recent == nil then recent = true end
 
 			return function()
-				local icon = function() -- Set icon only when not running Neovim on a TTY.
-					if vim.env.DISPLAY ~= nil then
-						return "󰍹 "
-					else
-						return ""
-					end
-				end
-				local section = padding .. icon() .. "Sessions" -- Added text padding and icon compared to original source code.
+				local section = padding .. icons.sections.session .. "Sessions" -- Added text padding and icon compared to original source code.
 
 				if _G.MiniSessions == nil then
 					return { { name = [['mini.sessions' is not set up]], action = '', section = section } }
@@ -213,18 +168,18 @@ return {
 			header = header,
 			footer = footer,
 			content_hooks = {
-				starter.gen_hook.adding_bullet(padding .. gen_hook_adding_bullet_set_icon(), false),
+				starter.gen_hook.adding_bullet(padding .. icons.bullet, false),
 				starter.gen_hook.indexing("all", {}), -- Use numbers to index items.
 				starter.gen_hook.aligning("center", "center"),
 				starter.gen_hook.padding(6, 0),
 			},
 			items = {
 				--stylua: ignore start
-				starter.new_section(" New File",    "ene | startinsert", actions_section),
-				starter.new_section("󰅚 Quit Neovim", "qa!",               actions_section),
+				starter.new_section(icons.actions.new_file .. "New File",    "ene | startinsert", actions_section),
+				starter.new_section(icons.actions.quit     .. "Quit Neovim", "qa!",               actions_section),
 				--stylua: ignore end
 
-				starter.new_section("󰉋 Open File Explorer", function()
+				starter.new_section(icons.actions.file_explorer .. "Open File Explorer", function()
 					local has_neo_tree, neo_tree = pcall(require, "neo-tree")
 					local has_mini_files, mini_files = pcall(require, "mini.files")
 
@@ -241,12 +196,12 @@ return {
 				end, actions_section),
 
 				--stylua: ignore start
-				starter.new_section("󰮊 List Buffers", [[lua require("lazy").load({ plugins = "mini.pick" }); require("mini.pick").builtin.buffers()]],   actions_section),
-				starter.new_section(" Recent Files", [[lua require("lazy").load({ plugins = "mini.pick" }); require("mini.extra").pickers.oldfiles()]], actions_section),
-				starter.new_section("󰱼 Find Files",   [[lua require("lazy").load({ plugins = "mini.pick" }); require("mini.pick").builtin.files()]],     actions_section),
-				starter.new_section("󰈬 Live Grep",    [[lua require("lazy").load({ plugins = "mini.pick" }); require("mini.pick").builtin.grep_live()]], actions_section),
-				starter.new_section("󰒲 Lazy",         "Lazy",                                           actions_section),
-				starter.new_section("◍ Mason",        "Mason",                                          actions_section),
+				starter.new_section(icons.actions.list_buffers .. "List Buffers", [[lua require("lazy").load({ plugins = "mini.pick" }); require("mini.pick").builtin.buffers()]],   actions_section),
+				starter.new_section(icons.actions.recent_files .. "Recent Files", [[lua require("lazy").load({ plugins = "mini.pick" }); require("mini.extra").pickers.oldfiles()]], actions_section),
+				starter.new_section(icons.actions.find_files .. "Find Files",   [[lua require("lazy").load({ plugins = "mini.pick" }); require("mini.pick").builtin.files()]],     actions_section),
+				starter.new_section(icons.actions.live_grep .. "Live Grep",    [[lua require("lazy").load({ plugins = "mini.pick" }); require("mini.pick").builtin.grep_live()]], actions_section),
+				starter.new_section(icons.actions.lazy .. "Lazy",         "Lazy",                                           actions_section),
+				starter.new_section(icons.actions.mason .. "Mason",        "Mason",                                          actions_section),
 				starter.sections.recent_files_modified(5, false, false),
 				starter.sections.recent_files_modified(5, true, false),
 				starter.sections.sessions_modified(5, true)
