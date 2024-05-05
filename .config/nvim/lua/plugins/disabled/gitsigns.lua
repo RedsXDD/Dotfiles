@@ -10,10 +10,9 @@ return {
 		{ "<Leader>gh", mode = { "n" } },
 	},
 	opts = function()
-		local M = {}
 		local icons = require("user.icons").icons
 
-		M = {
+		return {
 			signs = {
 				add          = { text = icons.gitsigns.add },
 				change       = { text = icons.gitsigns.change },
@@ -45,7 +44,5 @@ return {
 				-- stylua: ignore end
 			end,
 		}
-
-		return M
 	end,
 }
