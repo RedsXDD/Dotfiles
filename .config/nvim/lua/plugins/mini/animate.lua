@@ -1,6 +1,6 @@
 return {
 	"echasnovski/mini.animate",
-	event = "CursorMoved",
+	event = { "BufReadPost", "BufNewFile", "BufUnload" },
 	keys = function()
 		local M = {}
 
@@ -38,7 +38,7 @@ return {
 			end, { expr = true })
 		end
 
-		local M = {
+		return {
 			resize = {
 				timing = animate.gen_timing.linear({ duration = 100, unit = "total" }),
 			},
@@ -55,7 +55,5 @@ return {
 				}),
 			},
 		}
-
-		return M
 	end,
 }
