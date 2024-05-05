@@ -2093,12 +2093,12 @@ M.highlights_base = function (colors)
 		MiniStatuslineModeInactive = { link = "Normal", bold = true },
 		--: }}}
 		--: mini.tabline {{{
-		MiniTablineCurrent         = { link = "TabLineSel" },
+		MiniTablineCurrent         = { bg = colors.color4, fg = colors.background, bold = true, italic = true },
 		MiniTablineFill            = { link = "TabLineFill" },
 		MiniTablineVisible         = { link = "TabLine" },
 		MiniTablineHidden          = { link = "MiniTablineVisible" },
-		MiniTablineModifiedCurrent = { fg = colors.color3, bold = true, italic = true },
-		MiniTablineModifiedVisible = { fg = colors.color3 },
+		MiniTablineModifiedCurrent = { bg = colors.color3, fg = colors.background, bold = true, italic = true },
+		MiniTablineModifiedVisible = { fg = colors.color6 },
 		MiniTablineModifiedHidden  = { fg = colors.color5 },
 		MiniTablineTabpagesection  = { bg = colors.color4, fg = colors.background, bold = true },
 		--: }}}
