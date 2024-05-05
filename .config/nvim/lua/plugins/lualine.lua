@@ -4,14 +4,19 @@ return {
 	event = { "BufReadPost", "BufNewFile", "BufUnload" },
 	opts = function()
 		local icons = require("user.icons").icons
-
 		return {
 			options = {
 				theme = "pywal-nvim",
 				icons_enabled = true,
 				always_divide_middle = true,
 				component_separators = "|",
-				disabled_filetypes = { statusline = { "dashboard", "alpha", "starter" } },
+				disabled_filetypes = {
+					statusline = {
+						"dashboard",
+						"alpha",
+						"starter",
+					},
+				},
 			},
 			extensions = {
 				"lazy",
