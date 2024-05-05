@@ -1,7 +1,10 @@
+-- vim:fileencoding=utf-8:foldmethod=marker
+
 return {
 	"echasnovski/mini.starter",
 	event = "VimEnter",
-	config = function()
+	opts = function()
+		--: Main variables {{{
 		local starter = require("mini.starter")
 		local padding = string.rep(" ", 13) -- Padding to center sections and actions.
 		local icons = require("user.icons").icons.starter
@@ -10,8 +13,8 @@ return {
 		starter.new_section = function(name, action, section)
 			return { name = name, action = action, section = padding .. section }
 		end
-
-		-- Setup header text:
+		--: }}}
+		--: Header text {{{
 		local header = [[]]
 		if vim.env.DISPLAY ~= nil then
 			header = table.concat({
@@ -40,7 +43,8 @@ return {
 			}, "\n")
 		end
 		header = table.concat({ header, "\n" .. padding .. [[TIP: To exit Neovim, just run $sudo rm -rf /*]] }, "\n")
-
+		--: }}}
+		--: Footer text {{{
 		local footer = (function()
 			--[[
 				NOTE:
@@ -55,7 +59,7 @@ return {
 				if vim.bo.filetype ~= "starter" then
 					return false
 				end
-				starter.refresh()
+				pcall(starter.refresh)
 			end), delay, true)
 			-- stylua: ignore end
 
@@ -65,7 +69,8 @@ return {
 				return padding .. icons.footer .. "Neovim loaded " .. stats.count .. " plugins in " .. ms .. "ms"
 			end
 		end)()
-
+		--: }}}
+		--: starter.sections.recent_files_modified {{{
 		-- stylua: ignore start
 		-- This is a modified version of MiniStarter's default "recentfiles" function taken directly from the source code.
 		-- It had to be copied over because otherwise the section padding couldn't be modified to make it aligned with all other sections from the `new_section` function.
@@ -122,7 +127,8 @@ return {
 			end
 		end
 		-- stylua: ignore end
-
+		--: }}}
+		--: starter.sections.sessions_modified {{{
 		-- stylua: ignore start
 		-- This is modified version of MiniStarter's default "sessions" function taken directly from the source code.
 		-- It had to be copied over because otherwise the section padding couldn't be modified to make it aligned with all other sections from the `new_section` function.
@@ -180,11 +186,14 @@ return {
 			end
 		end
 		-- stylua: ignore end
-
-		starter.setup({
+		--: }}}
+		--: Return options table {{{
+		vim.o.laststatus = 0 -- Disable statusline when mini.starter opens.
+		return {
 			evaluate_single = true,
 			header = header,
 			footer = footer,
+			query_updaters = "abcdefgimnopqrstuvwxyz0123456789_-.",
 			content_hooks = {
 				starter.gen_hook.adding_bullet(padding .. icons.bullet, false),
 				starter.gen_hook.indexing("all", {}), -- Use numbers to index items.
@@ -237,6 +246,7 @@ return {
 				starter.sections.recent_files_modified(5, true, false),
 				starter.sections.sessions_modified(5, true),
 			},
-		})
+		}
+		--: }}}
 	end,
 }
