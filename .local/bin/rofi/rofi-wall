@@ -7,7 +7,7 @@ killall rofi >/dev/null 2>&1
 # Import current theme:
 theme="${XDG_CONFIG_HOME:-$HOME/.config}/rofi/themes/launchers/type-6/style-1.rasi"
 
-wallpapers_dir="${1:-$HOME/Pictures/wallpapers/wallhaven}"
+wallpapers_dir="${1:-$HOME/Pictures/wallpapers/anime}"
 rofi_cmd(){
 	[ "$(awk '/fullscreen:/ {print $2}' "$theme")" != 'true;' ] && border_setup='window { border: 0px solid; border-color: @border-colour; }'
 
