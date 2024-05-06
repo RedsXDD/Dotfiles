@@ -1,13 +1,10 @@
 #!/usr/bin/env sh
 
-# Copy kvantum themes to pywal theme folder:
-Pywal_theme='Pywal16-pywal'
+# Auto generate themix/oomox theme:
+oomox_theme_name='oomox-pywal'
 wal_dir="${XDG_CACHE_HOME:-$HOME/.cache}/wal"
-Kvantum_theme_dir="${XDG_CONFIG_HOME:-$HOME/.config}/Kvantum"/"$Pywal_theme"
-[ ! -f "$Kvantum_theme_dir" ] && mkdir -p "$Kvantum_theme_dir"
-cp -f "$wal_dir"/"$Pywal_theme".kvconfig "$Kvantum_theme_dir"
-cp -f "$wal_dir"/"$Pywal_theme".svg "$Kvantum_theme_dir"
-kvantummanager --set "$Pywal_theme"
+cp -f "$wal_dir"/colors-oomox "${XDG_CONFIG_HOME:-$HOME/.config}"/oomox/colors/pywal
+[ -f "$wal_dir"/colors-oomox ] && oomox-cli --hidpi true --make-opts all --target-dir "${XDG_DATA_HOME:-$HOME/.local/share}"/themes --output "$oomox_theme_name" "$wal_dir"/colors-oomox
 
 # [ -n "$(pgrep waybar)" ] && killall -SIGUSR2 waybar || waybar &
 killall waybar cava swaync
