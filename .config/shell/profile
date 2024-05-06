@@ -66,8 +66,10 @@ export READER='zathura'
 export TERMINAL='kitty'
 export VIDEO='mpv'
 
-# Have QT use gtk2 theme.
-export QT_QPA_PLATFORMTHEME='qt5ct'
+# GTK/QT configuration:
+export QT_QPA_PLATFORMTHEME='qt6ct'
+export OOMOX_QTSTYLEPLUGIN_THEME='oomox-pywal'
+export GTK_THEME='oomox-pywal'
 
 # Swww config:
 export SWWW_TRANSITION='any'
