@@ -13,6 +13,7 @@
 set font "JetBrainsMonoNerdFont normal 15"
 set page-padding 1
 set recolor true
+set recolor-keephue true
 set recolor-reverse-video true
 set sandbox none
 set selection-clipboard clipboard
