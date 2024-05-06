@@ -5,13 +5,13 @@
 
 # Oomox setup:
 oomox_theme_name='oomox-pywal'
-oomox_plugins_path='/opt/oomox/plugins'
-oomox_icon_path="$oomox_plugins_path/icons_suruplus_aspromauros"
-wal_dir="${XDG_CACHE_HOME:-$HOME/.cache}/wal"
-cp -f "$wal_dir"/colors-oomox "${XDG_CONFIG_HOME:-$HOME/.config}"/oomox/colors/pywal
+oomox_plugins_dir='/opt/oomox/plugins'
+pywal_cache_dir="${XDG_CACHE_HOME:-$HOME/.cache}/wal"
+pywal_oomox_file="${pywal_cache_dir}/colors-oomox"
+cp -f "$pywal_oomox_file" "${XDG_CONFIG_HOME:-$HOME/.config}"/oomox/colors/pywal
 
 send_notification(){
-	notify-send -t 3000 'Pywal_postrun' "$@"
+	notify-send -t 3000 'Pywal_postrun' "$1"
 }
 
 restart_processes(){
@@ -26,28 +26,48 @@ restart_processes(){
 # Auto generate themix/oomox theme:
 gen_oomox_theme(){
 	send_notification 'Generating Oomox colorschemes ...'
-	if [ -f "$wal_dir"/colors-oomox ]; then
+	if [ -f "$pywal_oomox_file" ]; then
 		oomox-cli --hidpi true \
 			--make-opts all \
 			--target-dir "${XDG_DATA_HOME:-$HOME/.local/share}"/themes \
 			--output "$oomox_theme_name" \
-			"$wal_dir"/colors-oomox &&
+			"$pywal_oomox_file" &&
 		send_notification '✅ Colorscheme generation completed successfully!'
 	fi
 }
 
+# Auto generate oomox qt5/qt6 themes:
+gen_oomox_qt_theme(){
+	qt_output_dir="${XDG_CONFIG_HOME:-$HOME/.config}/oomox-qtstyleplugin/themes"
+	[ ! -d "$qt_output_dir" ] && mkdir -p "$qt_output_dir"
+
+	qt_plugin_file="$oomox_plugins_dir/base16/templates/qt-oomox-styleplugin/templates/default.mustache"
+	[ -f "$qt_plugin_file" ] && themix-base16-cli "$qt_plugin_file" "$pywal_oomox_file" | sed '/^ERROR:/d; /^Import/d' > "${qt_output_dir}/${oomox_theme_name}.css"
+}
+
 # Auto generate oomox icon theme:
-gen_oomox_icons(){
-	send_notification 'Generating Oomox icons ...'
-	if [ -f "$wal_dir"/colors-oomox ]; then
-		"$oomox_icon_path"/change_color.sh \
-			-d "${XDG_DATA_HOME:-$HOME/.local/share}"/icons/"$oomox_theme_name" \
-			-o "$oomox_theme_name" \
-			"$wal_dir"/colors-oomox &&
-		send_notification '✅ Icon generation completed successfully!'
+gen_oomox_icon_theme(){
+	icon_theme_name="$1"
+	oomox_plugin_path="$oomox_plugins_dir/icons_${icon_theme_name}"
+	destination_name="oomox_pywal_${icon_theme_name}"
+
+	send_notification "Generating Oomox icon theme '$(echo "$icon_theme_name" | sed 's/_/ /g')' ..."
+	if [ -f "$pywal_oomox_file" ]; then
+		"$oomox_plugin_path"/change_color.sh \
+			-d "${XDG_DATA_HOME:-$HOME/.local/share}"/icons/"$destination_name" \
+			-o "$destination_name" \
+			"$pywal_oomox_file" &&
+			send_notification "✅ Oomox icon theme '$(echo "$icon_theme_name" | sed 's/_/ /g')' generateted successfully!"
 	fi
 }
 
-restart_processes
-gen_oomox_theme
-gen_oomox_icons
+main(){
+	restart_processes
+	gen_oomox_theme &
+	gen_oomox_qt_theme &
+	gen_oomox_icon_theme 'papirus' &
+	gen_oomox_icon_theme 'numix' &
+	gen_oomox_icon_theme 'suruplus_aspromauros' &
+}
+
+main
