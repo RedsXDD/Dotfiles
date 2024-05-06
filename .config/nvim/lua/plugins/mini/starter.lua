@@ -6,7 +6,7 @@ return {
 	opts = function()
 		--: Main variables {{{
 		local starter = require("mini.starter")
-		local padding = string.rep(" ", 13) -- Padding to center sections and actions.
+		local padding = string.rep(" ", 15) -- Padding to center sections and actions.
 		local icons = require("user.icons").icons.starter
 
 		local actions_section = icons.sections.actions .. "Actions"
