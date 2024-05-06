@@ -6,3 +6,6 @@
 .config/qt6ct/colors/oomox-pywal.conf
 .config/qt5ct/colors/oomox-pywal.conf
 .config/oomox/colors/pywal
+.config/btop/themes/pywal.theme
+.config/gnuplot/gnuplotrc
+.config/oomox-qtstyleplugin/themes/oomox-pywal.css
