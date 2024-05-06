@@ -1,16 +1,53 @@
 #!/usr/bin/env sh
 
-# Auto generate themix/oomox theme:
+# Auto reload tmux theming:
+[ -n "$TMUX" ] && tmux source-file ~/.config/tmux/tmux.conf
+
+# Oomux setup:
 oomox_theme_name='oomox-pywal'
+oomux_plugins_path='/opt/oomox/plugins'
+oomux_icon_path="$oomux_plugins_path/icons_suruplus_aspromauros"
 wal_dir="${XDG_CACHE_HOME:-$HOME/.cache}/wal"
 cp -f "$wal_dir"/colors-oomox "${XDG_CONFIG_HOME:-$HOME/.config}"/oomox/colors/pywal
-[ -f "$wal_dir"/colors-oomox ] && oomox-cli --hidpi true --make-opts all --target-dir "${XDG_DATA_HOME:-$HOME/.local/share}"/themes --output "$oomox_theme_name" "$wal_dir"/colors-oomox
 
-# [ -n "$(pgrep waybar)" ] && killall -SIGUSR2 waybar || waybar &
-killall waybar cava swaync
-while pgrep -x waybar >/dev/null; do sleep 1; done
-while pgrep -x cava >/dev/null; do sleep 1; done
-while pgrep -x swaync >/dev/null; do sleep 1; done
-waybar & swaync &
+send_notification(){
+	notify-send -t 3000 'Pywal_postrun' "$@"
+}
 
-[ -n "$TMUX" ] && tmux source-file ~/.config/tmux/tmux.conf
+restart_processes(){
+	killall waybar cava swaync
+	while pgrep -x waybar >/dev/null; do sleep 1; done
+	while pgrep -x cava >/dev/null; do sleep 1; done
+	while pgrep -x swaync >/dev/null; do sleep 1; done
+	waybar >/dev/null &
+	swaync >/dev/null &
+}
+
+# Auto generate themix/oomox theme:
+gen_oomox_theme(){
+	send_notification 'Generating Oomox colorschemes ...'
+	if [ -f "$wal_dir"/colors-oomox ]; then
+		oomox-cli --hidpi true \
+			--make-opts all \
+			--target-dir "${XDG_DATA_HOME:-$HOME/.local/share}"/themes \
+			--output "$oomox_theme_name" \
+			"$wal_dir"/colors-oomox &&
+		send_notification '✅ Colorscheme generation completed successfully!'
+	fi
+}
+
+# Auto generate oomox icon theme:
+gen_oomox_icons(){
+	send_notification 'Generating Oomox icons ...'
+	if [ -f "$wal_dir"/colors-oomox ]; then
+		"$oomux_icon_path"/change_color.sh \
+			-d "${XDG_DATA_HOME:-$HOME/.local/share}"/icons/"$oomox_theme_name" \
+			-o "$oomox_theme_name" \
+			"$wal_dir"/colors-oomox &&
+		send_notification '✅ Icon generation completed successfully!'
+	fi
+}
+
+restart_processes
+gen_oomox_theme
+gen_oomox_icons
