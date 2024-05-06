@@ -3,10 +3,10 @@
 # Auto reload tmux theming:
 [ -n "$TMUX" ] && tmux source-file ~/.config/tmux/tmux.conf
 
-# Oomux setup:
+# Oomox setup:
 oomox_theme_name='oomox-pywal'
-oomux_plugins_path='/opt/oomox/plugins'
-oomux_icon_path="$oomux_plugins_path/icons_suruplus_aspromauros"
+oomox_plugins_path='/opt/oomox/plugins'
+oomox_icon_path="$oomox_plugins_path/icons_suruplus_aspromauros"
 wal_dir="${XDG_CACHE_HOME:-$HOME/.cache}/wal"
 cp -f "$wal_dir"/colors-oomox "${XDG_CONFIG_HOME:-$HOME/.config}"/oomox/colors/pywal
 
@@ -40,7 +40,7 @@ gen_oomox_theme(){
 gen_oomox_icons(){
 	send_notification 'Generating Oomox icons ...'
 	if [ -f "$wal_dir"/colors-oomox ]; then
-		"$oomux_icon_path"/change_color.sh \
+		"$oomox_icon_path"/change_color.sh \
 			-d "${XDG_DATA_HOME:-$HOME/.local/share}"/icons/"$oomox_theme_name" \
 			-o "$oomox_theme_name" \
 			"$wal_dir"/colors-oomox &&
