@@ -198,26 +198,29 @@ button:hover {
 #mpd.stopped,
 #mpd.paused {
 	padding: 0 7px;
-	color: @background;
 }
 
 #mpd {
 	background-color: @color5;
-	color: black;
+	color: @background;
 	border-bottom: 7px solid mix(@color5,black,0.3);
 }
 
 #mpd.paused {
-	background-color: @color15;
-	border-bottom: 7px solid mix(@color15,black,0.3);
+	background-color: @foreground;
+	color: @background;
+	border-bottom: 7px solid mix(@foreground,black,0.3);
 }
 
 #mpd.stopped {
-	color: @foreground;
+	background-color: @foreground;
+	color: @background;
+	border-bottom: 7px solid mix(@foreground,black,0.3);
 }
 
 #mpd.disconnected {
 	background-color: @color1;
+	color: @background;
 	border-bottom: 7px solid mix(@color1,black,0.3);
 }
 /* }}} */
