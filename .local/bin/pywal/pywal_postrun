@@ -191,49 +191,61 @@ gen_dolphin_fix(){
 #: Oomox theming {{{
 # Auto generate themix/oomox theme:
 gen_oomox_theme(){
+	[ ! -f "$pywal_oomox_file" ] && return 1
+
 	send_notification 'Generating Oomox colorscheme ...'
 
 	oomox_colors_dir="${XDG_CONFIG_HOME:-$HOME/.config}/oomox/colors"
 	[ ! -d "$oomox_colors_dir" ] && mkdir -vp "$oomox_colors_dir"
 	cp -vf "$pywal_oomox_file" "${oomox_colors_dir}/pywal"
-	if [ -f "$pywal_oomox_file" ]; then
-		# NOTE: gtk2 applications do not read themes under .local/share/themes, so the target dir has to be ~/.themes
-		oomox-cli --hidpi false \
-			--make-opts all \
-			--target-dir "${HOME}/.themes" \
-			--output "$oomox_theme_name" \
-			"$pywal_oomox_file"
 
-		gtk4_output_dir="${HOME}/.themes/${oomox_theme_name}/gtk-4.0"
-		[ ! -d "$gtk4_output_dir" ] && mkdir -p "$gtk4_output_dir"
-		themix-base16-cli "${oomox_plugins_dir}/base16/templates/gtk4/templates/gtk.mustache" "${pywal_cache_dir}/colors-oomox" | sed '/^ERROR:/d; /^Import/d' > "${gtk4_output_dir}/gtk.css"
+	# NOTE: gtk2 applications do not read themes under .local/share/themes, so the target dir has to be ~/.themes
+	oomox-cli --hidpi false \
+		--make-opts all \
+		--target-dir "${HOME}/.themes" \
+		--output "$oomox_theme_name" \
+		"$pywal_oomox_file"
 
-		send_notification '✅ Oomox colorscheme generated successfully!'
-	fi
+	gtk4_output_dir="${HOME}/.themes/${oomox_theme_name}/gtk-4.0"
+	[ ! -d "$gtk4_output_dir" ] && mkdir -p "$gtk4_output_dir"
+	themix-base16-cli "${oomox_plugins_dir}/base16/templates/gtk4/templates/gtk.mustache" "${pywal_cache_dir}/colors-oomox" | sed '/^ERROR:/d; /^Import/d' > "${gtk4_output_dir}/gtk.css"
+
+	send_notification '✅ Oomox colorscheme generated successfully!'
 }
 
 # Auto generate oomox qt5/qt6 themes:
 gen_oomox_qt_theme(){
 	qt_output_dir="${XDG_CONFIG_HOME:-$HOME/.config}/oomox-qtstyleplugin/themes"
-	[ ! -d "$qt_output_dir" ] && mkdir -p "$qt_output_dir"
-
 	qt_plugin_file="$oomox_plugins_dir/base16/templates/qt-oomox-styleplugin/templates/default.mustache"
+
+	[ ! -d "$qt_output_dir" ] && mkdir -p "$qt_output_dir"
 	[ -f "$qt_plugin_file" ] && themix-base16-cli "$qt_plugin_file" "$pywal_oomox_file" | sed '/^ERROR:/d; /^Import/d' > "${qt_output_dir}/${oomox_theme_name}.css"
 }
 
 # Auto generate oomox icon theme:
+
 gen_oomox_icon_theme(){
+	[ ! -f "$pywal_oomox_file" ] && return 1
+
+	# Main variables:
 	icon_theme_name="$1"
-	oomox_plugin_path="${oomox_plugins_dir}/icons_${icon_theme_name}"
+	output_name="oomox_pywal_${icon_theme_name}"
+	destination_dir="${XDG_DATA_HOME:-$HOME/.local/share}/icons/oomox_pywal_${icon_theme_name}"
 
 	send_notification "Generating Oomox icon theme '$(echo "$icon_theme_name" | sed 's/_/ /g')' ..."
-	if [ -f "$pywal_oomox_file" ]; then
-		"$oomox_plugin_path"/change_color.sh \
-			-d "${XDG_DATA_HOME:-$HOME/.local/share}/icons/oomox_pywal_${icon_theme_name}" \
-			-o "oomox_pywal_${icon_theme_name}" \
-			"$pywal_oomox_file" &&
-			send_notification "✅ Oomox icon theme '$(echo "$icon_theme_name" | sed 's/_/ /g')' generateted successfully!"
-	fi
+	case "$icon_theme_name" in
+		'archdroid') oomox-archdroid-icons-cli -d "$destination_dir" -o "$output_name" "$pywal_oomox_file" || return 1 ;;
+		'gnome_colors') oomox-gnome-colors-icons-cli -d "$destination_dir" -o "$output_name" "$pywal_oomox_file" || return 1 ;;
+		*)
+			oomox_plugin_path="${oomox_plugins_dir}/icons_${icon_theme_name}/change_color.sh"
+			"$oomox_plugin_path" \
+				-d "$destination_dir" \
+				-o "$output_name" \
+				"$pywal_oomox_file" || return 1
+		;;
+	esac
+
+	send_notification "✅ Oomox icon theme '$(echo "$icon_theme_name" | sed 's/_/ /g')' generateted successfully!"
 }
 #: }}}
 #: Main function {{{
@@ -241,8 +253,10 @@ main(){
 	# Auto reload tmux theming:
 	[ -n "$TMUX" ] && tmux source-file ~/.config/tmux/tmux.conf
 
+	# Restart main programs:
 	restart_processes
 
+	# Generate main program themes:
 	gen_gnuplot_theme
 	gen_btop_theme
 	gen_imv_theme
@@ -251,6 +265,8 @@ main(){
 	# Oomux theme generation:
 	gen_oomox_theme &
 	gen_oomox_qt_theme &
+	gen_oomox_icon_theme 'archdroid' &
+	gen_oomox_icon_theme 'gnome_colors' &
 	gen_oomox_icon_theme 'papirus' &
 	gen_oomox_icon_theme 'numix' &
 	gen_oomox_icon_theme 'suruplus_aspromauros' &
