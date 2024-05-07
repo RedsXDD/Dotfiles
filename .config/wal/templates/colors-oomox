@@ -1,7 +1,7 @@
 # General options:
 NAME="oomox-pywal"
 THEME_STYLE=oomox
-GTK3_GENERATE_DARK=True
+GTK3_GENERATE_DARK=False
 ROUNDNESS=3
 SPACING=2
 GRADIENT=0.0
