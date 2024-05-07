@@ -1,4 +1,4 @@
-local plugin_opts = function()
+local plugin_config = function()
 	local border_style = require("user.icons").icons.misc.border
 	local prefix_icon = require("user.icons").icons.mini_files.content.prefix
 
@@ -112,6 +112,30 @@ end
 return {
 	"echasnovski/mini.files",
 	dependencies = { "nvim-tree/nvim-web-devicons" },
+	opts = plugin_config(),
+	init = function() -- NOTE: The init function allows the plugin to be lazy loaded without breaking the netrw hijack functionality.
+		vim.g.loaded_netrwPlugin = 1
+		vim.g.loaded_netrw = 1
+
+		local group_name = "augroup_mini_files_netrw_hijack"
+		local augroup = vim.api.nvim_create_augroup(group_name, { clear = true })
+		vim.api.nvim_create_autocmd("VimEnter", {
+			desc = "Auto open mini.files when loading a directory.",
+			group = augroup,
+			callback = function(args)
+				if vim.fn.argc(-1) == 1 then
+					local files = require("mini.files")
+					local stat = vim.uv.fs_stat(vim.fn.argv(0))
+					if stat and stat.type == "directory" then
+						files.setup(plugin_config())
+						files.open(vim.api.nvim_buf_get_name(0), true)
+					end
+				end
+
+				vim.api.nvim_clear_autocmds({ group = group_name })
+			end,
+		})
+	end,
 	keys = function()
 		local M = {}
 
@@ -134,29 +158,5 @@ return {
 		-- stylua: ignore end
 
 		return M
-	end,
-	opts = plugin_opts(),
-	init = function() -- NOTE: The init function allows the plugin to be lazy loaded without breaking the netrw hijack functionality.
-		vim.g.loaded_netrwPlugin = 1
-		vim.g.loaded_netrw = 1
-
-		local group_name = "augroup_mini_files_netrw_hijack"
-		local augroup = vim.api.nvim_create_augroup(group_name, { clear = true })
-		vim.api.nvim_create_autocmd("VimEnter", {
-			desc = "Auto open mini.files when loading a directory.",
-			group = augroup,
-			callback = function(args)
-				if vim.fn.argc(-1) == 1 then
-					local files = require("mini.files")
-					local stat = vim.uv.fs_stat(vim.fn.argv(0))
-					if stat and stat.type == "directory" then
-						files.setup(plugin_opts())
-						files.open(vim.uv.cwd(), true)
-					end
-				end
-
-				vim.api.nvim_clear_autocmds({ group = group_name })
-			end,
-		})
 	end,
 }
