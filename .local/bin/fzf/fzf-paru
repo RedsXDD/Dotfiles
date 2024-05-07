@@ -9,7 +9,7 @@ case "${1:--S}" in
 		else
 			paru --color=always -Sl |
 				sed 's|\s|/|; s/\s\+.*unknown-version//g' |
-				fzf-tmux -p 50% -w 50% --prompt '> Install package(s) > ' --multi --preview 'paru -Si {1}' |
+				fzf-tmux -p 75% -w 75% --prompt '> Install package(s) > ' --multi --preview 'paru -Si {1}' |
 				cut -d'/' -f2 | cut -d' ' -f1 | xargs -ro paru -S
 		fi
 	;;
@@ -17,14 +17,14 @@ case "${1:--S}" in
 	'-R')
 		paru --color=always -Qs |
 			sed '/^\s\+/d; ; s/\s\+.*unknown-version//g' |
-			fzf-tmux -p 50% -w 50% --prompt '> Remove package(s) > ' --multi --preview 'paru -Qi {1}' |
+			fzf-tmux -p 75% -w 75% --prompt '> Remove package(s) > ' --multi --preview 'paru -Qi {1}' |
 			cut -d'/' -f2 | cut -d' ' -f1 | xargs -ro sudo pacman -Rusnv
 	;;
 
 	'-Q')
 		paru --color=always -Qs |
 			sed '/^\s\+/d; ; s/\s\+.*unknown-version//g' |
-			fzf-tmux -p 50% -w 50% --prompt '> Get info from package(s) > ' --multi --preview 'paru -Qi {1}' |
+			fzf-tmux -p 75% -w 75% --prompt '> Get info from package(s) > ' --multi --preview 'paru -Qi {1}' |
 			cut -d'/' -f2 | cut -d' ' -f1 | xargs -ro paru -Qi
 	;;
 
