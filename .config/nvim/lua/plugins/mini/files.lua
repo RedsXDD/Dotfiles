@@ -114,9 +114,6 @@ return {
 	dependencies = { "nvim-tree/nvim-web-devicons" },
 	opts = plugin_config(),
 	init = function() -- NOTE: The init function allows the plugin to be lazy loaded without breaking the netrw hijack functionality.
-		vim.g.loaded_netrwPlugin = 1
-		vim.g.loaded_netrw = 1
-
 		local group_name = "augroup_mini_files_netrw_hijack"
 		local augroup = vim.api.nvim_create_augroup(group_name, { clear = true })
 		vim.api.nvim_create_autocmd("VimEnter", {
@@ -124,9 +121,11 @@ return {
 			group = augroup,
 			callback = function(args)
 				if vim.fn.argc(-1) == 1 then
-					local files = require("mini.files")
 					local stat = vim.uv.fs_stat(vim.fn.argv(0))
 					if stat and stat.type == "directory" then
+						vim.g.loaded_netrwPlugin = 1
+						vim.g.loaded_netrw = 1
+						local files = require("mini.files")
 						files.setup(plugin_config())
 						files.open(vim.api.nvim_buf_get_name(0), true)
 					end
