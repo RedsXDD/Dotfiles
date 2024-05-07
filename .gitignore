@@ -1,13 +1,8 @@
 .config/rofi/images/wall.png
 .config/zellij/layouts/default.kdl
 .config/zellij/themes/pywal.kdl
-.config/oomox/colors/pywal
-.config/qt5ct/colors/oomox-pywal.conf
 .config/qt6ct/colors/oomox-pywal.conf
 .config/qt5ct/colors/oomox-pywal.conf
-.config/oomox/colors/pywal
 .config/btop/themes/pywal.theme
 .config/gnuplot/gnuplotrc
-.config/oomox-qtstyleplugin/themes/oomox-pywal.css
-.config/oomox/export_config/base16.json
 .config/zsh/.zcompdump
