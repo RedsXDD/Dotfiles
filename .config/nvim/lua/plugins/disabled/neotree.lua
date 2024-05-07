@@ -13,21 +13,22 @@ return {
 	},
 	-- NOTE: The init function allows the plugin to be lazy loaded without breaking the netrw hijack functionality.
 	init = function()
-		vim.g.loaded_netrwPlugin = 1
-		vim.g.loaded_netrw = 1
-
 		local group_name = "augroup_neotree_netrw_hijack"
 		local augroup = vim.api.nvim_create_augroup(group_name, { clear = true })
-
 		vim.api.nvim_create_autocmd("BufEnter", {
 			desc = "Auto open Neotree when loading a directory.",
 			group = augroup,
 			callback = function(args)
-				local f = vim.fn.expand("%:p")
-				if vim.fn.isdirectory(f) ~= 0 then
-					require("neo-tree.command").execute({ toggle = true, dir = vim.uv.cwd() })
-					vim.api.nvim_clear_autocmds({ group = group_name })
+				if vim.fn.argc(-1) == 1 then
+					local stat = vim.uv.fs_stat(vim.fn.argv(0))
+					if stat and stat.type == "directory" then
+						vim.g.loaded_netrwPlugin = 1
+						vim.g.loaded_netrw = 1
+						require("neo-tree.command").execute({ toggle = true, dir = vim.uv.cwd() })
+					end
 				end
+
+				vim.api.nvim_clear_autocmds({ group = group_name })
 			end,
 		})
 	end,
