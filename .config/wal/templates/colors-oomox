@@ -2,9 +2,9 @@
 NAME="oomox-pywal"
 THEME_STYLE=oomox
 GTK3_GENERATE_DARK=True
-ROUNDNESS=5
-SPACING=3
-GRADIENT=0.3
+ROUNDNESS=3
+SPACING=2
+GRADIENT=0.0
 ICONS_NUMIX_STYLE=0
 ICONS_STYLE=suruplus_aspromauros_icons
 BASE16_GENERATE_DARK=False
@@ -25,23 +25,28 @@ OUTLINE_WIDTH=1
 # Main colors:
 BG={background.strip}
 FG={foreground.strip}
-MENU_BG={background.darken(15%)}
-MENU_FG={foreground.darken(3%)}
-SEL_BG={color2.strip}
+MENU_BG={background.darken(30%)}
+MENU_FG={color15.strip}
+SEL_BG={color4.strip}
 SEL_FG={background.strip}
-TXT_BG={background.darken(15%)}
+TXT_BG={background.darken(30%)}
 TXT_FG={color15.strip}
-BTN_BG={background.darken(5%)}
+BTN_BG={background.darken(30%)}
 BTN_FG={color15.strip}
-HDR_BTN_BG={color4.strip}
+HDR_BTN_BG={color2.strip}
 HDR_BTN_FG={background.strip}
-HDR_BG={background.darken(15%)}
-HDR_FG={foreground.darken(3%)}
-ACCENT_BG={color2.strip}
+HDR_BG={background.darken(30%)}
+HDR_FG={color15.strip}
+ACCENT_BG={color4.strip}
 CARET1_FG={color15.strip}
 CARET2_FG={color15.strip}
-WM_BORDER_FOCUS={color2.strip}
-WM_BORDER_UNFOCUS={background.darken(15%)}
+WM_BORDER_FOCUS={color4.strip}
+WM_BORDER_UNFOCUS={background.darken(30%)}
+
+# Spotify colors:
+SPOTIFY_PROTO_BG={background.strip}
+SPOTIFY_PROTO_FG={foreground.strip}
+SPOTIFY_PROTO_SEL={color4.strip}
 
 # Icon colors:
 ICONS_ARCHDROID={color4.strip}
@@ -49,14 +54,14 @@ ICONS_SYMBOLIC_ACTION={color4.strip}
 ICONS_SYMBOLIC_PANEL={color4.strip}
 ICONS_LIGHT={color4.strip}
 ICONS_LIGHT_FOLDER={color4.strip}
-ICONS_MEDIUM={color4.darken(35%)}
+ICONS_MEDIUM={color4.darken(30%)}
 ICONS_DARK={background.strip}
 SURUPLUS_GRADIENT1={color4.strip}
-SURUPLUS_GRADIENT2={color6.strip}
+SURUPLUS_GRADIENT2={color5.strip}
 SURUPLUS_GRADIENT_ENABLED=True
 
 # Terminal colors:
-TERMINAL_ACCENT_COLOR={color2.strip}
+TERMINAL_ACCENT_COLOR={color4.strip}
 TERMINAL_BACKGROUND={background.strip}
 TERMINAL_FOREGROUND={foreground.strip}
 TERMINAL_CURSOR={cursor.strip}
@@ -76,8 +81,3 @@ TERMINAL_COLOR12={color12.strip}
 TERMINAL_COLOR13={color13.strip}
 TERMINAL_COLOR14={color14.strip}
 TERMINAL_COLOR15={color15.strip}
-
-# Spotify colors:
-SPOTIFY_PROTO_BG={background.darken(15%)}
-SPOTIFY_PROTO_FG={foreground.darken(3%)}
-SPOTIFY_PROTO_SEL={color2.strip}
