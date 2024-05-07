@@ -181,7 +181,10 @@ gen_dolphin_fix(){
 		BackgroundNormal=$background
 		DOLPHINEOF
 	}
-	gen_theme_config >> "${XDG_CONFIG_HOME:-$HOME/.config}/kdeglobals"
+	kdeglobals_file="${XDG_CONFIG_HOME:-$HOME/.config}/kdeglobals"
+	tmp="$(mktemp)"
+	trap 'rm -rf "$tmp"' 0 1 15
+	sed "s/BackgroundNormal=.*/BackgroundNormal=$background/g" "$kdeglobals_file" > "$tmp" && mv "$tmp" "$kdeglobals_file" || gen_theme_config >> "$kdeglobals_file"
 }
 #: }}}
 #: Oomox theming {{{
@@ -189,13 +192,21 @@ gen_dolphin_fix(){
 gen_oomox_theme(){
 	send_notification 'Generating Oomox colorschemes ...'
 
-	cp -f "$pywal_oomox_file" "${XDG_CONFIG_HOME:-$HOME/.config}"/oomox/colors/pywal
+	oomox_colors_dir="${XDG_CONFIG_HOME:-$HOME/.config}/oomox/colors"
+	[ ! -d "$oomox_colors_dir" ] && mkdir -vp "$oomox_colors_dir"
+	cp -vf "$pywal_oomox_file" "${oomox_colors_dir}/pywal"
 	if [ -f "$pywal_oomox_file" ]; then
-		oomox-cli --hidpi true \
+		# Setting the hidpi option to true basically doubles the gtk2 icon sizes:
+		oomox-cli --hidpi false \
 			--make-opts all \
 			--target-dir "${XDG_DATA_HOME:-$HOME/.local/share}"/themes \
 			--output "$oomox_theme_name" \
-			"$pywal_oomox_file" &&
+			"$pywal_oomox_file"
+
+		gtk4_output_dir="${XDG_DATA_HOME:-$HOME/.local/share}/themes/${oomox_theme_name}/gtk-4.0"
+		[ ! -d "$gtk4_output_dir" ] && mkdir -p "$gtk4_output_dir"
+		themix-base16-cli "${oomox_plugins_dir}/base16/templates/gtk4/templates/gtk.mustache" "${pywal_cache_dir}/colors-oomox" | sed '/^ERROR:/d; /^Import/d' > "${gtk4_output_dir}/gtk.css"
+
 		send_notification '✅ Colorscheme generation completed successfully!'
 	fi
 }
@@ -218,7 +229,7 @@ gen_oomox_icon_theme(){
 	send_notification "Generating Oomox icon theme '$(echo "$icon_theme_name" | sed 's/_/ /g')' ..."
 	if [ -f "$pywal_oomox_file" ]; then
 		"$oomox_plugin_path"/change_color.sh \
-			-d "${XDG_DATA_HOME:-$HOME/.local/share}"/icons/"$destination_name" \
+			-d "${XDG_DATA_HOME:-$HOME/.local/share}/icons/${destination_name}" \
 			-o "$destination_name" \
 			"$pywal_oomox_file" &&
 			send_notification "✅ Oomox icon theme '$(echo "$icon_theme_name" | sed 's/_/ /g')' generateted successfully!"
