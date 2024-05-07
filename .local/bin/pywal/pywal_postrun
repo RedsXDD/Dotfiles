@@ -190,7 +190,7 @@ gen_dolphin_fix(){
 #: Oomox theming {{{
 # Auto generate themix/oomox theme:
 gen_oomox_theme(){
-	send_notification 'Generating Oomox colorschemes ...'
+	send_notification 'Generating Oomox colorscheme ...'
 
 	oomox_colors_dir="${XDG_CONFIG_HOME:-$HOME/.config}/oomox/colors"
 	[ ! -d "$oomox_colors_dir" ] && mkdir -vp "$oomox_colors_dir"
@@ -207,7 +207,11 @@ gen_oomox_theme(){
 		[ ! -d "$gtk4_output_dir" ] && mkdir -p "$gtk4_output_dir"
 		themix-base16-cli "${oomox_plugins_dir}/base16/templates/gtk4/templates/gtk.mustache" "${pywal_cache_dir}/colors-oomox" | sed '/^ERROR:/d; /^Import/d' > "${gtk4_output_dir}/gtk.css"
 
-		send_notification '✅ Colorscheme generation completed successfully!'
+		# NOTE: gtk2 applications do not read themes under .local/share/themes
+		[ ! -d "$HOME/.themes" ] && mkdir -vp "$HOME/.themes"
+		[ ! -h "$HOME/.themes/${oomox_theme_name}" ] && ln -sv "${XDG_DATA_HOME:-$HOME/.local/share}/themes/${oomox_theme_name}" "$HOME/.themes/${oomox_theme_name}"
+
+		send_notification '✅ Oomox colorscheme generated successfully!'
 	fi
 }
 
