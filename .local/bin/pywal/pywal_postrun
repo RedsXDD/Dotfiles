@@ -163,11 +163,11 @@ gen_imv_theme(){
 	[ ! -f "$pywal_cache_dir/colors.sh" ] && return 1
 
 	imv_config="${XDG_CONFIG_HOME:-$HOME/.config}/imv/config"
-	tmp="$(mktemp)"
-	trap 'rm -rf "$tmp"' 0 1 15
-	[ -f "$imv_config" ] && cp "$imv_config" "$tmp"
-	sed "s|background =.*|background = ${background###}|g; s|overlay_background_color =.*|overlay_background_color = ${color4###}|g" "$imv_config" > "$tmp"
-	mv "$tmp" "$imv_config"
+	tmp_imv="$(mktemp)"
+	trap 'rm -rf "$tmp_imv"' 0 1 15
+	[ -f "$imv_config" ] && cp "$imv_config" "$tmp_imv"
+	sed "s|background =.*|background = ${background###}|g; s|overlay_background_color =.*|overlay_background_color = ${color4###}|g" "$imv_config" > "$tmp_imv"
+	mv "$tmp_imv" "$imv_config"
 }
 #: }}}
 #: Fix dolphin background color {{{
@@ -182,9 +182,10 @@ gen_dolphin_fix(){
 		DOLPHINEOF
 	}
 	kdeglobals_file="${XDG_CONFIG_HOME:-$HOME/.config}/kdeglobals"
-	tmp="$(mktemp)"
-	trap 'rm -rf "$tmp"' 0 1 15
-	sed "s/BackgroundNormal=.*/BackgroundNormal=$background/g" "$kdeglobals_file" > "$tmp" && mv "$tmp" "$kdeglobals_file" || gen_theme_config >> "$kdeglobals_file"
+	tmp_dolphin="$(mktemp)"
+	trap 'rm -rf "$tmp_dolphin"' 0 1 15
+	sed "s/BackgroundNormal=.*/BackgroundNormal=$background/g" "$kdeglobals_file" > "$tmp_dolphin" || gen_theme_config > "$tmp_dolphin"
+	mv "$tmp_dolphin" "$kdeglobals_file"
 }
 #: }}}
 #: Oomox theming {{{
@@ -196,20 +197,16 @@ gen_oomox_theme(){
 	[ ! -d "$oomox_colors_dir" ] && mkdir -vp "$oomox_colors_dir"
 	cp -vf "$pywal_oomox_file" "${oomox_colors_dir}/pywal"
 	if [ -f "$pywal_oomox_file" ]; then
-		# Setting the hidpi option to true basically doubles the gtk2 icon sizes:
+		# NOTE: gtk2 applications do not read themes under .local/share/themes, so the target dir has to be ~/.themes
 		oomox-cli --hidpi false \
 			--make-opts all \
-			--target-dir "${XDG_DATA_HOME:-$HOME/.local/share}"/themes \
+			--target-dir "${HOME}/.themes" \
 			--output "$oomox_theme_name" \
 			"$pywal_oomox_file"
 
-		gtk4_output_dir="${XDG_DATA_HOME:-$HOME/.local/share}/themes/${oomox_theme_name}/gtk-4.0"
+		gtk4_output_dir="${HOME}/.themes/${oomox_theme_name}/gtk-4.0"
 		[ ! -d "$gtk4_output_dir" ] && mkdir -p "$gtk4_output_dir"
 		themix-base16-cli "${oomox_plugins_dir}/base16/templates/gtk4/templates/gtk.mustache" "${pywal_cache_dir}/colors-oomox" | sed '/^ERROR:/d; /^Import/d' > "${gtk4_output_dir}/gtk.css"
-
-		# NOTE: gtk2 applications do not read themes under .local/share/themes
-		[ ! -d "$HOME/.themes" ] && mkdir -vp "$HOME/.themes"
-		[ ! -h "$HOME/.themes/${oomox_theme_name}" ] && ln -sv "${XDG_DATA_HOME:-$HOME/.local/share}/themes/${oomox_theme_name}" "$HOME/.themes/${oomox_theme_name}"
 
 		send_notification '✅ Oomox colorscheme generated successfully!'
 	fi
@@ -227,14 +224,13 @@ gen_oomox_qt_theme(){
 # Auto generate oomox icon theme:
 gen_oomox_icon_theme(){
 	icon_theme_name="$1"
-	oomox_plugin_path="$oomox_plugins_dir/icons_${icon_theme_name}"
-	destination_name="oomox_pywal_${icon_theme_name}"
+	oomox_plugin_path="${oomox_plugins_dir}/icons_${icon_theme_name}"
 
 	send_notification "Generating Oomox icon theme '$(echo "$icon_theme_name" | sed 's/_/ /g')' ..."
 	if [ -f "$pywal_oomox_file" ]; then
 		"$oomox_plugin_path"/change_color.sh \
-			-d "${XDG_DATA_HOME:-$HOME/.local/share}/icons/${destination_name}" \
-			-o "$destination_name" \
+			-d "${XDG_DATA_HOME:-$HOME/.local/share}/icons/oomox_pywal_${icon_theme_name}" \
+			-o "oomox_pywal_${icon_theme_name}" \
 			"$pywal_oomox_file" &&
 			send_notification "✅ Oomox icon theme '$(echo "$icon_theme_name" | sed 's/_/ /g')' generateted successfully!"
 	fi
