@@ -1,29 +1,48 @@
 #!/usr/bin/env sh
 
 # Script dependencies: gnutls, python-pywal, zathura
-# shellcheck disable=1091,2154
+# shellcheck disable=1091,2034,2154
 
-zathurarc_file="${XDG_CONFIG_HOME:-$HOME/.config}/zathura/zathurarc"
 [ -f "${XDG_CACHE_HOME:-$HOME/.cache}/wal/colors.sh" ] && . "${XDG_CACHE_HOME:-$HOME/.cache}/wal/colors.sh"
-if [ -f "${XDG_CACHE_HOME:-$HOME/.cache}/wal/colors-putty.reg" ]; then
-	# rgba_background="$(printf 'rgba(%s,0.5)' "$(grep 'Colour2' "${XDG_CACHE_HOME:-$HOME/.cache}/wal/colors-putty.reg" | sed 's/.*="//g; s/"\s\+;.*//g')")"
-	# rgba_foreground="$(printf 'rgba(%s,0.5)' "$(grep 'Colour0' "${XDG_CACHE_HOME:-$HOME/.cache}/wal/colors-putty.reg" | sed 's/.*="//g; s/"\s\+;.*//g')")"
-	# rgba_color0="$(printf 'rgba(%s,0.5)' "$(grep 'Colour6' "${XDG_CACHE_HOME:-$HOME/.cache}/wal/colors-putty.reg" | sed 's/.*="//g; s/"\s\+;.*//g')")"
-	# rgba_color1="$(printf 'rgba(%s,0.5)' "$(grep 'Colour8' "${XDG_CACHE_HOME:-$HOME/.cache}/wal/colors-putty.reg" | sed 's/.*="//g; s/"\s\+;.*//g')")"
+
+if [ ! -f "$pywal_cache_dir/colors-putty.reg" ]; then
+	rgba_background="$background"
+	rgba_foreground="$foreground"
+	rgba_color0="$color0"
+	rgba_color1="$color1"
+	rgba_color2="$color2"
+	rgba_color3="$color3"
+	rgba_color4="$color4"
+	rgba_color5="$color5"
+	rgba_color6="$color6"
+	rgba_color7="$color7"
+	rgba_color8="$color8"
+	rgba_color9="$color9"
+	rgba_color10="$color10"
+	rgba_color11="$color11"
+	rgba_color12="$color12"
+	rgba_color13="$color13"
+	rgba_color14="$color14"
+	rgba_color15="$color15"
+else
+	rgba_background="$(printf 'rgba(%s,0.5)' "$(grep 'Colour2' "${XDG_CACHE_HOME:-$HOME/.cache}/wal/colors-putty.reg" | sed 's/.*="//g; s/"\s\+;.*//g')")"
+	rgba_foreground="$(printf 'rgba(%s,0.5)' "$(grep 'Colour0' "${XDG_CACHE_HOME:-$HOME/.cache}/wal/colors-putty.reg" | sed 's/.*="//g; s/"\s\+;.*//g')")"
+	rgba_color0="$(printf 'rgba(%s,0.5)' "$(grep 'Colour6' "${XDG_CACHE_HOME:-$HOME/.cache}/wal/colors-putty.reg" | sed 's/.*="//g; s/"\s\+;.*//g')")"
+	rgba_color1="$(printf 'rgba(%s,0.5)' "$(grep 'Colour8' "${XDG_CACHE_HOME:-$HOME/.cache}/wal/colors-putty.reg" | sed 's/.*="//g; s/"\s\+;.*//g')")"
 	rgba_color2="$(printf 'rgba(%s,0.5)' "$(grep 'Colour10' "${XDG_CACHE_HOME:-$HOME/.cache}/wal/colors-putty.reg" | sed 's/.*="//g; s/"\s\+;.*//g')")"
 	rgba_color3="$(printf 'rgba(%s,0.5)' "$(grep 'Colour12' "${XDG_CACHE_HOME:-$HOME/.cache}/wal/colors-putty.reg" | sed 's/.*="//g; s/"\s\+;.*//g')")"
 	rgba_color4="$(printf 'rgba(%s,0.5)' "$(grep 'Colour14' "${XDG_CACHE_HOME:-$HOME/.cache}/wal/colors-putty.reg" | sed 's/.*="//g; s/"\s\+;.*//g')")"
-	# rgba_color5="$(printf 'rgba(%s,0.5)' "$(grep 'Colour16' "${XDG_CACHE_HOME:-$HOME/.cache}/wal/colors-putty.reg" | sed 's/.*="//g; s/"\s\+;.*//g')")"
-	# rgba_color6="$(printf 'rgba(%s,0.5)' "$(grep 'Colour18' "${XDG_CACHE_HOME:-$HOME/.cache}/wal/colors-putty.reg" | sed 's/.*="//g; s/"\s\+;.*//g')")"
-	# rgba_color7="$(printf 'rgba(%s,0.5)' "$(grep 'Colour20' "${XDG_CACHE_HOME:-$HOME/.cache}/wal/colors-putty.reg" | sed 's/.*="//g; s/"\s\+;.*//g')")"
-	# rgba_color8="$(printf 'rgba(%s,0.5)' "$(grep 'Colour20' "${XDG_CACHE_HOME:-$HOME/.cache}/wal/colors-putty.reg" | sed 's/.*="//g; s/"\s\+;.*//g')")"
-	# rgba_color9="$(printf 'rgba(%s,0.5)' "$(grep 'Colour9' "${XDG_CACHE_HOME:-$HOME/.cache}/wal/colors-putty.reg" | sed 's/.*="//g; s/"\s\+;.*//g')")"
-	# rgba_color10="$(printf 'rgba(%s,0.5)' "$(grep 'Colour10' "${XDG_CACHE_HOME:-$HOME/.cache}/wal/colors-putty.reg" | sed 's/.*="//g; s/"\s\+;.*//g')")"
-	# rgba_color11="$(printf 'rgba(%s,0.5)' "$(grep 'Colour13' "${XDG_CACHE_HOME:-$HOME/.cache}/wal/colors-putty.reg" | sed 's/.*="//g; s/"\s\+;.*//g')")"
-	# rgba_color12="$(printf 'rgba(%s,0.5)' "$(grep 'Colour15' "${XDG_CACHE_HOME:-$HOME/.cache}/wal/colors-putty.reg" | sed 's/.*="//g; s/"\s\+;.*//g')")"
-	# rgba_color13="$(printf 'rgba(%s,0.5)' "$(grep 'Colour17' "${XDG_CACHE_HOME:-$HOME/.cache}/wal/colors-putty.reg" | sed 's/.*="//g; s/"\s\+;.*//g')")"
-	# rgba_color14="$(printf 'rgba(%s,0.5)' "$(grep 'Colour19' "${XDG_CACHE_HOME:-$HOME/.cache}/wal/colors-putty.reg" | sed 's/.*="//g; s/"\s\+;.*//g')")"
-	# rgba_color15="$(printf 'rgba(%s,0.5)' "$(grep 'Colour21' "${XDG_CACHE_HOME:-$HOME/.cache}/wal/colors-putty.reg" | sed 's/.*="//g; s/"\s\+;.*//g')")"
+	rgba_color5="$(printf 'rgba(%s,0.5)' "$(grep 'Colour16' "${XDG_CACHE_HOME:-$HOME/.cache}/wal/colors-putty.reg" | sed 's/.*="//g; s/"\s\+;.*//g')")"
+	rgba_color6="$(printf 'rgba(%s,0.5)' "$(grep 'Colour18' "${XDG_CACHE_HOME:-$HOME/.cache}/wal/colors-putty.reg" | sed 's/.*="//g; s/"\s\+;.*//g')")"
+	rgba_color7="$(printf 'rgba(%s,0.5)' "$(grep 'Colour20' "${XDG_CACHE_HOME:-$HOME/.cache}/wal/colors-putty.reg" | sed 's/.*="//g; s/"\s\+;.*//g')")"
+	rgba_color8="$(printf 'rgba(%s,0.5)' "$(grep 'Colour20' "${XDG_CACHE_HOME:-$HOME/.cache}/wal/colors-putty.reg" | sed 's/.*="//g; s/"\s\+;.*//g')")"
+	rgba_color9="$(printf 'rgba(%s,0.5)' "$(grep 'Colour9' "${XDG_CACHE_HOME:-$HOME/.cache}/wal/colors-putty.reg" | sed 's/.*="//g; s/"\s\+;.*//g')")"
+	rgba_color10="$(printf 'rgba(%s,0.5)' "$(grep 'Colour10' "${XDG_CACHE_HOME:-$HOME/.cache}/wal/colors-putty.reg" | sed 's/.*="//g; s/"\s\+;.*//g')")"
+	rgba_color11="$(printf 'rgba(%s,0.5)' "$(grep 'Colour13' "${XDG_CACHE_HOME:-$HOME/.cache}/wal/colors-putty.reg" | sed 's/.*="//g; s/"\s\+;.*//g')")"
+	rgba_color12="$(printf 'rgba(%s,0.5)' "$(grep 'Colour15' "${XDG_CACHE_HOME:-$HOME/.cache}/wal/colors-putty.reg" | sed 's/.*="//g; s/"\s\+;.*//g')")"
+	rgba_color13="$(printf 'rgba(%s,0.5)' "$(grep 'Colour17' "${XDG_CACHE_HOME:-$HOME/.cache}/wal/colors-putty.reg" | sed 's/.*="//g; s/"\s\+;.*//g')")"
+	rgba_color14="$(printf 'rgba(%s,0.5)' "$(grep 'Colour19' "${XDG_CACHE_HOME:-$HOME/.cache}/wal/colors-putty.reg" | sed 's/.*="//g; s/"\s\+;.*//g')")"
+	rgba_color15="$(printf 'rgba(%s,0.5)' "$(grep 'Colour21' "${XDG_CACHE_HOME:-$HOME/.cache}/wal/colors-putty.reg" | sed 's/.*="//g; s/"\s\+;.*//g')")"
 fi
 
 gen_theme(){
@@ -67,11 +86,12 @@ gen_theme(){
 	CONF
 }
 
+zathurarc_file="${XDG_CONFIG_HOME:-$HOME/.config}/zathura/zathurarc"
 zathura_tmp_dir="$(mktemp -d)"
 zathurarc_tmp="$zathura_tmp_dir/zathurarc"
 trap 'rm -rf "$zathura_tmp_dir"' 0 1 15
 
-[ -f "$zathurarc_file" ] && cp "$zathurarc_file" "$zathurarc_tmp"
+[ -f "$zathurarc_file" ] && cp -f "$zathurarc_file" "$zathurarc_tmp"
 gen_theme >> "$zathurarc_tmp"
 \zathura --config-dir="$zathura_tmp_dir" "$@"
 
