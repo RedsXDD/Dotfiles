@@ -50,8 +50,8 @@ SPOTIFY_PROTO_SEL={color4.strip}
 
 # Icon colors:
 ICONS_ARCHDROID={color4.strip}
-ICONS_SYMBOLIC_ACTION={color4.strip}
-ICONS_SYMBOLIC_PANEL={color4.strip}
+ICONS_SYMBOLIC_ACTION={foreground.strip}
+ICONS_SYMBOLIC_PANEL={foreground.strip}
 ICONS_LIGHT={color4.strip}
 ICONS_LIGHT_FOLDER={color4.strip}
 ICONS_MEDIUM={color4.darken(30%)}
