@@ -251,6 +251,21 @@ gen_oomox_icon_theme(){
 	send_notification "✅ Oomox icon theme '$(echo "$icon_theme_name" | sed 's/_/ /g')' generateted successfully!"
 }
 #: }}}
+#: Kvantum theming {{{
+gen_kvantum_theme(){
+	kvantum_theme_name='Pywal16-pywal'
+	Kvantum_theme_dir="${XDG_CONFIG_HOME:-$HOME/.config}/Kvantum/${kvantum_theme_name}"
+
+	# Check if require theme files exist under `$pywal_cache_dir`.
+	[ ! -f "${pywal_cache_dir}/${kvantum_theme_name}.kvconfig" ] && return 1
+	[ ! -f "${pywal_cache_dir}/${kvantum_theme_name}.svg" ] && return 1
+
+	[ ! -d "$Kvantum_theme_dir" ] && mkdir -p "$Kvantum_theme_dir"
+	cp -f "${pywal_cache_dir}/${kvantum_theme_name}.kvconfig" "$Kvantum_theme_dir"
+	cp -f "${pywal_cache_dir}/${kvantum_theme_name}.svg" "$Kvantum_theme_dir"
+	kvantummanager --set "$kvantum_theme_name"
+}
+#: }}}
 #: Main function {{{
 main(){
 	# Auto reload tmux theming:
@@ -266,6 +281,7 @@ main(){
 	gen_dolphin_fix
 
 	# Oomux theme generation:
+	gen_kvantum_theme &
 	gen_oomox_theme &
 	gen_oomox_qt_theme &
 	gen_oomox_icon_theme 'archdroid' &
