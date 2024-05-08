@@ -20,11 +20,11 @@ export XDG_STATE_HOME=${XDG_STATE_HOME:="$HOME/.local/state"}
 # Clean up /home:
 export CARGO_HOME="$XDG_DATA_HOME/cargo"
 export GNUPGHOME="$XDG_DATA_HOME/gnupg"
-export GOMODCACHE="$XDG_CACHE_HOME/go/mod"
 export GOPATH="$XDG_DATA_HOME/go"
+export GOMODCACHE="$XDG_CACHE_HOME/go/mod"
 export GTK2_RC_FILES="$XDG_CONFIG_HOME/gtk-2.0/gtkrc"
 export LYNX_CFG_PATH="$XDG_CONFIG_HOME/lynx.cfg"
-export NPM_CONFIG_USERCONFIG="$XDG_CONFIG_HOME/npm/npmrc"
+export NPM_CONFIG_USERCONFIG="$XDG_CONFIG_HOME"/npm/npmrc
 # export RIPGREP_CONFIG_PATH="$XDG_CONFIG_HOME/ripgrep/config"
 export SQLITE_HISTORY="$XDG_DATA_HOME/sqlite_history"
 export TMUX_TMPDIR="$XDG_RUNTIME_DIR"
