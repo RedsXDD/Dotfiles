@@ -6,7 +6,7 @@ return {
 		local icons = require("user.icons").icons
 		return {
 			options = {
-				theme = "pywal-nvim",
+				theme = "neopywal",
 				icons_enabled = true,
 				always_divide_middle = true,
 				component_separators = "|",
