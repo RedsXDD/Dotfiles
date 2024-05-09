@@ -2,3 +2,18 @@
 	email = 161394370+RedsXDD@users.noreply.github.com
 	name = RedsXDD
 	editor = neovim
+
+[core]
+    pager = delta
+
+[interactive]
+    diffFilter = delta --color-only
+
+[delta]
+    navigate = true    # use n and N to move between diff sections
+
+[merge]
+    conflictstyle = diff3
+
+[diff]
+    colorMoved = default
