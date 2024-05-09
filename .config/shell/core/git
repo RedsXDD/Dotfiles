@@ -1,7 +1,7 @@
 # vim:fileencoding=utf-8:foldmethod=marker:filetype=sh
 
-alias stow_dots='stow --adopt -d "$HOME/.sources/Reds/dotfiles" -t "$HOME"'
-alias stow_undots='stow -d "$HOME/.sources/Reds/dotfiles" -t "$HOME" -D'
-alias dots='/usr/bin/git --git-dir="$HOME/.sources/Reds/dotfiles/.git" --work-tree="$HOME/.sources/Reds/dotfiles"'
+alias stow_dots='stow --adopt -d "$HOME/.local/sources/Reds/dotfiles" -t "$HOME"'
+alias stow_undots='stow -d "$HOME/.local/sources/Reds/dotfiles" -t "$HOME" -D'
+alias dots='/usr/bin/git --git-dir="$HOME/.local/sources/Reds/dotfiles/.git" --work-tree="$HOME/.local/sources/Reds/dotfiles"'
 alias lg='lazygit'
-alias lgd='lazygit -p "$HOME/.sources/Reds/dotfiles"'
+alias lgd='lazygit -p "$HOME/.local/sources/Reds/dotfiles"'
