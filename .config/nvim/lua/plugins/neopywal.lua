@@ -1,13 +1,11 @@
 return {
 	"RedsXDD/neopywal.nvim",
+	branch = "testing",
 	name = "neopywal",
 	lazy = false,
 	priority = 1000,
 	opts = {},
-	config = function(_, opts)
-		local neopywal = require("neopywal")
-		neopywal.setup(opts)
-
+	config = function()
 		if vim.env.DISPLAY ~= nil then
 			vim.cmd.colorscheme("neopywal")
 		else
