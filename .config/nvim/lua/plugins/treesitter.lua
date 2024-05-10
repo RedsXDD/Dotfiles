@@ -9,7 +9,14 @@ return {
 		vim.o.foldenable = false
 		require("nvim-treesitter.configs").setup({
 			auto_install = true,
-			ensure_installed = { "c", "lua", "vim", "vimdoc", "query" },
+			ensure_installed = {
+				"bash",
+				"c",
+				"lua",
+				"vim",
+				"vimdoc",
+				"query",
+			},
 			indent = { enable = true },
 			highlight = {
 				enable = true,
