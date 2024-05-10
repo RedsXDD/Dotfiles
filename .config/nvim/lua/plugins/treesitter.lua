@@ -4,6 +4,9 @@ return {
 	event = { "BufReadPre", "BufNewFile" },
 	build = ":TSUpdate",
 	config = function()
+		vim.o.foldmethod = "expr"
+		vim.o.foldexpr = "nvim_treesitter#foldexpr()"
+		vim.o.foldenable = false
 		require("nvim-treesitter.configs").setup({
 			auto_install = true,
 			ensure_installed = { "c", "lua", "vim", "vimdoc", "query" },
