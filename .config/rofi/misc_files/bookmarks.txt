@@ -159,3 +159,4 @@ https://github.com/erikw/vim-keybindings-everywhere-the-ultimate-list?tab=readme
 https://github.com/catppuccin/nvim/tree/main/lua/catppuccin/groups/integrations
 https://github.com/omerxx/dotfiles
 https://gitlab.com/domsch1988/mvim
+https://groq.com/
