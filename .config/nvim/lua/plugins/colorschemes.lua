@@ -4,7 +4,6 @@ return {
 		lazy = true,
 		name = "catppuccin",
 		priority = 1000,
-		opts = {},
 	},
 	{
 		"folke/tokyonight.nvim",
@@ -20,24 +19,11 @@ return {
 		priority = 1000,
 		opts = {
 			default_fileformats = false,
-			default_plugins = false,
-			plugins = {
-				treesitter = true,
-				lspconfig = true,
-				nvim_cmp = true,
-				mini = {
-					cursorword = true,
-					files = true,
-					hipatterns = true,
-					indentscope = true,
-					pick = true,
-					starter = true,
-					statusline = true,
-					tabline = true,
-				},
-			},
 		},
-		config = function()
+		config = function(_, opts)
+			local neopywal = require("neopywal")
+			neopywal.setup(opts)
+
 			if vim.env.DISPLAY ~= nil then
 				vim.cmd.colorscheme("neopywal")
 			else
