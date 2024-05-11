@@ -9,6 +9,10 @@ return {
 		local padding = string.rep(" ", 15) -- Padding to center sections and actions.
 		local icons = require("user.icons").icons.starter
 
+		local function lazy_load(plugin)
+			require("lazy").load({ plugins = plugin })
+		end
+
 		local actions_section = icons.sections.actions .. "Actions"
 		starter.new_section = function(name, action, section)
 			return { name = name, action = action, section = padding .. section }
@@ -209,9 +213,11 @@ return {
 					local has_minifiles, mini_files = pcall(require, "mini.files")
 
 					if has_neotree then
+						lazy_load("neo-tree.nvim")
 						require("neo-tree.command").execute({ toggle = true, dir = vim.uv.cwd() })
 						return true
 					elseif has_minifiles then
+						lazy_load("mini.files")
 						mini_files.open(vim.uv.cwd(), true)
 						return true
 					else
@@ -220,28 +226,51 @@ return {
 					end
 				end, actions_section),
 
-				starter.new_section(
-					icons.actions.list_buffers .. "List Buffers",
-					[[lua require("lazy").load({ plugins = "mini.pick" }); require("mini.pick").builtin.buffers()]],
-					actions_section
-				),
-				starter.new_section(
-					icons.actions.recent_files .. "Recent Files",
-					[[lua require("lazy").load({ plugins = "mini.pick" }); require("mini.extra").pickers.oldfiles()]],
-					actions_section
-				),
-				starter.new_section(
-					icons.actions.find_files .. "Find Files",
-					[[lua require("lazy").load({ plugins = "mini.pick" }); require("mini.pick").builtin.files()]],
-					actions_section
-				),
-				starter.new_section(
-					icons.actions.live_grep .. "Live Grep",
-					[[lua require("lazy").load({ plugins = "mini.pick" }); require("mini.pick").builtin.grep_live()]],
-					actions_section
-				),
+				starter.new_section(icons.actions.list_buffers .. "List Buffers", function()
+					local has_pick, pick = pcall(require, "mini.pick")
+
+					if has_pick then
+						lazy_load("mini.pick")
+						pick.builtin.buffers()
+					end
+				end, actions_section),
+
+				starter.new_section(icons.actions.recent_files .. "Recent Files", function()
+					local has_pick, pick = pcall(require, "mini.pick")
+					local has_extra, extra = pcall(require, "mini.extra")
+
+					if has_pick and has_extra then
+						lazy_load({ "mini.pick", "mini.extra" })
+						extra.pickers.oldfiles()
+					end
+				end, actions_section),
+
+				starter.new_section(icons.actions.find_files .. "Find Files", function()
+					local has_pick, pick = pcall(require, "mini.pick")
+
+					if has_pick then
+						lazy_load("mini.pick")
+						pick.builtin.files()
+					end
+				end, actions_section),
+
+				starter.new_section(icons.actions.live_grep .. "Live Grep", function()
+					local has_pick, pick = pcall(require, "mini.pick")
+
+					if has_pick then
+						lazy_load("mini.pick")
+						pick.builtin.grep_live()
+					end
+				end, actions_section),
+
 				starter.new_section(icons.actions.lazy .. "Lazy", "Lazy", actions_section),
-				starter.new_section(icons.actions.mason .. "Mason", "Mason", actions_section),
+				starter.new_section(icons.actions.mason .. "Mason", function()
+					local has_mason, mason = pcall(require, "mason")
+
+					if has_mason then
+						vim.cmd("Mason")
+					end
+				end, actions_section),
 				starter.sections.recent_files_modified(5, false, false),
 				starter.sections.recent_files_modified(5, true, false),
 				starter.sections.sessions_modified(5, true),
