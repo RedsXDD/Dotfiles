@@ -49,12 +49,12 @@ SPOTIFY_PROTO_FG={foreground.strip}
 SPOTIFY_PROTO_SEL={color4.strip}
 
 # Icon colors:
-ICONS_ARCHDROID={color4.strip}
+ICONS_ARCHDROID={color5.strip}
 ICONS_SYMBOLIC_ACTION={foreground.strip}
 ICONS_SYMBOLIC_PANEL={foreground.strip}
-ICONS_LIGHT={color4.strip}
-ICONS_LIGHT_FOLDER={color4.strip}
-ICONS_MEDIUM={color4.darken(30%)}
+ICONS_LIGHT={color5.strip}
+ICONS_LIGHT_FOLDER={color5.strip}
+ICONS_MEDIUM={color5.darken(30%)}
 ICONS_DARK={background.strip}
 SURUPLUS_GRADIENT1={color15.strip}
 SURUPLUS_GRADIENT2={color5.strip}
