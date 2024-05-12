@@ -187,12 +187,12 @@ gen_btop_theme(){
 gen_imv_theme(){
 	[ ! -f "$pywal_cache_dir/colors.sh" ] && return 1
 
-	imv_config="${XDG_CONFIG_HOME:-$HOME/.config}/imv/config"
+	imv_config_dir="${XDG_CONFIG_HOME:-$HOME/.config}/imv"
+	[ ! -d "$imv_config_dir" ] && mkdir -vp "$imv_config_dir"
+
 	tmp_imv="$(mktemp)"
-	trap 'rm -rf "$tmp_imv"' 0 1 15
-	[ -f "$imv_config" ] && cp "$imv_config" "$tmp_imv"
-	sed "s|background =.*|background = ${background###}|g; s|overlay_background_color =.*|overlay_background_color = ${color4###}|g" "$imv_config" > "$tmp_imv"
-	mv "$tmp_imv" "$imv_config"
+	[ -f "${imv_config_dir}/config" ] && sed "s|background =.*|background = ${background###}|g; s|overlay_background_color =.*|overlay_background_color = ${color4###}|g" "${imv_config_dir}/config" > "$tmp_imv"
+	mv -vf "$tmp_imv" "${imv_config_dir}/config"
 }
 #: }}}
 #: Fix dolphin background color {{{
