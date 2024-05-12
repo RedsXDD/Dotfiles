@@ -195,6 +195,63 @@ gen_imv_theme(){
 	mv -vf "$tmp_imv" "${imv_config_dir}/config"
 }
 #: }}}
+#: Mpv theme {{{
+gen_mpv_theme(){
+	[ ! -f "$pywal_cache_dir/colors.sh" ] && return 1
+
+	gen_mpv_config_theme(){
+		cat <<- MPVEOF
+		# $pywal_gen_text
+
+		background-color='$background'
+		osd-back-color='$color8'
+		osd-border-color='$background'
+		osd-color='$foreground'
+		osd-shadow-color='$background'
+
+		# $pywal_eof_text
+		MPVEOF
+	}
+
+	gen_mpv_stats(){
+		cat <<- MPV_STATS_EOF
+		# $pywal_gen_text
+
+		# NOTE: Colors are in #BBGGRR format
+		border_color=$background
+		font_color=$foreground
+		plot_bg_border_color=$color11
+		plot_bg_color=$background
+		plot_color=$color11
+
+		# $pywal_eof_text
+		MPV_STATS_EOF
+	}
+
+	mpv_config_dir="${XDG_CONFIG_HOME:-$HOME/.config}/mpv"
+	mpv_script_opts_dir="${XDG_CONFIG_HOME:-$HOME/.config}/mpv/script-opts"
+	[ ! -d "$mpv_script_opts_dir" ] && mkdir -vp "$mpv_script_opts_dir"
+
+	# Generate mpv.conf theme.
+	tmp_mpv="$(mktemp)"
+	[ -f "${mpv_config_dir}/mpv.conf" ] && sed "/$pywal_gen_text/,/$pywal_eof_text/d" "${mpv_config_dir}/mpv.conf" > "$tmp_mpv"
+	gen_mpv_config_theme >> "$tmp_mpv"
+	mv -vf "$tmp_mpv" "${mpv_config_dir}/mpv.conf"
+
+	# This creates the stats.conf theme under "$tmp_mpv_stats", and the awk command converts the colors to BBGGRR format.
+	tmp_mpv_stats="$(mktemp)"
+	trap 'rm -rf "$tmp_mpv_stats"' 0 1 15
+
+	[ -f "${mpv_script_opts_dir}/stats.conf" ] && sed "/$pywal_gen_text/,/$pywal_eof_text/d" "${mpv_script_opts_dir}/stats.conf" > "$tmp_mpv_stats"
+	gen_mpv_stats >> "$tmp_mpv_stats"
+	awk 'BEGIN {FS= OFS= "="} $2 ~ /^#[A-Fa-f0-9]{6}$/ {
+		a=substr($2,2,2);
+		b=substr($2,4,2);
+		c=substr($2,6,2);
+		$2 = c b a
+	} 1' "$tmp_mpv_stats" > "$mpv_script_opts_dir/stats.conf"
+}
+#: }}}
 #: Fix dolphin background color {{{
 gen_dolphin_fix(){
 	[ ! -f "$pywal_cache_dir/colors.sh" ] && return 1
@@ -306,6 +363,7 @@ main(){
 	gen_gnuplot_theme
 	gen_btop_theme
 	gen_imv_theme
+	gen_mpv_theme
 	gen_dolphin_fix
 
 	# Oomux theme:
