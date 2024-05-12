@@ -6,3 +6,5 @@
 .config/btop/themes/pywal.theme
 .config/gnuplot/gnuplotrc
 .config/zsh/.zcompdump
+.config/mpv/script-opts/stats.conf
+.config/mpv/mpv.conf
