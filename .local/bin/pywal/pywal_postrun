@@ -237,7 +237,8 @@ gen_oomox_theme(){
 		"$pywal_oomox_file"
 
 	gtk4_output_dir="${HOME}/.themes/${oomox_theme_name}/gtk-4.0"
-	[ ! -d "$gtk4_output_dir" ] && mkdir -p "$gtk4_output_dir"
+	[ ! -d "$gtk4_output_dir" ] && mkdir -vp "$gtk4_output_dir"
+
 	themix-base16-cli "${oomox_plugins_dir}/base16/templates/gtk4/templates/gtk.mustache" "${pywal_cache_dir}/colors-oomox" | sed '/^ERROR:/d; /^Import/d' > "${gtk4_output_dir}/gtk.css"
 
 	send_notification '✅ Oomox colorscheme generated successfully!'
@@ -248,7 +249,7 @@ gen_oomox_qt_theme(){
 	qt_output_dir="${XDG_CONFIG_HOME:-$HOME/.config}/oomox-qtstyleplugin/themes"
 	qt_plugin_file="$oomox_plugins_dir/base16/templates/qt-oomox-styleplugin/templates/default.mustache"
 
-	[ ! -d "$qt_output_dir" ] && mkdir -p "$qt_output_dir"
+	[ ! -d "$qt_output_dir" ] && mkdir -vp "$qt_output_dir"
 	[ -f "$qt_plugin_file" ] && themix-base16-cli "$qt_plugin_file" "$pywal_oomox_file" | sed '/^ERROR:/d; /^Import/d' > "${qt_output_dir}/${oomox_theme_name}.css"
 }
 
@@ -282,14 +283,14 @@ gen_oomox_icon_theme(){
 gen_kvantum_theme(){
 	kvantum_theme_name='Pywal16-pywal'
 	Kvantum_theme_dir="${XDG_CONFIG_HOME:-$HOME/.config}/Kvantum/${kvantum_theme_name}"
+	[ ! -d "$Kvantum_theme_dir" ] && mkdir -vp "$Kvantum_theme_dir"
 
 	# Check if require theme files exist under `$pywal_cache_dir`.
 	[ ! -f "${pywal_cache_dir}/${kvantum_theme_name}.kvconfig" ] && return 1
 	[ ! -f "${pywal_cache_dir}/${kvantum_theme_name}.svg" ] && return 1
 
-	[ ! -d "$Kvantum_theme_dir" ] && mkdir -p "$Kvantum_theme_dir"
-	cp -f "${pywal_cache_dir}/${kvantum_theme_name}.kvconfig" "$Kvantum_theme_dir"
-	cp -f "${pywal_cache_dir}/${kvantum_theme_name}.svg" "$Kvantum_theme_dir"
+	cp -vf "${pywal_cache_dir}/${kvantum_theme_name}.kvconfig" "$Kvantum_theme_dir"
+	cp -vf "${pywal_cache_dir}/${kvantum_theme_name}.svg" "$Kvantum_theme_dir"
 	kvantummanager --set "$kvantum_theme_name"
 }
 #: }}}
