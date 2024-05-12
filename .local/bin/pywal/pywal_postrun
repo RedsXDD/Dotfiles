@@ -24,7 +24,7 @@ restart_processes(){
 	swaync >/dev/null &
 }
 #: }}}
-#: Gnuplot theme generation {{{
+#: Gnuplot theme {{{
 gen_gnuplot_theme(){
 	[ ! -f "$pywal_cache_dir/colors.sh" ] && return 1
 
@@ -72,7 +72,7 @@ gen_gnuplot_theme(){
 	mv -vf "$tmp_gnuplot" "${gnuplot_config_dir}/gnuplotrc"
 }
 #: }}}
-#: Btop theme generation {{{
+#: Btop theme {{{
 gen_btop_theme(){
 	[ ! -f "$pywal_cache_dir/colors.sh" ] && return 1
 
@@ -183,7 +183,7 @@ gen_btop_theme(){
 	mv -vf "$tmp_btop" "${btop_theme_dir}/pywal.theme"
 }
 #: }}}
-#: IMV theme generation {{{
+#: IMV theme {{{
 gen_imv_theme(){
 	[ ! -f "$pywal_cache_dir/colors.sh" ] && return 1
 
@@ -307,7 +307,7 @@ main(){
 	gen_imv_theme
 	gen_dolphin_fix
 
-	# Oomux theme generation:
+	# Oomux theme:
 	gen_kvantum_theme &
 	gen_oomox_theme &
 	gen_oomox_qt_theme &
