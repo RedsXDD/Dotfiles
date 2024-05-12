@@ -17,9 +17,7 @@ return {
 		name = "neopywal",
 		lazy = false,
 		priority = 1000,
-		opts = {
-			default_fileformats = false,
-		},
+		opts = { default_fileformats = false },
 		config = function(_, opts)
 			local neopywal = require("neopywal")
 			neopywal.setup(opts)
