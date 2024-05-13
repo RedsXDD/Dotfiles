@@ -9,3 +9,6 @@
 .config/mpv/script-opts/stats.conf
 .config/mpv/mpv.conf
 .config/yazi/plugins/smart-enter.yazi/init.lua
+.config/zellij/themes/wallust.kdl
+.config/tmux/statusbar/tmuxbar_wallust.tmux
+.config/rofi/colors.rasi
