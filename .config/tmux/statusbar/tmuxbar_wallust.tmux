@@ -12,8 +12,8 @@
 # ----------------------------------------------------------- #
 
 # Default variables:
-background_color='#1E1E2E'
-foreground_color='#CDD6F4'
+background_color='#1A1B26'
+foreground_color='#A9B1D6'
 txt_color="$background_color"
 pane_sync_symbol=''
 pane_mode_symbol='󰧑'

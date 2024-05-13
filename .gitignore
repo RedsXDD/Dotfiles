@@ -8,3 +8,4 @@
 .config/zsh/.zcompdump
 .config/mpv/script-opts/stats.conf
 .config/mpv/mpv.conf
+.config/yazi/plugins/smart-enter.yazi/init.lua

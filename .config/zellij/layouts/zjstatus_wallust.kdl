@@ -110,46 +110,46 @@ layout {
 				border_position "bottom"
 
 				// Main status bar configuration:
-				format_left   "{mode}#[bg=#CDD6F4,fg=#1E1E2E,bold] {session}#[bg=#1E1E2E,fg=#CDD6F4]"
+				format_left   "{mode}#[bg=#A9B1D6,fg=#1A1B26,bold] {session}#[bg=#1A1B26,fg=#A9B1D6]"
 				format_center "{tabs}"
-				format_right  "#[bg=#1E1E2E,fg=green,bold]{swap_layout} #[bg=#1E1E2E,fg=#CDD6F4]#[bg=#CDD6F4,fg=#1E1E2E,bold]{datetime}#[bg=blue,fg=#1E1E2E,bold]  #[bg=#1E1E2E,fg=blue]"
+				format_right  "#[bg=#1A1B26,fg=green,bold]{swap_layout} #[bg=#1A1B26,fg=#A9B1D6]#[bg=#A9B1D6,fg=#1A1B26,bold]{datetime}#[bg=blue,fg=#1A1B26,bold]  #[bg=#1A1B26,fg=blue]"
 				format_space  ""
 
-				datetime        "#[bg=#CDD6F4,fg=#1E1E2E,bold]{format} "
+				datetime        "#[bg=#A9B1D6,fg=#1A1B26,bold]{format} "
 				datetime_format "%a, %d %b %Y %H:%M"
 				datetime_timezone "Brazil/East"
 
 				// Mode configuration:
-				mode_normal       "#[bg=#1E1E2E,fg=blue]#[bg=blue,fg=#1E1E2E,bold]󰮊 {name} "
-				mode_locked       "#[bg=#1E1E2E,fg=red]#[bg=red,fg=#1E1E2E,bold]󰮊 {name} "
-				mode_tmux         "#[bg=#1E1E2E,fg=red]#[bg=red,fg=#1E1E2E,bold]󰮊 {name} "
-				mode_scroll       "#[bg=#1E1E2E,fg=green]#[bg=green,fg=#1E1E2E,bold]󰮊 {name} "
-				mode_enter_search "#[bg=#1E1E2E,fg=green]#[bg=green,fg=#1E1E2E,bold]󰮊 {name} "
-				mode_search       "#[bg=#1E1E2E,fg=green]#[bg=green,fg=#1E1E2E,bold]󰮊 {name} "
-				mode_rename_tab   "#[bg=#1E1E2E,fg=magenta]#[bg=magenta,fg=#1E1E2E,bold]󰮊 {name} "
-				mode_rename_pane  "#[bg=#1E1E2E,fg=magenta]#[bg=magenta,fg=#1E1E2E,bold]󰮊 {name} "
-				mode_pane         "#[bg=#1E1E2E,fg=cyan]#[bg=cyan,fg=#1E1E2E,bold]󰮊 {name} "
-				mode_tab          "#[bg=#1E1E2E,fg=cyan]#[bg=cyan,fg=#1E1E2E,bold]󰮊 {name} "
-				mode_session      "#[bg=#1E1E2E,fg=cyan]#[bg=cyan,fg=#1E1E2E,bold]󰮊 {name} "
-				mode_move         "#[bg=#1E1E2E,fg=yellow]#[bg=yellow,fg=#1E1E2E,bold]󰮊 {name} "
-				mode_resize       "#[bg=#1E1E2E,fg=yellow]#[bg=yellow,fg=#1E1E2E,bold]󰮊 {name} "
-				mode_prompt       "#[bg=#1E1E2E,fg=yellow]#[bg=yellow,fg=#1E1E2E,bold]󰮊 {name} "
+				mode_normal       "#[bg=#1A1B26,fg=blue]#[bg=blue,fg=#1A1B26,bold]󰮊 {name} "
+				mode_locked       "#[bg=#1A1B26,fg=red]#[bg=red,fg=#1A1B26,bold]󰮊 {name} "
+				mode_tmux         "#[bg=#1A1B26,fg=red]#[bg=red,fg=#1A1B26,bold]󰮊 {name} "
+				mode_scroll       "#[bg=#1A1B26,fg=green]#[bg=green,fg=#1A1B26,bold]󰮊 {name} "
+				mode_enter_search "#[bg=#1A1B26,fg=green]#[bg=green,fg=#1A1B26,bold]󰮊 {name} "
+				mode_search       "#[bg=#1A1B26,fg=green]#[bg=green,fg=#1A1B26,bold]󰮊 {name} "
+				mode_rename_tab   "#[bg=#1A1B26,fg=magenta]#[bg=magenta,fg=#1A1B26,bold]󰮊 {name} "
+				mode_rename_pane  "#[bg=#1A1B26,fg=magenta]#[bg=magenta,fg=#1A1B26,bold]󰮊 {name} "
+				mode_pane         "#[bg=#1A1B26,fg=cyan]#[bg=cyan,fg=#1A1B26,bold]󰮊 {name} "
+				mode_tab          "#[bg=#1A1B26,fg=cyan]#[bg=cyan,fg=#1A1B26,bold]󰮊 {name} "
+				mode_session      "#[bg=#1A1B26,fg=cyan]#[bg=cyan,fg=#1A1B26,bold]󰮊 {name} "
+				mode_move         "#[bg=#1A1B26,fg=yellow]#[bg=yellow,fg=#1A1B26,bold]󰮊 {name} "
+				mode_resize       "#[bg=#1A1B26,fg=yellow]#[bg=yellow,fg=#1A1B26,bold]󰮊 {name} "
+				mode_prompt       "#[bg=#1A1B26,fg=yellow]#[bg=yellow,fg=#1A1B26,bold]󰮊 {name} "
 
 				// General tab formatting options:
-				tab_separator            "#[bg=#1E1E2E,fg=#1E1E2E] "
+				tab_separator            "#[bg=#1A1B26,fg=#1A1B26] "
 				tab_sync_indicator       " "
 				tab_fullscreen_indicator "󰍋 "
 				tab_floating_indicator   "⬚ "
 
 				// Formatting for inactive tabs:
-				tab_normal            "#[bg=#1E1E2E,fg=#CDD6F4,bold] {index}"
-				tab_normal_sync       "#[bg=#1E1E2E,fg=#CDD6F4,bold]{sync_indicator}{index}"
-				tab_normal_fullscreen "#[bg=#1E1E2E,fg=#CDD6F4,bold]{fullscreen_indicator}{index}"
+				tab_normal            "#[bg=#1A1B26,fg=#A9B1D6,bold] {index}"
+				tab_normal_sync       "#[bg=#1A1B26,fg=#A9B1D6,bold]{sync_indicator}{index}"
+				tab_normal_fullscreen "#[bg=#1A1B26,fg=#A9B1D6,bold]{fullscreen_indicator}{index}"
 
 				// Formatting for active tabs:
-				tab_active            "#[bg=#1E1E2E,fg=#CDD6F4]#[bg=#CDD6F4,fg=#1E1E2E,bold]{floating_indicator}{name} #[bg=green,fg=#1E1E2E,bold] {index}#[bg=#1E1E2E,fg=green]"
-				tab_active_sync       "#[bg=#1E1E2E,fg=#CDD6F4]#[bg=#CDD6F4,fg=#1E1E2E,bold]{sync_indicator}{name} #[bg=green,fg=#1E1E2E,bold] {index}#[bg=#1E1E2E,fg=green]"
-				tab_active_fullscreen "#[bg=#1E1E2E,fg=#CDD6F4]#[bg=#CDD6F4,fg=#1E1E2E,bold]{fullscreen_indicator}{name} #[bg=green,fg=#1E1E2E,bold] {index}#[bg=#1E1E2E,fg=green]"
+				tab_active            "#[bg=#1A1B26,fg=#A9B1D6]#[bg=#A9B1D6,fg=#1A1B26,bold]{floating_indicator}{name} #[bg=green,fg=#1A1B26,bold] {index}#[bg=#1A1B26,fg=green]"
+				tab_active_sync       "#[bg=#1A1B26,fg=#A9B1D6]#[bg=#A9B1D6,fg=#1A1B26,bold]{sync_indicator}{name} #[bg=green,fg=#1A1B26,bold] {index}#[bg=#1A1B26,fg=green]"
+				tab_active_fullscreen "#[bg=#1A1B26,fg=#A9B1D6]#[bg=#A9B1D6,fg=#1A1B26,bold]{fullscreen_indicator}{name} #[bg=green,fg=#1A1B26,bold] {index}#[bg=#1A1B26,fg=green]"
 			}
 		}
 		children // The position of this entry in the code defines the position of the status bar (top/bottom).
