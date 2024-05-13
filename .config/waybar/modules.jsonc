@@ -104,7 +104,7 @@
 	// }}}
 	// Clock module {{{
 	// Pywal Version:
-	"include": ["${XDG_CACHE_HOME:-$HOME/.cache}/wal/colors-waybar-clock.jsonc"],
+	"include": ["${XDG_CONFIG_HOME:-$HOME/.config}/waybar/shared/clock_wallust.jsonc"],
 
 	/*
 	 * "clock": {

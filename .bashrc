@@ -122,9 +122,6 @@ set_ps1(){
 	export PS1+="\n${bold}\`[ \$? = 0 ] && echo \"${white}\w >\" || echo \"${red}\w >\"\`${reset} "
 }
 
-# Setup pywal starship prompt.
-[ -n "$DISPLAY" -a -f "$XDG_CACHE_HOME/wal/colors-starship.toml" ] && export STARSHIP_CONFIG="$XDG_CACHE_HOME/wal/colors-starship.toml"
-
 eval "$(starship init bash)" || set_ps1
 unset -f set_ps1
 #: }}}

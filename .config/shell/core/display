@@ -12,8 +12,11 @@ if [ -z "$DISPLAY" ]; then
 	alias lsd='lsd --group-directories-first --color=always --icon=never'
 	alias eza='eza --group-directories-first --color=always'
 
-	# Set Pywal color scheme for the TTY.
-	[ -f "${XDG_CACHE_HOME:-$HOME/.cache}/wal/colors-tty.sh" ] && . "${XDG_CACHE_HOME:-$HOME/.cache}/wal/colors-tty.sh"
+	# Setup TTY starship prompt.
+	[ -f "${XDG_CONFIG_HOME:-$HOME/.config}/starship_tty.toml" ] && export STARSHIP_CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/starship_tty.toml"
+
+	# Set wallust color scheme for the TTY.
+	[ -f "${XDG_CACHE_HOME:-$HOME/.cache}/wallust/colors_tty.sh" ] && . "${XDG_CACHE_HOME:-$HOME/.cache}/wallust/colors_tty.sh"
 
 	# Set fastfetch tty theme.
 	fastfetch_tty_theme="${XDG_CONFIG_HOME:-$HOME/.config}/fastfetch/config-tty.jsonc"

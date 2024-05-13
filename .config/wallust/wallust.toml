@@ -1,0 +1,48 @@
+[templates]
+alacritty.template = "templates/colors_alacritty.toml"
+alacritty.target = "~/.config/alacritty/alacritty_wallust.toml"
+
+kitty.template = "templates/colors_kitty.conf"
+kitty.target = "~/.config/kitty/kitty_wallust.conf"
+
+glow.template = "templates/colors_glow.json"
+glow.target = "~/.config/glow/glow_wallust.json"
+
+hypr.template = "templates/colors_hypr.conf"
+hypr.target = "~/.config/hypr/hypr_wallust.conf"
+
+oomox.template = "templates/colors_oomox"
+oomox.target = "~/.config/oomox/colors/wallust"
+
+rofi.template = "templates/colors_rofi.rasi"
+rofi.target = "~/.config/rofi/colors.rasi"
+
+starship.template = "templates/colors_starship.toml"
+starship.target = "~/.config/starship.toml"
+
+swaync.template = "templates/colors_swaync.css"
+swaync.target = "~/.config/swaync/swaync_wallust.css"
+
+tmuxbar.template = "templates/colors_tmuxbar.tmux"
+tmuxbar.target = "~/.config/tmux/statusbar/tmuxbar_wallust.tmux"
+
+tty.template = "templates/colors_tty.sh"
+tty.target = "~/.cache/wallust/colors_tty.sh"
+
+waybar.template = "templates/colors_waybar.css"
+waybar.target = "~/.config/waybar/shared/waybar_wallust.css"
+
+waybar_clock.template = "templates/colors_waybar_clock.jsonc"
+waybar_clock.target = "~/.config/waybar/shared/clock_wallust.jsonc"
+
+zellij.template = "templates/colors_zellij.kdl"
+zellij.target = "~/.config/zellij/themes/wallust.kdl"
+
+zjstatus.template = "templates/colors_zjstatus.kdl"
+zjstatus.target = "~/.config/zellij/layouts/zjstatus_wallust.kdl"
+
+kvantum_kvconfig.template = "templates/colors_kvantum.kvconfig"
+kvantum_kvconfig.target = "~/.config/Kvantum/Wallust-Theme/Wallust-Theme.kvconfig"
+
+kvantum_svg.template = "templates/colors_kvantum.svg"
+kvantum_svg.target = "~/.config/Kvantum/Wallust-Theme/Wallust-Theme.svg"

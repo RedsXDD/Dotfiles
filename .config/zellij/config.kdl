@@ -515,7 +515,7 @@ plugins {
 
 // Theming:
 theme_dir "/home/Reds/.config/zellij/themes"
-theme "pywal"
+theme "wallust"
 
 // UI configuration:
 ui {

@@ -15,7 +15,7 @@
 /* ------------------------------------------------------------------------------------------------------------------------- */
 
 /* Import pywal theme */
-@import url('file:///home/Reds/.cache/wal/colors-waybar.css');
+@import url('file:///home/Reds/.config/waybar/shared/waybar_wallust.css');
 
 /* Main configuration {{{ */
 * {

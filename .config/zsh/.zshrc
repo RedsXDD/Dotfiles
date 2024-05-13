@@ -252,9 +252,6 @@ set_ps1(){
 	export PROMPT="${PROMPT}%B%F"$'\n'"%(?.%F{white}%5~ >.%F{red}%5~ >)%f%b "
 }
 
-# Setup pywal starship prompt.
-[ -n "$DISPLAY" -a -f "$XDG_CACHE_HOME/wal/colors-starship.toml" ] && export STARSHIP_CONFIG="$XDG_CACHE_HOME/wal/colors-starship.toml"
-
 eval "$(starship init zsh)" || set_ps1
 unset -f set_ps1
 #: }}}
