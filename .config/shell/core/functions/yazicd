@@ -1,0 +1,17 @@
+# vim:fileencoding=utf-8:foldmethod=marker:filetype=sh
+
+alias yy='yazicd'
+alias yi='cdi && yazicd'
+yazicd(){
+	local exited_path
+	local cwd
+
+	exited_path="$(mktemp -t "yazi_cwd.XXXXXXXXXX")"
+	trap 'rm -rf "$exited_path"' 0 1 15
+
+	yazi --cwd-file="$exited_path" "$@"
+
+	if cwd="$(< "$exited_path")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+		builtin cd -- "$cwd" || return 1
+	fi
+}
