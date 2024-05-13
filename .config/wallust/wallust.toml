@@ -46,3 +46,6 @@ kvantum_kvconfig.target = "~/.config/Kvantum/Wallust-Theme/Wallust-Theme.kvconfi
 
 kvantum_svg.template = "templates/colors_kvantum.svg"
 kvantum_svg.target = "~/.config/Kvantum/Wallust-Theme/Wallust-Theme.svg"
+
+neopywal.template = "templates/colors_neopywal.vim"
+neopywal.target = "~/.cache/wallust/colors_neopywal.vim"
