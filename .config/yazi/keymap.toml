@@ -211,13 +211,13 @@ keymap = [
 	{ on = [ "<C-f>" ],   run = "move 1",  desc = "Move forward a character" },
 
 	# Word-wise movement
-	{ on = [ "b" ],     run = "backward",              desc = "Move back to the start of the current or previous word" },
-	{ on = [ "w" ],     run = "forward",               desc = "Move forward to the start of the next word" },
-	{ on = [ "e" ],     run = "forward --end-of-word", desc = "Move forward to the end of the current or next word" },
+	{ on = [ "b" ], run = "backward",              desc = "Move back to the start of the current or previous word" },
+	{ on = [ "w" ], run = "forward",               desc = "Move forward to the start of the next word" },
+	{ on = [ "e" ], run = "forward --end-of-word", desc = "Move forward to the end of the current or next word" },
 
 	# Line-wise movement
-	{ on = [ "0" ],      run = "move -999", desc = "Move to the BOL" },
-	{ on = [ "$" ],      run = "move 999",  desc = "Move to the EOL" },
+	{ on = [ "0" ], run = "move -999", desc = "Move to the BOL" },
+	{ on = [ "$" ], run = "move 999",  desc = "Move to the EOL" },
 
 	# Delete
 	{ on = [ "<Backspace>" ], run = "backspace",         desc = "Delete the character before the cursor" },
@@ -256,8 +256,8 @@ keymap = [
 	{ on = [ "<C-q>" ],   run = "close",                                      desc = "Cancel completion" },
 	{ on = [ "<Tab>" ],   run = "close --submit",                             desc = "Submit the completion" },
 	{ on = [ "<Enter>" ], run = [ "close --submit", "close_input --submit" ], desc = "Submit the completion and input" },
-	{ on = [ "<C-p>" ], run = "arrow -1", desc = "Move cursor up" },
-	{ on = [ "<C-n>" ], run = "arrow 1",  desc = "Move cursor down" },
+	{ on = [ "<C-p>" ],   run = "arrow -1", desc = "Move cursor up" },
+	{ on = [ "<C-n>" ],   run = "arrow 1",  desc = "Move cursor down" },
 
 	# Help
 	{ on = [ "g", "?" ], run = "help", desc = "Open help." },
