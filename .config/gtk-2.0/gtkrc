@@ -3,7 +3,7 @@
 
 include "/home/Reds/.gtkrc-2.0.mine"
 gtk-theme-name="oomox-wallust"
-gtk-icon-theme-name="oomox_wallust_papirus"
+gtk-icon-theme-name="We10X-special-dark"
 gtk-font-name="JetBrainsMono Nerd Font 12"
 gtk-cursor-theme-name="Adwaita"
 gtk-cursor-theme-size=24
