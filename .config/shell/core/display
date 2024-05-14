@@ -35,5 +35,6 @@ else
 	alias lsblk='lsblk -f'
 	alias lsd='lsd --group-directories-first --color=always --icon=auto'
 	alias eza='eza --group-directories-first --color=always --icons'
-	fastfetch && alias cl='clear; fastfetch'
+	alias cl='clear; fastfetch'
+	command fastfetch
 fi
