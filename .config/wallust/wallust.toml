@@ -55,6 +55,8 @@ gnuplotrc.target = "~/.config/gnuplot/gnuplotrc"
 
 colors_sh.template = "templates/colors.sh"
 colors_sh.target = "~/.cache/wallust/colors.sh"
+zathurarc.template = "templates/colors_zathurarc"
+zathurarc.target = "~/.config/zathura/zathurarc"
 
 kdeglobals.template = "templates/colors_kdeglobals"
 kdeglobals.target = "~/.config/kdeglobals"
