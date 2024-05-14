@@ -175,8 +175,8 @@ map({ "n", "v" }, "<Leader>bC", ":tabnew ", "Open a new tab.")
 map({ "n", "v" }, "<Leader>bX", ":tabc<CR>", "Close current tab.")
 map({ "n", "v" }, "<Leader>.", ":tabn<CR>", "Move to the next tab.")
 map({ "n", "v" }, "<Leader>,", ":tabp<CR>", "Move to the previous tab.")
-map({ "n", "v" }, "<Tab>", ":bnext<CR>", "Switch to the next buffer.")
-map({ "n", "v" }, "<S-Tab>", ":bprevious<CR>", "Switch to the previous buffer.")
+-- map({ "n", "v" }, "<Tab>", ":bnext<CR>", "Switch to the next buffer.")
+-- map({ "n", "v" }, "<S-Tab>", ":bprevious<CR>", "Switch to the previous buffer.")
 
 -- Select buffer using Alt + <NUM> (Requires Bufferline.nvim).
 for i = 1, 9, 1 do
