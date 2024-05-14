@@ -20,3 +20,4 @@
 .config/waybar/shared/clock_wallust.jsonc
 .config/waybar/shared/waybar_wallust.css
 .config/zellij/layouts/zjstatus_wallust.kdl
+.config/btop/themes/wallust.theme
