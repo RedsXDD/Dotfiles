@@ -29,9 +29,9 @@ $line_break\
 $cmd_duration$character
 """
 
-palette = 'pywal'
+palette = 'wallust'
 
-[palettes.pywal]
+[palettes.wallust]
 background = '{{background}}'
 foreground = '{{foreground}}'
 color1 = '{{color1}}'
