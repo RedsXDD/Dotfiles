@@ -68,10 +68,8 @@ keymap = [
 	{ on = [ "c", "c" ], run = "rename --empty=all --cursor=start",  desc = "Rename a file or directory. [|]" },
 	#: }}}
 	#: Copy/pasting {{{
-	{ on = [ "Y" ],      run = "unyank",                desc = "Cancel the yank status of files." },
 	{ on = [ "y" ],      run = "yank",                  desc = "Copy the selected files." },
 	{ on = [ "x" ],      run = "yank --cut",            desc = "Cut the selected files." },
-	{ on = [ "X" ],      run = "unyank",                desc = "Cancel the yank status of files." },
 	{ on = [ "c", "p" ], run = "copy path",             desc = "Copy the absolute path." },
 	{ on = [ "c", "P" ], run = "copy dirname",          desc = "Copy the path of the parent directory." },
 	{ on = [ "c", "f" ], run = "copy filename",         desc = "Copy the name of the file." },
