@@ -12,3 +12,11 @@
 .config/zellij/themes/wallust.kdl
 .config/tmux/statusbar/tmuxbar_wallust.tmux
 .config/rofi/colors.rasi
+.config/alacritty/alacritty_wallust.toml
+.config/glow/glow_wallust.json
+.config/hypr/hypr_wallust.conf
+.config/kitty/kitty_wallust.conf
+.config/swaync/swaync_wallust.css
+.config/waybar/shared/clock_wallust.jsonc
+.config/waybar/shared/waybar_wallust.css
+.config/zellij/layouts/zjstatus_wallust.kdl
