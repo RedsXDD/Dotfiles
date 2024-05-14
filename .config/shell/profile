@@ -43,7 +43,7 @@ export HISTORY_IGNORE="(pwd|exit|q|cl|history|cd -|cd ..)"
 
 # PATH:
 bin_files="$(find "$HOME/.local/bin" -follow -type d -not -path "$HOME/.local/bin/not_path/*" -not -path "$HOME/.local/bin/not_path" -printf %p:)"
-export PATH="$PATH:${bin_files}$HOME/Applications:$CARGO_HOME"
+export PATH="$PATH:${bin_files}${HOME}/Applications:${CARGO_HOME}/bin/"
 unset bin_files
 
 # Bat config:
