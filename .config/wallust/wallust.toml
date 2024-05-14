@@ -42,10 +42,10 @@ zjstatus.template = "templates/colors_zjstatus.kdl"
 zjstatus.target = "~/.config/zellij/layouts/zjstatus_wallust.kdl"
 
 kvantum_kvconfig.template = "templates/colors_kvantum.kvconfig"
-kvantum_kvconfig.target = "~/.config/Kvantum/Wallust-Theme/Wallust-Theme.kvconfig"
+kvantum_kvconfig.target = "~/.config/Kvantum/Wallust/Wallust.kvconfig"
 
 kvantum_svg.template = "templates/colors_kvantum.svg"
-kvantum_svg.target = "~/.config/Kvantum/Wallust-Theme/Wallust-Theme.svg"
+kvantum_svg.target = "~/.config/Kvantum/Wallust/Wallust.svg"
 
 btop.template = "templates/colors_btop.theme"
 btop.target = "~/.config/btop/themes/wallust.theme"
