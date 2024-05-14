@@ -133,6 +133,8 @@ rules = [
 [icon]
 rules = [
 	# Programming
+	{ name = "*.o"    , text = " ", fg = "lightblue" },
+	{ name = "*.1"    , text = " ", fg = "lightmagenta" },
 	{ name = "*.c"    , text = " ", fg = "lightblue" },
 	{ name = "*.h"    , text = " ", fg = "lightmagenta" },
 	{ name = "*.cpp"  , text = " ", fg = "cyan" },
@@ -164,12 +166,13 @@ rules = [
 	{ name = "*.tsx"  , text = " ", fg = "lightblue" },
 	{ name = "*.vim"  , text = " ", fg = "green" },
 	{ name = "*.vue"  , text = "󰡄 ", fg = "lightgreen" },
+	{ name = "*.db"   , text = " ", fg = "darkgray" },
 
 	# Text
 	{ name = "*.conf", text = " ", fg = "darkgray" },
 	{ name = "*.ini" , text = " ", fg = "darkgray" },
 	{ name = "*.kdl" , text = " ", fg = "darkgray" },
-	{ name = "*.toml", text = " ", fg = "lightyellow" },
+	{ name = "*.toml", text = " ", fg = "lightyellow" },
 	{ name = "*.json", text = " ", fg = "lightyellow" },
 	{ name = "*.md"  , text = " ", fg = "white" },
 	{ name = "*.txt" , text = " ", fg = "yellow" },
@@ -223,9 +226,11 @@ rules = [
 	{ name = "*.doct", text = " ", fg = "lightblue" },
 	{ name = "*.docx", text = " ", fg = "lightblue" },
 	{ name = "*.dot" , text = " ", fg = "lightblue" },
+	{ name = "*.djvu", text = " ", fg = "lightblue" },
 	{ name = "*.ods" , text = " ", fg = "green" },
 	{ name = "*.ots" , text = " ", fg = "green" },
 	{ name = "*.pdf" , text = " ", fg = "red" },
+	{ name = "*.ps"  , text = "󰕙 ", fg = "magenta" },
 	{ name = "*.pom" , text = " ", fg = "red" },
 	{ name = "*.pot" , text = " ", fg = "lightyellow" },
 	{ name = "*.potx", text = " ", fg = "lightyellow" },
@@ -246,19 +251,19 @@ rules = [
 	{ name = "*.lock", text = " ", fg = "red" },
 
 	# Misc
-	{ name = "*.bin"     , text = " ", fg = "red" },
-	{ name = "*.exe"     , text = " ", fg = "red" },
-	{ name = "*.pkg"     , text = " ", fg = "red" },
-	{ name = "*.iso"     , text = " ", fg = "green" },
-	{ name = "*.dmg"     , text = " ", fg = "green" },
-	{ name = "*.img"     , text = " ", fg = "green" },
-	{ name = "*.deb"     , text = " ", fg = "blue" },
-	{ name = "*.rpm"     , text = "󱄛 ", fg = "blue" },
-	{ name = "*.AppImage", text = "󰃘 ", fg = "green" },
+	{ name = "*.bin"      , text = " ", fg = "red" },
+	{ name = "*.exe"      , text = " ", fg = "red" },
+	{ name = "*.pkg"      , text = " ", fg = "red" },
+	{ name = "*.iso"      , text = " ", fg = "green" },
+	{ name = "*.dmg"      , text = " ", fg = "green" },
+	{ name = "*.img"      , text = " ", fg = "green" },
+	{ name = "*.deb"      , text = " ", fg = "blue" },
+	{ name = "*.rpm"      , text = "󱄛 ", fg = "blue" },
+	{ name = "*.AppImage" , text = "󰃘 ", fg = "green" },
+	{ name = "*kdeglobals", text = " ", fg = "blue" },
 
 
 	# Dotfiles
-
 	{ name = "*.DS_Store"     , text = " ", fg = "darkgray" },
 	{ name = "*.bash_profile" , text = " ", fg = "lightgreen" },
 	{ name = "*.bashprofile"  , text = " ", fg = "lightgreen" },
