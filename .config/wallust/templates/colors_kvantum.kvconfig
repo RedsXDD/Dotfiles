@@ -77,13 +77,13 @@ tooltip_blur_radius=0
 
 [GeneralColors]
 window.color={{background}}
-base.color={{background | saturate(0.3)}}
-alt.base.color={{background | saturate(0.3)}}
+base.color={{background | darken(0.3)}}
+alt.base.color={{background | darken(0.3)}}
 button.color={{color0}}
 light.color={{color0}}
 mid.light.color={{color0}}
-dark.color={{background | saturate(0.3)}}
-mid.color={{background | saturate(0.3)}}
+dark.color={{background | darken(0.3)}}
+mid.color={{background | darken(0.3)}}
 highlight.color={{color12}}
 inactive.highlight.color={{color12}}
 text.color={{color15}}
@@ -91,7 +91,7 @@ window.text.color={{color15}}
 button.text.color={{color15}}
 disabled.text.color={{color8}}
 tooltip.text.color={{color15}}
-highlight.text.color={{background | saturate(0.3)}}
+highlight.text.color={{background | darken(0.3)}}
 link.color={{color2}}
 link.visited.color={{color12}}
 
@@ -102,7 +102,7 @@ interior.element=itemview
 frame=true
 interior=true
 text.iconspacing=3
-text.toggle.color={{background | saturate(0.3)}}
+text.toggle.color={{background | darken(0.3)}}
 
 [RadioButton]
 inherits=PanelButtonCommand
@@ -131,8 +131,8 @@ interior.element=button
 frame.element=button
 text.normal.color={{color15}}
 text.focus.color={{color15}}
-text.press.color={{background | saturate(0.3)}}
-text.toggle.color={{background | saturate(0.3)}}
+text.press.color={{background | darken(0.3)}}
+text.toggle.color={{background | darken(0.3)}}
 
 [PanelButtonTool]
 inherits=PanelButtonCommand
@@ -316,8 +316,8 @@ interior.element=tbutton
 indicator.element=arrow
 text.normal.color={{color15}}
 text.focus.color={{color15}}
-text.press.color={{background | saturate(0.3)}}
-text.toggle.color={{background | saturate(0.3)}}
+text.press.color={{background | darken(0.3)}}
+text.toggle.color={{background | darken(0.3)}}
 text.bold=false
 
 [Scrollbar]
@@ -361,8 +361,8 @@ frame.right=2
 text.margin=0
 text.normal.color={{color15}}
 text.focus.color={{color15}}
-text.press.color={{background | saturate(0.3)}}
-text.toggle.color={{background | saturate(0.3)}}
+text.press.color={{background | darken(0.3)}}
+text.toggle.color={{background | darken(0.3)}}
 text.bold=false
 frame.expansion=18
 
@@ -373,8 +373,8 @@ inherits=PanelButtonCommand
 frame.element=menu
 interior.element=menu
 inherits=PanelButtonCommand
-text.press.color={{background | saturate(0.3)}}
-text.toggle.color={{background | saturate(0.3)}}
+text.press.color={{background | darken(0.3)}}
+text.toggle.color={{background | darken(0.3)}}
 text.bold=false
 frame.top=3
 frame.bottom=3
