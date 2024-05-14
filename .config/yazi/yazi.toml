@@ -35,8 +35,8 @@ ueberzug_offset = [ 0, 0, 0, 0 ]
 edit = [ { run = '${EDITOR:=vi} "$@"', desc = "$EDITOR", block = true, for = "unix" } ]
 open = [ { run = 'xdg-open "$@"',      desc = "Open",                  for = "linux" } ]
 reveal = [
-	{ run = 'xdg-open "$(dirname "$0")"',            desc = "Reveal", for = "linux" },
-	{ run = '''mediainfo -f "$1"; echo "Press enter to exit"; read _''', block = true, desc = "Show media info", for = "unix" },
+	{ run = 'xdg-open "$(dirname "$0")"',   desc = "Reveal", for = "linux" },
+	{ run = '''mediainfo -f "$1" | less''', block = true, desc = "Show media info", for = "unix" },
 ]
 extract = [ { run = 'unar "$1"', desc = "Extract here", for = "unix" }, ]
 play = [ { run = 'mpv "$@"', orphan = true, for = "unix" }, ]
