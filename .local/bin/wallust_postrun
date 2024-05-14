@@ -90,7 +90,8 @@ gen_oomox_theme(){
 	send_notification 'Generating Oomox colorscheme ...'
 
 	# NOTE: gtk2 applications do not read themes under .local/share/themes, so the target dir has to be ~/.themes
-	oomox-cli --hidpi false \
+	oomox-cli \
+		--hidpi false \
 		--make-opts all \
 		--target-dir "${HOME}/.themes" \
 		--output "$oomox_theme_name" \
