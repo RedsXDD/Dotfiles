@@ -1,3 +1,4 @@
+---@diagnostic disable: undefined-global
 -- Show symlink in status bar:
 function Status:name()
 	local h = cx.active.current.hovered
