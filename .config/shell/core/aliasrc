@@ -59,13 +59,6 @@ alias info='info --vi-keys --init-file ~/.config/infokey'
 alias q='exit'
 alias cbonsai='cbonsai -li'
 
-# Pywal related:
-alias zathura='zatp'
-alias gnuplot='gplot'
-alias btop='ptop'
-alias cava='pcava'
-# alias imv='pimv -df -t 2'
-
 # Power commands:
 alias shutdown='\systemctl poweroff'
 alias reboot='\systemctl reboot'
