@@ -36,15 +36,10 @@ edit = [ { run = '${EDITOR:=vi} "$@"', desc = "$EDITOR", block = true, for = "un
 open = [ { run = 'xdg-open "$@"',      desc = "Open",                  for = "linux" } ]
 reveal = [
 	{ run = 'xdg-open "$(dirname "$0")"',            desc = "Reveal", for = "linux" },
-	{ run = '''exiftool "$1"; echo "Press enter to exit"; read _''', block = true, desc = "Show EXIF", for = "unix" },
+	{ run = '''mediainfo -f "$1"; echo "Press enter to exit"; read _''', block = true, desc = "Show media info", for = "unix" },
 ]
-extract = [
-	{ run = 'unar "$1"', desc = "Extract here", for = "unix" },
-]
-play = [
-	{ run = 'mpv "$@"', orphan = true, for = "unix" },
-	{ run = '''mediainfo "$1"; echo "Press enter to exit"; read _''', block = true, desc = "Show media info", for = "unix" },
-]
+extract = [ { run = 'unar "$1"', desc = "Extract here", for = "unix" }, ]
+play = [ { run = 'mpv "$@"', orphan = true, for = "unix" }, ]
 
 [open]
 rules = [
