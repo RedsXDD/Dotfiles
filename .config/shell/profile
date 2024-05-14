@@ -68,7 +68,7 @@ export VIDEO='mpv'
 
 # GTK/QT configuration:
 export QT_QPA_PLATFORMTHEME='qt6ct'
-export OOMOX_QTSTYLEPLUGIN_THEME='oomox-pywal'
+export OOMOX_QTSTYLEPLUGIN_THEME='oomox-wallust'
 
 # Swww config:
 export SWWW_TRANSITION='any'
