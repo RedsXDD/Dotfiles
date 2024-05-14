@@ -1,6 +1,6 @@
 [%General]
 author=Vince Liuice and elkrien, based on KvAdapta by Tsu Jan and Arc Dark style
-comment=An uncomplicated pywal theme inspired by Materia GTK theme and Catppuccin-Mocha-Blue
+comment=An uncomplicated wallust theme inspired by Materia GTK theme and Catppuccin-Mocha-Blue
 x11drag=menubar_and_primary_toolbar
 alt_mnemonic=true
 left_tabs=false
