@@ -47,7 +47,7 @@ keymap = [
 	{ on = [ "<C-l>" ],     run = "open --interactive",                desc = "Open the selected files interactively." },
 	{ on = [ "d", "d" ],    run = "remove",                            desc = "Move the files to the trash." },
 	{ on = [ "d", "D" ],    run = "remove --permanently",              desc = "Permanently delete the files." },
-	{ on = [ "m", "f" ],    run = "create",                            desc = "Create a file or directory (ends with / for directories)." },
+	{ on = [ "n" ],         run = "create",                            desc = "Create a file or directory (ends with / for directories)." },
 	{ on = [ ";" ],         run = "shell",                             desc = "Run a shell command." },
 	{ on = [ ":" ],         run = "shell --block",                     desc = "Run a shell command (block the UI until the command finishes)." },
 	{ on = [ "z", "h" ],    run = "hidden toggle",                     desc = "Toggle the visibility of hidden files." },
