@@ -24,10 +24,10 @@ alacritty_sync = 1
 [color]
 gradient = 1
 gradient_count = 4
-gradient_color_1 = '#449DAB'
-gradient_color_2 = '#7AA2F7'
-gradient_color_3 = '#AD8EE6'
-gradient_color_4 = '#F7768E'
+gradient_color_1 = '{{color6}}'
+gradient_color_2 = '{{color4}}'
+gradient_color_3 = '{{color5}}'
+gradient_color_4 = '{{color1}}'
 
 [smoothing]
 monstercat = 1

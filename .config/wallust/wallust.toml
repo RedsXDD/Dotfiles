@@ -50,6 +50,9 @@ kvantum_svg.target = "~/.config/Kvantum/Wallust/Wallust.svg"
 btop.template = "templates/colors_btop.theme"
 btop.target = "~/.config/btop/themes/wallust.theme"
 
+cava.template = "templates/colors_cava"
+cava.target = "~/.config/cava/config"
+
 gnuplotrc.template = "templates/colors_gnuplotrc"
 gnuplotrc.target = "~/.config/gnuplot/gnuplotrc"
 
