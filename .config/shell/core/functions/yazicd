@@ -7,11 +7,11 @@ yazicd(){
 	local cwd
 
 	exited_path="$(mktemp -t "yazi_cwd.XXXXXXXXXX")"
-	trap 'rm -rf "$exited_path"' 0 1 15
-
 	STARSHIP_CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/yazi/plugins/starship.yazi/starship.toml" yazi --cwd-file="$exited_path" "$@"
 
 	if cwd="$(< "$exited_path")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
 		builtin cd -- "$cwd" || return 1
 	fi
+
+	rm -rf -- "$exited_path"
 }
