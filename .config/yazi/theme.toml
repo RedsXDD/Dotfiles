@@ -23,7 +23,7 @@ marker_marked   = { bg = "lightcyan",    fg = "lightcyan" }
 marker_selected = { bg = "lightmagenta", fg = "lightmagenta" }
 
 # Tab
-tab_active   = { fg = "blue", bold = true, reversed = true }
+tab_active   = { bg = "darkgray", fg = "blue", bold = true }
 tab_inactive = { bold = true }
 tab_width    = 1
 
@@ -91,7 +91,7 @@ icon_command = " "
 [tasks]
 border  = { fg = "blue" }
 title   = {}
-hovered = { fg = "magenta", underline = true }
+hovered = { bg = "darkgray", fg = "magenta", bold = true }
 #: }}}
 #: Which {{{
 [which]
@@ -105,11 +105,11 @@ separator_style = { fg = "lightyellow", bold = true }
 #: }}}
 #: Help {{{
 [help]
-on      = { fg = "blue" }
-run     = { fg = "magenta" }
+on      = { fg = "cyan" }
+run     = { fg = "lightyellow" }
 desc    = {}
-hovered = { reversed = true, bold = true }
-footer  = { bg = "white", fg = "black" }
+hovered = { bg = "darkgray", bold = true }
+footer  = { fg = "white", reversed = true }
 #: }}}
 #: Notify {{{
 [notify]
@@ -292,8 +292,8 @@ rules = [
 	{ name = "*Videos/"     , text = " " },
 
 	# Default
-	{ name = "*" , text = "" },
-	{ name = "*/", text = "" },
+	{ name = "*" , text = " " },
+	{ name = "*/", text = " " },
 ]
 #: }}}
 #: }}}
