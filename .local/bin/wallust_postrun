@@ -164,4 +164,4 @@ main(){
 main
 #: }}}
 
-# vim:fileencoding=utf-8:foldmethod=marker
+# vim:fileencoding=utf-8:foldmethod=marker:foldenable
