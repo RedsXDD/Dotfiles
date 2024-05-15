@@ -55,7 +55,7 @@ keymap = [
 	{ on = [ "z", "p" ],    run = "plugin --sync hide-preview",        desc = "Hide preview pane." },
 	{ on = [ "z", "i" ],    run = "plugin zoxide",                     desc = "Jump to a directory using zoxide." },
 	{ on = [ "z", "f" ],    run = "plugin fzf",                        desc = "Jump to a directory, or reveal a file using fzf." },
-	{ on = [ "z", "l" ],    run = "shell --confirm --block 'lazygit'", desc = "Open lazygit." },
+	{ on = [ "z", "l" ],    run = 'shell --confirm --block "lazygit"', desc = "Open lazygit." },
 	#: }}}
 	#: Change file {{{
 	{ on = [ "c", "i" ], run = "rename --cursor=before_ext",         desc = "Rename a file or directory. [foo|.txt]" },
