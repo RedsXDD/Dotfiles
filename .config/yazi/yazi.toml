@@ -69,13 +69,10 @@ suppress_preload = false
 [plugin]
 preloaders = [
 	# Image
-	{ mime = "image/*", run = "allmytoes" },
-	{ mime = "audio/*", run = "allmytoes" },
-	{ mime = "video/*", run = "allmytoes" },
+	{ mime = "{image,audio,video}/*", run = "allmytoes" },
 
 	# Documents
-	{ mime = "application/pdf", run = "allmytoes" },
-	{ mime = "application/postscript", run = "allmytoes" },
+	{ mime = "application/{pdf,postscript}", run = "allmytoes" },
 	{ mime = "application/{epub+zip,x-mobipocket-ebook,x-fictionbook+xml}", run = "allmytoes" },
 
 	# Fonts
@@ -91,13 +88,10 @@ prepend_previewers = [
 ]
 previewers = [
 	# Image
-	{ mime = "image/*", run = "allmytoes" },
-	{ mime = "audio/*", run = "allmytoes" },
-	{ mime = "video/*", run = "allmytoes" },
+	{ mime = "{image,audio,video}/*", run = "allmytoes" },
 
 	# Documents
-	{ mime = "application/pdf", run = "allmytoes" },
-	{ mime = "application/postscript", run = "allmytoes" },
+	{ mime = "application/{pdf,postscript}", run = "allmytoes" },
 	{ mime = "application/{epub+zip,x-mobipocket-ebook,x-fictionbook+xml}", run = "allmytoes" },
 
 	# Fonts
