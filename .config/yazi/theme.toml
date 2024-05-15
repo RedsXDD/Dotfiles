@@ -13,7 +13,7 @@ hovered         = { fg = "blue", reversed = true, bold = true }
 preview_hovered = { fg = "blue", reversed = true, bold = true }
 
 # Find
-find_keyword  = { fg = "yellow", bold = true, italic = true, underline = true }
+find_keyword  = { fg = "yellow", reversed = true, bold = true, italic = true }
 find_position = { bg = "reset", fg = "magenta", bold = true, italic = true }
 
 # Marker
@@ -28,9 +28,9 @@ tab_inactive = { bold = true }
 tab_width    = 1
 
 # Count
-count_copied   = { bg = "green", fg = "white" }
-count_cut      = { bg = "red", fg = "white" }
-count_selected = { bg = "yellow", fg = "white" }
+count_copied   = { fg = "yellow",  reversed = true, bold = true }
+count_cut      = { fg = "red",     reversed = true, bold = true }
+count_selected = { fg = "magenta", reversed = true, bold = true }
 
 # Border
 border_symbol = " "
@@ -53,8 +53,8 @@ mode_unset  = { bg = "red",     fg = "black", bold = true }
 
 # Progress
 progress_label  = { bold = true }
-progress_normal = { bg = "black", fg = "blue" }
-progress_error  = { bg = "black",  fg = "red" }
+progress_normal = { bg = "black", fg = "blue", reversed = true }
+progress_error  = { bg = "black", fg = "red",  reversed = true }
 
 # Permissions
 permissions_t = { fg = "green",    bold = true }
@@ -71,15 +71,15 @@ inactive = {}
 #: }}}
 #: Input {{{
 [input]
-border   = { fg = "blue" }
+border   = { fg = "cyan", bold = true }
 title    = {}
 value    = {}
 selected = { reversed = true }
 #: }}}
 #: Completion {{{
 [completion]
-border   = { fg = "blue" }
-active   = { reversed = true }
+border   = { fg = "blue", bold = true }
+active   = { reversed = true, bold = true }
 inactive = {}
 
 # Icons
@@ -89,13 +89,13 @@ icon_command = " "
 #: }}}
 #: Tasks {{{
 [tasks]
-border  = { fg = "blue" }
+border  = { fg = "cyan", bold = true }
 title   = {}
 hovered = { bg = "darkgray", fg = "magenta", bold = true }
 #: }}}
-#: Which {{{
+#: Which-key {{{
 [which]
-cols            = 3
+cols            = 1
 mask            = { bg = "black" }
 cand            = { fg = "cyan", bold = true }
 rest            = { fg = "darkgray" }
@@ -118,16 +118,34 @@ title_warn  = { fg = "yellow" }
 title_error = { fg = "red" }
 
 # Icons
-icon_info  = ""
-icon_warn  = ""
-icon_error = ""
+icon_info  = " "
+icon_warn  = " "
+icon_error = " "
 #: }}}
 #: File-specific styles {{{
 [filetype]
 rules = [
+	# Symbolic links
+	{ name = "*/", is = "link"  , fg = "cyan" },
+	{ name = "*/", is = "orphan", fg = "red" },
+
+	# FIFO, Char and block
+	{ name = "*", is = "fifo" , fg = "yellow" },
+	{ name = "*", is = "char" , fg = "yellow" },
+	{ name = "*", is = "block", fg = "yellow" },
+
+	# Socket
+	{ name = "*", is = "sock", fg = "lightblue" },
+
+	# Sticky
+	{ name = "*", is = "sticky", fg = "magenta" },
+
+	# Lock files:
+	{ name = "*.lock", fg = "red" },
+
 	# Fallback
-	{ name = "*", fg = "white" },
 	{ name = "*/", fg = "blue" },
+	{ name = "*" , fg = "white" },
 ]
 #: Icon styles {{{
 [icon]
@@ -145,9 +163,9 @@ rules = [
 	{ name = "*.elm"  , text = " ", fg = "lightcyan" },
 	{ name = "*.go"   , text = " ", fg = "cyan" },
 	{ name = "*.html" , text = " ", fg = "lightyellow" },
-	{ name = "*.jar"  , text = " ", fg = "red" },
-	{ name = "*.java" , text = " ", fg = "red" },
-	{ name = "*.class", text = " ", fg = "red" },
+	{ name = "*.jar"  , text = " ", fg = "lightyellow" },
+	{ name = "*.java" , text = " ", fg = "lightyellow" },
+	{ name = "*.class", text = " ", fg = "lightyellow" },
 	{ name = "*.js"   , text = " ", fg = "yellow" },
 	{ name = "*.jsx"  , text = " ", fg = "cyan" },
 	{ name = "*.lua"  , text = " ", fg = "lightcyan" },
@@ -159,7 +177,6 @@ rules = [
 	{ name = "*.sbt"  , text = " ", fg = "darkgray" },
 	{ name = "*.scala", text = " ", fg = "red" },
 	{ name = "*.sh"   , text = " ", fg = "darkgray" },
-	{ name = "*.fish" , text = " ", fg = "lightyellow" },
 	{ name = "*.nu"   , text = "> ", fg = "green" },
 	{ name = "*.swift", text = " ", fg = "lightyellow" },
 	{ name = "*.ts"   , text = " ", fg = "cyan" },
@@ -175,11 +192,13 @@ rules = [
 	{ name = "*.toml", text = " ", fg = "lightyellow" },
 	{ name = "*.json", text = " ", fg = "lightyellow" },
 	{ name = "*.md"  , text = " ", fg = "white" },
-	{ name = "*.txt" , text = " ", fg = "yellow" },
+	{ name = "*.txt" , text = " ", fg = "white" },
 	{ name = "*.yaml", text = " ", fg = "darkgray" },
 	{ name = "*.yml" , text = " ", fg = "darkgray" },
 
 	# Archives
+	{ name = "*.lz"  , text = " ", fg = "red" },
+	{ name = "*.zst" , text = " ", fg = "red" },
 	{ name = "*.7z"  , text = " ", fg = "red" },
 	{ name = "*.bz2" , text = " ", fg = "red" },
 	{ name = "*.gz"  , text = " ", fg = "red" },
@@ -252,29 +271,31 @@ rules = [
 
 	# Misc
 	{ name = "*.bin"      , text = " ", fg = "red" },
-	{ name = "*.exe"      , text = " ", fg = "red" },
+	{ name = "*.deb"      , text = " ", fg = "red" },
+	{ name = "*.rpm"      , text = "󱄛 ", fg = "red" },
+	{ name = "*.exe"      , text = " ", fg = "lightblue" },
 	{ name = "*.pkg"      , text = " ", fg = "red" },
 	{ name = "*.iso"      , text = " ", fg = "green" },
 	{ name = "*.dmg"      , text = " ", fg = "green" },
 	{ name = "*.img"      , text = " ", fg = "green" },
-	{ name = "*.deb"      , text = " ", fg = "blue" },
-	{ name = "*.rpm"      , text = "󱄛 ", fg = "blue" },
-	{ name = "*.AppImage" , text = "󰃘 ", fg = "green" },
+	{ name = "*.AppImage" , text = "󰃘 ", fg = "lightcyan" },
 	{ name = "*kdeglobals", text = " ", fg = "blue" },
 
 
 	# Dotfiles
+	{ name = "*.bash_logout"  , text = " ", fg = "white" },
+	{ name = "*.bash_profile" , text = " ", fg = "white" },
+	{ name = "*.bashprofile"  , text = " ", fg = "white" },
+	{ name = "*.bashrc"       , text = " ", fg = "white" },
+	{ name = "*.zprofile"     , text = " ", fg = "white" },
+	{ name = "*.zshenv"       , text = " ", fg = "white" },
+	{ name = "*.zshrc"        , text = " ", fg = "white" },
+	{ name = "*.fish"         , text = " ", fg = "white" },
 	{ name = "*.DS_Store"     , text = " ", fg = "darkgray" },
-	{ name = "*.bash_profile" , text = " ", fg = "lightgreen" },
-	{ name = "*.bashprofile"  , text = " ", fg = "lightgreen" },
-	{ name = "*.bashrc"       , text = " ", fg = "lightgreen" },
-	{ name = "*.zshenv"       , text = " ", fg = "lightgreen" },
-	{ name = "*.zshrc"        , text = " ", fg = "lightgreen" },
 	{ name = "*.gitattributes", text = " ", fg = "darkgray" },
 	{ name = "*.gitignore"    , text = " ", fg = "darkgray" },
 	{ name = "*.gitmodules"   , text = " ", fg = "darkgray" },
 	{ name = "*.vimrc"        , text = " ", fg = "green" },
-	{ name = "*.zprofile"     , text = " ", fg = "lightgreen" },
 
 	# Named files
 	{ name = "*COPYING"      , text = "󰿃 ", fg = "yellow" },
