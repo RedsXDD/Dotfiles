@@ -53,7 +53,7 @@ rules = [
 	{ mime = "{audio,video}/*", use = [ "play", "reveal" ] },
 
 	{ mime = "application/*zip", use = [ "extract", "reveal" ] },
-	{ mime = "application/x-{tar,bzip*,7z-compressed,xz,rar}", use = [ "extract", "reveal" ] },
+	{ mime = "application/x-{tar,compress,bzip*,7z-compressed,xz,rar}", use = [ "extract", "reveal" ] },
 
 	{ mime = "*", use = [ "open", "reveal" ] },
 ]
