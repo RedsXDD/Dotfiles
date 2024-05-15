@@ -42,12 +42,12 @@ keymap = [
 	{ on = [ "<C-a>" ],   run = "select_all --state=true",            desc = "Select all files." },
 	#: }}}
 	#: Operation {{{
+	{ on = [ "a" ],         run = "create",                            desc = "Create a file or directory (ends with / for directories)." },
 	{ on = [ "o" ],         run = "open",                              desc = "Open the selected files." },
 	{ on = [ "O" ],         run = "open --interactive",                desc = "Open the selected files interactively." },
 	{ on = [ "<C-l>" ],     run = "open --interactive",                desc = "Open the selected files interactively." },
 	{ on = [ "d", "d" ],    run = "remove",                            desc = "Move the files to the trash." },
 	{ on = [ "d", "D" ],    run = "remove --permanently",              desc = "Permanently delete the files." },
-	{ on = [ "a" ],         run = "create",                            desc = "Create a file or directory (ends with / for directories)." },
 	{ on = [ ";" ],         run = "shell",                             desc = "Run a shell command." },
 	{ on = [ ":" ],         run = "shell --block",                     desc = "Run a shell command (block the UI until the command finishes)." },
 	{ on = [ "z", "h" ],    run = "hidden toggle",                     desc = "Toggle the visibility of hidden files." },
