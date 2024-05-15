@@ -60,7 +60,7 @@ rules = [
 
 [tasks]
 micro_workers    = 10
-macro_workers    = 25
+macro_workers    = 10
 bizarre_retry    = 5
 image_alloc      = 536870912  # 512MB
 image_bound      = [ 0, 0 ]
@@ -68,25 +68,33 @@ suppress_preload = false
 
 [plugin]
 preloaders = [
-	{ name = "*", cond = "!mime", run = "mime", multi = true, prio = "high" },
-
 	# Image
 	{ mime = "image/*", run = "allmytoes" },
+	{ mime = "audio/*", run = "allmytoes" },
+	{ mime = "video/*", run = "allmytoes" },
 
-	# Video
-	{ mime = "video/*", run = "video" },
+	# Documents
+	{ mime = "application/pdf", run = "allmytoes" },
+	{ mime = "application/postscript", run = "allmytoes" },
+	{ mime = "application/{epub+zip,x-mobipocket-ebook,x-fictionbook+xml}", run = "allmytoes" },
 
-	# PDF
-	{ mime = "application/pdf", run = "pdf" },
+	{ name = "*", cond = "!mime", run = "mime", multi = true, prio = "high" },
+
 ]
 prepend_previewers = [
 	{ name = "*.md", run = "glow" },
 	{ mime = "application/x-bittorrent", run = "torrent-preview" },
-	{ mime = "application/*zip",                               run = "ouch" },
-	{ mime = "application/x-{tar,bzip*,7z-compressed,xz,rar}", run = "ouch" },
 ]
 previewers = [
-	{ name = "*/", run = "folder", sync = true },
+	# Image
+	{ mime = "image/*", run = "allmytoes" },
+	{ mime = "audio/*", run = "allmytoes" },
+	{ mime = "video/*", run = "allmytoes" },
+
+	# Documents
+	{ mime = "application/pdf", run = "allmytoes" },
+	{ mime = "application/postscript", run = "allmytoes" },
+	{ mime = "application/{epub+zip,x-mobipocket-ebook,x-fictionbook+xml}", run = "allmytoes" },
 
 	# Code
 	{ mime = "text/*", run = "code" },
@@ -95,17 +103,12 @@ previewers = [
 	# JSON
 	{ mime = "application/json", run = "json" },
 
-	# Image
-	{ mime = "image/vnd.djvu", run = "noop" },
-	{ mime = "image/*",        run = "allmytoes" },
-
-	# Video
-	{ mime = "video/*", run = "video" },
-
-	# PDF
-	{ mime = "application/pdf", run = "pdf" },
+	# Archives
+	{ mime = "application/*zip",                               run = "ouch" },
+	{ mime = "application/x-{tar,bzip*,7z-compressed,xz,rar}", run = "ouch" },
 
 	# Fallback
+	{ name = "*/", run = "folder", sync = true },
 	{ name = "*", run = "file" },
 ]
 

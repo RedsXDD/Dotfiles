@@ -1,0 +1,188 @@
+- mimes: [image/avif]
+  commands:
+    - |
+      result="$(mktemp /tmp/result_XXXXXXXXXX.png)"
+      convert "%(file)s" "$result" && mv "$result" "%(outfile)s"
+
+- mimes:
+  - "application/epub+zip"
+  - "application/x-mobipocket-ebook"
+  - "application/x-fictionbook+xml"
+  commands:
+    - |
+      result="$(mktemp /tmp/result_XXXXXXXXXX.png)"
+      gnome-epub-thumbnailer "%(file)s" "$result" && mv "$result" "%(outfile)s"
+
+
+- mimes: [image/vnd.djvu+multipage]
+  commands:
+    - |
+      result="$(mktemp /tmp/result_XXXXXXXXXX.png)"
+      djvused "%(file)s" -e 'select 1; save-page-with /dev/stdout' | convert -density 200 - "$result" && mv "$result" "%(outfile)s"
+
+- mimes: [application/pdf, application/postscript]
+  commands:
+    - |
+      result="$(mktemp /tmp/result_XXXXXXXXXX.png)"
+      gs -q -o "$result" -r200 -sDEVICE=png16 "%(file)s" && mv "$result" "%(outfile)s"
+    # evince is more than three times faster than convert and installed on many machines
+    - evince-thumbnailer -s %(size)s "%(file)s" %(outfile)s
+    - convert -thumbnail %(size)sx%(size)s -background white %(file)s[0] PNG:%(outfile)s
+
+
+- mimes:
+  - image/svg+xml
+  commands:
+    - |
+      result="$(mktemp /tmp/result_XXXXXXXXXX.png)"
+      convert -background none -resize %(size)sx%(size)s "%(file)s" "$result" && mv "$result" "%(outfile)s"
+    - |
+      which inkscape || exit 1
+      result="$(mktemp /tmp/result_XXXXXXXXXX.png)"
+      w=$(inkscape -W "%(file)s" | sed 's/\..*//')
+      h=$(inkscape -H "%(file)s" | sed 's/\..*//')
+      test $w -gt $h && size_arg="-w %(size)s" || size_arg="-h %(size)s"
+      inkscape --export-area-page --export-type=png $size_arg -o "$result" "%(file)s" && \
+        mv "$result" "%(outfile)s"
+
+- mimes:
+  - "application/mxf"
+  - "application/ogg"
+  - "application/sdp"
+  - "application/smil"
+  - "application/streamingmedia"
+  - "application/vnd.apple.mpegurl"
+  - "application/vnd.ms-asf"
+  - "application/vnd.rn-realmedia-vbr"
+  - "application/vnd.rn-realmedia"
+  - "application/x-cue"
+  - "application/x-extension-m4a"
+  - "application/x-extension-mp4"
+  - "application/x-matroska"
+  - "application/x-mpegurl"
+  - "application/x-ogg"
+  - "application/x-ogm-audio"
+  - "application/x-ogm-video"
+  - "application/x-ogm"
+  - "application/x-shorten"
+  - "application/x-smil"
+  - "application/x-streamingmedia"
+  - "audio/3gpp2"
+  - "audio/3gpp"
+  - "audio/AMR"
+  - "audio/aac"
+  - "audio/ac3"
+  - "audio/aiff"
+  - "audio/amr-wb"
+  - "audio/dv"
+  - "audio/eac3"
+  - "audio/flac"
+  - "audio/m3u"
+  - "audio/m4a"
+  - "audio/mp1"
+  - "audio/mp2"
+  - "audio/mp3"
+  - "audio/mp4"
+  - "audio/mpeg2"
+  - "audio/mpeg3"
+  - "audio/mpeg"
+  - "audio/mpegurl"
+  - "audio/mpg"
+  - "audio/musepack"
+  - "audio/ogg"
+  - "audio/opus"
+  - "audio/rn-mpeg"
+  - "audio/scpls"
+  - "audio/vnd.dolby.heaac.1"
+  - "audio/vnd.dolby.heaac.2"
+  - "audio/vnd.dts.hd"
+  - "audio/vnd.dts"
+  - "audio/vnd.rn-realaudio"
+  - "audio/vorbis"
+  - "audio/wav"
+  - "audio/webm"
+  - "audio/x-aac"
+  - "audio/x-adpcm"
+  - "audio/x-aiff"
+  - "audio/x-ape"
+  - "audio/x-m4a"
+  - "audio/x-matroska"
+  - "audio/x-mp1"
+  - "audio/x-mp2"
+  - "audio/x-mp3"
+  - "audio/x-mpegurl"
+  - "audio/x-mpg"
+  - "audio/x-ms-asf"
+  - "audio/x-ms-wma"
+  - "audio/x-musepack"
+  - "audio/x-pls"
+  - "audio/x-pn-au"
+  - "audio/x-pn-realaudio"
+  - "audio/x-pn-wav"
+  - "audio/x-pn-windows-pcm"
+  - "audio/x-realaudio"
+  - "audio/x-scpls"
+  - "audio/x-shorten"
+  - "audio/x-tta"
+  - "audio/x-vorbis+ogg"
+  - "audio/x-vorbis"
+  - "audio/x-wav"
+  - "audio/x-wavpack"
+  - "video/3gp"
+  - "video/3gpp2"
+  - "video/3gpp"
+  - "video/avi"
+  - "video/divx"
+  - "video/dv"
+  - "video/fli"
+  - "video/flv"
+  - "video/mkv"
+  - "video/mp2t"
+  - "video/mp4"
+  - "video/mp4v-es"
+  - "video/mpeg"
+  - "video/msvideo"
+  - "video/ogg"
+  - "video/quicktime"
+  - "video/vnd.divx"
+  - "video/vnd.mpegurl"
+  - "video/vnd.rn-realvideo"
+  - "video/webm"
+  - "video/x-avi"
+  - "video/x-flc"
+  - "video/x-flic"
+  - "video/x-flv"
+  - "video/x-m4v"
+  - "video/x-matroska"
+  - "video/x-mpeg2"
+  - "video/x-mpeg3"
+  - "video/x-ms-afs"
+  - "video/x-ms-asf"
+  - "video/x-ms-wmv"
+  - "video/x-ms-wmx"
+  - "video/x-ms-wvxvideo"
+  - "video/x-msvideo"
+  - "video/x-ogm+ogg"
+  - "video/x-ogm"
+  - "video/x-theora+ogg"
+  - "video/x-theora"
+  commands:
+    - |
+      result="$(mktemp /tmp/result_XXXXXXXXXX.png)"
+      ffmpeg -nostdin -y -i "%(file)s" -vf "thumbnail" -frames:v 1 "$result" && mv "$result" %(outfile)s
+  meta:
+    'Thumb::Movie::Length':
+      - ffprobe -v error -show_entries format=duration -of default=noprint_wrappers=1:nokey=1 "%(file)s"
+      - |
+        which mediainfo || exit 1
+        which bc || exit 1
+        duration=$(mediainfo --Inform="General;%Duration%" "%(file)s")
+        echo "$duration / 1000" | bc
+      - |
+        which exiftool || exit 1
+        which bc || exit 1
+        output=$(exiftool -duration# "%(file)s")
+        time=$(echo $output | sed 's/^[^:]*: //')
+        IFS=: read hours minutes seconds <<< "$time"
+        echo "$hours * 3600 + $minutes * 60 + $seconds" | bc
+  revision: 1
