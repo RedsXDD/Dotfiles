@@ -24,9 +24,9 @@ scrolloff      = 8
 tab_size        = 2
 max_width       = 800
 max_height      = 900
-cache_dir       = "~/.cache/yazi"
+cache_dir       = ""
 image_filter    = "triangle"
-image_quality   = 75
+image_quality   = 50
 sixel_fraction  = 15
 ueberzug_scale  = 1
 ueberzug_offset = [ 0, 0, 0, 0 ]
@@ -71,7 +71,7 @@ preloaders = [
 	{ name = "*", cond = "!mime", run = "mime", multi = true, prio = "high" },
 
 	# Image
-	{ mime = "image/*", run = "image" },
+	{ mime = "image/*", run = "allmytoes" },
 
 	# Video
 	{ mime = "video/*", run = "video" },
@@ -97,7 +97,7 @@ previewers = [
 
 	# Image
 	{ mime = "image/vnd.djvu", run = "noop" },
-	{ mime = "image/*",        run = "image" },
+	{ mime = "image/*",        run = "allmytoes" },
 
 	# Video
 	{ mime = "video/*", run = "video" },
