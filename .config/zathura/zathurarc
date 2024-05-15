@@ -9,6 +9,9 @@
 
 # ------------------------------------------------------------------------ #
 
+# Include wallust colorschem:
+include zathurarc_wallust
+
 # Options:
 set font "JetBrainsMonoNerdFont normal 15"
 set page-padding 1
@@ -31,40 +34,3 @@ map p print
 map r reload
 map R rotate
 map D toggle_page_mode
-
-# Colorscheme:
-set default-bg "#1A1B26"
-set default-fg "#A9B1D6"
-set recolor-lightcolor "#1A1B26"
-set recolor-darkcolor "#A9B1D6"
-
-set completion-bg "#1A1B26"
-set completion-fg "#A9B1D6"
-set completion-group-bg "#1A1B26"
-set completion-group-fg "#9ECE6A"
-set completion-highlight-bg "#7AA2F7"
-set completion-highlight-fg "#1A1B26"
-
-set inputbar-bg "#7AA2F7"
-set inputbar-fg "#1A1B26"
-set statusbar-bg "#7AA2F7"
-set statusbar-fg "#1A1B26"
-
-set render-loading-bg "#1A1B26"
-set render-loading-fg "#A9B1D6"
-
-set notification-bg "#7AA2F7"
-set notification-fg "#1A1B26"
-set notification-error-bg "#E0AF68"
-set notification-error-fg "#1A1B26"
-set notification-warning-bg "#F7768E"
-set notification-warning-fg "#1A1B26"
-
-set index-bg "#1A1B26"
-set index-fg "#A9B1D6"
-set index-active-bg "#A9B1D6"
-set index-active-fg "#1A1B26"
-
-set highlight-color "rgba(122,162,247,0.5)"
-set highlight-fg "rgba(158,206,106,0.5)"
-set highlight-active-color "rgba(224,175,104,0.5)"
