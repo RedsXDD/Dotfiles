@@ -40,7 +40,11 @@ return {
 					select = true,
 				},
 				window = {
-					completion = cmp.config.window.bordered(),
+					completion = {
+						winhighlight = "Normal:Normal,FloatBorder:Pmenu,Search:None",
+						col_offset = -3,
+						side_padding = 0,
+					},
 					documentation = cmp.config.window.bordered(),
 				},
 				experimental = {
@@ -79,13 +83,13 @@ return {
 					fields = { "kind", "abbr", "menu" },
 					format = function(entry, vim_item)
 						-- Kind icons.
-						vim_item.kind = string.format("%s", kind_icons[vim_item.kind])
+						vim_item.kind = string.format(" %s", kind_icons[vim_item.kind])
 						vim_item.menu = ({
-							nvim_lsp = "[LSP]",
-							nvim_lua = "[Neovim Lua]",
-							luasnip = "[Snippet]",
-							buffer = "[Buffer]",
-							path = "[Path]",
+							nvim_lsp = "(LSP)",
+							nvim_lua = "(Neovim Lua)",
+							luasnip = "(Snippet)",
+							buffer = "(Buffer)",
+							path = "(Path)",
 						})[entry.source.name]
 						return vim_item
 					end,
