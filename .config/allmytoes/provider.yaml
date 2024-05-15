@@ -1,3 +1,22 @@
+- mimes:
+  - "font/ttf"
+  - "font/sfnt"
+  - "font/otf"
+  - "font/woff"
+  - "font/woff2"
+  - "application/vnd.ms-opentype"
+  commands:
+    - |
+      result="$(mktemp /tmp/result_XXXXXXXXXX.jpeg)"
+      convert \
+        -font "%(file)s" \
+        -size "%(size)sx%(size)s" \
+        xc:"#ffffff" -fill "#000000" \
+        -gravity center \
+        -pointsize "95" \
+        -annotate +0+0 'ABCÇDEFGHIJKLM\nNOPQRSTUVWXYZ\nabcçdefghijklm\nnopqrstuvwxyz\n1234567890\n!?@#£¢$§&%\()[]{}\n_=-+*.,:;\\\/|\n°ºª\`\´~^"' \
+        -flatten "$result" && mv "$result" "%(outfile)s"
+
 - mimes: [image/avif]
   commands:
     - |

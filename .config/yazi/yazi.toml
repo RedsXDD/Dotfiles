@@ -78,6 +78,10 @@ preloaders = [
 	{ mime = "application/postscript", run = "allmytoes" },
 	{ mime = "application/{epub+zip,x-mobipocket-ebook,x-fictionbook+xml}", run = "allmytoes" },
 
+	# Fonts
+	{ mime = "font/*", run = "allmytoes" },
+	{ mime = "application/vnd.ms-opentype", run = "allmytoes" },
+
 	{ name = "*", cond = "!mime", run = "mime", multi = true, prio = "high" },
 
 ]
@@ -95,6 +99,10 @@ previewers = [
 	{ mime = "application/pdf", run = "allmytoes" },
 	{ mime = "application/postscript", run = "allmytoes" },
 	{ mime = "application/{epub+zip,x-mobipocket-ebook,x-fictionbook+xml}", run = "allmytoes" },
+
+	# Fonts
+	{ mime = "font/*", run = "allmytoes" },
+	{ mime = "application/vnd.ms-opentype", run = "allmytoes" },
 
 	# Code
 	{ mime = "text/*", run = "code" },
