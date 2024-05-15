@@ -65,7 +65,7 @@ keymap = [
 	{ on = [ "c", "E" ], run = "rename --empty=dot_ext",             desc = "Rename a file or directory. [foo|]" },
 	{ on = [ "c", "w" ], run = "rename --empty=stem --cursor=start", desc = "Rename a file or directory. [|.txt]" },
 	{ on = [ "c", "W" ], run = "rename --empty=all --cursor=start",  desc = "Rename a file or directory. [|]" },
-	{ on = [ "c", "c" ], run = "rename --empty=all --cursor=start",  desc = "Rename a file or directory. [|]" },
+	{ on = [ "C" ],      run = "rename --empty=all --cursor=start",  desc = "Rename a file or directory. [|]" },
 	#: }}}
 	#: Copy/pasting {{{
 	{ on = [ "y" ],      run = "yank",                  desc = "Copy the selected files." },
