@@ -480,8 +480,8 @@ keybinds clear-defaults=true{
 
 	// Shared except:
 	shared_except "locked" {
-		bind "Alt n" { FocusNextPane; SwitchToMode "Normal"; }
-		bind "Alt p" { FocusPreviousPane; SwitchToMode "Normal"; }
+		bind "Alt n" { FocusNextPane; }
+		bind "Alt p" { FocusPreviousPane; }
 		bind "Alt g" { SwitchToMode "Locked"; }
 		bind "Alt h" { MoveFocusOrTab "Left"; }
 		bind "Alt j" { MoveFocus "Down"; }
