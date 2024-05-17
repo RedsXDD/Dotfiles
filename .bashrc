@@ -28,15 +28,15 @@ shopt -s dotglob        # Inclued filenames beginning with a ‘.’ in the resu
 shopt -s expand_aliases # Expand aliases.
 shopt -s checkwinsize   # Checks term size when bash regains control.
 stty -ixon              # Disable Ctrl-s and Ctrl-q.
-
-# History:
-shopt -s histappend # Do not overwrite history
-shopt -s cmdhist    # Save multi-line commands in history as single line
 #: }}}
-#: Vi mode cursor {{{
+#: Vi mode {{{
 # Enable vi mode:
 set -o vi
 
+# Clear screen on vi mode with C-l.
+bind -m vi-command '"\C-l":clear-screen'; bind -m vi-insert '"\C-l":clear-screen'
+
+# Vi mode cursor style:
 nrm_mode_cursor='\1\e[1 q\2'
 ins_mode_cursor='\1\e[5 q\2'
 # '\e[1 q' -> bliking block.
@@ -62,52 +62,48 @@ bind "set completion-ignore-case on"    # Ignore upper and lowercase with TAB co
 bind "set completion-display-width 0"   # number of screen columns used to display possible matches when performing completion.
 bind "set completion-query-items 1000"  # Amount of completions that can be displayed.
 #: }}}
-#: Keybindings {{{
 #: History {{{
+shopt -s histappend # Do not overwrite history
+shopt -s cmdhist    # Save multi-line commands in history as single line
+
 # Search backwards in history from letter:
-bind -m vi-command '"\e[A": history-substring-search-backward'
-bind -m vi-insert '"\e[A": history-substring-search-backward'
+bind -m vi-command '"\C-p": history-substring-search-backward'
+bind -m vi-insert '"\C-p": history-substring-search-backward'
 
 # Search forwards in history from letter:
-bind -m vi-command '"\e[B": history-substring-search-forward'
-bind -m vi-insert '"\e[B": history-substring-search-forward'
-
-# Move forwards by word:
-bind -m vi-command '"\e[1;5C": forward-word'
-bind -m vi-insert '"\e[1;5C": forward-word'
-
-# Move backward by word
-bind -m vi-command '"\e[1;5D": backward-word'
-bind -m vi-insert '"\e[1;5D": backward-word'
-#: }}}
-# Vi-command mode bindings:
-bind -m vi-command '"\C-l":clear-screen'
-
-# Vi-insert mode bindings:
-bind -m vi-insert '"\C-l":clear-screen'
-bind -m vi-insert '"\C-f":"fzf-hist\C-m"' # Run fzf-hist.
-bind -m vi-insert '"\C-e":"fzf-configs\C-m"' # Edit files with an fzf script.
-bind -m vi-insert '"\C-o":"cdi\C-m"' # Open zoxide directory menu.
+bind -m vi-command '"\C-n": history-substring-search-forward'
+bind -m vi-insert '"\C-n": history-substring-search-forward'
 #: }}}
 
-# Startup zoxide:
+# Shell integrations:
 eval "$(zoxide init --cmd cd bash)"
 
 #: Shell prompt {{{
 # Function to set the PS1 prompt:
 set_ps1(){
 	# Color variables:
+	local black=''
+	local red=''
+	local green=''
+	local yellow=''
+	local blue=''
+	local magenta=''
+	local cyan=''
+	local white=''
+	local bold=''
+	local reset=''
+
 	# \[ and \] are required to define the cursor position
-	local black="\[$(tput setaf 0)\]"
-	local red="\[$(tput setaf 1)\]"
-	local green="\[$(tput setaf 2)\]"
-	local yellow="\[$(tput setaf 3)\]"
-	local blue="\[$(tput setaf 4)\]"
-	local magenta="\[$(tput setaf 5)\]"
-	local cyan="\[$(tput setaf 6)\]"
-	local white="\[$(tput setaf 7)\]"
-	local bold="\[$(tput bold)\]"
-	local reset="\[$(tput sgr0)\]"
+	black="\[$(tput setaf 0)\]"
+	red="\[$(tput setaf 1)\]"
+	green="\[$(tput setaf 2)\]"
+	yellow="\[$(tput setaf 3)\]"
+	blue="\[$(tput setaf 4)\]"
+	magenta="\[$(tput setaf 5)\]"
+	cyan="\[$(tput setaf 6)\]"
+	white="\[$(tput setaf 7)\]"
+	bold="\[$(tput bold)\]"
+	reset="\[$(tput sgr0)\]"
 
 	# Prompt:
 	export PROMPT_DIRTRIM='5' # Depth of "current directory" when using \w or \W
@@ -124,13 +120,4 @@ set_ps1(){
 
 eval "$(starship init bash)" || set_ps1
 unset -f set_ps1
-#: }}}
-#: Auto completions {{{
-# Uncomment any line to enable extra completions.
-# WARNING: the more completions are enabled the slower the shell prompt will be!
-# eval "$(glow completion bash)"      # Glow
-# eval "$(starship completions bash)" # Starship
-# eval "$(procs --gen-completion-out bash)" # Procs
-# eval "$(zellij setup --generate-completion bash)" # Zellij
-# eval "$(register-python-argcomplete pipx)" # Pipx
 #: }}}
