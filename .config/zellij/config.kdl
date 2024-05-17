@@ -1,4 +1,4 @@
-// vim:fileencoding=utf-8:foldmethod=marker:filetype=scss
+// vim:fileencoding=utf-8:foldmethod=marker:filetype=scss:foldenable
 
 // ---------------------------------------------------------------------------------------------------------------------- //
 
@@ -217,6 +217,8 @@ keybinds clear-defaults=true{
 		bind "Alt j" { MoveFocus "Down"; }
 		bind "Alt k" { MoveFocus "Up"; }
 		bind "Alt l" { MoveFocusOrTab "Right"; }
+		bind "Alt n" { FocusNextPane; }
+		bind "Alt p" { FocusPreviousPane; }
 		bind "Alt c" { Copy; }
 	}
 
@@ -238,8 +240,8 @@ keybinds clear-defaults=true{
 	// Move mode:
 	move {
 		bind "Ctrl c" "Esc" { SwitchToMode "Normal"; }
-		bind "o"            { MovePane; }
-		bind "O"            { MovePaneBackwards; }
+		bind "]"            { MovePane; }
+		bind "["            { MovePaneBackwards; }
 		bind "h"            { MovePane "Left"; }
 		bind "j"            { MovePane "Down"; }
 		bind "k"            { MovePane "Up"; }
@@ -308,8 +310,6 @@ keybinds clear-defaults=true{
 		bind "f" { TogglePaneFrames; SwitchToMode "Normal"; }
 		bind "z" { ToggleFocusFullscreen; SwitchToMode "Normal"; }
 		bind "x" { CloseFocus; SwitchToMode "Normal"; }
-		bind "o" { FocusNextPane; SwitchToMode "Normal"; }
-		bind "O" { FocusPreviousPane; SwitchToMode "Normal"; }
 		bind "Y" { ToggleActiveSyncTab; SwitchToMode "Normal"; }
 		bind "b" { BreakPane; SwitchToMode "Normal"; }
 		bind "]" { BreakPaneRight; SwitchToMode "Normal"; }
@@ -480,19 +480,17 @@ keybinds clear-defaults=true{
 
 	// Shared except:
 	shared_except "locked" {
+		bind "Alt n" { FocusNextPane; SwitchToMode "Normal"; }
+		bind "Alt p" { FocusPreviousPane; SwitchToMode "Normal"; }
 		bind "Alt g" { SwitchToMode "Locked"; }
 		bind "Alt h" { MoveFocusOrTab "Left"; }
 		bind "Alt j" { MoveFocus "Down"; }
 		bind "Alt k" { MoveFocus "Up"; }
 		bind "Alt l" { MoveFocusOrTab "Right"; }
-		bind "Alt H" { MovePane "Left"; }
-		bind "Alt J" { MovePane "Down"; }
-		bind "Alt K" { MovePane "Up"; }
-		bind "Alt L" { MovePane "Right"; }
-		bind "Alt [" { PreviousSwapLayout; }
-		bind "Alt ]" { NextSwapLayout; }
-		bind "Alt ," { GoToPreviousTab; }
-		bind "Alt ." { GoToNextTab; }
+		bind "Alt [" { GoToPreviousTab; }
+		bind "Alt ]" { GoToNextTab; }
+		bind "Alt {" { PreviousSwapLayout; }
+		bind "Alt }" { NextSwapLayout; }
 	}
 	shared_except "tmux" "locked" { bind "Ctrl a" { SwitchToMode "Tmux"; }; }
 }
