@@ -6,6 +6,7 @@ if ! which waybg || ! which wallust || ! which wallust_postrun; then
 fi >/dev/null 2>&1
 
 file="$(dirname "$@")/$(basename "$@")"
+file_name="$(basename "$@")"
 colorschemes_dir="${XDG_CONFIG_HOME:-$HOME/.config}/wallust/colorschemes"
 
 apply_colorscheme(){ wallust cs "$1" && wallust_postrun; }
@@ -17,7 +18,7 @@ apply_wallpaper(){
 		wallust_postrun
 }
 
-if [ -f "${colorschemes_dir}/light/${file}" ] || [ -f "${colorschemes_dir}/dark/${file}" ]; then
+if [ -f "${colorschemes_dir}/light/${file_name}" ] || [ -f "${colorschemes_dir}/dark/${file_name}" ]; then
 	apply_colorscheme "$file"
 else
 	apply_wallpaper "$file"
