@@ -58,6 +58,7 @@ keymap = [
 	{ on = [ "z", "l" ],    run = 'shell --confirm --block "lazygit"',  desc = "Open lazygit." },
 	{ on = [ "z", "w" ],    run = 'shell --confirm --block "waybg $1"', desc = "Change wallpaper." },
 	{ on = [ "z", "W" ],    run = 'shell --confirm "waybg \"$1\" && wallust run -p dark16 \"$(head -n1 "$HOME/.cache/waybg/wallpaper")\" && wallust_postrun"', desc = "Change wallpaper." },
+	{ on = [ "z", "W" ], run = ''' shell --confirm 'waybg "$1" && wallust run -p dark16 "$(head -n1 "$HOME/.cache/waybg/wallpaper")" && notify-send -t 2000 "Wallust Theming" "Started applying wallust dark16 colorscheme." && wallust_postrun' ''', desc = "Change wallpaper and wallust theme." },
 	#: }}}
 	#: Change file {{{
 	{ on = [ "c", "i" ], run = "rename --cursor=before_ext",         desc = "Rename a file or directory. [foo|.txt]" },
