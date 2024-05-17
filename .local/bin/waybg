@@ -258,4 +258,4 @@ case "$(file --mime-type -Lb "$wall" | tr '[:upper:]' '[:lower:]')" in
 esac
 #: }}}
 
-# vim:fileencoding=utf-8:foldmethod=marker
+# vim:fileencoding=utf-8:foldmethod=marker:foldenable
