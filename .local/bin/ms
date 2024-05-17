@@ -10,23 +10,38 @@ gen_script(){
 	EOF
 }
 
-script_path="$(dirname -- "$1")"
-script_name="$(basename -- "$1")"
+if [ "$1" = '-y' ]; then
+	script_path="$(dirname -- "$2")"
+	script_name="$(basename -- "$2")"
+else
+	script_path="$(dirname -- "$1")"
+	script_name="$(basename -- "$1")"
+fi
+
 script_file="${script_path}/${script_name}"
 
 if [ -f "$script_file" ]; then
 	"${EDITOR:-vi}" "$script_file"
-else
-	printf '%s' "The script '$script_name' doesn't seem to exist on the path '$script_path/', create it? (y/n) "; read -r answer
-	case "$(echo "$answer" | tr '[:upper:]' '[:lower:]')" in
-		'y' | 'yes')
-			gen_script > "$script_file"
-			chmod 755 "$script_file"
-			"${EDITOR:-vi}" "$script_file"
-		;;
-		*)
-			echo 'User choose to not create a new script.'
-			exit 0
-		;;
-	esac
+	return 0
 fi
+
+if [ "$1" = '-y' ]; then
+	gen_script > "$script_file"
+	chmod 755 "$script_file"
+	"${EDITOR:-vi}" "$script_file"
+	return 0
+fi
+
+printf '%s' "The script '$script_name' doesn't seem to exist on the path '$script_path/', create it? (y/n) "; read -r answer
+case "$(echo "$answer" | tr '[:upper:]' '[:lower:]')" in
+	'y' | 'yes')
+		gen_script > "$script_file"
+		chmod 755 "$script_file"
+		"${EDITOR:-vi}" "$script_file"
+	;;
+
+	*)
+		echo 'User choose to not create a new script.'
+		exit 0
+	;;
+esac
