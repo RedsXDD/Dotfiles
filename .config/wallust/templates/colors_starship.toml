@@ -1,3 +1,5 @@
+# vim:fileencoding=utf-8:foldmethod=marker:foldenable:foldmarker=[[[,]]]
+
 # ---------------------------------------------------------- #
 
 # ███████╗████████╗ █████╗ ██████╗ ███████╗██╗  ██╗██╗██████╗
@@ -9,6 +11,7 @@
 
 # ---------------------------------------------------------- #
 
+#: Formatting [[[
 format = """
 [╭](fg:foreground bold)\
 [](fg:blue)\
@@ -28,7 +31,8 @@ $line_break\
 [╰─](fg:foreground bold)\
 $cmd_duration$character
 """
-
+#: ]]]
+#: Palette [[[
 palette = 'wallust'
 
 [palettes.wallust]
@@ -49,7 +53,8 @@ color12 = '{{color12}}'
 color13 = '{{color13}}'
 color14 = '{{color14}}'
 color15 = '{{color15}}'
-
+#: ]]]
+#: OS [[[
 [os]
 disabled = false
 style = "bg:blue fg:background"
@@ -94,21 +99,24 @@ SUSE = " "
 Ubuntu = " "
 Unknown = " "
 Windows = "󰍲 "
-
+#: ]]]
+#: Username [[[
 [username]
 disabled = false
 show_always = true
 style_user = "bg:blue fg:background bold"
 style_root = "bg:blue fg:background bold"
 format = '[$user]($style)'
-
+#: ]]]
+#: Hostname [[[
 [hostname]
 disabled = false
 ssh_only = false
 ssh_symbol = " "
 style = "bg:blue fg:background bold"
 format = '[@$ssh_symbol$hostname ]($style)'
-
+#: ]]]
+#: Directory [[[
 [directory]
 style = "bg:foreground fg:background bold"
 format = "[ 󰉋 $path ]($style)"
@@ -123,7 +131,8 @@ truncation_symbol = "…/"
 'Music' = '󰝚 '
 'Pictures' = ' '
 'Videos' = ' '
-
+#: ]]]
+#: Shell [[[
 [shell]
 disabled = false
 bash_indicator = 'bash'
@@ -139,7 +148,8 @@ zsh_indicator = 'zsh'
 unknown_indicator = '?sh'
 style = "bg:blue fg:background bold"
 format = "[  $indicator ]($style)"
-
+#: ]]]
+#: Git [[[
 [git_branch]
 symbol = ""
 style = "bg:foreground fg:background"
@@ -148,13 +158,8 @@ format = '[[ $symbol $branch ](bg:foreground fg:background bold)]($style)'
 [git_status]
 style = "bg:foreground fg:background"
 format = '[[($all_status$ahead_behind )](bg:foreground fg:background bold)]($style)'
-
-# --------------------------------------------------------- #
-
-#############
-# Languages #
-#############
-
+#: ]]]
+#: Languages [[[
 [aws]
 symbol = "  "
 style = "bg:blue"
@@ -314,26 +319,28 @@ format = '[[ $symbol($version) ](bg:blue fg:background bold)]($style)'
 symbol = " "
 style = "bg:blue"
 format = '[[ $symbol($version) ](bg:blue fg:background bold)]($style)'
-
-# --------------------------------------------------------- #
-
+#: ]]]
+#: Docker [[[
 [docker_context]
 disabled = true
 symbol = " "
 style = "bg:blue fg:background"
 format = '[[ $symbol( $context) ](bg:blue fg:background bold)]($style)'
-
+#: ]]]
+#: Time [[[
 [time]
 disabled = true
 time_format = "%R"
 style = "fg:foreground bold"
 format = '[[󰥔 $time ](fg:foreground bold)]($style)'
-
+#: ]]]
+#: Cmd duration [[[
 [cmd_duration]
 disabled = false
 style = "fg:yellow bold"
 format = 'took [$duration]($style) '
-
+#: ]]]
+#: Line break & Character [[[
 [line_break]
 disabled = false
 
@@ -345,3 +352,4 @@ vimcmd_symbol = '[❮](bold fg:foreground)'
 vimcmd_visual_symbol = '[❮](bold fg:yellow)'
 vimcmd_replace_symbol = '[❮](bold fg:purple)'
 vimcmd_replace_one_symbol = '[❮](bold fg:purple)'
+#: ]]]
