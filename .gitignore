@@ -22,3 +22,5 @@
 .config/zellij/themes/pywal.kdl
 .config/zellij/themes/wallust.kdl
 .config/zsh/.zcompdump
+.config/cava/config
+.config/zathura/zathurarc_wallust
