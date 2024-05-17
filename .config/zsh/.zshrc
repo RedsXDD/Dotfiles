@@ -46,31 +46,29 @@ setopt \
 autoload -U compinit
 zstyle ':completion:*' menu select
 
-# Auto complete with case insenstivity:
-zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
-zstyle ':completion::complete:*' gain-privileges 1
-
-# Include hidden files:
+# Include hidden files on completion:
 zmodload zsh/complist
 compinit
 _comp_options+=(globdots)
 
-# Use arrow keys/vim keys in tab complete menu:
-bindkey -M menuselect 'h' vi-backward-char
-bindkey -M menuselect 'k' vi-up-line-or-history
-bindkey -M menuselect 'l' vi-forward-char
-bindkey -M menuselect 'j' vi-down-line-or-history
-bindkey -M menuselect 'left' vi-backward-char
-bindkey -M menuselect 'up' vi-up-line-or-history
-bindkey -M menuselect 'right' vi-forward-char
-bindkey -M menuselect 'down' vi-down-line-or-history
+# Auto complete with case insenstivity:
+zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
+zstyle ':completion::complete:*' gain-privileges 1
+
+# Completion styling:
+zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
+
+# Navigate completion menu with vim keys:
+bindkey -M menuselect '^h' vi-backward-char
+bindkey -M menuselect '^k' vi-up-line-or-history
+bindkey -M menuselect '^l' vi-forward-char
+bindkey -M menuselect '^j' vi-down-line-or-history
 
 # Fix backspace bug when switching modes:
 bindkey -v '^?' backward-delete-char
 #: }}}
 #: Fix basics keybindings: {{{
-# Create a zkbd compatible hash;
-# to add other keys to this hash, see: man 5 terminfo
+# Create a zkbd compatible hash, to add other keys to this hash, see: man 5 terminfo.
 typeset -g -A key
 
 key[Home]="${terminfo[khome]}"
@@ -133,7 +131,11 @@ key[Control-Right]="${terminfo[kRIT5]}"
 [[ -n "${key[PageDown]}"  ]] && bindkey -M visual -- "${key[PageDown]}"  end-of-buffer-or-history
 [[ -n "${key[Shift-Tab]}" ]] && bindkey -M visual -- "${key[Shift-Tab]}" reverse-menu-complete
 #: }}}
-#: Keybindings {{{
+#: Vi mode {{{
+# Enable vi mode:
+bindkey -v
+export KEYTIMEOUT=1
+
 # Open text editor buffer with Ctrl-v:
 autoload edit-command-line; zle -N edit-command-line
 bindkey '^v' edit-command-line
@@ -141,15 +143,7 @@ bindkey -M vicmd '^v' edit-command-line
 bindkey -M vicmd '^[[P' vi-delete-char
 bindkey -M visual '^[[P' vi-delete
 
-bindkey -s '^f' 'fzf-hist\n' # Run fzf-hist.
-bindkey -s '^e' 'fzf-configs\n' # Edit files with an fzf script.
-bindkey -s '^o' 'cdi\n' # Open zoxide directory menu.
-#: }}}
-#: Vi mode {{{
-# Enable vi mode:
-bindkey -v
-export KEYTIMEOUT=1
-
+# Vi mode cursor style:
 local nrm_mode_cursor='\e[1 q'
 local ins_mode_cursor='\e[5 q'
 # '\e[1 q' -> bliking block.
@@ -178,25 +172,23 @@ preexec(){ echo -ne "$ins_mode_cursor"; } # Use custom shapep cursor for each ne
 # Add plugin function:
 zsh_add_plugin(){
 	# Base variables:
-	local MAIN_DIR="${XDG_DATA_HOME:-$HOME/.local/share}/zsh/plugins"
-	local PLUGIN_NAME="$(echo $1 | cut -d '/' -f 2)"
-	local PLUGIN_DIR="$MAIN_DIR/$PLUGIN_NAME"
+	local PLUGIN_NAME="$(echo "$1" | cut -d '/' -f 2)"
+	local PLUGIN_DIR="${XDG_DATA_HOME:-${HOME}/.local/share}/zsh/plugins/${PLUGIN_NAME}"
 
-	# Load plugin function:
 	zsh_load_plugin(){
-		[ -f "$PLUGIN_DIR/$PLUGIN_NAME.zsh" ] && source "$PLUGIN_DIR/$PLUGIN_NAME.zsh"
-		[ -f "$PLUGIN_DIR/$PLUGIN_NAME.plugin.zsh" ] && source "$PLUGIN_DIR/$PLUGIN_NAME.plugin.zsh"
+		[ -f "${PLUGIN_DIR}/${PLUGIN_NAME}.zsh" ] && source "${PLUGIN_DIR}/${PLUGIN_NAME}.zsh"
+		[ -f "${PLUGIN_DIR}/${PLUGIN_NAME}.plugin.zsh" ] && source "${PLUGIN_DIR}/${PLUGIN_NAME}.plugin.zsh"
 	}
 
 	# Load plugin if it's installed:
-	[ -d "$PLUGIN_DIR" ] && zsh_load_plugin
-		# Download and load plugin if it's not installed:
+	[ -d "$PLUGIN_DIR" ] && zsh_load_plugin && return 0
+
+	# Download and load plugin if it's not installed:
 	[ ! -d "$PLUGIN_DIR" ] &&
 		local PLUGIN="$1" &&
-		\mkdir -p "$PLUGIN_DIR" &&
-		git clone "https://github.com/$PLUGIN.git" "$PLUGIN_DIR" &&
-		zsh_load_plugin &&
-		echo ''
+		\mkdir -vp "$PLUGIN_DIR" &&
+		git clone "https://github.com/${PLUGIN}.git" "${PLUGIN_DIR}" &&
+		zsh_load_plugin
 }
 #: }}}
 # For more plugins check https://github.com/unixorn/awesome-zsh-plugins
@@ -206,27 +198,27 @@ zsh_add_plugin zsh-users/zsh-completions
 zsh_add_plugin MichaelAquilina/zsh-you-should-use
 zsh_add_plugin zsh-users/zsh-history-substring-search
 
-# Unset functions & variables from plugin manager:
+# Unset functions from plugin manager:
 unset -f zsh_add_plugin zsh_load_plugin
 #: }}}
 #: History {{{
-setopt incappendhistory # Add entries to hist file without having to wait for shell to exit
-setopt histignoredups   # Ignore duplicates
-setopt histfindnodups
+setopt \
+	incappendhistory \
+	histignoredups \
+	appendhistory \
+	sharehistory \
+	histignorespace \
+	histignorealldups \
+	histsavenodups \
+	histfindnodups
 
-# History search:
-# autoload -Uz up-line-or-beginning-search down-line-or-beginning-search
-# zle -N up-line-or-beginning-search
-# zle -N down-line-or-beginning-search
-#
-# [[ -n "${key[Up]}"   ]] && bindkey -- "${key[Up]}"   up-line-or-beginning-search
-# [[ -n "${key[Down]}" ]] && bindkey -- "${key[Down]}" down-line-or-beginning-search
+# Default zsh history search:
+bindkey '^p' history-search-backward
+bindkey '^n' history-search-forward
 
 # Zsh history substring search:
-bindkey '^[[A' history-substring-search-up
-bindkey '^[[B' history-substring-search-down
-# bindkey -M vicmd 'k' history-substring-search-up
-# bindkey -M vicmd 'j' history-substring-search-down
+bindkey '^k' history-substring-search-up
+bindkey '^j' history-substring-search-down
 HISTORY_SUBSTRING_SEARCH_ENSURE_UNIQUE=1
 HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND='bg=magenta,fg=black,bold'
 HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_NOT_FOUND='bg=red,fg=black,bold'
@@ -236,7 +228,7 @@ HISTORY_SUBSTRING_SEARCH_FUZZY='1'
 HISTORY_SUBSTRING_SEARCH_PREFIXED=''
 #: }}}
 
-# Startup zoxide (Line must be added after compinit is called):
+# Shell integrations (Must be after compinit is called):
 eval "$(zoxide init --cmd cd zsh)"
 
 #: Shell prompt {{{
@@ -254,10 +246,4 @@ set_ps1(){
 
 eval "$(starship init zsh)" || set_ps1
 unset -f set_ps1
-#: }}}
-#: Auto completions (must be after compinit is called) {{{
-# Uncomment any line to enable extra completions.
-# WARNING: the more completions are enabled the slower the shell prompt will be!
-# eval "$(starship completions zsh)" # Starship
-# autoload -U bashcompinit; bashcompinit; eval "$(register-python-argcomplete pipx)" # Pipx
 #: }}}
