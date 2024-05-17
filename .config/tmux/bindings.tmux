@@ -12,9 +12,6 @@
 # -------------------------------------------------------------------------------------------------- #
 
 #: Unbind-keys {{{
-# List keys:
-unbind-key '?' # List keys.
-
 # Buffers:
 unbind-key '#' # List all paste buffers.
 unbind-key '-' # Delete the most recent paste buffer.
@@ -74,10 +71,7 @@ set-option -g prefix 'C-a'
 bind-key 'C-a' send-prefix
 
 bind-key 'M-c' customize-mode -Z # Toggle customize mode.
-bind-key R source-file ~/.config/tmux/tmux.conf\; display 'Tmux config reloaded!' # Reload tmux config.
-
-# List possible keybindings:
-if-shell '[ -f "${XDG_CONFIG_HOME:-$HOME/.config}/tmux/tmux-forgot.sh" ]' 'bind-key "?" run-shell "$\{XDG_CONFIG_HOME:-$HOME/.config\}/tmux/tmux-forgot.sh"' 'bind-key "?" list-keys -N'
+bind-key 'R' source-file ~/.config/tmux/tmux.conf\; display 'Tmux config reloaded!' # Reload tmux config.
 #: }}}
 #: Copy mode & buffer management {{{
 # Enter and navigate copy mode:
