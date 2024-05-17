@@ -35,11 +35,12 @@ export _JAVA_OPTIONS="-Djava.util.prefs.userRoot=$XDG_CONFIG_HOME/java"
 
 # Shell history:
 export HISTFILE="$XDG_CACHE_HOME/shell/hist"
-export SAVEHIST=100000
 export HISTSIZE=100000
+export SAVEHIST="$HISTSIZE"
 export HISTFILESIZE=''
 export HISTCONTROL='ignoreboth:erasedups'
 export HISTORY_IGNORE="(pwd|exit|q|cl|history|cd -|cd ..)"
+export HISTDUP='erase'
 
 # PATH:
 bin_files="$(find "$HOME/.local/bin" -follow -type d -not -path "$HOME/.local/bin/not_path/*" -not -path "$HOME/.local/bin/not_path" -printf %p:)"
