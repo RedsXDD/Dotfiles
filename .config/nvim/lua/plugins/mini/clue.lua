@@ -67,19 +67,19 @@ return {
 			},
 			clues = {
 				-- General:
-				{ mode = "n", keys = "<Leader>b", desc = "Buffers & Tabs" },
-				{ mode = "x", keys = "<Leader>b", desc = "Buffers & Tabs" },
-				{ mode = "n", keys = "<Leader>t", desc = "Toggles" },
-				{ mode = "x", keys = "<Leader>t", desc = "Toggles" },
-				{ mode = "n", keys = "<Leader>g", desc = "Misc" },
-				{ mode = "x", keys = "<Leader>g", desc = "Misc" },
+				{ mode = "n", keys = "<Leader>b", desc = "+Buffers & Tabs" },
+				{ mode = "x", keys = "<Leader>b", desc = "+Buffers & Tabs" },
+				{ mode = "n", keys = "<Leader>t", desc = "+Toggles" },
+				{ mode = "x", keys = "<Leader>t", desc = "+Toggles" },
+				{ mode = "n", keys = "<Leader>g", desc = "+Misc" },
+				{ mode = "x", keys = "<Leader>g", desc = "+Misc" },
 
 				-- Noice:
-				clue.mkclue_with_dependency("noice", { mode = "n", keys = "<Leader>gn", desc = "Noice" }),
+				clue.mkclue_with_dependency("noice", { mode = "n", keys = "<Leader>gn", desc = "+Noice" }),
 
 				-- Lsp:
 				clue.mkclue_with_dependency("lspconfig", {
-					{ mode = "n", keys = "<Leader>l", desc = "LSP" },
+					{ mode = "n", keys = "<Leader>l", desc = "+LSP" },
 					{ mode = "n", keys = "]d", postkeys = "]" },
 					{ mode = "n", keys = "]D", postkeys = "]" },
 					{ mode = "n", keys = "[d", postkeys = "[" },
@@ -91,17 +91,17 @@ return {
 				}),
 
 				-- Mini.map:
-				clue.mkclue_with_dependency("mini.map", { mode = "n", keys = "<Leader>m", desc = "MiniMap" }),
+				clue.mkclue_with_dependency("mini.map", { mode = "n", keys = "<Leader>m", desc = "+MiniMap" }),
 
 				-- Mini.surround:
 				clue.mkclue_with_dependency("mini.surround", {
-					{ mode = "n", keys = "<Leader>s", desc = "Surround" },
-					{ mode = "x", keys = "<Leader>s", desc = "Surround" },
+					{ mode = "n", keys = "<Leader>s", desc = "+Surround" },
+					{ mode = "x", keys = "<Leader>s", desc = "+Surround" },
 				}),
 
 				-- Mini.diff:
 				clue.mkclue_with_dependency("mini.diff", {
-					{ mode = "n", keys = "<Leader>d", desc = "MiniDiff" },
+					{ mode = "n", keys = "<Leader>d", desc = "+MiniDiff" },
 					{ mode = "n", keys = "]h", postkeys = "]" },
 					{ mode = "n", keys = "]H", postkeys = "]" },
 					{ mode = "n", keys = "[h", postkeys = "[" },
@@ -112,10 +112,19 @@ return {
 					{ mode = "x", keys = "[H", postkeys = "[" },
 				}),
 
+				-- Mini.pick:
+				clue.mkclue_with_dependency("mini.pick", {
+					{ mode = "n", keys = "<Leader>f", desc = "+MiniPick" },
+					{ mode = "n", keys = "<Leader>fg", desc = "+Grep" },
+					{ mode = "n", keys = "<Leader>fG", desc = "+Git" },
+					{ mode = "n", keys = "<Leader>fl", desc = "+LSP" },
+					{ mode = "n", keys = "<Leader>fL", desc = "+List" },
+				}),
+
 				-- Gitsigns:
 				clue.mkclue_with_dependency("gitsigns", {
-					{ mode = "n", keys = "<Leader>gh", desc = "Gitsigns" },
-					{ mode = "x", keys = "<Leader>gh", desc = "Gitsigns" },
+					{ mode = "n", keys = "<Leader>gh", desc = "+Gitsigns" },
+					{ mode = "x", keys = "<Leader>gh", desc = "+Gitsigns" },
 					{ mode = "n", keys = "]h", postkeys = "]" },
 					{ mode = "n", keys = "]H", postkeys = "]" },
 					{ mode = "n", keys = "[h", postkeys = "[" },
@@ -127,18 +136,18 @@ return {
 				}),
 
 				-- Jump betwheen brackets.
-				{ mode = "n", keys = "])", desc = "Jump to next `)`" },
-				{ mode = "n", keys = "]]", desc = "Jump to next `]`" },
-				{ mode = "n", keys = "]}", desc = "Jump to next `}`" },
-				{ mode = "n", keys = "[(", desc = "Jump to previous `(`" },
-				{ mode = "n", keys = "[[", desc = "Jump to previous `[`" },
-				{ mode = "n", keys = "[{", desc = "Jump to previous `{`" },
-				{ mode = "x", keys = "])", desc = "Jump to next `)`" },
-				{ mode = "x", keys = "]]", desc = "Jump to next `]`" },
-				{ mode = "x", keys = "]}", desc = "Jump to next `}`" },
-				{ mode = "x", keys = "[(", desc = "Jump to previous `(`" },
-				{ mode = "x", keys = "[[", desc = "Jump to previous `[`" },
-				{ mode = "x", keys = "[{", desc = "Jump to previous `{`" },
+				{ mode = "n", keys = "])", desc = "+Jump to next `)`" },
+				{ mode = "n", keys = "]]", desc = "+Jump to next `]`" },
+				{ mode = "n", keys = "]}", desc = "+Jump to next `}`" },
+				{ mode = "n", keys = "[(", desc = "+Jump to previous `(`" },
+				{ mode = "n", keys = "[[", desc = "+Jump to previous `[`" },
+				{ mode = "n", keys = "[{", desc = "+Jump to previous `{`" },
+				{ mode = "x", keys = "])", desc = "+Jump to next `)`" },
+				{ mode = "x", keys = "]]", desc = "+Jump to next `]`" },
+				{ mode = "x", keys = "]}", desc = "+Jump to next `}`" },
+				{ mode = "x", keys = "[(", desc = "+Jump to previous `(`" },
+				{ mode = "x", keys = "[[", desc = "+Jump to previous `[`" },
+				{ mode = "x", keys = "[{", desc = "+Jump to previous `{`" },
 
 				-- Mini.bracketed:
 				clue.mkclue_with_dependency("mini.bracketed", {
@@ -235,15 +244,6 @@ return {
 					{ mode = "n", keys = "]Y", postkeys = "]" },
 					{ mode = "n", keys = "[y", postkeys = "[" },
 					{ mode = "n", keys = "[Y", postkeys = "[" },
-				}),
-
-				-- Mini.pick:
-				clue.mkclue_with_dependency("mini.pick", {
-					{ mode = "n", keys = "<Leader>f", desc = "MiniPick" },
-					{ mode = "n", keys = "<Leader>fg", desc = "Grep" },
-					{ mode = "n", keys = "<Leader>fG", desc = "Git" },
-					{ mode = "n", keys = "<Leader>fl", desc = "LSP" },
-					{ mode = "n", keys = "<Leader>fL", desc = "List" },
 				}),
 
 				clue.gen_clues.builtin_completion(),
