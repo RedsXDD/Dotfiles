@@ -10,7 +10,7 @@
 # -------------------------- #
 
 [manager]
-ratio          = [ 1, 4, 3 ]
+ratio          = [ 1, 3, 4 ]
 sort_by        = "natural"
 sort_sensitive = false
 sort_reverse   = false
@@ -21,8 +21,8 @@ show_symlink   = true
 scrolloff      = 8
 
 [preview]
-tab_size        = 2
-max_width       = 800
+tab_size        = 1
+max_width       = 1000
 max_height      = 900
 cache_dir       = "~/.cache/yazi"
 image_filter    = "triangle"
