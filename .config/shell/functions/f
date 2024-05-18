@@ -1,9 +1,0 @@
-# vim:fileencoding=utf-8:foldmethod=marker:filetype=sh:foldenable
-
-alias fzf='f'
-alias fzf-tmux='f'
-f(){
-	export FZF_DEFAULT_OPTS='--cycle --reverse --ansi --border=rounded --no-scrollbar --preview-window=bottom,50%'
-	[ -z "$DISPLAY" ] && export FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS} --no-unicode"
-	command fzf "$@"
-}

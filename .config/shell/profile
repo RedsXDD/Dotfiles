@@ -47,6 +47,9 @@ bin_files="$(find "$HOME/.local/bin" -follow -type d -not -path "$HOME/.local/bi
 export PATH="$PATH:${bin_files}${HOME}/Applications:${CARGO_HOME}/bin/"
 unset bin_files
 
+# FZF config:
+export FZF_DEFAULT_OPTS='--cycle --reverse --ansi --border=rounded --no-scrollbar --preview-window=bottom,50%'
+
 # Bat config:
 export BAT_THEME='ansi'
 
@@ -124,14 +127,11 @@ export LESS_TERMCAP_ZV
 export LESS_TERMCAP_ZO
 export LESS_TERMCAP_ZW
 
-
 # TTY commands:
 # shellcheck source=/dev/null
 if [ -z "$DISPLAY" ]; then
-	# Starship config:
+	export FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS} --no-unicode"
 	[ -f "${XDG_CONFIG_HOME:-$HOME/.config}/starship_tty.toml" ] && export STARSHIP_CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/starship_tty.toml"
-
-	# Set wallust color scheme for the TTY.
 	[ -f "${XDG_CACHE_HOME:-$HOME/.cache}/wallust/colors_tty.sh" ] && . "${XDG_CACHE_HOME:-$HOME/.cache}/wallust/colors_tty.sh"
 
 	# Start WM:
