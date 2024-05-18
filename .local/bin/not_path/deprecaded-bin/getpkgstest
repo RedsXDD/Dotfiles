@@ -1,8 +1,0 @@
-#!/bin/bash
-
-sudo pacman -S --noconfirm cowsay;
-yay -S --noconfirm nsnake;
-sudo snap install snap-store;
-flatpak install -yv io.github.peazip.PeaZip
-
-# cowsay nsnake snap-store io.github.peazip.PeaZip

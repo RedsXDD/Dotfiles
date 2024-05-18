@@ -1,5 +1,0 @@
-#!/usr/bin/env sh
-
-killall sxhkd 2> /dev/null 1>&2
-sleep 0.3
-sxhkd &

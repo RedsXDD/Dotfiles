@@ -1,8 +1,0 @@
-#!/bin/bash
-
-n="$((( $RANDOM % 173 ) + 1 ))"
-distro=$(cat $custombash/distrolist | sed "$n!d")
-neofetch --color_blocks off --ascii_distro "$distro"
-echo ""
-echo "$distro"
-echo ""

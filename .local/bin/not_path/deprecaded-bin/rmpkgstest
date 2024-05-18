@@ -1,8 +1,0 @@
-#!/bin/bash
-
-sudo pacman -Rusn --noconfirm cowsay;
-yay -Rusn --noconfirm nsnake;
-sudo snap remove --purge snap-store;
-flatpak remove -yv --delete-data io.github.peazip.PeaZip
-
-# cowsay nsnake snap-store io.github.peazip.PeaZip
