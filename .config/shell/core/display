@@ -5,6 +5,7 @@ export FZF_DEFAULT_OPTS='--cycle --reverse --ansi --border=rounded --no-scrollba
 [ -z "$DISPLAY" ] && export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS --no-unicode"
 
 if [ -z "$DISPLAY" ]; then
+	alias zellij='zellij --config="${XDG_CONFIG_HOME:-$HOME/.config}/zellij_tty/config.kdl"'
 	alias btop='btop -t'
 	alias rr='mpv https://youtu.be/dQw4w9WgXcQ'
 	alias duf='duf -style ascii'
