@@ -127,14 +127,14 @@ export LESS_TERMCAP_ZV
 export LESS_TERMCAP_ZO
 export LESS_TERMCAP_ZW
 
-# TTY commands:
 # shellcheck source=/dev/null
+# TTY commands:
 if [ -z "$DISPLAY" ]; then
-	export FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS} --no-unicode"
-	[ -f "${XDG_CONFIG_HOME:-$HOME/.config}/starship_tty.toml" ] && export STARSHIP_CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/starship_tty.toml"
-	[ -f "${XDG_CACHE_HOME:-$HOME/.cache}/wallust/colors_tty.sh" ] && . "${XDG_CACHE_HOME:-$HOME/.cache}/wallust/colors_tty.sh"
-
 	# Start WM:
 	# [ "$(tty)" = '/dev/tty1' ] && sx "${XDG_CONFIG_HOME:-$HOME/.config}/x11/xinit"
 	[ "$(tty)" = '/dev/tty1' ] && Hyprland
+
+	export FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS} --no-unicode"
+	[ -f "${XDG_CONFIG_HOME:-$HOME/.config}/starship_tty.toml" ] && export STARSHIP_CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/starship_tty.toml"
+	[ -f "${XDG_CACHE_HOME:-$HOME/.cache}/wallust/colors_tty.sh" ] && . "${XDG_CACHE_HOME:-$HOME/.cache}/wallust/colors_tty.sh"
 fi
