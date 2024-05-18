@@ -94,7 +94,7 @@ alias \
 	p='pacman --color=auto' \
 	sp='sudo pacman --color=auto' \
 	pp='paru --color=auto' \
-	fp='fzf-paru' \
+	fp='fparu' \
 	pc='paru -Qqd | paru -Rsu --print -' \
 	pcl='sudo pacman -Rusnv $(paru -Qdtq)' \
 	mirror='sudo reflector -f 30 -l 30 --number 10 --verbose --save /etc/pacman.d/mirrorlist && sudo pacman -Syy' \
