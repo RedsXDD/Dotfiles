@@ -14,7 +14,6 @@ return {
 				end
 
 				--stylua: ignore start
-				lsp_map("K", vim.lsp.buf.hover, "LSP: Show hover information.")
 				lsp_map("[d", vim.diagnostic.goto_prev, "Go to previous diagnostic message.")
 				lsp_map("]d", vim.diagnostic.goto_next, "Go to next diagnostic message.")
 				lsp_map("<Leader>lj", vim.diagnostic.goto_prev, "Go to previous diagnostic message.")
