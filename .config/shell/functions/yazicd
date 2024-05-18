@@ -10,11 +10,11 @@ yazicd(){
 	local cwd
 
 	exited_path="$(mktemp -t "yazi_cwd.XXXXXXXXXX")"
-	STARSHIP_CONFIG="/dev/null" yazi --cwd-file="$exited_path" "$@"
+	STARSHIP_CONFIG="/dev/null" command yazi --cwd-file="$exited_path" "$@"
 
 	if cwd="$(< "$exited_path")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
 		builtin cd -- "$cwd" || return 1
 	fi
 
-	rm -rf -- "$exited_path"
+	rm -rf -- "$exited_path" >/dev/null 2>&1
 }
