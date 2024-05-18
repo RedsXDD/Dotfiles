@@ -220,7 +220,7 @@ bindkey '^n' history-search-forward
 # Zsh history substring search:
 bindkey '^k' history-substring-search-up
 bindkey '^j' history-substring-search-down
-HISTORY_SUBSTRING_SEARCH_ENSURE_UNIQUE=1
+HISTORY_SUBSTRING_SEARCH_ENSURE_UNIQUE='1'
 HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND='bg=magenta,fg=black,bold'
 HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_NOT_FOUND='bg=red,fg=black,bold'
 HISTORY_SUBSTRING_SEARCH_GLOBBING_FLAGS='i'
