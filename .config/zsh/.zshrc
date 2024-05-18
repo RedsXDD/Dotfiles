@@ -199,6 +199,12 @@ zsh_add_plugin zsh-users/zsh-completions
 zsh_add_plugin MichaelAquilina/zsh-you-should-use
 zsh_add_plugin zsh-users/zsh-history-substring-search
 
+# Fzf tab.
+zsh_add_plugin Aloxaf/fzf-tab
+zstyle ':completion:*' menu no
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
+zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
+
 # Unset functions from plugin manager:
 unset -f zsh_add_plugin zsh_load_plugin
 #: }}}
@@ -247,6 +253,7 @@ unset -f set_ps1
 
 # Shell integrations (Must be after compinit is called):
 eval "$(zoxide init --cmd cd zsh)"
+eval "$(fzf --zsh)"
 
 # Run fastfetch:
 fastfetch
