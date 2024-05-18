@@ -20,16 +20,12 @@ if [ -z "$DISPLAY" ]; then
 	# Set wallust color scheme for the TTY.
 	[ -f "${XDG_CACHE_HOME:-$HOME/.cache}/wallust/colors_tty.sh" ] && . "${XDG_CACHE_HOME:-$HOME/.cache}/wallust/colors_tty.sh"
 
-	# Set fastfetch tty theme.
-	fastfetch_tty_theme="${XDG_CONFIG_HOME:-$HOME/.config}/fastfetch/config-tty.jsonc"
-
-	# Run fastfetch.
-	fastfetch --load-config "$fastfetch_tty_theme"
+	# Run fastfetch with tty theme.
+	fastfetch --load-config "${XDG_CONFIG_HOME:-$HOME/.config}/fastfetch/config-tty.jsonc"
 
 	# Aliases for clear + fastfetch.
-	alias fastfetch="\fastfetch --load-config $fastfetch_tty_theme"
-	alias cl="clear; \fastfetch --load-config $fastfetch_tty_theme"
-	unset fastfetch_tty_theme
+	alias fastfetch='\fastfetch --load-config "${XDG_CONFIG_HOME:-$HOME/.config}/fastfetch/config-tty.jsonc"'
+	alias cl='clear; \fastfetch --load-config "${XDG_CONFIG_HOME:-$HOME/.config}/fastfetch/config-tty.jsonc"'
 else
 	alias rr='curl -sL https://raw.githubusercontent.com/keroserene/rickrollrc/master/roll.sh | bash'
 	alias RR='mpv https://youtu.be/dQw4w9WgXcQ'
