@@ -15,7 +15,8 @@
 [[ $- != *i* ]] && return
 
 # Source main shell configs:
-files="$(find "${XDG_CONFIG_HOME:-$HOME/.config}/shell/core" -follow -type f -printf '; source %p')"; eval "source ${files##; source}"; unset files
+source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/aliasrc"
+files="$(find "${XDG_CONFIG_HOME:-$HOME/.config}/shell/functions" -follow -type f -printf '; source %p')"; eval "source ${files##; source}"; unset files
 
 #: Options {{{
 # ^C no longer shows on C-c keypress:
@@ -74,10 +75,6 @@ bind -m vi-insert '"\C-p": history-substring-search-backward'
 bind -m vi-command '"\C-n": history-substring-search-forward'
 bind -m vi-insert '"\C-n": history-substring-search-forward'
 #: }}}
-
-# Shell integrations:
-eval "$(zoxide init --cmd cd bash)"
-
 #: Shell prompt {{{
 # Function to set the PS1 prompt:
 set_ps1(){
@@ -121,3 +118,9 @@ set_ps1(){
 eval "$(starship init bash)" || set_ps1
 unset -f set_ps1
 #: }}}
+
+# Shell integrations:
+eval "$(zoxide init --cmd cd bash)"
+
+# Run fastfetch:
+fastfetch

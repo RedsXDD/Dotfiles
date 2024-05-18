@@ -15,7 +15,8 @@
 [[ $- != *i* ]] && return
 
 # Source main shell configs:
-files="$(find "${XDG_CONFIG_HOME:-$HOME/.config}/shell/core" -follow -type f -printf '; source %p')"; eval "source ${files##; source}"; unset files
+source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/aliasrc"
+files="$(find "${XDG_CONFIG_HOME:-$HOME/.config}/shell/functions" -follow -type f -printf '; source %p')"; eval "source ${files##; source}"; unset files
 
 #: Options {{{
 # Enable colors:
@@ -227,10 +228,6 @@ HISTORY_SUBSTRING_SEARCH_ENSURE_UNIQUE=''
 HISTORY_SUBSTRING_SEARCH_FUZZY='1'
 HISTORY_SUBSTRING_SEARCH_PREFIXED=''
 #: }}}
-
-# Shell integrations (Must be after compinit is called):
-eval "$(zoxide init --cmd cd zsh)"
-
 #: Shell prompt {{{
 # Function to set the PS1 prompt:
 set_ps1(){
@@ -247,3 +244,9 @@ set_ps1(){
 eval "$(starship init zsh)" || set_ps1
 unset -f set_ps1
 #: }}}
+
+# Shell integrations (Must be after compinit is called):
+eval "$(zoxide init --cmd cd zsh)"
+
+# Run fastfetch:
+fastfetch

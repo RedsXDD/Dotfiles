@@ -97,20 +97,44 @@ export LESSHISTFILE="$XDG_CACHE_HOME/lesshst"
 export LESSHISTSIZE='10000'
 
 # Less color configuration, tput information can be found at man terminfo.
-export LESS_TERMCAP_mb="$(tput bold; tput setaf 2)"            # Start blinking, green
-export LESS_TERMCAP_md="$(tput bold; tput setaf 6)"            # Start bold, cyan
-export LESS_TERMCAP_me="$(tput sgr0)"                          # End bold, blinking, standout, underline
-export LESS_TERMCAP_so="$(tput bold; tput setaf 6; tput rev)"  # Start stand out, cyan, reverse.
-export LESS_TERMCAP_se="$(tput rmso; tput sgr0)"               # End standout, reset
-export LESS_TERMCAP_us="$(tput smul; tput bold; tput setaf 1)" # Start underline, bold, red
-export LESS_TERMCAP_ue="$(tput sgr0)"                          # End Underline
-export LESS_TERMCAP_mr="$(tput rev)"                           # Reverse background/foreground colors.
-export LESS_TERMCAP_mh="$(tput dim)"                           # Enter dim mode.
-export LESS_TERMCAP_ZN="$(tput ssubm)"                         # Enter subscript mode.
-export LESS_TERMCAP_ZV="$(tput rsubm)"                         # End subscript mode.
-export LESS_TERMCAP_ZO="$(tput ssupm)"                         # Enter superscript mode.
-export LESS_TERMCAP_ZW="$(tput rsupm)"                         # End superscript mode.
+LESS_TERMCAP_mb="$(tput bold; tput setaf 2)"            # Start blinking, green
+LESS_TERMCAP_md="$(tput bold; tput setaf 6)"            # Start bold, cyan
+LESS_TERMCAP_me="$(tput sgr0)"                          # End bold, blinking, standout, underline
+LESS_TERMCAP_so="$(tput bold; tput setaf 6; tput rev)"  # Start stand out, cyan, reverse.
+LESS_TERMCAP_se="$(tput rmso; tput sgr0)"               # End standout, reset
+LESS_TERMCAP_us="$(tput smul; tput bold; tput setaf 1)" # Start underline, bold, red
+LESS_TERMCAP_ue="$(tput sgr0)"                          # End Underline
+LESS_TERMCAP_mr="$(tput rev)"                           # Reverse background/foreground colors.
+LESS_TERMCAP_mh="$(tput dim)"                           # Enter dim mode.
+LESS_TERMCAP_ZN="$(tput ssubm)"                         # Enter subscript mode.
+LESS_TERMCAP_ZV="$(tput rsubm)"                         # End subscript mode.
+LESS_TERMCAP_ZO="$(tput ssupm)"                         # Enter superscript mode.
+LESS_TERMCAP_ZW="$(tput rsupm)"                         # End superscript mode.
+export LESS_TERMCAP_mb
+export LESS_TERMCAP_md
+export LESS_TERMCAP_me
+export LESS_TERMCAP_so
+export LESS_TERMCAP_se
+export LESS_TERMCAP_us
+export LESS_TERMCAP_ue
+export LESS_TERMCAP_mr
+export LESS_TERMCAP_mh
+export LESS_TERMCAP_ZN
+export LESS_TERMCAP_ZV
+export LESS_TERMCAP_ZO
+export LESS_TERMCAP_ZW
 
-# Startx/Start Hyprland:
-# [ -z "$DISPLAY" ] && [ "$(tty)" = '/dev/tty1' ] && sx "${XDG_CONFIG_HOME:-$HOME/.config}/x11/xinit"
-[ -z "$DISPLAY" ] && [ "$(tty)" = '/dev/tty1' ] && Hyprland
+
+# TTY commands:
+# shellcheck source=/dev/null
+if [ -z "$DISPLAY" ]; then
+	# Starship config:
+	[ -f "${XDG_CONFIG_HOME:-$HOME/.config}/starship_tty.toml" ] && export STARSHIP_CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/starship_tty.toml"
+
+	# Set wallust color scheme for the TTY.
+	[ -f "${XDG_CACHE_HOME:-$HOME/.cache}/wallust/colors_tty.sh" ] && . "${XDG_CACHE_HOME:-$HOME/.cache}/wallust/colors_tty.sh"
+
+	# Start WM:
+	# [ "$(tty)" = '/dev/tty1' ] && sx "${XDG_CONFIG_HOME:-$HOME/.config}/x11/xinit"
+	[ "$(tty)" = '/dev/tty1' ] && Hyprland
+fi

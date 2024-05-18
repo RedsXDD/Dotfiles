@@ -1,7 +1,10 @@
 # vim:fileencoding=utf-8:foldmethod=marker:filetype=sh
 
-alias y='yazicd'
-alias yi='cdi && yazicd'
+alias \
+	yazi='yazicd' \
+	y='yazicd' \
+	yi='cdi && yazicd'
+
 yazicd(){
 	local exited_path
 	local cwd
