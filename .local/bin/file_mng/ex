@@ -1,0 +1,104 @@
+#!/usr/bin/env sh
+
+# Function to display various error codes:
+errcode(){
+	# Color Variables:
+	red="$(tput setaf 1)"
+	bold="$(tput bold)"
+	reset="$(tput sgr0)"
+	err_txt="${bold}${red}ERROR: ${reset}${bold}"
+	script_name="$0"
+	case "$1" in
+		1) echo "${err_txt}no file specified" ;;
+		2) echo "${err_txt}${file} couldn't be extracted via ${script_name}" ;;
+	esac
+	exit 1
+}
+
+# Fail if no file was specified:
+[ -z "$*" ] && errcode 1
+
+while [ "$1" ];
+do
+	file="$(readlink -f -- "$1")"; shift
+	file_name="$(basename -- "${file%.*}")"
+	file_extension="$(basename -- "$file" | awk 'BEGIN { FS = "." } { print "." tolower($NF) }')"
+	extracted_dir="$(mktemp -d "${file_name}-extracted-XXXXXXXXXX")"
+
+	case "$(file --mime-type -Lb "$file" | tr '[:upper:]' '[:lower:]')" in
+		# .a/.deb archives
+		application/x-archive | application/vnd.debian.binary-package) ar x "$file" --output "${extracted_dir}" ;;
+
+		# 7z/dmg/rpm/exe archives
+		application/x-7z-compressed | application/zlib | application/x-rpm | application/vnd.microsoft.portable-executable) 7z x "$file" -o"$extracted_dir" ;;
+
+		# Zstd archives
+		application/zstd)
+			case "$file_extension" in
+				.tzst | .tar*) tar xvf "$file" --directory="$extracted_dir" ;;
+				*) zstd -k -d "$file" --output-dir-flat "${extracted_dir}" ;;
+			esac
+		;;
+
+		# .Z (Compress) archives
+		application/x-compress)
+			case "$file_extension" in
+				.tz | .tar*) tar xvf "$file" --directory="$extracted_dir" ;;
+				*) compress -k -dc "$file" > "${extracted_dir}/${file_name}" ;;
+			esac
+		;;
+
+		# Rar archives
+		application/x-rar) unrar x "$file" "${extracted_dir}" ;;
+
+		# Zip/jar/oxt archives
+		application/zip | application/java-archive | application/vnd.openofficeorg.extension) unzip "$file" -d "${extracted_dir}";;
+
+		# Xz/lzma archives
+		application/x-xz | application/x-lzma)
+			case "$file_extension" in
+				.txz | .tar*) tar xvf "$file" --directory="$extracted_dir" ;;
+				*) xz -k -dc "$file" > "${extracted_dir}/${file_name}" ;;
+			esac
+		;;
+
+		# Lzip archives
+		application/x-lzip)
+			case "$file_extension" in
+				.tlz | .tar*) tar xvf "$file" --directory="$extracted_dir" ;;
+				*) lzip -k -d "$file" -o "${extracted_dir}/${file_name}" ;;
+			esac
+		;;
+
+		# Lzop archives
+		application/octet-stream)
+			case "$file_extension" in
+				.tlzo | .tar*) tar xvf "$file" --directory="$extracted_dir" ;;
+				.lzo) lzop -k -x "$file" --path="${extracted_dir}" ;;
+			esac
+		;;
+
+		application/x-cpio)
+			cpio -idv < "$file" > "${extracted_dir}/${file_name}"
+		;;
+
+		#application/gzip) ;;
+
+		# *) tar xvf "$file" --directory="$extracted_dir" || 7z x "$file" -o"$extracted_dir" ;;
+	esac
+done
+
+# file="$1"; shift
+# case "$file" in
+# 	*.tbz2 | *.tar.bz2) tar xvjf -- "$file" ;;
+# 	*.tgz | *.tar.gz) tar xvzf -- "$file"   ;;
+# 	*.tar | *.tar.xz) tar xvf -- "$file"    ;;
+# 	*.tar.zst) unzstd -- "$file"            ;;
+# 	*.bz2) bunzip2 -- "$file"               ;;
+# 	*.gz) gzip -- "$file"                   ;;
+# 	*.Z)  uncompress -- "$file"             ;;
+# 	*.rar | *.zip | *.7z) 7z x -- "$file"   ;;
+# 	*.deb) ar x -- "$file"                  ;;
+# 	*.jar) jar -xvf "$file"                 ;;
+# 	*) errcode 2                            ;;
+# esac
