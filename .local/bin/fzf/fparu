@@ -1,7 +1,5 @@
 #!/usr/bin/env sh
 
-# Script dependencies: gnutls, fzf, paru
-
 case "${1:--S}" in
 	'-S')
 		if [ -n "$2" ]; then

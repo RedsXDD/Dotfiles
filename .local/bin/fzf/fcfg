@@ -1,7 +1,5 @@
 #!/usr/bin/env sh
 
-# Script dependencies: gnutls, fzf, nvim
-
 # Fallback opener function.
 file_editor(){
 	file="$*"

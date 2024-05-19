@@ -1,7 +1,5 @@
 #!/usr/bin/env sh
 
-# Script dependencies: gnutls, fzf, arch-wiki-docs, xdg-utils, lynx(some browser).
-
 wikidir='/usr/share/doc/arch-wiki/html/en'
 [ -z "$DISPLAY" ] && opener='lynx' || opener="${BROWSER:-xdg-open}"
 

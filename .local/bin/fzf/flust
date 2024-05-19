@@ -30,6 +30,9 @@ find "${search_dir}" -type f -name '*.json' | sed "s|$search_dir||g" |
 
 		# Add the string " § " and the original line to the end of the line
 		$0 = $0 " § " orig;
-	}1' | column -ts '§' -o '->' | fzf --prompt '> Change Colorscheme > ' --preview 'echo {} | sed "s/.*-> //g" | xargs -ro -I {} wallust cs -T {}' | sed "s/.*-> //g" | xargs -ro -I {} wallust cs "{}"
+	}1' |
+	column -ts '§' -o '->' |
+	fzf-tmux -p 75% -w 75% --prompt '> Change Colorscheme > ' --preview 'echo {} | sed "s/.*-> //g" | xargs -ro -I {} wallust cs -T {}' |
+	sed "s/.*-> //g" | xargs -ro -I {} wallust cs "{}"
 
 # vim:fileencoding=utf-8:foldmethod=marker
