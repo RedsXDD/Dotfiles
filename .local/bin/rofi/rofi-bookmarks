@@ -92,7 +92,7 @@ confirm_removal(){
 }
 
 case "$(actions_rofi)" in
-	"$opt_1") wtype "$(run_rofi)" -P 'Return' ;;
+	"$opt_1") wtype "$(run_rofi)"             ;;
 	"$opt_2") run_rofi | xargs -ro "$BROWSER" ;;
 	"$opt_3")
 		choosen_bookmark="$(run_rofi)"
