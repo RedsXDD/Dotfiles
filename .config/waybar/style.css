@@ -43,13 +43,14 @@ window#waybar.hidden {
 }
 
 #window,
+#custom-cava,
 #mpd, #mpd.paused, #mpd.stopped, #mpd.disconnected,
 #clock,
 #pulseaudio, #wireplumber,
 #custom-weather,
 #keyboard-state,
 #tray {
-	background: @background;
+	background: mix(@background, white, 0.03);
 	color: @foreground;
 	padding: 0 9px;
 	margin: 5px 3px;
@@ -67,7 +68,7 @@ tooltip label {
 /* }}} */
 /* Workspace module {{{ */
 #workspaces {
-	background: @background;
+	background: mix(@background, white, 0.03);
 	padding: 0 5px 0 4px;
 	margin: 5px 3px;
 }
@@ -98,6 +99,11 @@ tooltip label {
 	background: @color6;
 }
 /* }}} */
+/* Cava {{{ */
+#custom-cava {
+	padding: 0 6px 0 3px;
+}
+/* }}} */
 /* Window module {{{ */
 #waybar.empty #window {
 	background: transparent;
@@ -114,7 +120,7 @@ tooltip label {
 /* Notifications module {{{ */
 #custom-notifications {
 	font-size: 18px;
-	background: @background;
+	background: mix(@background, white, 0.03);
 	color: @foreground;
 	padding: 0 11px 0 9px;
 	margin: 5px 3px;
@@ -133,7 +139,7 @@ tooltip label {
 }
 
 #keyboard-state > label {
-	padding: 0 6px;
+	padding: 0 9px 0 6px;
 }
 
 #keyboard-state > label.locked {
