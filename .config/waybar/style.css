@@ -43,8 +43,8 @@ window#waybar.hidden {
 }
 
 #workspaces,
-#window,
 #custom-cava,
+#window,
 #mpd, #mpd.paused, #mpd.stopped, #mpd.disconnected,
 #custom-notifications,
 #clock,
@@ -101,6 +101,7 @@ tooltip label {
 /* }}} */
 /* Cava {{{ */
 #custom-cava {
+	color: @color4;
 	padding: 0 6px 0 3px;
 }
 /* }}} */
@@ -113,16 +114,27 @@ tooltip label {
 }
 /* }}} */
 /* Mpd Module {{{ */
+#mpd,
+#mpd.paused,
+#mpd.stopped,
+#mpd.disconnected {
+	color: @background;
+}
+
+#mpd {
+	background: @color4;
+}
+
 #mpd.paused {
-	color: @color3;
+	background: @color3;
 }
 
 #mpd.stopped {
-	color: mix(@color1, @color3, 0.3);
+	background: mix(@color1, @color3, 0.3);
 }
 
 #mpd.disconnected {
-	color: @color1;
+	background: @color1;
 }
 /* }}} */
 /* Notifications module {{{ */
