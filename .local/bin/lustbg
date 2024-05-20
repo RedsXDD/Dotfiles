@@ -6,8 +6,7 @@ if ! which waybg || ! which wallust || ! which wallust_postrun; then
 fi >/dev/null 2>&1
 
 file="$(dirname "$@")/$(basename "$@")"
-file_name="$(basename "$@")"
-colorschemes_dir="${XDG_CONFIG_HOME:-$HOME/.config}/wallust/colorschemes"
+file_extension="$(basename -- "$file" | awk 'BEGIN { FS = "." } { print "." tolower($NF) }')"
 
 apply_colorscheme(){ wallust cs "$1" && wallust_postrun; }
 
@@ -18,8 +17,7 @@ apply_wallpaper(){
 		wallust_postrun
 }
 
-if [ -f "${colorschemes_dir}/light/${file_name}" ] || [ -f "${colorschemes_dir}/dark/${file_name}" ]; then
-	apply_colorscheme "$file"
-else
-	apply_wallpaper "$file"
-fi
+case "$file_extension" in
+	'.json') apply_colorscheme "$file" ;;
+	*)       apply_wallpaper "$file"   ;;
+esac
