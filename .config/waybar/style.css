@@ -68,7 +68,7 @@ tooltip label {
 	padding: 9px;
 }
 /* }}} */
-/* Workspace module {{{ */
+/* Workspace {{{ */
 #workspaces {
 	padding: 0 5px 0 4px;
 }
@@ -105,7 +105,7 @@ tooltip label {
 	padding: 0 6px 0 3px;
 }
 /* }}} */
-/* Window module {{{ */
+/* Window {{{ */
 #waybar.empty #window {
 	background: transparent;
 	margin: 0;
@@ -113,7 +113,7 @@ tooltip label {
 	border: 0;
 }
 /* }}} */
-/* Mpd Module {{{ */
+/* Mpd {{{ */
 #mpd,
 #mpd.paused,
 #mpd.stopped,
@@ -137,18 +137,18 @@ tooltip label {
 	background: @color1;
 }
 /* }}} */
-/* Notifications module {{{ */
+/* Notifications {{{ */
 #custom-notifications {
 	font-size: 18px;
 	padding: 0 11px 0 9px;
 }
 /* }}} */
-/* Pulseaudio/Wireplumber modules {{{ */
+/* Pulseaudio/Wireplumber {{{ */
 #pulseaudio.muted, #wireplumber.muted {
 	color: @color3;
 }
 /* }}} */
-/* Keyboard state module {{{ */
+/* Keyboard state {{{ */
 #keyboard-state,
 #keyboard-state > label,
 #keyboard-state > label.locked {
@@ -163,7 +163,7 @@ tooltip label {
 	color: mix(@color1, @color3, 0.3);
 }
 /* }}} */
-/* Tray module {{{ */
+/* Tray {{{ */
 #tray > .passive {
 	-gtk-icon-effect: dim;
 }
