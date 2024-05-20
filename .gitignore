@@ -24,3 +24,4 @@
 .config/zsh/.zcompdump
 .config/cava/config
 .config/zathura/zathurarc_wallust
+.config/nvim/lazy-lock.json
