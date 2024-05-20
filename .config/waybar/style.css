@@ -84,7 +84,7 @@ tooltip label {
 }
 
 #workspaces button {
-	color: mix(@background, white, 0.3);
+	color: @color8;
 }
 
 #workspaces button.active {
