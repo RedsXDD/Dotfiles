@@ -42,9 +42,11 @@ window#waybar.hidden {
 	opacity: 0.2;
 }
 
+#workspaces,
 #window,
 #custom-cava,
 #mpd, #mpd.paused, #mpd.stopped, #mpd.disconnected,
+#custom-notifications,
 #clock,
 #pulseaudio, #wireplumber,
 #custom-weather,
@@ -68,9 +70,7 @@ tooltip label {
 /* }}} */
 /* Workspace module {{{ */
 #workspaces {
-	background: mix(@background, white, 0.03);
 	padding: 0 5px 0 4px;
-	margin: 5px 3px;
 }
 
 #workspaces button,
@@ -120,10 +120,7 @@ tooltip label {
 /* Notifications module {{{ */
 #custom-notifications {
 	font-size: 18px;
-	background: mix(@background, white, 0.03);
-	color: @foreground;
 	padding: 0 11px 0 9px;
-	margin: 5px 3px;
 }
 /* }}} */
 /* Pulseaudio/Wireplumber modules {{{ */
