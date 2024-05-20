@@ -48,7 +48,7 @@ export PATH="$PATH:${bin_files}${HOME}/Applications:${CARGO_HOME}/bin/"
 unset bin_files
 
 # FZF config:
-export FZF_DEFAULT_OPTS='--cycle --reverse --ansi --border=rounded --no-scrollbar'
+export FZF_DEFAULT_OPTS='--cycle --reverse --ansi --no-scrollbar'
 
 # Bat config:
 export BAT_THEME='ansi'
