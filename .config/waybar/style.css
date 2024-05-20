@@ -140,7 +140,7 @@ tooltip label {
 }
 
 #keyboard-state > label.locked {
-	color: @color4;
+	color: @color1;
 }
 /* }}} */
 /* Tray module {{{ */
