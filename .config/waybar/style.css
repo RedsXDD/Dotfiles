@@ -1,35 +1,38 @@
 /* vim:fileencoding=utf-8:foldmethod=marker:foldenable
  */
 
-/* ------------------------------------------------------------------------------------------------------------------------- */
+/* ------------------------------------------------------------------ */
 
 /*
- * ██╗    ██╗ █████╗ ██╗   ██╗██████╗  █████╗ ██████╗     ███████╗████████╗██╗   ██╗██╗     ███████╗    ██████╗███████╗███████╗
- * ██║    ██║██╔══██╗╚██╗ ██╔╝██╔══██╗██╔══██╗██╔══██╗    ██╔════╝╚══██╔══╝╚██╗ ██╔╝██║     ██╔════╝   ██╔════╝██╔════╝██╔════╝
- * ██║ █╗ ██║███████║ ╚████╔╝ ██████╔╝███████║██████╔╝    ███████╗   ██║    ╚████╔╝ ██║     █████╗     ██║     ███████╗███████╗
- * ██║███╗██║██╔══██║  ╚██╔╝  ██╔══██╗██╔══██║██╔══██╗    ╚════██║   ██║     ╚██╔╝  ██║     ██╔══╝     ██║     ╚════██║╚════██║
- * ╚███╔███╔╝██║  ██║   ██║   ██████╔╝██║  ██║██║  ██║    ███████║   ██║      ██║   ███████╗███████╗██╗╚██████╗███████║███████║
- *  ╚══╝╚══╝ ╚═╝  ╚═╝   ╚═╝   ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝    ╚══════╝   ╚═╝      ╚═╝   ╚══════╝╚══════╝╚═╝ ╚═════╝╚══════╝╚══════╝
+ * ███████╗████████╗██╗   ██╗██╗     ███████╗    ██████╗███████╗███████╗
+ * ██╔════╝╚══██╔══╝╚██╗ ██╔╝██║     ██╔════╝   ██╔════╝██╔════╝██╔════╝
+ * ███████╗   ██║    ╚████╔╝ ██║     █████╗     ██║     ███████╗███████╗
+ * ╚════██║   ██║     ╚██╔╝  ██║     ██╔══╝     ██║     ╚════██║╚════██║
+ * ███████║   ██║      ██║   ███████╗███████╗██╗╚██████╗███████║███████║
+ * ╚══════╝   ╚═╝      ╚═╝   ╚══════╝╚══════╝╚═╝ ╚═════╝╚══════╝╚══════╝
  */
 
-/* ------------------------------------------------------------------------------------------------------------------------- */
+/* ------------------------------------------------------------------ */
 
-/* Import pywal theme */
+/* Import wallust theme */
 @import url('file:///home/Reds/.config/waybar/shared/waybar_wallust.css');
+
+/* padding: top right bottom left */
+/* padding: top sides */
 
 /* Main configuration {{{ */
 * {
 	font-family: JetBrainsMonoNerdFont;
-	font-size: 13px;
+	font-size: 14px;
 	font-weight: bold;
 	border: none;
 	margin: 0;
 	padding: 0;
-	border-radius: 5px;
+	border-radius: 10px;
 }
 
 window#waybar {
-	background: transparent;
+	background: mix(@background, black, 0.3);
 	border-radius: 0;
 	transition-property: background;
 	transition-duration: .2s;
@@ -37,236 +40,89 @@ window#waybar {
 
 window#waybar.hidden {
 	opacity: 0.2;
-	border-radius: 0;
 }
 
-/*
- * window#waybar.empty {
- *     background: transparent;
- * }
- * window#waybar.solo {
- *     background: #FFFFFF;
- * }
- */
+#window,
+#mpd, #mpd.paused, #mpd.stopped, #mpd.disconnected,
+#clock,
+#pulseaudio, #wireplumber,
+#custom-weather,
+#keyboard-state,
+#tray {
+	background: @background;
+	color: @foreground;
+	padding: 0 9px;
+	margin: 5px 3px;
+}
 /* }}} */
 /* Tooltip {{{ */
 tooltip {
-	background: @background;
-	border: 1px solid mix(@background,black,0.4);
-	border-bottom: 7px solid mix(@background,black,0.5);
+	background: mix(@background, black, 0.3);
 }
 
 tooltip label {
 	color: @foreground;
-	padding: 7px;
-}
-
-label:focus {
-	background: @background;
-	border: none;
+	padding: 9px;
 }
 /* }}} */
-/* Border setup {{{ */
-#custom-powermenu,
-#window,
-#custom-cava,
-#workspaces button, button,
-#clock,
-#custom-notifications,
-#custom-weather,
-#pulseaudio, #wireplumber,
-#tray,
-#keyboard-state,
-#mpd {
-	box-shadow: 0 0 5px rgb(0, 0, 0);
-	margin: 7px;
-}
-
-#custom-cava,
-#workspaces button, button,
-#mpd.stopped {
+/* Workspace module {{{ */
+#workspaces {
 	background: @background;
-	border: 1px solid mix(@background,black,0.5);
-	border-bottom: 7px solid mix(@background,black,0.5);
+	padding: 0 5px 0 4px;
+	margin: 5px 3px;
 }
 
-#workspaces button:hover,
+#workspaces button,
 #workspaces button.active,
-#workspaces button.urgent {
-	border: none;
-	border-bottom: 7px solid mix(@background,black,0.5);
-}
-/* }}} */
-/* Modules {{{ */
-/* Left modules */
-/* Window module {{{ */
-#window {
-	background: @color4;
-	color: black;
-	padding: 0 7px;
-	border-bottom: 7px solid mix(@color4,black,0.3);
+#workspaces button.urgent,
+#workspaces button:hover {
+	color: @background;
+	padding: 3px 9px 3px 3px;
+	margin: 5px;
+	border-radius: 100px;
 }
 
+#workspaces button {
+	color: mix(@background, white, 0.3);
+}
+
+#workspaces button.active {
+	background: @color4;
+}
+
+#workspaces button.urgent {
+	background: @color1;
+}
+
+#workspaces button:hover {
+	background: @color6;
+}
+/* }}} */
+/* Window module {{{ */
 #waybar.empty #window {
 	background: transparent;
 	margin: 0;
 	padding: 0;
 	border: 0;
-	box-shadow: none;
 }
 /* }}} */
-/* Cava Module {{{ */
-#custom-cava {
-	color: @color4;
-}
-/* }}} */
-/* Workspace module {{{ */
-/*
- * #workspaces {
- * }
- */
-
-#workspaces button {
-	color: @foreground;
-	padding: 7px;
-}
-
-#workspaces button:hover,
-#workspaces button.active,
-#workspaces button.urgent {
-	color: black;
-	padding: 8px;
-}
-
-#workspaces button:hover {
-	background: @color6;
-	border-bottom: 7px solid mix(@color6,black,0.3);
-}
-
-#workspaces button.active {
-	background: @color4;
-	border-bottom: 7px solid mix(@color4,black,0.3);
-}
-
-#workspaces button.urgent {
-	background: @color1;
-	border-bottom: 7px solid mix(@color1,black,0.3);
-}
-/* }}} */
-/* Taskbar module {{{ */
-button {
-	background: @background;
-}
-
-button:hover {
-	background: @color6;
-	border-bottom: 7px solid mix(@color6,black,0.3);
-}
-
-#taskbar button.active {
-	background: @color4;
-	border-bottom: 7px solid mix(@color4,black,0.3);
-}
-
-#taskbar button.empty {
-	background: transparent;
-	border-bottom: 7px solid transparent;
-}
-
-/*
- * #taskbar {
- * }
- *
- * #taskbar button {
- * }
- *
- * #taskbar button.minimized {
- * }
- *
- * #taskbar button.maximized {
- * }
- *
- * #taskbar button.fullscreen {
- * }
- */
-/* }}} */
-
-/* Center modules */
 /* Mpd Module {{{ */
-#mpd,
-#mpd.disconnected,
-#mpd.stopped,
-#mpd.paused {
-	padding: 0 7px;
-}
-
-#mpd {
-	background: @color5;
-	color: @background;
-	border-bottom: 7px solid mix(@color5,black,0.3);
-}
-
-#mpd.paused {
-	background: @foreground;
-	color: @background;
-	border-bottom: 7px solid mix(@foreground,black,0.3);
-}
-
-#mpd.stopped {
-	background: @foreground;
-	color: @background;
-	border-bottom: 7px solid mix(@foreground,black,0.3);
-}
-
-#mpd.disconnected {
-	background: @color1;
-	color: @background;
-	border-bottom: 7px solid mix(@color1,black,0.3);
-}
-/* }}} */
-
-/* Right modules */
-/* Clock module {{{ */
-#clock {
-	background: @color4;
-	color: black;
-	padding: 0 7px;
-	border-radius: 5px;
-	border-bottom: 7px solid mix(@color4,black,0.3);
-}
-/* }}} */
-/* Weather module {{{ */
-#custom-weather {
-	background: @color6;
-	color: black;
-	padding: 0 7px;
-	border-bottom: 7px solid mix(@color6,black,0.3);
+#mpd.paused, #mpd.stopped, #mpd.disconnected {
+	color: @color1;
 }
 /* }}} */
 /* Notifications module {{{ */
 #custom-notifications {
-	font-size: 17px;
-	background: @color2;
-	color: black;
-	padding: 0 12px 0 10px;
-	border-bottom: 7px solid mix(@color2,black,0.3);
+	font-size: 18px;
+	background: @background;
+	color: @foreground;
+	padding: 0 11px 0 9px;
+	margin: 5px 3px;
 }
 /* }}} */
 /* Pulseaudio/Wireplumber modules {{{ */
-#pulseaudio,
-#wireplumber {
-	background: @color3;
-	border-radius: 5px;
-	color: black;
-	padding: 0 7px;
-	border-bottom: 7px solid mix(@color3,black,0.3);
-}
-
-#pulseaudio.muted,
-#wireplumber.muted {
-	background: @color15;
-	color: black;
-	border-bottom: 7px solid mix(@color15,black,0.3);
+#pulseaudio.muted, #wireplumber.muted {
+	color: @color1;
 }
 /* }}} */
 /* Keyboard state module {{{ */
@@ -276,28 +132,15 @@ button:hover {
 	font-size: 18px;
 }
 
-#keyboard-state {
-	font-size: 25px;
-	background: mix(@color1,@color3,0.5);
-	color: black;
-	border-bottom: 7px solid mix(mix(@color1,@color3,0.5),black,0.3);
-}
-
 #keyboard-state > label {
-	padding: 0 10px 0 7px;
+	padding: 0 6px;
 }
 
 #keyboard-state > label.locked {
-	color: white;
+	color: @color4;
 }
 /* }}} */
 /* Tray module {{{ */
-#tray {
-	background: @color1;
-	padding: 7px 7px;
-	border-bottom: 7px solid mix(@color1,black,0.3);
-}
-
 #tray > .passive {
 	-gtk-icon-effect: dim;
 }
@@ -306,5 +149,4 @@ button:hover {
 	-gtk-icon-effect: highlight;
 	background: @color1;
 }
-/* }}} */
 /* }}} */

@@ -2,7 +2,7 @@
 	"clock": {
 		"interval": 60,
 		"format": "󰥔 {:%H:%M}",
-		"format-alt": "󰸗 {:%A, %B %d, %Y}",
+		"format-alt": " {:%A, %B %d, %Y}",
 		"tooltip-format": "<span size='9pt' font='JetBrainsMono Nerd Font'>{calendar}</span>",
 		"calendar": {
 			"mode": "month",
