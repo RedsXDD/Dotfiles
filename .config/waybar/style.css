@@ -32,7 +32,7 @@
 }
 
 window#waybar {
-	background: mix(@background, black, 0.3);
+	background: mix(@background, black, 0.4);
 	border-radius: 0;
 	transition-property: background;
 	transition-duration: .2s;
@@ -113,7 +113,15 @@ tooltip label {
 }
 /* }}} */
 /* Mpd Module {{{ */
-#mpd.paused, #mpd.stopped, #mpd.disconnected {
+#mpd.paused {
+	color: @color3;
+}
+
+#mpd.stopped {
+	color: mix(@color1, @color3, 0.3);
+}
+
+#mpd.disconnected {
 	color: @color1;
 }
 /* }}} */
@@ -125,7 +133,7 @@ tooltip label {
 /* }}} */
 /* Pulseaudio/Wireplumber modules {{{ */
 #pulseaudio.muted, #wireplumber.muted {
-	color: @color1;
+	color: @color3;
 }
 /* }}} */
 /* Keyboard state module {{{ */
@@ -140,7 +148,7 @@ tooltip label {
 }
 
 #keyboard-state > label.locked {
-	color: @color1;
+	color: mix(@color1, @color3, 0.3);
 }
 /* }}} */
 /* Tray module {{{ */
@@ -150,6 +158,6 @@ tooltip label {
 
 #tray > .needs-attention {
 	-gtk-icon-effect: highlight;
-	background: @color1;
+	color: @color1;
 }
 /* }}} */
