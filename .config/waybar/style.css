@@ -14,8 +14,8 @@
 
 /* ------------------------------------------------------------------ */
 
-/* Import wallust theme */
-@import url('file:///home/Reds/.config/waybar/shared/waybar_wallust.css');
+/* Import colors */
+@import "shared/colors.css";
 
 /* padding: top right bottom left */
 /* padding: top sides */

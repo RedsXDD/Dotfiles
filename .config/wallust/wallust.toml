@@ -30,7 +30,7 @@ tty.template = "templates/colors_tty.sh"
 tty.target = "~/.cache/wallust/colors_tty.sh"
 
 waybar.template = "templates/colors_waybar.css"
-waybar.target = "~/.config/waybar/shared/waybar_wallust.css"
+waybar.target = "~/.config/waybar/shared/colors.css"
 
 waybar_clock.template = "templates/colors_waybar_clock.jsonc"
 waybar_clock.target = "~/.config/waybar/shared/clock_wallust.jsonc"
