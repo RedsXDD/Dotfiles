@@ -18,8 +18,8 @@
 
 	"modules-left": [
 		"hyprland/workspaces",
-		"hyprland/window",
 		"custom/cava",
+		"hyprland/window",
 	],
 	"modules-center": [
 		"mpd",
