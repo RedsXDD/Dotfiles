@@ -1,5 +1,5 @@
 # General options:
-NAME="oomox-wallust"
+NAME="oomox_wallust"
 THEME_STYLE=oomox
 GTK3_GENERATE_DARK=False
 ROUNDNESS=3

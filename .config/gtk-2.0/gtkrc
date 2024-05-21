@@ -2,7 +2,7 @@
 # Any customization should be done in ~/.gtkrc-2.0.mine instead.
 
 include "/home/Reds/.gtkrc-2.0.mine"
-gtk-theme-name="oomox-wallust"
+gtk-theme-name="oomox_wallust"
 gtk-icon-theme-name="oomox_wallust_papirus"
 gtk-font-name="JetBrainsMono Nerd Font 12"
 gtk-cursor-theme-name="Adwaita"

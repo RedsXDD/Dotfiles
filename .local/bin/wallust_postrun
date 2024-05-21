@@ -9,7 +9,7 @@ wallust_footer_txt='EOF_WALLUST'
 wallust_cache_dir="${XDG_CACHE_HOME:-$HOME/.cache}/wallust"
 wallust_oomox_theme_file="${XDG_CONFIG_HOME:-$HOME/.config}/oomox/colors/wallust"
 oomox_plugins_dir='/opt/oomox/plugins'
-oomox_theme_name='oomox-wallust'
+oomox_theme_name='oomox_wallust'
 
 send_notification(){ notify-send -t 3000 'Wallust_postrun' "$1"; }
 
