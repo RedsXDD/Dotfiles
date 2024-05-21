@@ -1,7 +1,8 @@
 :root {
-    --main-bg-color: #151520;
+    --main-bg-color: #89B4FA;
     --prompt-bg-color: #1E1E2E;
     --text-color: #CDD6F4;
+    --shell-prompt: #A6E3A1;
 }
 
 * {
@@ -54,7 +55,7 @@ input {
 #input {
     padding-left: 10px;
     padding-right: 10px;
-    color: var(--text-color);
+    color: var(--shell-prompt);
 
 }
 
