@@ -54,8 +54,8 @@ window#waybar.hidden {
 #tray {
 	background: mix(@background, white, 0.03);
 	color: @foreground;
-	padding: 0 9px;
-	margin: 5px 3px;
+	padding: 0 0.64em 0 0.64em;
+	margin: 0.36em 0.21em;
 }
 /* }}} */
 /* Tooltip {{{ */
@@ -65,12 +65,12 @@ tooltip {
 
 tooltip label {
 	color: @foreground;
-	padding: 9px;
+	padding: 0.64em;
 }
 /* }}} */
 /* Workspace {{{ */
 #workspaces {
-	padding: 0 5px 0 4px;
+	padding: 0 0.36em 0 0.29em;
 }
 
 #workspaces button,
@@ -78,8 +78,8 @@ tooltip label {
 #workspaces button.urgent,
 #workspaces button:hover {
 	color: @background;
-	padding: 5px 9px 5px 3px;
-	margin: 5px;
+	padding: 0.36em 0.76em 0.36em 0.35em;
+	margin: 0.36em;
 	border-radius: 100px;
 }
 
@@ -102,7 +102,7 @@ tooltip label {
 /* Cava {{{ */
 #custom-cava {
 	color: @color4;
-	padding: 0 6px 0 3px;
+	padding: 0 0.43em 0 0.21em;
 }
 /* }}} */
 /* Window {{{ */
@@ -139,8 +139,9 @@ tooltip label {
 /* }}} */
 /* Notifications {{{ */
 #custom-notifications {
-	font-size: 18px;
-	padding: 0 11px 0 9px;
+	font-size: 1.29em;
+	padding: 0 0.79em 0 0.64em;
+	margin: 0.29em 0.21em;
 }
 /* }}} */
 /* Pulseaudio/Wireplumber {{{ */
@@ -149,14 +150,18 @@ tooltip label {
 }
 /* }}} */
 /* Keyboard state {{{ */
+#keyboard-state {
+	margin: 0.29em 0.21em;
+}
+
 #keyboard-state,
 #keyboard-state > label,
 #keyboard-state > label.locked {
-	font-size: 18px;
+	font-size: 1.1em;
 }
 
 #keyboard-state > label {
-	padding: 0 9px 0 6px;
+	padding: 0 0.64em 0 0.43em;
 }
 
 #keyboard-state > label.locked {
