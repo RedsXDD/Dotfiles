@@ -11,7 +11,7 @@
 cache_dir="${XDG_CACHE_HOME:-$HOME/.cache}/waybg"
 cache_imgs="$cache_dir/imgs"
 rofi_img_dir="${XDG_CONFIG_HOME:-$HOME/.config}/rofi/images"
-librewolf_img_dir="$HOME/.librewolf/vnmkhf5p.default-default/chrome"
+librewolf_img_dir="$HOME/.librewolf/default/chrome"
 [ ! -d "$cache_dir" ] && mkdir -p "$cache_dir"
 [ ! -d "$cache_imgs" ] && mkdir -p "$cache_imgs"
 reload_file="$cache_dir/wallpaper"
