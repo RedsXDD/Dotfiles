@@ -11,6 +11,18 @@ function clear(args) {
 	document.getElementById('wrapper').innerHTML = "";
 }
 
+// Search something on youtube, if no arguments are provided => https://youtube.com
+yt = youtube;
+function youtube(args) {
+	if (args != undefined) {
+		search = args.replace(" ", "+")
+		window.open("https://youtube.com/search?q=" + search);
+	} else {
+		window.open("https://youtube.com");
+	}
+}
+
+
 // Search something on searxng, if no arguments are provided => https://searxng.ca
 s = searxng;
 function searxng(args) {
