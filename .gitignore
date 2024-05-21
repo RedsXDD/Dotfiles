@@ -26,3 +26,4 @@
 .config/zathura/zathurarc_wallust
 .config/nvim/lazy-lock.json
 .config/waybar/shared/colors.css
+.librewolf/default/chrome/includes/cascade-colours.css
