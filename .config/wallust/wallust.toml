@@ -70,3 +70,6 @@ neopywal.target = "~/.cache/wallust/colors_neopywal.vim"
 
 cascade.template = "templates/colors_cascade.css"
 cascade.target = "~/.librewolf/default/chrome/includes/cascade-colours.css"
+bento.template = "templates/colors_bento.css"
+bento.target = "~/.local/sources/Reds/Bento/assets/style/colors.css"
+

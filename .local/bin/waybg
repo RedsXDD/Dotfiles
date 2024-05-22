@@ -11,6 +11,7 @@
 cache_dir="${XDG_CACHE_HOME:-$HOME/.cache}/waybg"
 cache_imgs="$cache_dir/imgs"
 rofi_img_dir="${XDG_CONFIG_HOME:-$HOME/.config}/rofi/images"
+bento_dir="$HOME/.local/sources/Reds/Bento/assets/"
 [ ! -d "$cache_dir" ] && mkdir -p "$cache_dir"
 [ ! -d "$cache_imgs" ] && mkdir -p "$cache_imgs"
 reload_file="$cache_dir/wallpaper"
@@ -213,6 +214,7 @@ set_wallpaper(){
 
 	# Make reload file, link original wallpaper to a cache file and exit with success code:
 	printf '%s\n' "$cache_dir/wall.png" "$rofi_img_dir/wall.png" | xargs -I {} ln -sf "$file" "{}"
+	cp -fL "$file" "$bento_dir/wall.png"
 	mkreload "$file" && success_code 1
 }
 
@@ -229,6 +231,7 @@ set_video_wallpaper(){
 
 	# Make reload file, link original wallpaper to a cache file and exit with success code:
 	printf '%s\n' "$cache_dir/wall.png" "$rofi_img_dir/wall.png" | xargs -I {} ln -sf "$cache_file" "{}"
+	cp -fL "$cache_file" "$bento_dir/wall.png"
 	mkreload "$file" && success_code 2
 }
 
