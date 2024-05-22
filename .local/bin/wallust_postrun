@@ -154,12 +154,12 @@ main(){
 	gen_mpv_theme "mvi"
 
 	# Oomux theme:
-	gen_oomox_theme &
-	gen_oomox_icon_theme 'archdroid' &
-	gen_oomox_icon_theme 'gnome_colors' &
-	gen_oomox_icon_theme 'papirus' &
-	gen_oomox_icon_theme 'numix' &
-	gen_oomox_icon_theme 'suruplus_aspromauros' &
+	gen_oomox_theme
+	# gen_oomox_icon_theme 'archdroid'
+	# gen_oomox_icon_theme 'gnome_colors'
+	gen_oomox_icon_theme 'papirus'
+	# gen_oomox_icon_theme 'numix'
+	# gen_oomox_icon_theme 'suruplus_aspromauros'
 }
 main
 #: }}}
