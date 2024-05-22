@@ -2,7 +2,7 @@
 time = clock;
 function clock(args) {
 	var today = new Date();
-	block_log(today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds());
+	block_log(today.getHours() + "hrs : " + today.getMinutes() + "mins : " + today.getSeconds() + "secs.");
 }
 
 // Clear the terminal
