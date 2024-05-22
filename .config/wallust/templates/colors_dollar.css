@@ -1,6 +1,6 @@
 :root {
     --main-bg-color: {{color4}};
-    --prompt-bg-color: {{background}};
+    --prompt-bg-color: {{background | lighten(0.03)}};
     --text-color: {{foreground}};
     --shell-prompt: {{color2}};
 }

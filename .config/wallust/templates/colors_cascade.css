@@ -17,7 +17,7 @@
 
   /*  Cascades main Colour Scheme */
   --uc-base-colour:               {{background | darken(0.3)}};
-  --uc-highlight-colour:          {{background}};
+  --uc-highlight-colour:          {{background | lighten(0.03)}};
   --uc-inverted-colour:           {{foreground}};
   --uc-muted-colour:              {{foreground | darken(0.3)}};
   --uc-accent-colour:             var(--uc-identity-colour-purple);
@@ -42,7 +42,7 @@
   --uc-base-colour:               {{foreground}};
   --uc-highlight-colour:          {{foreground | darken(0.3)}};
   --uc-inverted-colour:           {{background | darken(0.3)}};
-  --uc-muted-colour:              {{background}};
+  --uc-muted-colour:              {{background | lighten(0.03)}};
   --uc-accent-colour:             var(--uc-identity-colour-purple);
 
 }}
