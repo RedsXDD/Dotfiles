@@ -42,26 +42,26 @@
     /* Comment the color theme you don't want to use */
 
     /* Dark Theme Colors */
-    --window-colour:               #151520;
-    --secondary-colour:            #292938;
-    --inverted-colour:             #9096AB;
+    --window-colour:               {{background | darken(0.3)}};
+    --secondary-colour:            {{background | lighten(0.05)}};
+    --inverted-colour:             {{foreground | darken(0.3)}};
 
     /* Light Theme Colors
-    --window-colour:               #CDD6F4;
-    --secondary-colour:            #9096AB;
-    --inverted-colour:             #1E1E2E;
+    --window-colour:               {{foreground}};
+    --secondary-colour:            {{foreground | darken(0.3)}};
+    --inverted-colour:             {{background}};
     */
 
 
     /* Containter Tab Colours */
-    --uc-identity-color-blue:      #89B4FA;
-    --uc-identity-color-turquoise: #94E2D5;
-    --uc-identity-color-green:     #A6E3A1;
-    --uc-identity-color-yellow:    #F9E2AF;
-    --uc-identity-color-orange:    #F9C758;
-    --uc-identity-color-red:       #F38BA8;
-    --uc-identity-color-pink:      #F9C5D4;
-    --uc-identity-color-purple:    #F5C2E7;
+    --uc-identity-color-blue:      {{color4}};
+    --uc-identity-color-turquoise: {{color6}};
+    --uc-identity-color-green:     {{color2}};
+    --uc-identity-color-yellow:    {{color3}};
+    --uc-identity-color-orange:    {{color3 | saturate(0.5)}};
+    --uc-identity-color-red:       {{color1}};
+    --uc-identity-color-pink:      {{color1 | lighten(0.5)}};
+    --uc-identity-color-purple:    {{color5}};
 
 
     /* URL colour in URL bar suggestions */
