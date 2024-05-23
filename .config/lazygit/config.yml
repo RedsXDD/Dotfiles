@@ -261,5 +261,5 @@ keybinding:
 disableStartupPopups: false
 customCommands: []
 services: {}
-notARepository: prompt
+notARepository: skip
 promptToReturnFromSubprocess: true
