@@ -11,7 +11,7 @@
 
 [general]
 framerate = 60
-bar_width = 4
+bar_width = 3
 bar_spacing = 2
 
 [input]
