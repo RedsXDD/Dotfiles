@@ -74,7 +74,7 @@
      +---+---+---+---+---+---+---*/
 
     /* global border radius */
-    --uc-border-radius: 0;
+    --uc-border-radius: 10px;
 
     /* dynamic url bar width settings */
     --uc-urlbar-width: clamp(250px, 50vw, 600px);
@@ -399,7 +399,10 @@ window,
 .urlbarView-row:hover
     > .urlbarView-row-inner,
 .urlbarView-row[selected]
-    > .urlbarView-row-inner { background: var(--uc-hover-colour) !important; }
+    > .urlbarView-row-inner {
+	background: var(--uc-hover-colour) !important;
+	color: var(--uc-inverted-colour);
+}
 
 
 
