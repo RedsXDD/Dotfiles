@@ -159,37 +159,36 @@ set_image_wallpaper(){
 	echo_success "successfully changed wallpaper to image $wallpaper"
 }
 
-gen_black_svg(){
-	cat <<- EOF_BLACK_WALLPAPER
-	<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1920" height="1000" version="1">
-	<rect id="rectangle" style="fill:#000000" width="1920" height="1000"/>
-	</svg>
-	EOF_BLACK_WALLPAPER
-}
-
-reset_swww(){
-	black_png="/tmp/waybg_fallback.png"
-
-	if swww query | grep -q "$black_png"; then
-		return 0
-	fi
-
-	tmp_svg="$(mktemp waybg_fallback_XXXXXXXXXX.svg)"
-	trap 'rm -rf "$tmp_svg"' 0 1 15
-
-	gen_black_svg > "$tmp_svg"
-	[ ! -f "$black_png" ] && convert "$tmp_svg" "$black_png"
-
-	swww img "$black_png" --resize crop && sleep "${SWWW_TRANSITION_DURATION:-1}"
-}
-
 set_video_wallpaper(){
 	video="$1"
 	cache_file="$2"
+	black_png="/tmp/waybg_black.png"
+
+	if [ ! -f "$black_png" ]; then
+		tmp_svg="$(mktemp waybg_fallback_XXXXXXXXXX.svg)"
+		trap 'rm -rf "$tmp_svg"' 0 1 15
+
+		printf '%s\n' \
+			'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1" height="1" version="1">' \
+			'<rect id="rectangle" style="fill:#000000" width="1" height="1"/>' \
+			'</svg>' > "$tmp_svg"
+
+		convert "$tmp_svg" "$black_png"
+	fi
+
+	if ! swww query | grep -q "$black_png"; then
+		swww img "$black_png" && sleep "${SWWW_TRANSITION_DURATION:-1}"
+	fi
+
+	kill_mpvpaper; killall -q swww-daemon 2>/dev/null
+	while pgrep -x swww-daemon >/dev/null
+	do
+		sleep 0.1
+	done
 
 	# Set specified video as the new wallpaper, enabling audio if specified.
 	[ -z "$ENABLE_AUDIO" ] && mpvpaper_opts='--no-audio'
-	reset_swww; kill_mpvpaper; mpvpaper -fo "--loop ${mpvpaper_opts}" '*' "$video"
+	mpvpaper -fo "--loop ${mpvpaper_opts}" '*' "$video"
 
 	# Make reload video, link original wallpaper to a cache video and exit with success code:
 	printf '%s\n' "$cache_dir/wall.png" "$rofi_img_dir/wall.png" | xargs -I {} ln -sf "$cache_file" "{}"
