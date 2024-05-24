@@ -136,12 +136,12 @@ set_icons("git", {
 })
 
 set_icons("gitsigns", {
-	add = "",
-	change = "",
+	add = "▎",
+	change = "▎",
 	delete = "",
 	topdelete = "",
-	changedelete = "",
-	untracked = "",
+	changedelete = "",
+	untracked = "▎",
 }, {
 	add = "+",
 	change = "~",
