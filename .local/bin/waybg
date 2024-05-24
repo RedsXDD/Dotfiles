@@ -12,9 +12,6 @@ cache_imgs="${cache_dir}/imgs"
 reload_file="${cache_dir}/wallpaper"
 [ ! -d "$cache_imgs" ] && mkdir -p "$cache_imgs"
 
-rofi_img_dir="${XDG_CONFIG_HOME:-$HOME/.config}/rofi/images"
-bento_dir="$HOME/.local/sources/Reds/Bento/assets/"
-
 #: Help page {{{
 # Function to display waybg's help page:
 help_page(){
@@ -153,8 +150,7 @@ set_image_wallpaper(){
 	kill_mpvpaper; swww img "$image" --resize crop
 
 	# Make reload image, link original wallpaper to a cache image and exit with success code:
-	printf '%s\n' "$cache_dir/wall.png" "$rofi_img_dir/wall.png" | xargs -I {} ln -sf "$image" "{}"
-	cp -fL "$image" "$bento_dir/wall.png"
+	ln -sf "$image" "$cache_dir/wall.png"
 	mkreload "$image"
 	echo_success "successfully changed wallpaper to image $wallpaper"
 }
@@ -191,8 +187,7 @@ set_video_wallpaper(){
 	mpvpaper -fo "--loop ${mpvpaper_opts}" '*' "$video"
 
 	# Make reload video, link original wallpaper to a cache video and exit with success code:
-	printf '%s\n' "$cache_dir/wall.png" "$rofi_img_dir/wall.png" | xargs -I {} ln -sf "$cache_file" "{}"
-	cp -fL "$cache_file" "$bento_dir/wall.png"
+	ln -sf "$video_thumbnail" "$cache_dir/wall.png"
 	mkreload "$video"
 	echo_success "successfully changed wallpaper to the video $wallpaper"
 }

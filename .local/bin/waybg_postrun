@@ -1,0 +1,11 @@
+#!/usr/bin/env sh
+
+waybg_img="${XDG_CACHE_HOME:-$HOME/.cache}/waybg/wall.png"
+
+rofi_dir="${XDG_CONFIG_HOME:-$HOME/.config}/rofi/images"
+bento_dir="$HOME/.local/sources/Reds/Bento/assets/"
+
+cp -fL "$waybg_img" "$rofi_dir/wall.png"
+cp -fL "$waybg_img" "$bento_dir/wall.png"
+
+# vim:fileencoding=utf-8:foldmethod=marker
