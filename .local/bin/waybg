@@ -157,7 +157,7 @@ set_image_wallpaper(){
 
 set_video_wallpaper(){
 	video="$1"
-	cache_file="$2"
+	video_thumbnail="$2"
 	black_png="/tmp/waybg_black.png"
 
 	if [ ! -f "$black_png" ]; then
@@ -203,20 +203,25 @@ set_wallpaper(){
 
 		'video/'*)
 			# If a video file is used, extract thumbnail with ffmpeg, kill current wallpaper processes, and set video wallpaper:
-			cache_file="${cache_imgs}/thumb-$(stat --printf '%n\0%i\0%F\0%s\0%W\0%Y' -- "$(readlink -f "$wallpaper")" | sha256sum | cut -d' ' -f1).png"
-			[ ! -f "$cache_file" ] && ffmpeg -y -i "$wallpaper" -frames:v 1 "$cache_file"
-			set_video_wallpaper "$wallpaper" "$cache_file"
+			video_thumbnail="${cache_imgs}/thumb-$(stat --printf '%n\0%i\0%F\0%s\0%W\0%Y' -- "$(readlink -f "$wallpaper")" | sha256sum | cut -d' ' -f1).png"
+			[ ! -f "$video_thumbnail" ] && ffmpeg -y -i "$wallpaper" -frames:v 1 "$video_thumbnail"
+			set_video_wallpaper "$wallpaper" "$video_thumbnail"
 		;;
 
-		# Set video wallpaper if it's a youtube url:
-		'http://youtu.be/'* | 'https://youtu.be/'* | 'http://'*'www.youtube.com/'* | 'https://'*'www.youtube.com/'*)
-			# If a YouTube URL is used, download thumbnail with yt-dlp, kill current wallpaper processes, and set video wallpaper:
-			cache_file="${cache_imgs}/thumb-$(echo "$wallpaper" | sha256sum | cut -d' ' -f1).png"
-			[ ! -f "$cache_file" ] && yt-dlp --write-thumbnail --convert-thumbnails png --skip-download "$wallpaper" --output "${cache_file%%.png}"
-			set_video_wallpaper "$wallpaper" "$cache_file"
-		;;
 
-		*) echoerr "no valid option or wallpaper path specified." ;;
+		*)
+			case "$wallpaper" in
+				# Set video wallpaper if it's a youtube url:
+				http://youtu.be/* | https://youtu.be/* | http://*www.youtube.com/* | https://*www.youtube.com/*)
+					# If a YouTube URL is used, download thumbnail with yt-dlp, kill current wallpaper processes, and set video wallpaper:
+					video_thumbnail="${cache_imgs}/thumb-$(echo "$wallpaper" | sha256sum | cut -d' ' -f1).png"
+					[ ! -f "$video_thumbnail" ] && yt-dlp --write-thumbnail --convert-thumbnails png --skip-download "$wallpaper" --output "${video_thumbnail%%.png}"
+					set_video_wallpaper "$wallpaper" "$video_thumbnail"
+				;;
+
+				*) echoerr "no valid option or wallpaper path specified." ;;
+			esac
+		;;
 	esac
 }
 #: }}}
