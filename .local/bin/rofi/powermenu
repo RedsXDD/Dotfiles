@@ -92,7 +92,7 @@ case "$(run_rofi)" in
 	"$lock")
 		mpc -q pause
 		amixer set Master mute
-		swaylock
+		hyprlock
 	;;
 
 	"$suspend")
