@@ -1,7 +1,6 @@
 #!/usr/bin/env sh
 
 # TODO: Add more comments.
-# TODO: Remove the need to have a fallback img.
 # TODO: Error for invalid options.
 
 # Start swww daemon if it's not running already.
@@ -15,9 +14,6 @@ reload_file="${cache_dir}/wallpaper"
 
 rofi_img_dir="${XDG_CONFIG_HOME:-$HOME/.config}/rofi/images"
 bento_dir="$HOME/.local/sources/Reds/Bento/assets/"
-
-# Fallback image:
-fallback_img="$HOME/Pictures/wallpapers/black.png"
 
 #: Help page {{{
 # Function to display waybg's help page:
@@ -163,23 +159,37 @@ set_image_wallpaper(){
 	echo_success "successfully changed wallpaper to image $wallpaper"
 }
 
+gen_black_svg(){
+	cat <<- EOF_BLACK_WALLPAPER
+	<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1920" height="1000" version="1">
+	<rect id="rectangle" style="fill:#000000" width="1920" height="1000"/>
+	</svg>
+	EOF_BLACK_WALLPAPER
+}
+
+reset_swww(){
+	black_png="/tmp/waybg_fallback.png"
+
+	if swww query | grep -q "$black_png"; then
+		return 0
+	fi
+
+	tmp_svg="$(mktemp waybg_fallback_XXXXXXXXXX.svg)"
+	trap 'rm -rf "$tmp_svg"' 0 1 15
+
+	gen_black_svg > "$tmp_svg"
+	[ ! -f "$black_png" ] && convert "$tmp_svg" "$black_png"
+
+	swww img "$black_png" --resize crop && sleep "${SWWW_TRANSITION_DURATION:-1}"
+}
+
 set_video_wallpaper(){
 	video="$1"
 	cache_file="$2"
 
-	# Check if the fallback black image is currently set, if not set it as the current wallpaper.
-	[ -z "$(swww query | grep "$fallback_img")" ] && swww img "$fallback_img" --resize crop && sleep "${SWWW_TRANSITION_DURATION:-1}"
-
-	# Make sure only mpvpaper is being used for setting the background wallpaper.
-	killall -q swww-daemon 2>/dev/null
-	while pgrep -x swww-daemon >/dev/null
-	do
-		sleep 0.1
-	done
-
 	# Set specified video as the new wallpaper, enabling audio if specified.
 	[ -z "$ENABLE_AUDIO" ] && mpvpaper_opts='--no-audio'
-	kill_mpvpaper; mpvpaper -fo "--loop ${mpvpaper_opts}" '*' "$video"
+	reset_swww; kill_mpvpaper; mpvpaper -fo "--loop ${mpvpaper_opts}" '*' "$video"
 
 	# Make reload video, link original wallpaper to a cache video and exit with success code:
 	printf '%s\n' "$cache_dir/wall.png" "$rofi_img_dir/wall.png" | xargs -I {} ln -sf "$cache_file" "{}"
