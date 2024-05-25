@@ -95,10 +95,10 @@ local plugin_config = function()
 		},
 		mappings = {
 			close = "q",
-			go_in = "<C-l>",
-			go_in_plus = "<CR>", -- Close explorer after opening file.
-			go_out = "<C-h>",
-			go_out_plus = "",
+			go_in = "l",
+			go_in_plus = "L", -- Close explorer after opening file.
+			go_out = "h",
+			go_out_plus = "K",
 			reset = "<BS>",
 			reveal_cwd = "@",
 			show_help = "?",
