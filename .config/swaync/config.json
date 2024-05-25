@@ -37,10 +37,6 @@
 		"dnd": {
 			"text": "Do Not Disturb"
 		},
-		"label": {
-			"max-lines": 1,
-			"text": "Notification Center"
-		},
 		"mpris": {
 			"image-size": 50,
 			"image-radius": 5
@@ -68,11 +64,6 @@
 				{
 					"label": "󰍃",
 					"command": "loginctl terminate-user $USER"
-				},
-				{
-					"label": "󰤄",
-					"command": "swaync-client -d",
-					"type": "toggle"
 				},
 				{
 					"label": "󰕾",
