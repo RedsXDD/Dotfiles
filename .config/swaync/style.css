@@ -5,6 +5,7 @@
 	all: unset;
 	font-size: 14px;
 	font-family: "JetBrainsNerdFont";
+	transition: 200ms;
 }
 
 trough highlight {
@@ -320,11 +321,11 @@ slider {
 
 .widget-volume label {
 	font-size: 1.5rem;
-	color: @color4;
+	color: @foreground;
 }
 
 .widget-volume trough highlight {
-	background: @color4;
+	background: @foreground;
 }
 
 .widget-backlight trough highlight {
