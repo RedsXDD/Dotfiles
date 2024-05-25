@@ -1,9 +1,9 @@
 #!/usr/bin/env sh
 
 # Exit if necessary scripts aren't in PATH:
-if ! which waybg || ! which wallust || ! which wallust_postrun || ! which flust; then
+if ! which waybg || ! which waybg_postrun || ! which wallust || ! which wallust_postrun || ! which flust; then
 	echo "ERROR: You don't have the required dependency in your PATH variable, make sure to install them correctly."
-	echo "Dependency scripts required: waybg, wallust, wallust_postrun, flust."
+	echo "Dependency scripts required: waybg, waybg_postrun, wallust, wallust_postrun, flust."
 	exit 1
 fi >/dev/null 2>&1
 
@@ -12,7 +12,7 @@ apply_colorscheme(){
 }
 
 apply_wallpaper(){
-	waybg "$1" &&
+	waybg "$1" && waybg_postrun &&
 		notify-send -t 2000 'Wallust theming' 'Generating wallust theme.' &&
 		wallust run -p dark16 "$(head -n1 "$HOME/.cache/waybg/wallpaper")" &&
 		wallust_postrun
@@ -28,7 +28,7 @@ fi
 if [ -n "$2" ]; then
 	wallpaper="$(dirname -- "$1")/$(basename -- "$1")"
 	theme="$(dirname -- "$2")/$(basename -- "$2")"
-	waybg "$wallpaper" && apply_colorscheme "$theme" && exit 0
+	waybg "$wallpaper" && waybg_postrun && apply_colorscheme "$theme" && exit 0
 fi
 
 # If only one argument was given, check if it's an wallpaper of a .json colorscheme file, and apply wallust theme accordingly.

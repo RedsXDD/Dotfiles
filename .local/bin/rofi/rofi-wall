@@ -43,4 +43,8 @@ rofi_cmd(){
 choosen_wallpaper="$(rofi_cmd)"
 [ -n "$choosen_wallpaper" ] && waybg "${wallpapers_dir}/${choosen_wallpaper}"
 
+if which waybg_postrun 2>/dev/null; then
+	[ -n "$choosen_wallpaper" ] && waybg_postrun
+fi
+
 # vim:fileencoding=utf-8:foldmethod=marker
