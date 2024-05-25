@@ -5,7 +5,7 @@ waybg_img="${XDG_CACHE_HOME:-$HOME/.cache}/waybg/wall.png"
 rofi_file="${XDG_CONFIG_HOME:-$HOME/.config}/rofi/images/wall.png"
 bento_file="$HOME/.local/sources/Reds/Bento/assets/wall.png"
 
-cp -fL "$waybg_img" "$rofi_file"
-cp -fL "$waybg_img" "$bento_file"
+cp -vfL "$waybg_img" "$rofi_file"
+cp -vfL "$waybg_img" "$bento_file"
 
 # vim:fileencoding=utf-8:foldmethod=marker
