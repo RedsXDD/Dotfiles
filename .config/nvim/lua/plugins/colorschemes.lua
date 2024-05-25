@@ -19,6 +19,7 @@ return {
 		priority = 1000,
 		opts = {
 			use_wallust = true,
+			transparent = false,
 			default_fileformats = false,
 			default_plugins = false,
 			plugins = {
