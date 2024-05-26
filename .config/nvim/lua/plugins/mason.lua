@@ -5,6 +5,9 @@ return {
 		"WhoIsSethDaniel/mason-tool-installer.nvim",
 	},
 	event = { "BufReadPre", "BufNewFile" },
+	keys = {
+		{ "<Leader>gm", "<CMD>Mason<CR>", desc = "Open Mason UI." },
+	},
 	cmd = "Mason",
 	build = ":MasonUpdate",
 	config = function()
@@ -27,26 +30,17 @@ return {
 			},
 		})
 
-		mason_lspconfig.setup({
-			automatic_installation = true,
+		mason_lspconfig.setup({})
+		mason_tool_installer.setup({
 			ensure_installed = {
+				"stylua",
 				"lua_ls",
 				"bashls",
 				"clangd",
 				"yamlls",
+				"rust-analyzer",
+				"shfmt",
 			},
-		})
-
-		-- mason_tool_installer.setup({ ensure_installed = mason_list })
-		mason_tool_installer.setup({
-			ensure_installed = {
-				"eslint_d",
-				"pylint",
-				"stylua",
-				"prettier",
-				"black",
-				"isort",
-			}
 		})
 	end,
 }
