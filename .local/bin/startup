@@ -1,0 +1,26 @@
+#!/usr/bin/env sh
+
+pgrep -x waybar >/dev/null 2>&1 || waybar &
+sleep 1
+
+pgrep -x mpd >/dev/null 2>&1 || mpd &
+pgrep -x keepassxc >/dev/null 2>&1 || keepassxc &
+pgrep -x gammastep >/dev/null 2>&1 || gammastep &
+pgrep -x transmission-daemon >/dev/null 2>&1 || transmission-daemon &
+
+# # Polkit agent:
+pgrep -f polkit-gnome-authentication-agent-1 >/dev/null 2>&1 || /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
+
+# Cliphist:
+if ! pgrep -x wl-paste >/dev/null 2>&1; then
+	wl-paste --type text --watch cliphist store &  # Stores only text data
+	wl-paste --type image --watch cliphist store & # Stores only image data
+	wl-clip-persist --clipboard both &
+fi
+
+# Wallpaper:
+if which waybg >/dev/null 2>&1; then
+	waybg -R
+fi
+
+# # vim:fileencoding=utf-8:foldmethod=marker
