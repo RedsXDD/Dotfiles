@@ -225,37 +225,40 @@ set_wallpaper(){
 	esac
 }
 #: }}}
-#: Read options {{{
-# All options are read by this while loop:
-while [ "$1" ]
-do
-	case "$1" in
-		'-R' | '--reload')    RELOAD='true'       ;;
-		'-a' | '--audio')     ENABLE_AUDIO='true' ;;
-		'-r' | '--recurse')   RECURSIVENESS="$2"  ;;
-		'-f' | '--use-fd')    USE_FD='true'       ;;
-		'-m' | '--use-mimes') USE_MIMES='true'    ;;
-		'-Q' | '--quiet')     QUIET='true'        ;;
-		'-h' | '--help' | '-'*) help_page         ;;
-	esac
+#: Main {{{
+main(){
+	# All options are read by this while loop:
+	while [ "$1" ]
+	do
+		case "$1" in
+			'-R' | '--reload')    RELOAD='true'       ;;
+			'-a' | '--audio')     ENABLE_AUDIO='true' ;;
+			'-r' | '--recurse')   RECURSIVENESS="$2"  ;;
+			'-f' | '--use-fd')    USE_FD='true'       ;;
+			'-m' | '--use-mimes') USE_MIMES='true'    ;;
+			'-Q' | '--quiet')     QUIET='true'        ;;
+			'-h' | '--help' | '-'*) help_page         ;;
+		esac
 
-	# Make sure the wallpaper path is the last argument to be read.
-	wallpaper="$1"; shift
-done
+		# Make sure the wallpaper path is the last argument to be read.
+		wallpaper="$1"; shift
+	done
 
-# Reload previous wallpaper if specified
-if [ -n "$RELOAD" ]; then
-	[ ! -f "$reload_file" ] && echoerr "Reload file not found."
-	wallpaper="$(readlink -f -- "$(head -n1 "$reload_file")")"
+	# Reload previous wallpaper if specified
+	if [ -n "$RELOAD" ]; then
+		[ ! -f "$reload_file" ] && echoerr "Reload file not found."
+		wallpaper="$(readlink -f -- "$(head -n1 "$reload_file")")"
+		set_wallpaper "$wallpaper"
+	fi
+
+	# Error if no file/directory/option/URL was specified:
+	[ -z "$wallpaper" ] && echoerr "no valid option or wallpaper path specified."
+
+	[ -d "$wallpaper" ] && directory_search "$wallpaper"
+
 	set_wallpaper "$wallpaper"
-fi
-
-# Error if no file/directory/option/URL was specified:
-[ -z "$wallpaper" ] && echoerr "no valid option or wallpaper path specified."
-
-[ -d "$wallpaper" ] && directory_search "$wallpaper"
-
-set_wallpaper "$wallpaper"
+}
+main "$@"
 #: }}}
 
 # vim:fileencoding=utf-8:foldmethod=marker:foldenable
