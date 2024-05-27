@@ -41,7 +41,7 @@ return {
 				},
 				window = {
 					completion = {
-						winhighlight = "Normal:Normal,FloatBorder:Pmenu,Search:None",
+						winhighlight = "Normal:Pmenu",
 						col_offset = -3,
 						side_padding = 0,
 					},
