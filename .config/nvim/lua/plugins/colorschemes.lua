@@ -19,7 +19,7 @@ return {
 		priority = 1000,
 		opts = {
 			use_wallust = true,
-			transparent = false,
+			transparent = true,
 			default_fileformats = false,
 			default_plugins = true,
 			custom_highlights = function(colors)
