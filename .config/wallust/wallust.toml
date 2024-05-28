@@ -1,5 +1,5 @@
 # backend = "full"
-color_space = "labmixed"
+color_space = "lchansi"
 palette = "dark16"
 
 [templates]
