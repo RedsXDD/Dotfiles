@@ -3,6 +3,7 @@
 pgrep -x waybar >/dev/null 2>&1 || waybar &
 sleep 1
 
+pgrep -x swaync >/dev/null 2>&1 || swaync &
 pgrep -x mpd >/dev/null 2>&1 || mpd &
 pgrep -x keepassxc >/dev/null 2>&1 || keepassxc &
 pgrep -x gammastep >/dev/null 2>&1 || gammastep &
@@ -23,4 +24,4 @@ if which waybg >/dev/null 2>&1; then
 	waybg -R
 fi
 
-# # vim:fileencoding=utf-8:foldmethod=marker
+# vim:fileencoding=utf-8:foldmethod=marker
