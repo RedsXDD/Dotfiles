@@ -33,7 +33,7 @@
   "mini.starter": { "branch": "main", "commit": "3c6ed3caaadef35291e98f0701038254ee1e78b0" },
   "mini.surround": { "branch": "main", "commit": "27096c1a27324ee8f2044ea2adc77366d8a782de" },
   "mini.tabline": { "branch": "main", "commit": "d2331ba3a332227c3a2b5e8daf464d4b3135381e" },
-  "neopywal": { "branch": "testing", "commit": "5045099db0e1502314dc90c4643a54c3102b0343" },
+  "neopywal": { "branch": "testing", "commit": "894ec1a557c261f081afed1f2488bb9cda30cb84" },
   "nvim-cmp": { "branch": "main", "commit": "5260e5e8ecadaf13e6b82cf867a909f54e15fd07" },
   "nvim-lspconfig": { "branch": "master", "commit": "38de86f82efd9ba0881203767d6a8e1815abca28" },
   "nvim-treesitter": { "branch": "master", "commit": "ea2b137f35fb1e87a6471ec311805920fdf45745" },
