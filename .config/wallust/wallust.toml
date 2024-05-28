@@ -1,3 +1,7 @@
+# backend = "full"
+color_space = "labmixed"
+palette = "dark16"
+
 [templates]
 alacritty.template = "templates/colors_alacritty.toml"
 alacritty.target = "~/.config/alacritty/alacritty_wallust.toml"
