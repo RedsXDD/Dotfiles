@@ -1,6 +1,6 @@
-# backend = "full"
-color_space = "lchansi"
-palette = "dark16"
+backend = "wal"
+color_space = "lab"
+palette = "harddark16"
 
 [templates]
 alacritty.template = "templates/colors_alacritty.toml"
