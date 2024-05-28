@@ -2,11 +2,11 @@
 
 gen_script(){
 	cat <<- EOF
-	#!/usr/bin/env sh
+		#!/usr/bin/env sh
 
 
 
-	# vim:fileencoding=utf-8:foldmethod=marker
+		# vim:fileencoding=utf-8:foldmethod=marker
 	EOF
 }
 
