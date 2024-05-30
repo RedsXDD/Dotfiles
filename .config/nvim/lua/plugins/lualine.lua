@@ -4,7 +4,8 @@ return {
 	event = { "BufReadPost", "BufNewFile", "BufUnload" },
 	opts = function()
 		local icons = require("user.icons").icons
-		return {
+
+		local opts = {
 			options = {
 				theme = "neopywal",
 				icons_enabled = true,
@@ -24,17 +25,17 @@ return {
 				"mason",
 				"neo-tree",
 			},
+		}
+
+		local global_sections = {
 			sections = {
-				lualine_a = {
-					{ "mode", separator = { left = "" }, padding = { left = 0, right = 1 }, },
-				},
 				lualine_b = {
-					{ "filetype" },
+					"filetype",
 					"filesize",
-					{ "filename", padding = { left = 1, right = 0 }, },
+					{ "filename", padding = { left = 1, right = 1 } },
 				},
 				lualine_c = {
-					{ "branch" },
+					"branch",
 					{
 						"diff",
 						symbols = {
@@ -71,59 +72,49 @@ return {
 					},
 				},
 				lualine_x = {},
+			},
+		}
+
+		local theme = {
+			options = {
+				section_separators = { left = "", right = "" },
+			},
+			sections = {
+				lualine_a = {
+					{ "mode", separator = { left = "", right = "" }, padding = { left = 0, right = 0 } },
+				},
 				lualine_y = {
 					{ "encoding", padding = { left = 0, right = 1 } },
 					{ "fileformat", icons_enabled = false, padding = { left = 1, right = 1 } },
 					{ "progress", padding = { left = 1, right = 1 } },
 				},
 				lualine_z = {
-					{ "location", separator = { right = "" }, padding = { left = 1, right = 0 } },
+					{ "location", separator = { left = "", right = "" }, padding = { left = 0, right = 0 } },
 				},
 			},
 		}
-	end,
-	config = function(_, opts)
-		local lualine = require("lualine")
-		local options = opts.options
-		local sections = opts.sections
 
-		-- Create a configuration that's TTY compatible.
-		if vim.env.DISPLAY ~= nil then
-			options.section_separators = { left = "", right = "" }
-		else
-			options.section_separators = ""
+		local tty_theme = {
+			options = {
+				section_separators = "",
+				icons_enabled = false,
+			},
+			sections = {
+				lualine_a = {
+					{ "mode", padding = { left = 1, right = 1 } },
+				},
+				lualine_y = {
+					{ "encoding", padding = { left = 1, right = 1 } },
+					{ "fileformat", padding = { left = 1, right = 1 } },
+					{ "progress", padding = { left = 1, right = 1 } },
+				},
+				lualine_z = {
+					{ "location", padding = { left = 1, right = 1 } },
+				},
+			},
+		}
 
-			-- Define a map of component names that need to be modified to their corresponding sections:
-			local component_map = {
-				["mode"] = sections.lualine_a,
-				["filetype"] = sections.lualine_b,
-				["filename"] = sections.lualine_b,
-				["branch"] = sections.lualine_c,
-				["encoding"] = sections.lualine_y,
-				["location"] = sections.lualine_z
-			}
-
-			for comp_name, section in pairs(component_map) do
-				for _, comp in ipairs(section) do
-					if comp[1] == comp_name then
-						if comp_name == "mode" then
-							comp.separator = { left = "", right = "" }
-							comp.padding = { left = 1, right = 1 }
-						elseif comp_name == "filetype" or comp_name == "filename" or comp_name == "encoding" then
-							comp.icons_enabled = false
-							comp.padding = { left = 1, right = 1 }
-						elseif comp_name == "branch" then
-							comp.icons_enabled = false
-						elseif comp_name == "location" then
-							comp.separator = { left = "" }
-							comp.padding = { left = 1, right = 1 }
-						end
-						break
-					end
-				end
-			end
-		end
-
-		lualine.setup(opts)
+		-- Use different themes if Neovim is being ran on a TTY enviroment or not.
+		return vim.tbl_deep_extend("force", opts, global_sections, vim.env.DISPLAY ~= nil and theme or tty_theme)
 	end,
 }
