@@ -192,7 +192,6 @@ return {
 		-- stylua: ignore end
 		--: }}}
 		--: Return options table {{{
-		vim.o.laststatus = 0 -- Disable statusline when mini.starter opens.
 		return {
 			evaluate_single = true,
 			header = header,
