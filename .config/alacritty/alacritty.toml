@@ -228,8 +228,8 @@ columns = 0
 lines = 0
 
 [window.padding]
-x = 5
-y = 5
+x = 1
+y = 1
 
 [window.position]
 x = 0
