@@ -20,7 +20,7 @@ return {
 		opts = {
 			use_wallust = true,
 			transparent = true,
-			default_fileformats = false,
+			default_fileformats = true,
 			default_plugins = true,
 			custom_highlights = function(colors)
 				local U = require("neopywal.util")
