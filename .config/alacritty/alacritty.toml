@@ -33,7 +33,7 @@ TERM = "alacritty"
 
 [font]
 builtin_box_drawing = true
-size = 15
+size = 12
 
 [font.bold]
 family = "JetBrainsMonoNerdFont"

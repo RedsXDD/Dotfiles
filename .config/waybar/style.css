@@ -22,8 +22,8 @@
 
 /* Main configuration {{{ */
 * {
-	font-family: JetBrainsMonoNerdFont;
-	font-size: 14px;
+	font-family: monospace;
+	font-size: 12px;
 	font-weight: bold;
 	border: none;
 	margin: 0;
@@ -78,7 +78,7 @@ tooltip label {
 #workspaces button.urgent,
 #workspaces button:hover {
 	color: @background;
-	padding: 0.45em 0.76em 0.45em 0.35em;
+	padding: 0.45em 0.60em 0.45em 0.27em;
 	margin: 0.36em;
 	border-radius: 100px;
 }
