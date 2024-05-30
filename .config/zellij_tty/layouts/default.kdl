@@ -1,4 +1,4 @@
-// vim:fileencoding=utf-8:foldmethod=marker:filetype=scss:foldenable
+// vim:fileencoding=utf-8:foldmethod=marker:foldenable
 
 layout {
 	tab_template name="ui" {
@@ -32,10 +32,10 @@ layout {
 	//: }}}
 	//: Swap layout "Horizontal" {{{
 	swap_tiled_layout name="HORIZONTAL" {
-	 	ui max_panes=5 {
-	 		pane
-	 		pane
-	 	}
+		ui max_panes=5 {
+			pane
+			pane
+		}
 		ui max_panes=8 {
 			pane {
 				pane split_direction="vertical" { children; }
@@ -107,7 +107,7 @@ layout {
 	//: Zjstatus configuration {{{
 	default_tab_template {
 		pane size=1 borderless=true {
-			plugin location="file:$HOME/.config/zellij/plugins/zjstatus.wasm" {
+			plugin location="file:$HOME/.config/zellij_tty/plugins/zjstatus.wasm" {
 				hide_frame_for_single_pane "false"
 
 				// Zjstatus border options:
@@ -123,7 +123,7 @@ layout {
 				format_space  ""
 
 				datetime        "#[bg=white,fg=black,bold] {format} "
-				datetime_format "%a, %d %b %Y %H:%M"
+				datetime_format "%H:%M"
 				datetime_timezone "Brazil/East"
 
 				// Mode configuration:

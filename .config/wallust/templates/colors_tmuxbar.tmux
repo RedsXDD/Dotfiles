@@ -40,7 +40,7 @@ set -g status-left "#[none,bg=$background_color,#{?client_prefix,fg=color1,fg=co
 # Right status bar:
 set -g status-right " \
 			#[none,bg=$background_color,fg=$foreground_color]\
-			#[none,bg=$foreground_color,fg=$txt_color,bold]%a, %d %b %Y, %H:%M \
+			#[none,bg=$foreground_color,fg=$txt_color,bold]%H:%M \
 			#[none,bg=color4,fg=$txt_color,bold]  \
 			#[none,bg=$background_color,fg=color4]"
 

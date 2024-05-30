@@ -37,7 +37,7 @@ set -g status-left "#[none,#{?client_prefix,bg=color1,bg=color4},fg=$txt_color,b
 
 # Right status bar:
 set -g status-right " \
-			#[none,bg=$foreground_color,fg=$txt_color,bold] %a, %d %b %Y %H:%M \
+			#[none,bg=$foreground_color,fg=$txt_color,bold] %H:%M \
 			#[none,bg=color4,fg=$txt_color,bold] T "
 
 # Inactive window style:
