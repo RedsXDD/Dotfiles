@@ -5,7 +5,7 @@
  *
  **/
 
-/* Import Pywal Colorscheme */
+/* Import wallust colorscheme */
 @import "~/.config/rofi/colors.rasi"
 
 /*****----- Configuration -----*****/
