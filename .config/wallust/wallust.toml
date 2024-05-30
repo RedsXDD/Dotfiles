@@ -27,9 +27,6 @@ starship.target = "~/.config/starship.toml"
 swaync.template = "templates/colors_swaync.css"
 swaync.target = "~/.config/swaync/swaync_wallust.css"
 
-tmuxbar.template = "templates/colors_tmuxbar.tmux"
-tmuxbar.target = "~/.config/tmux/statusbar/tmuxbar_wallust.tmux"
-
 tty.template = "templates/colors_tty.sh"
 tty.target = "~/.cache/wallust/colors_tty.sh"
 
