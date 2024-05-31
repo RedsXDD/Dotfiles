@@ -10,6 +10,7 @@ return {
 		{ "<Leader>sn", desc = "Update `MiniSurround.config.n_lines`." },
 	},
 	opts = {
+		respect_selection_type = true,
 		mappings = {
 			add = "<Leader>sa", -- Add surrounding in Normal and Visual modes.
 			delete = "<Leader>sd", -- Delete surrounding.
