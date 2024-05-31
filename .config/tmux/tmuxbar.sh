@@ -125,4 +125,6 @@ set message-command-style "#{?pane_active,bg=$background,bg=color8},fg=color8,bo
 [ -z "$DISPLAY" ] && tty_theme && exit 0
 theme
 
+[ -n "$DISPLAY" ] && [ -f "$HOME/.config/tmux/window_icons.sh" ] && set automatic-rename-format "#($HOME/.config/tmux/window_icons.sh #{pane_current_command} #{window_panes})"
+
 # vim:fileencoding=utf-8:foldmethod=marker
