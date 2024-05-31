@@ -38,24 +38,24 @@ theme() {
 	local mode_symbol="#{?pane_in_mode,$pane_mode_symbol,#{?window_zoomed_flag,$pane_zoom_symbol,#{?pane_synchronized,$pane_sync_symbol,$pane_default_symbol}}}"
 
 	# Left statusbar:
-	set status-left "#[none,bold,#{?client_prefix,fg=$prefix_active_color,fg=$prefix_color}]$mode_symbol #S "
+	set status-left "#[none,bold,#{?client_prefix,fg=$prefix_active_color,fg=$prefix_color}]$mode_symbol #[none,bold,fg=$txt_color]#S "
 
 	# Right statusbar:
 	set status-right \
 		" " \
-		"#[none,bold,fg=$date_color]%a %d/%m   " \
-		"#[none,bold,fg=$time_color]%H:%M  "
+		"#[none,bold,fg=$txt_color]#H #[none,bold,fg=$hostname_color]  " \
+		"#[none,bold,fg=$txt_color]%a %d/%m #[none,bold,fg=$date_color]  " \
+		"#[none,bold,fg=$txt_color]%H:%M #[none,bold,fg=$time_color] "
 
 	# Currently active window style:
-	set window-status-current-format \
-		"#[none,bold,fg=$active_window_color]#I#{?pane_in_mode,tmux,#W}" \
+	set window-status-current-format "#[none,bold,fg=$active_window_color]#I#W" \
 
 	# Inactive window style:
 	set window-status-format \
 		"#[none,bold,#{?window_last_flag,fg=$last_window_color,fg=$normal_window_color}]" \
 		"#I" \
 		"#{?window_last_flag,*,}" \
-		"#{?pane_in_mode,tmux,#W}"
+		"#W"
 }
 
 tty_theme() {
@@ -66,21 +66,24 @@ tty_theme() {
 	local mode_symbol="#{?pane_in_mode,$pane_mode_symbol,#{?window_zoomed_flag,$pane_zoom_symbol,#{?pane_synchronized,$pane_sync_symbol,$pane_default_symbol}}}"
 
 	# Left statusbar:
-	set status-left "#[none,bold,#{?client_prefix,fg=$prefix_active_color,fg=$prefix_color}]($mode_symbol)[#S] "
+	set status-left "#[none,bold,#{?client_prefix,fg=$prefix_active_color,fg=$prefix_color}]($mode_symbol) #[none,bold,fg=$txt_color]#S "
 
 	# Right statusbar:
-	set status-right " #[none,bold,fg=$time_color]%a, %d/%m, %H:%M"
+	set status-right \
+		" " \
+		"#[none,bold,fg=$txt_color]#H#[none,bold,fg=$hostname_color]:H" "  " \
+		"#[none,bold,fg=$txt_color]%a, %d/%m#[none,bold,fg=$date_color]:D" "  " \
+		"#[none,bold,fg=$txt_color]%H:%M#[none,bold,fg=$time_color]:T" "  "
 
 	# Currently active window style:
-	set window-status-current-format \
-		"#[none,bold,fg=$active_window_color]#I:#{?pane_in_mode,tmux,#W}" \
+	set window-status-current-format "#[none,bold,fg=$active_window_color]#I:#W" \
 
 	# Inactive window style:
 	set window-status-format \
 		"#[none,bold,#{?window_last_flag,fg=$last_window_color,fg=$normal_window_color}]" \
 		"#I" \
 		"#{?window_last_flag,*,:}" \
-		"#{?pane_in_mode,tmux,#W}"
+		"#W"
 }
 
 # Apply wallust/pywal theme if existent (only if tmux is not being ran inside a TTY).
@@ -99,20 +102,21 @@ foreground="${foreground:-color7}"
 txt_color="$foreground"
 prefix_color="color6"
 prefix_active_color="color1"
-date_color="$txt_color"
-time_color="$txt_color"
+hostname_color="color11"
+date_color="color5"
+time_color="color6"
 normal_window_color="$txt_color"
 active_window_color="color2"
 last_window_color="$txt_color"
 
-# General status bar options:
+# General statusbar options:
 set window-status-separator '  ' # Window separator.
-set status-left-length 100       # Left status bar length.
-set status-right-length 100      # Right status bar length.
-set status-left-style default    # Default left status bar style.
-set status-right-style default   # Default right status bar style.
-set status-position top          # Set status bar posisiton.
-set status-justify centre        # Center window status bar.
+set status-left-length 100       # Left statusbar length.
+set status-right-length 100      # Right statusbar length.
+set status-left-style default    # Default left statusbar style.
+set status-right-style default   # Default right statusbar style.
+set status-position top          # Set statusbar posisiton.
+set status-justify centre        # Window statusbar position.
 
 # General styling:
 setw clock-mode-colour "color4"                       # Clock mode.
