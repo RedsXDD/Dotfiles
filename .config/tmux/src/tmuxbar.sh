@@ -37,7 +37,7 @@ theme() {
 	local mode_symbol="#{?pane_in_mode,$pane_mode_symbol,#{?window_zoomed_flag,$pane_zoom_symbol,#{?pane_synchronized,$pane_sync_symbol,$pane_default_symbol}}}"
 
 	# Left statusbar:
-	git_status="#($HOME/.config/tmux/git_status.sh #{pane_current_path})"
+	git_status="#(${SRCDIR}/git_status.sh #{pane_current_path})"
 	set status-left "#[none,bold,#{?client_prefix,fg=$prefix_active_color,fg=$prefix_color}]$mode_symbol #[none,bold,fg=$txt_color]#S ${git_status} "
 
 	# Right statusbar:
@@ -88,7 +88,8 @@ if [ -n "$DISPLAY" ]; then
 	fi
 fi
 
-# Main color variables:
+# Main variables:
+SRCDIR="${XDG_CONFIG_HOME:-HOME/.config}/tmux/src"
 background="${background:-color0}"
 foreground="${foreground:-color7}"
 txt_color="$foreground"
@@ -126,6 +127,6 @@ set message-command-style "#{?pane_active,bg=$background,bg=color8},fg=color8,bo
 theme
 
 # Apply window icon names:
-[ -n "$DISPLAY" ] && [ -f "$HOME/.config/tmux/window_icons.sh" ] && set automatic-rename-format "#($HOME/.config/tmux/window_icons.sh #{pane_current_command} #{window_panes})"
+[ -n "$DISPLAY" ] && [ -f "${SRCDIR}/window_icons.sh" ] && set automatic-rename-format "#(${SRCDIR}/window_icons.sh #{pane_current_command} #{window_panes})"
 
 # vim:fileencoding=utf-8:foldmethod=marker

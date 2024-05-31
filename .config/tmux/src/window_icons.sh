@@ -10,7 +10,8 @@ fi
 
 NAME="$1"
 PANES="$2"
-CONFIG_FILE="${XDG_CONFIG_HOME:-$HOME/.config}/tmux/window_icons.yml"
+SRCDIR="${XDG_CONFIG_HOME:-HOME/.config}/tmux/src"
+CONFIG_FILE="${SRCDIR}/window_icons.yml"
 
 get_config_value() {
 	key=$1
