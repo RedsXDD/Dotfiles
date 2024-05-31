@@ -29,7 +29,6 @@ setw() {
 	tmux set-window-option -gq "$option" "$value"
 }
 
-# Default variables:
 theme() {
 	local pane_sync_symbol=''
 	local pane_mode_symbol='󰧑'
@@ -38,7 +37,8 @@ theme() {
 	local mode_symbol="#{?pane_in_mode,$pane_mode_symbol,#{?window_zoomed_flag,$pane_zoom_symbol,#{?pane_synchronized,$pane_sync_symbol,$pane_default_symbol}}}"
 
 	# Left statusbar:
-	set status-left "#[none,bold,#{?client_prefix,fg=$prefix_active_color,fg=$prefix_color}]$mode_symbol #[none,bold,fg=$txt_color]#S "
+	git_status="#($HOME/.config/tmux/git_status.sh #{pane_current_path})"
+	set status-left "#[none,bold,#{?client_prefix,fg=$prefix_active_color,fg=$prefix_color}]$mode_symbol #[none,bold,fg=$txt_color]#S ${git_status} "
 
 	# Right statusbar:
 	set status-right \
@@ -48,7 +48,7 @@ theme() {
 		"#[none,bold,fg=$txt_color]%H:%M #[none,bold,fg=$time_color] "
 
 	# Currently active window style:
-	set window-status-current-format "#[none,bold,fg=$active_window_color]#I#W" \
+	set window-status-current-format "#[none,bold,fg=$active_window_color]#I#W"
 
 	# Inactive window style:
 	set window-status-format "#[none,bold,#{?window_last_flag,fg=$last_window_color,fg=$normal_window_color}]#I#{?window_last_flag,*,}#W"
@@ -72,7 +72,7 @@ tty_theme() {
 		"#[none,bold,fg=$txt_color]%H:%M#[none,bold,fg=$time_color]:T" "  "
 
 	# Currently active window style:
-	set window-status-current-format "#[none,bold,fg=$active_window_color]#I:#W" \
+	set window-status-current-format "#[none,bold,fg=$active_window_color]#I:#W"
 
 	# Inactive window style:
 	set window-status-format "#[none,bold,#{?window_last_flag,fg=$last_window_color,fg=$normal_window_color}]#I#{?window_last_flag,*,:}#W"
