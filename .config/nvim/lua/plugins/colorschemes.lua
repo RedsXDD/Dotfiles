@@ -41,8 +41,8 @@ return {
 					CmpItemKindModule = { link = "CmpItemKindConstructor" }, -- Link Include
 					CmpItemKindUnit = { link = "CmpItemKindConstructor" }, -- Link Number
 					CmpItemKindSnippet = { link = "CmpItemKindModule" },
-					CmpItemKindClass   = { bg = colors.color6, fg = colors.background }, -- Link StorageClass
-					CmpItemKindStruct  = { link = "CmpItemKindClass" }, -- Link Structure
+					CmpItemKindClass = { bg = colors.color6, fg = colors.background }, -- Link StorageClass
+					CmpItemKindStruct = { link = "CmpItemKindClass" }, -- Link Structure
 					CmpItemKindCopilot = { link = "CmpItemKindClass" },
 					CmpItemKindTabNine = { link = "CmpItemKindClass" },
 					CmpItemKindTypeParameter = { bg = colors.color11, fg = colors.background }, -- Link Identifier
@@ -55,16 +55,5 @@ return {
 				}
 			end,
 		},
-		config = function(_, opts)
-			local neopywal = require("neopywal")
-			neopywal.setup(opts)
-
-			if vim.env.DISPLAY ~= nil then
-				vim.cmd.colorscheme("neopywal")
-			else
-				vim.cmd([[set notermguicolors]])
-				vim.cmd.colorscheme("default")
-			end
-		end,
 	},
 }
