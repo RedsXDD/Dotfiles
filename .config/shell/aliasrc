@@ -85,7 +85,7 @@ alias \
 alias \
 	ls='eza -a' \
 	la='eza -1a' \
-	ll='eza -lah' \
+	ll='eza -lah --git' \
 	lt='eza --git-ignore -aTL 2' \
 	lT='eza --git-ignore -aT'
 #: }}}
