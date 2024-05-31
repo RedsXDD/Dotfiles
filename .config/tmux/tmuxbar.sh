@@ -44,7 +44,7 @@ theme() {
 	set status-right \
 		" " \
 		"#[none,bold,fg=$txt_color]#H #[none,bold,fg=$hostname_color]  " \
-		"#[none,bold,fg=$txt_color]%a %d/%m #[none,bold,fg=$date_color]  " \
+		"#[none,bold,fg=$txt_color]%d-%b-%y #[none,bold,fg=$date_color]  " \
 		"#[none,bold,fg=$txt_color]%H:%M #[none,bold,fg=$time_color] "
 
 	# Currently active window style:
@@ -72,7 +72,7 @@ tty_theme() {
 	set status-right \
 		" " \
 		"#[none,bold,fg=$txt_color]#H#[none,bold,fg=$hostname_color]:H" "  " \
-		"#[none,bold,fg=$txt_color]%a, %d/%m#[none,bold,fg=$date_color]:D" "  " \
+		"#[none,bold,fg=$txt_color]%d-%b-%y#[none,bold,fg=$date_color]:D" "  " \
 		"#[none,bold,fg=$txt_color]%H:%M#[none,bold,fg=$time_color]:T" "  "
 
 	# Currently active window style:
