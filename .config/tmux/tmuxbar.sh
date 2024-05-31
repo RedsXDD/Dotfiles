@@ -106,13 +106,13 @@ active_window_color="color2"
 last_window_color="$txt_color"
 
 # General status bar options:
-set window-status-separator ' ' # Window separator.
-set status-left-length 100      # Left status bar length.
-set status-right-length 100     # Right status bar length.
-set status-left-style default   # Default left status bar style.
-set status-right-style default  # Default right status bar style.
-set status-position top         # Set status bar posisiton.
-set status-justify centre       # Center window status bar.
+set window-status-separator '  ' # Window separator.
+set status-left-length 100       # Left status bar length.
+set status-right-length 100      # Right status bar length.
+set status-left-style default    # Default left status bar style.
+set status-right-style default   # Default right status bar style.
+set status-position top          # Set status bar posisiton.
+set status-justify centre        # Center window status bar.
 
 # General styling:
 setw clock-mode-colour "color4"                       # Clock mode.
@@ -129,6 +129,7 @@ set message-command-style "#{?pane_active,bg=$background,bg=color8},fg=color8,bo
 [ -z "$DISPLAY" ] && tty_theme && exit 0
 theme
 
+# Apply window icon names:
 [ -n "$DISPLAY" ] && [ -f "$HOME/.config/tmux/window_icons.sh" ] && set automatic-rename-format "#($HOME/.config/tmux/window_icons.sh #{pane_current_command} #{window_panes})"
 
 # vim:fileencoding=utf-8:foldmethod=marker
