@@ -34,7 +34,7 @@ theme() {
 	local pane_sync_symbol=''
 	local pane_mode_symbol='󰧑'
 	local pane_zoom_symbol='󰍋'
-	local pane_default_symbol=''
+	local pane_default_symbol='󰮊'
 	local mode_symbol="#{?pane_in_mode,$pane_mode_symbol,#{?window_zoomed_flag,$pane_zoom_symbol,#{?pane_synchronized,$pane_sync_symbol,$pane_default_symbol}}}"
 
 	# Left statusbar:
@@ -48,12 +48,14 @@ theme() {
 
 	# Currently active window style:
 	set window-status-current-format \
-		"#[none,bold,fg=$active_window_color]*#I#{?pane_in_mode,tmux,#W}" \
+		"#[none,bold,fg=$active_window_color]#I#{?pane_in_mode,tmux,#W}" \
 
 	# Inactive window style:
 	set window-status-format \
 		"#[none,bold,#{?window_last_flag,fg=$last_window_color,fg=$normal_window_color}]" \
-		"#{?window_last_flag,*,}#I#{?pane_in_mode,tmux,#W}"
+		"#I" \
+		"#{?window_last_flag,*,}" \
+		"#{?pane_in_mode,tmux,#W}"
 }
 
 tty_theme() {
@@ -71,12 +73,14 @@ tty_theme() {
 
 	# Currently active window style:
 	set window-status-current-format \
-		"#[none,bold,fg=$active_window_color]*#I:#{?pane_in_mode,tmux,#W}" \
+		"#[none,bold,fg=$active_window_color]#I:#{?pane_in_mode,tmux,#W}" \
 
 	# Inactive window style:
 	set window-status-format \
 		"#[none,bold,#{?window_last_flag,fg=$last_window_color,fg=$normal_window_color}]" \
-		"#{?window_last_flag,*,}#I:#{?pane_in_mode,tmux,#W}"
+		"#I" \
+		"#{?window_last_flag,*,:}" \
+		"#{?pane_in_mode,tmux,#W}"
 }
 
 # Apply wallust/pywal theme if existent (only if tmux is not being ran inside a TTY).
