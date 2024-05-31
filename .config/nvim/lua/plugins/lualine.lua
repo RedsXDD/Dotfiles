@@ -32,7 +32,7 @@ return {
 				lualine_b = {
 					"filetype",
 					"filesize",
-					{ "filename", padding = { left = 1, right = 1 } },
+					"filename",
 				},
 				lualine_c = {
 					"branch",
@@ -84,9 +84,9 @@ return {
 					{ "mode", separator = { left = "", right = "" }, padding = { left = 0, right = 0 } },
 				},
 				lualine_y = {
-					{ "encoding", padding = { left = 0, right = 1 } },
-					{ "fileformat", icons_enabled = false, padding = { left = 1, right = 1 } },
-					{ "progress", padding = { left = 1, right = 1 } },
+					"encoding",
+					{ "fileformat", icons_enabled = false },
+					{ "progress" },
 				},
 				lualine_z = {
 					{ "location", separator = { left = "", right = "" }, padding = { left = 0, right = 0 } },
@@ -101,15 +101,15 @@ return {
 			},
 			sections = {
 				lualine_a = {
-					{ "mode", padding = { left = 1, right = 1 } },
+					"mode",
 				},
 				lualine_y = {
-					{ "encoding", padding = { left = 1, right = 1 } },
-					{ "fileformat", padding = { left = 1, right = 1 } },
-					{ "progress", padding = { left = 1, right = 1 } },
+					"encoding",
+					"fileformat",
+					"progress",
 				},
 				lualine_z = {
-					{ "location", padding = { left = 1, right = 1 } },
+					"location",
 				},
 			},
 		}
