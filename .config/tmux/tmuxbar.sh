@@ -51,11 +51,7 @@ theme() {
 	set window-status-current-format "#[none,bold,fg=$active_window_color]#I#W" \
 
 	# Inactive window style:
-	set window-status-format \
-		"#[none,bold,#{?window_last_flag,fg=$last_window_color,fg=$normal_window_color}]" \
-		"#I" \
-		"#{?window_last_flag,*,}" \
-		"#W"
+	set window-status-format "#[none,bold,#{?window_last_flag,fg=$last_window_color,fg=$normal_window_color}]#I#{?window_last_flag,*,}#W"
 }
 
 tty_theme() {
@@ -79,11 +75,7 @@ tty_theme() {
 	set window-status-current-format "#[none,bold,fg=$active_window_color]#I:#W" \
 
 	# Inactive window style:
-	set window-status-format \
-		"#[none,bold,#{?window_last_flag,fg=$last_window_color,fg=$normal_window_color}]" \
-		"#I" \
-		"#{?window_last_flag,*,:}" \
-		"#W"
+	set window-status-format "#[none,bold,#{?window_last_flag,fg=$last_window_color,fg=$normal_window_color}]#I#{?window_last_flag,*,:}#W"
 }
 
 # Apply wallust/pywal theme if existent (only if tmux is not being ran inside a TTY).
