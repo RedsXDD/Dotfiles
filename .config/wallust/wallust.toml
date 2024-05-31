@@ -36,12 +36,6 @@ waybar.target = "~/.config/waybar/shared/colors.css"
 waybar_clock.template = "templates/colors_waybar_clock.jsonc"
 waybar_clock.target = "~/.config/waybar/shared/clock_wallust.jsonc"
 
-zellij.template = "templates/colors_zellij.kdl"
-zellij.target = "~/.config/zellij/themes/wallust.kdl"
-
-zjstatus.template = "templates/colors_zjstatus.kdl"
-zjstatus.target = "~/.config/zellij/layouts/default.kdl"
-
 kvantum_kvconfig.template = "templates/colors_kvantum.kvconfig"
 kvantum_kvconfig.target = "~/.config/Kvantum/Wallust/Wallust.kvconfig"
 
