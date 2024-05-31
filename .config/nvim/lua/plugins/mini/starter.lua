@@ -208,7 +208,7 @@ return {
 				starter.new_section(icons.actions.quit .. "Quit Neovim", "qa!", actions_section),
 
 				starter.new_section(icons.actions.file_explorer .. "Open File Explorer", function()
-					local has_neotree, neo_tree = pcall(require, "neo-tree")
+					local has_neotree, _ = pcall(require, "neo-tree")
 					local has_minifiles, mini_files = pcall(require, "mini.files")
 
 					if has_neotree then
@@ -227,7 +227,6 @@ return {
 
 				starter.new_section(icons.actions.list_buffers .. "List Buffers", function()
 					local has_pick, pick = pcall(require, "mini.pick")
-
 					if has_pick then
 						lazy_load("mini.pick")
 						pick.builtin.buffers()
@@ -235,9 +234,8 @@ return {
 				end, actions_section),
 
 				starter.new_section(icons.actions.recent_files .. "Recent Files", function()
-					local has_pick, pick = pcall(require, "mini.pick")
+					local has_pick, _ = pcall(require, "mini.pick")
 					local has_extra, extra = pcall(require, "mini.extra")
-
 					if has_pick and has_extra then
 						lazy_load({ "mini.pick", "mini.extra" })
 						extra.pickers.oldfiles()
@@ -246,7 +244,6 @@ return {
 
 				starter.new_section(icons.actions.find_files .. "Find Files", function()
 					local has_pick, pick = pcall(require, "mini.pick")
-
 					if has_pick then
 						lazy_load("mini.pick")
 						pick.builtin.files()
@@ -255,7 +252,6 @@ return {
 
 				starter.new_section(icons.actions.live_grep .. "Live Grep", function()
 					local has_pick, pick = pcall(require, "mini.pick")
-
 					if has_pick then
 						lazy_load("mini.pick")
 						pick.builtin.grep_live()
@@ -264,8 +260,7 @@ return {
 
 				starter.new_section(icons.actions.lazy .. "Lazy", "Lazy", actions_section),
 				starter.new_section(icons.actions.mason .. "Mason", function()
-					local has_mason, mason = pcall(require, "mason")
-
+					local has_mason, _ = pcall(require, "mason")
 					if has_mason then
 						vim.cmd("Mason")
 					end
