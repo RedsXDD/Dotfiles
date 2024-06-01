@@ -19,10 +19,10 @@ keybinds clear-defaults=true{
 	// Locked mode:
 	locked {
 		bind "Alt g" { SwitchToMode "Normal"; }
-		bind "Alt h" { MoveFocusOrTab "Left"; }
+		bind "Alt h" { MoveFocus "Left"; }
 		bind "Alt j" { MoveFocus "Down"; }
 		bind "Alt k" { MoveFocus "Up"; }
-		bind "Alt l" { MoveFocusOrTab "Right"; }
+		bind "Alt l" { MoveFocus "Right"; }
 		bind "Alt n" { FocusNextPane; }
 		bind "Alt p" { FocusPreviousPane; }
 		bind "Alt c" { Copy; }
@@ -289,10 +289,10 @@ keybinds clear-defaults=true{
 		bind "Alt n" { FocusNextPane; }
 		bind "Alt p" { FocusPreviousPane; }
 		bind "Alt g" { SwitchToMode "Locked"; }
-		bind "Alt h" { MoveFocusOrTab "Left"; }
+		bind "Alt h" { MoveFocus "Left"; }
 		bind "Alt j" { MoveFocus "Down"; }
 		bind "Alt k" { MoveFocus "Up"; }
-		bind "Alt l" { MoveFocusOrTab "Right"; }
+		bind "Alt l" { MoveFocus "Right"; }
 		bind "Alt [" { GoToPreviousTab; }
 		bind "Alt ]" { GoToNextTab; }
 		bind "Alt {" { PreviousSwapLayout; }
