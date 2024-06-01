@@ -205,7 +205,7 @@
 // 	}
 // }
 // //: }}}
-//: Tmux-like keybindings: {{{
+//: Tmux keybindings: {{{
 keybinds clear-defaults=true{
 	// Normal mode:
 	normal { bind "Alt c" { Copy; }; } // key if 'copy_on_select=false'
