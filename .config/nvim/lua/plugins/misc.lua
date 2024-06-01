@@ -3,14 +3,14 @@ return {
 		"theRealCarneiro/hyprland-vim-syntax",
 		ft = "hypr",
 	},
-	{
-		"camnw/lf-vim",
-		ft = "lf",
-	},
-	{
-		"fladson/vim-kitty",
-		ft = "kitty",
-	},
+	-- {
+	-- 	"camnw/lf-vim",
+	-- 	ft = "lf",
+	-- },
+	-- {
+	-- 	"fladson/vim-kitty",
+	-- 	ft = "kitty",
+	-- },
 	{
 		"rust-lang/rust.vim",
 		ft = "rust",
