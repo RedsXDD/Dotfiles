@@ -79,7 +79,7 @@ tooltip label {
 #workspaces button.urgent,
 #workspaces button:hover {
 	color: @background;
-	padding: 0.45em 0.60em 0.45em 0.27em;
+	padding: 0.49em 0.60em 0.49em 0.27em;
 	margin: 0.36em;
 	border-radius: 100px;
 }
