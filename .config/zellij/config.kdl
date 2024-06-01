@@ -142,8 +142,8 @@ keybinds clear-defaults=true{
 		bind "m" { SwitchToMode "Move"; }
 		bind "i" { SwitchToMode "RenamePane"; PaneNameInput 0; }
 		bind "I" { SwitchToMode "RenameTab"; TabNameInput 0; }
-		//: Plugin keybindings {{{
-		//: Zellij session manager {{{
+
+		// Session manager:
 		bind "W" {
 			SwitchToMode "Normal"
 			LaunchOrFocusPlugin "zellij:session-manager" {
@@ -151,137 +151,6 @@ keybinds clear-defaults=true{
 				move_to_focused_tab true
 			}
 		}
-		//: }}}
-		//: Zellij strider {{{
-		bind "S" {
-			SwitchToMode "Normal"
-			LaunchOrFocusPlugin "zellij:strider" {
-				floating true
-				move_to_focused_tab true
-			}
-		}
-		//: }}}
-		//: Room (https://github.com/rvcas/room) {{{
-		bind "w" {
-			SwitchToMode "Normal"
-			LaunchOrFocusPlugin "file:~/.config/zellij/plugins/room.wasm" {
-				floating true
-				move_to_focused_tab true
-				ignore_case true
-			}
-		}
-		//: }}}
-		//: Zellij-forgot (https://github.com/karimould/zellij-forgot) {{{
-		bind "?" {
-			SwitchToMode "Normal"
-			LaunchOrFocusPlugin "file:~/.config/zellij/plugins/zellij_forgot.wasm" {
-				floating true
-				move_to_focused_tab true
-
-				// Do not list zellij bindings:
-				"LOAD_ZELLIJ_BINDINGS" "false"
-
-				// Normal mode bindings:
-				"Copy selected contents" "Alt + c"
-				"Cancel action(s)"       "Ctrl + c/Esc"
-
-				// Tmux mode bindings:
-				"TMUX MODE Tmux prefix key"                       "Ctrl + a"
-				"TMUX MODE Type 'Ctrl + a'"                       "PREFIX + Ctrl + a"
-				"TMUX MODE Detach"                                "PREFIX + d"
-				"TMUX MODE Quit"                                  "PREFIX + Q"
-				"TMUX MODE Create a new vertical pane"            "PREFIX + -"
-				"TMUX MODE Create a new horizontal pane"          "PREFIX + _"
-				"TMUX MODE Create a new floating pane"            "PREFIX + e"
-				"TMUX MODE Toggle floating state for active pane" "PREFIX + E"
-				"TMUX MODE Toggle pane frames"                    "PREFIX + f"
-				"TMUX MODE 'Zoom' into pane (toggle fullscreen)"  "PREFIX + z"
-				"TMUX MODE Close active pane"                     "PREFIX + x"
-				"TMUX MODE Focus next pane"                       "PREFIX + o"
-				"TMUX MODE Focus previous pane"                   "PREFIX + O"
-				"TMUX MODE Toggle pane sync"                      "PREFIX + Y"
-				"TMUX MODE Break pane into a new tab"             "PREFIX + b"
-				"TMUX MODE Break pane to the right"               "PREFIX + ]"
-				"TMUX MODE Break pane to the left"                "PREFIX + ["
-				"TMUX MODE Create a new tab"                      "PREFIX + c"
-				"TMUX MODE Close active tab"                      "PREFIX + X"
-				"TMUX MODE Switch to the previously active tab"   "PREFIX + a"
-				"TMUX MODE Switch to tab number 1"                "PREFIX + 1"
-				"TMUX MODE Switch to tab number 2"                "PREFIX + 2"
-				"TMUX MODE Switch to tab number 3"                "PREFIX + 3"
-				"TMUX MODE Switch to tab number 4"                "PREFIX + 4"
-				"TMUX MODE Switch to tab number 5"                "PREFIX + 5"
-				"TMUX MODE Switch to tab number 6"                "PREFIX + 6"
-				"TMUX MODE Switch to tab number 7"                "PREFIX + 7"
-				"TMUX MODE Switch to tab number 8"                "PREFIX + 9"
-				"TMUX MODE Switch to tab number 9"                "PREFIX + 9"
-				"TMUX MODE Switch to rename mode"                 "PREFIX + r"
-				"TMUX MODE Switch to scroll mode"                 "PREFIX + s"
-				"TMUX MODE Switch to search mode"                 "PREFIX + /"
-				"TMUX MODE Switch to move mode"                   "PREFIX + m"
-				"TMUX MODE Rename active pane"                    "PREFIX + i"
-				"TMUX MODE Rename active tab"                     "PREFIX + I"
-
-				// Plugins:
-				"PLUGINS Launch session manager"                    "PREFIX + W"
-				"PLUGINS Launch room (Tab searching)"               "PREFIX + w"
-				"PLUGINS Launch strider (File opening)"             "PREFIX + S"
-				"PLUGINS Launch zellij-forgot (Keybinding listing)" "PREFIX + ?"
-
-				// Lock mode bindings:
-				"LOCK MODE Toggle lock mode"  "Alt + g"
-				"LOCK MODE Select left pane"  "Alt + h"
-				"LOCK MODE Select below pane" "Alt + j"
-				"LOCK MODE Select above pane" "Alt + k"
-				"LOCK MODE Select right pane" "Alt + l"
-
-				// Resize mode:
-				"RESIZE MODE Increase pane size"               "=/+"
-				"RESIZE MODE Decrease pane size"               "-"
-				"RESIZE MODE Increase pane size to the left"   "h"
-				"RESIZE MODE Increase pane size to the bottom" "j"
-				"RESIZE MODE Increase pane size to the top"    "k"
-				"RESIZE MODE Increase pane size to the right"  "l"
-				"RESIZE MODE Decrease pane size to the left"   "H"
-				"RESIZE MODE Decrease pane size to the bottom" "J"
-				"RESIZE MODE Decrease pane size to the top"    "K"
-				"RESIZE MODE Decrease pane size to the right"  "L"
-
-				// Move mode:
-				"MOVE MODE Move pane fowards"       "o"
-				"MOVE MODE Move pane backwards"     "O"
-				"MOVE MODE Move pane to the left"   "h"
-				"MOVE MODE Move pane to the bottom" "j"
-				"MOVE MODE Move pane to the top"    "k"
-				"MOVE MODE Move pane to the right"  "l"
-
-				// Scroll mode:
-				"SCROLL MODE Enter search mode"       "/"
-				"SCROLL MODE Edit scrollback history" "e"
-				"SCROLL MODE Scroll up"               "k"
-				"SCROLL MODE Scroll down"             "j"
-				"SCROLL MODE Scroll one page up"      "Ctrl b"
-				"SCROLL MODE Scroll one page down"    "Ctrl f"
-				"SCROLL MODE Scroll a half page up"   "Ctrl u"
-				"SCROLL MODE Scroll a half page down" "Ctrl d"
-
-				// Search mode:
-				"SEARCH MODE Switch to normal mode"              "i"
-				"SEARCH MODE Scroll up"                          "k"
-				"SEARCH MODE Scroll down"                        "j"
-				"SEARCH MODE Scroll one page up"                 "Ctrl b"
-				"SEARCH MODE Scroll one page down"               "Ctrl f"
-				"SEARCH MODE Scroll a half page up"              "Ctrl u"
-				"SEARCH MODE Scroll a half page down"            "Ctrl d"
-				"SEARCH MODE Go to the next searched term"       "n"
-				"SEARCH MODE Go to the previous searched term"   "N"
-				"SEARCH MODE Toggle case sensitivity"            "c"
-				"SEARCH MODE Toggle line wrapping"               "w"
-				"SEARCH MODE Toggle 'WholeWord' seaching option" "o"
-			}
-		}
-		//: }}}
-		//: }}}
 	}
 
 	// Shared except:
