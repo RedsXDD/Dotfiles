@@ -6,8 +6,8 @@ palette = "harddark16"
 alacritty.template = "templates/colors_alacritty.toml"
 alacritty.target = "~/.config/alacritty/alacritty_wallust.toml"
 
-kitty.template = "templates/colors_kitty.conf"
-kitty.target = "~/.config/kitty/kitty_wallust.conf"
+wezterm.template = "templates/colors_wezterm.toml"
+wezterm.target = "~/.config/wezterm/colors/Wallust.toml"
 
 glow.template = "templates/colors_glow.json"
 glow.target = "~/.config/glow/glow_wallust.json"

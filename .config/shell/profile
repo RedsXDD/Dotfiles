@@ -67,7 +67,7 @@ export PAGER='less'
 export IMAGE='mvi'
 export OPENER='xdg-open'
 export READER='zathura'
-export TERMINAL='kitty'
+export TERMINAL='wezterm'
 export VIDEO='mpv'
 
 # GTK/QT configuration:
