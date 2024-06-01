@@ -1,3 +1,5 @@
 .config/rofi/images/wall.png
 .config/zsh/.zcompdump
 .config/nvim/lazy-lock.json
+.config/wezterm/colors/Wallust.toml
+.librewolf/default/chrome/userChrome.css
