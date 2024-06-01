@@ -9,6 +9,9 @@ alacritty.target = "~/.config/alacritty/alacritty_wallust.toml"
 wezterm.template = "templates/colors_wezterm.toml"
 wezterm.target = "~/.config/wezterm/colors/Wallust.toml"
 
+zellij.template = "templates/colors_zellij.kdl"
+zellij.target = "~/.config/zellij/themes/wallust.kdl"
+
 glow.template = "templates/colors_glow.json"
 glow.target = "~/.config/glow/glow_wallust.json"
 
