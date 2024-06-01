@@ -19,4 +19,59 @@ return {
 	scrollback_lines = 100000,
 	enable_scroll_bar = false,
 	check_for_updates = false,
+
+	-- Keybindings:
+	disable_default_key_bindings = true,
+	keys = {
+		-- Activate copy mode
+		{
+			key = "Space",
+			mods = "CTRL|SHIFT",
+			action = wezterm.action.ActivateCopyMode,
+		},
+		-- Clipboard
+		{
+			key = "y",
+			mods = "ALT",
+			action = wezterm.action.CopyTo("Clipboard"),
+		},
+		{
+			key = "p",
+			mods = "ALT",
+			action = wezterm.action.PasteFrom("Clipboard"),
+		},
+		-- Font size
+		{
+			key = "-",
+			mods = "CTRL",
+			action = wezterm.action.DecreaseFontSize,
+		},
+		{
+			key = "=",
+			mods = "CTRL",
+			action = wezterm.action.IncreaseFontSize,
+		},
+		{
+			key = "0",
+			mods = "CTRL",
+			action = wezterm.action.ResetFontSize,
+		},
+		-- Search
+		{
+			key = "/",
+			mods = "CTRL|ALT",
+			action = wezterm.action.Search({ CaseSensitiveString = "" }),
+		},
+		-- Scrollback
+		{
+			key = "u",
+			mods = "ALT",
+			action = wezterm.action.ScrollByPage(-1),
+		},
+		{
+			key = "d",
+			mods = "ALT",
+			action = wezterm.action.ScrollByPage(1),
+		},
+	},
 }
