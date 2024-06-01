@@ -31,188 +31,6 @@ LANG = "en_US.UTF-8"
 LC_ALL = "en_US.UTF-8"
 TERM = "alacritty"
 
-[font]
-builtin_box_drawing = true
-size = 12
-
-[font.bold]
-family = "JetBrainsMonoNerdFont"
-style = "Bold"
-
-[font.bold_italic]
-family = "JetBrainsMonoNerdFont"
-style = "Bold Italic"
-
-[font.glyph_offset]
-x = 0
-y = 0
-
-[font.italic]
-family = "JetBrainsMonoNerdFont"
-style = "Italic"
-
-[font.normal]
-family = "JetBrainsMonoNerdFont"
-style = "Regular"
-
-[font.offset]
-x = 0
-y = 0
-
-[[keyboard.bindings]]
-action = "ReceiveChar"
-key = "Up"
-mode = "Vi|~Search"
-
-[[keyboard.bindings]]
-action = "ReceiveChar"
-key = "Down"
-mode = "Vi|~Search"
-
-[[keyboard.bindings]]
-action = "ReceiveChar"
-key = "Left"
-mode = "Vi|~Search"
-
-[[keyboard.bindings]]
-action = "ReceiveChar"
-key = "Right"
-mode = "Vi|~Search"
-
-[[keyboard.bindings]]
-action = "ReceiveChar"
-key = "PageUp"
-mode = "~Alt"
-
-[[keyboard.bindings]]
-action = "ReceiveChar"
-key = "PageDown"
-mode = "~Alt"
-
-[[keyboard.bindings]]
-action = "ReceiveChar"
-key = "B"
-mode = "~Alt"
-mods = "Control"
-
-[[keyboard.bindings]]
-action = "ReceiveChar"
-key = "F"
-mode = "~Alt"
-mods = "Control"
-
-[[keyboard.bindings]]
-action = "ReceiveChar"
-key = "U"
-mode = "~Alt"
-mods = "Control"
-
-[[keyboard.bindings]]
-action = "ReceiveChar"
-key = "D"
-mode = "~Alt"
-mods = "Control"
-
-[[keyboard.bindings]]
-action = "Paste"
-key = "Paste"
-
-[[keyboard.bindings]]
-action = "Copy"
-key = "Copy"
-
-[[keyboard.bindings]]
-action = "ClearLogNotice"
-key = "L"
-mods = "Control"
-
-[[keyboard.bindings]]
-chars = "\f"
-key = "L"
-mode = "~Vi|~Search"
-mods = "Control"
-
-[[keyboard.bindings]]
-action = "ScrollToTop"
-key = "Home"
-mode = "~Alt"
-
-[[keyboard.bindings]]
-action = "ScrollToBottom"
-key = "End"
-mode = "~Alt"
-
-[[keyboard.bindings]]
-action = "SpawnNewInstance"
-key = "Return"
-mode = "~Alt"
-mods = "Control|Shift"
-
-[[keyboard.bindings]]
-action = "ToggleViMode"
-key = "Space"
-mode = "~Search"
-mods = "Control|Shift"
-
-[[keyboard.bindings]]
-action = "ClearSelection"
-key = "Escape"
-mode = "Vi|~Search"
-
-[[keyboard.bindings]]
-action = "Last"
-key = "Key4"
-mode = "Vi|~Search"
-
-[[keyboard.bindings]]
-action = "ScrollPageUp"
-key = "B"
-mode = "Vi|~Search"
-mods = "Control"
-
-[[keyboard.bindings]]
-action = "ScrollPageDown"
-key = "F"
-mode = "Vi|~Search"
-mods = "Control"
-
-[[keyboard.bindings]]
-action = "ScrollHalfPageUp"
-key = "U"
-mode = "Vi|~Search"
-mods = "Control"
-
-[[keyboard.bindings]]
-action = "ScrollHalfPageDown"
-key = "D"
-mode = "Vi|~Search"
-mods = "Control"
-
-[[keyboard.bindings]]
-action = "ResetFontSize"
-key = "Key0"
-mods = "Control"
-
-[[keyboard.bindings]]
-action = "IncreaseFontSize"
-key = "Plus"
-mods = "Control"
-
-[[keyboard.bindings]]
-action = "IncreaseFontSize"
-key = "NumpadAdd"
-mods = "Control"
-
-[[keyboard.bindings]]
-action = "DecreaseFontSize"
-key = "Minus"
-mods = "Control"
-
-[[keyboard.bindings]]
-action = "DecreaseFontSize"
-key = "NumpadSubtract"
-mods = "Control"
-
 [scrolling]
 history = 100000
 multiplier = 5
@@ -228,9 +46,43 @@ columns = 0
 lines = 0
 
 [window.padding]
-x = 1
-y = 1
+x = 5
+y = 5
 
 [window.position]
 x = 0
 y = 0
+
+[font.glyph_offset]
+x = 0
+y = 0
+
+[font]
+builtin_box_drawing = true
+size = 12
+
+[font.normal]
+family = "JetBrainsMonoNerdFont"
+style = "Regular"
+
+[font.italic]
+family = "JetBrainsMonoNerdFont"
+style = "Italic"
+
+[font.bold]
+family = "JetBrainsMonoNerdFont"
+style = "Bold"
+
+[font.bold_italic]
+family = "JetBrainsMonoNerdFont"
+style = "Bold Italic"
+
+[font.offset]
+x = 0
+y = 0
+
+[keyboard]
+bindings = [
+	{ action = "Paste", mods = "Alt", key = "p" }, # Copy selection.
+	{ action = "Copy",  mods = "Alt", key = "y" }, # Paste.
+]
