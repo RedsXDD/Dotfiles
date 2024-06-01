@@ -23,11 +23,17 @@ return {
 	-- Keybindings:
 	disable_default_key_bindings = true,
 	keys = {
-		-- Activate copy mode
+		-- Activate Vi mode
 		{
 			key = "Space",
 			mods = "CTRL|SHIFT",
 			action = wezterm.action.ActivateCopyMode,
+		},
+		-- Search
+		{
+			key = "/",
+			mods = "CTRL|ALT",
+			action = wezterm.action.Search({ CaseSensitiveString = "" }),
 		},
 		-- Clipboard
 		{
@@ -55,23 +61,6 @@ return {
 			key = "0",
 			mods = "CTRL",
 			action = wezterm.action.ResetFontSize,
-		},
-		-- Search
-		{
-			key = "/",
-			mods = "CTRL|ALT",
-			action = wezterm.action.Search({ CaseSensitiveString = "" }),
-		},
-		-- Scrollback
-		{
-			key = "u",
-			mods = "ALT",
-			action = wezterm.action.ScrollByPage(-1),
-		},
-		{
-			key = "d",
-			mods = "ALT",
-			action = wezterm.action.ScrollByPage(1),
 		},
 	},
 }
