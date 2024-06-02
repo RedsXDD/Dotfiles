@@ -65,6 +65,15 @@ bind "set completion-query-items 1000"  # Amount of completions that can be disp
 
 [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/bash/fzf-bash-completion.sh" ] && source "${XDG_CONFIG_HOME:-$HOME/.config}/bash/fzf-bash-completion.sh"
 bind -x '"\t": fzf_bash_completion'
+# Add scripts to the list of valid fzf-tab commands.
+complete -o bashdefault -o default -F _fzf_path_completion l.
+complete -o bashdefault -o default -F _fzf_path_completion v
+complete -o bashdefault -o default -F _fzf_path_completion sv
+complete -o bashdefault -o default -F _fzf_path_completion doasedit
+complete -o bashdefault -o default -F _fzf_path_completion lustbg
+complete -o bashdefault -o default -F _fzf_path_completion waybg
+complete -o bashdefault -o default -F _fzf_path_completion mpv
+complete -o bashdefault -o default -F _fzf_path_completion mvi
 #: }}}
 #: History {{{
 shopt -s histappend # Do not overwrite history
