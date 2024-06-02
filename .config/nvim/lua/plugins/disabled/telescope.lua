@@ -79,7 +79,6 @@ return {
 		config = function()
 			-- Main variables/functions:
 			local telescope = require("telescope")
-			local builtin = require("telescope.builtin")
 			local themes = require("telescope.themes")
 			local actions = require("telescope.actions")
 			local action_layout = require("telescope.actions.layout")
