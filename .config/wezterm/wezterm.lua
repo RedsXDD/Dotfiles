@@ -4,7 +4,7 @@ local wezterm = require("wezterm")
 return {
 	color_scheme = "Wallust",
 	font_size = 14,
-	font = wezterm.font("JetBrainsMono NF"),
+	font = wezterm.font("FiraCodeNerdFont"),
 
 	window_padding = {
 		left = 5,
