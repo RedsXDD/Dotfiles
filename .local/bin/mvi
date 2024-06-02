@@ -4,6 +4,6 @@
 # Optional dependencies: (https://github.com/occivink/mpv-gallery-view)
 
 [ ! -d "${XDG_CACHE_HOME:-$HOME/.cache}/thumbnails/mpv-gallery" ] && mkdir -p "${XDG_CACHE_HOME:-$HOME/.cache}/thumbnails/mpv-gallery" >/dev/null 2>&1
-mpv --fs --config-dir="${XDG_CONFIG_HOME:-$HOME/.config}/mvi" "$@"
+mpv --config-dir="${XDG_CONFIG_HOME:-$HOME/.config}/mvi" "$@"
 
 # vim:fileencoding=utf-8:foldmethod=marker
