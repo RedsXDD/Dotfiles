@@ -62,7 +62,7 @@ unset bin_files
 
 # FZF config:
 export FZF_TMUX_OPTS='-p 75% -w 75%'
-export FZF_DEFAULT_OPTS='--cycle --reverse --ansi'
+export FZF_DEFAULT_OPTS="--cycle --reverse --ansi --height='~100%'"
 
 # Source wallust fzf config.
 # shellcheck source=/dev/null
