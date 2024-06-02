@@ -214,6 +214,7 @@ zsh_add_plugin zsh-users/zsh-history-substring-search
 # Fzf tab.
 zsh_add_plugin Aloxaf/fzf-tab
 zstyle ':completion:*' menu no
+zstyle ':fzf-tab:*' fzf-flags --height='~100%'
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
 zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
 
