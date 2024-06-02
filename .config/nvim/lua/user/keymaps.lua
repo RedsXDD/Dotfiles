@@ -85,9 +85,9 @@ map("v", ">",       ">gv",                 "Move selected lines to the right.")
 --: }}}
 --: }}}
 --: Clipboard management {{{
-map({ "n", "v" }, "<Leader>y", '"*y', "Copy to primary clipboard.")
-map({ "n", "v" }, "<Leader>p", '"*p', "Paste from primary clipboard.")
-map({ "n", "v" }, "<Leader>P", '"*P', "Paste from primary clipboard.")
+map({ "n", "v" }, "<Leader>y", '"+y', "Copy to primary clipboard.")
+map({ "n", "v" }, "<Leader>p", '"+p', "Paste from primary clipboard.")
+map({ "n", "v" }, "<Leader>P", '"+P', "Paste from primary clipboard.")
 --: }}}
 --: Toggles {{{
 map({ "n", "v" }, "<Leader>ts", ":set spell!<CR>", "Toggle spell checking.")
