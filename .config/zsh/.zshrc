@@ -157,7 +157,6 @@ preexec(){ echo -ne "$ins_mode_cursor"; } # Use custom shapep cursor for each ne
 #: Tab complete menu {{{
 # Enable tab complete:
 autoload -U compinit
-# zstyle ':completion:*' menu select
 
 # Include hidden files on completion:
 zmodload zsh/complist
@@ -170,15 +169,6 @@ zstyle ':completion::complete:*' gain-privileges 1
 
 # Completion styling:
 zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
-
-# Navigate completion menu with vim keys:
-bindkey -M menuselect '^h' vi-backward-char
-bindkey -M menuselect '^k' vi-up-line-or-history
-bindkey -M menuselect '^l' vi-forward-char
-bindkey -M menuselect '^j' vi-down-line-or-history
-
-# Fix backspace bug when switching modes:
-bindkey -v '^?' backward-delete-char
 #: }}}
 #: Plugins {{{
 #: Plugin manager {{{
