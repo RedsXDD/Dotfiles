@@ -61,12 +61,39 @@ export PATH="$PATH:${bin_files}${HOME}/Applications:${CARGO_HOME}/bin/"
 unset bin_files
 
 # FZF config:
-export FZF_TMUX_OPTS='-p 75% -w 75%'
-export FZF_DEFAULT_OPTS="--cycle --reverse --ansi --height='~100%'"
-
-# Source wallust fzf config.
 # shellcheck source=/dev/null
-[ -f "${XDG_CONFIG_HOME}/shell/fzf_wallust.sh" ] && source "${XDG_CONFIG_HOME}/shell/fzf_wallust.sh"
+# Import wallust colors.
+[ -f "${XDG_CACHE_HOME}/wallust/colors.sh" ] && . "${XDG_CACHE_HOME}/wallust/colors.sh"
+export FZF_TMUX_OPTS='-p 75% -w 75%'
+export FZF_DEFAULT_OPTS="\
+	--color=bg:-1,bg+:${color0:--1} \
+	--color=fg:-1,fg+:-1 \
+	--color=hl:blue,hl+:blue \
+	--color=border:-1 \
+	--color=label:cyan \
+	--color=prompt:cyan \
+	--color=spinner:bright-yellow \
+	--color=info:-1 \
+	--color=marker:green \
+	--color=pointer:cyan \
+	--color=header:yellow \
+	--color=query:-1 \
+	--cycle \
+	--ansi \
+	--height='~100%'\
+	--border='rounded' \
+	--border-label='' \
+	--preview-window='border-rounded' \
+	--padding='1' \
+	--prompt='> ' \
+	--marker='>' \
+	--pointer='◆' \
+	--separator='─' \
+	--no-scrollbar \
+	--layout='reverse'"
+
+# Unset importted wallust colors.
+unset background foreground color0 color1 color2 color3 color4 color5 color6 color7 color8 color9 color10 color11 color12 color13 color14 color15
 
 # Bat config:
 export BAT_THEME='ansi'

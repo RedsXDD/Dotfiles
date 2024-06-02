@@ -3,4 +3,3 @@
 .config/wezterm/colors/Wallust.toml
 .librewolf/default/chrome/userChrome.css
 .config/nvim/lazy-lock.json
-.config/shell/fzf_wallust.sh
