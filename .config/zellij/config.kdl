@@ -14,7 +14,7 @@
 //: Tmux keybindings: {{{
 keybinds clear-defaults=true{
 	// Normal mode:
-	normal { bind "Alt c" { Copy; }; } // key if 'copy_on_select=false'
+	normal { bind "Alt y" { Copy; }; } // key if 'copy_on_select=false'
 
 	// Locked mode:
 	locked {
@@ -25,7 +25,7 @@ keybinds clear-defaults=true{
 		bind "Alt l" { MoveFocus "Right"; }
 		bind "Alt n" { FocusNextPane; }
 		bind "Alt p" { FocusPreviousPane; }
-		bind "Alt c" { Copy; }
+		bind "Alt y" { Copy; }
 	}
 
 	// Resize mode:
@@ -65,7 +65,7 @@ keybinds clear-defaults=true{
 		bind "Ctrl f"           { PageScrollDown; }
 		bind "Ctrl u"           { HalfPageScrollUp; }
 		bind "Ctrl d"           { HalfPageScrollDown; }
-		bind "Alt c"            { Copy; } // key if 'copy_on_select=false'
+		bind "Alt y"            { Copy; } // key if 'copy_on_select=false'
 	}
 
 	// Search mode:
@@ -82,12 +82,12 @@ keybinds clear-defaults=true{
 		bind "c"                { SearchToggleOption "CaseSensitivity"; }
 		bind "w"                { SearchToggleOption "Wrap"; }
 		bind "o"                { SearchToggleOption "WholeWord"; }
-		bind "Alt c"            { Copy; } // key if 'copy_on_select=false'
+		bind "Alt y"            { Copy; } // key if 'copy_on_select=false'
 	}
 	entersearch {
 		bind "Ctrl c" "Esc" { SwitchToMode "Normal"; }
 		bind "Enter"        { SwitchToMode "Search"; }
-		bind "Alt c"        { Copy; } // key if 'copy_on_select=false'
+		bind "Alt y"        { Copy; } // key if 'copy_on_select=false'
 	}
 
 	// Renaming modes:
