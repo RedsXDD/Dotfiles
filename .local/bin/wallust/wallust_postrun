@@ -11,12 +11,12 @@ wallust_oomox_theme_file="${XDG_CONFIG_HOME:-$HOME/.config}/oomox/colors/wallust
 oomox_plugins_dir='/opt/oomox/plugins'
 oomox_theme_name='oomox_wallust'
 
-send_notification(){ notify-send -t 3000 'Wallust_postrun' "$1"; }
+send_notification() { notify-send -t 3000 'Wallust_postrun' "$1"; }
 
 [ -f "${wallust_cache_dir}/colors.sh" ] && . "${wallust_cache_dir}/colors.sh"
 
 #: Restart processes function {{{
-restart_processes(){
+restart_processes() {
 	killall waybar cava swaync
 	while pgrep -x waybar >/dev/null; do sleep 1; done
 	while pgrep -x cava >/dev/null; do sleep 1; done
@@ -84,7 +84,7 @@ gen_mpv_theme(){
 #: }}}
 #: Oomox theming {{{
 # Auto generate themix/oomox theme:
-gen_oomox_theme(){
+gen_oomox_theme() {
 	[ ! -f "$wallust_oomox_theme_file" ] && return 1
 
 	send_notification 'Generating Oomox colorscheme ...'
@@ -102,20 +102,20 @@ gen_oomox_theme(){
 	gtk4_template_file="${oomox_plugins_dir}/base16/templates/gtk4/templates/gtk.mustache"
 
 	[ ! -d "$gtk4_output_dir" ] && mkdir -vp "$gtk4_output_dir"
-	[ -f "$gtk4_template_file" ] && themix-base16-cli "$gtk4_template_file" "$wallust_oomox_theme_file" | sed '/^ERROR:/d; /^Import/d' > "${gtk4_output_dir}/gtk.css"
+	[ -f "$gtk4_template_file" ] && themix-base16-cli "$gtk4_template_file" "$wallust_oomox_theme_file" | sed '/^ERROR:/d; /^Import/d' >"${gtk4_output_dir}/gtk.css"
 
 	# Generate QT5/QT6 oomox styleplugin themes:
 	qt_output_dir="${XDG_CONFIG_HOME:-$HOME/.config}/oomox-qtstyleplugin/themes"
 	qt_template_file="${oomox_plugins_dir}/base16/templates/qt-oomox-styleplugin/templates/default.mustache"
 
 	[ ! -d "$qt_output_dir" ] && mkdir -vp "$qt_output_dir"
-	[ -f "$qt_template_file" ] && themix-base16-cli "$qt_template_file" "$wallust_oomox_theme_file" | sed '/^ERROR:/d; /^Import/d' > "${qt_output_dir}/${oomox_theme_name}.css"
+	[ -f "$qt_template_file" ] && themix-base16-cli "$qt_template_file" "$wallust_oomox_theme_file" | sed '/^ERROR:/d; /^Import/d' >"${qt_output_dir}/${oomox_theme_name}.css"
 
 	send_notification '✅ Oomox colorscheme generated successfully!'
 }
 
 # Auto generate oomox icon theme:
-gen_oomox_icon_theme(){
+gen_oomox_icon_theme() {
 	[ ! -f "$wallust_oomox_theme_file" ] && return 1
 
 	# Main variables:
@@ -126,15 +126,15 @@ gen_oomox_icon_theme(){
 	send_notification "Generating Oomox icon theme '$(echo "$icon_theme_name" | sed 's/_/ /g')' ..."
 
 	case "$icon_theme_name" in
-		'archdroid')    oomox-archdroid-icons-cli    -d "$output_dir" -o "$output_name" "$wallust_oomox_theme_file" || return 1 ;;
-		'gnome_colors') oomox-gnome-colors-icons-cli -d "$output_dir" -o "$output_name" "$wallust_oomox_theme_file" || return 1 ;;
-		*)
-			oomox_plugin_path="${oomox_plugins_dir}/icons_${icon_theme_name}"
-			[ -f "${oomox_plugin_path}/change_color.sh" ] &&
-				"${oomox_plugin_path}/change_color.sh" \
-					-d "$output_dir" \
-					-o "$output_name" \
-					"$wallust_oomox_theme_file" || return 1
+	'archdroid') oomox-archdroid-icons-cli -d "$output_dir" -o "$output_name" "$wallust_oomox_theme_file" || return 1 ;;
+	'gnome_colors') oomox-gnome-colors-icons-cli -d "$output_dir" -o "$output_name" "$wallust_oomox_theme_file" || return 1 ;;
+	*)
+		oomox_plugin_path="${oomox_plugins_dir}/icons_${icon_theme_name}"
+		[ -f "${oomox_plugin_path}/change_color.sh" ] &&
+			"${oomox_plugin_path}/change_color.sh" \
+				-d "$output_dir" \
+				-o "$output_name" \
+				"$wallust_oomox_theme_file" || return 1
 		;;
 	esac
 
@@ -142,7 +142,7 @@ gen_oomox_icon_theme(){
 }
 #: }}}
 #: Main function {{{
-main(){
+main() {
 	# Auto reload tmux theming:
 	[ -n "$TMUX" ] && [ -f "${XDG_CONFIG_HOME:-$HOME/.config/}/tmux/tmux.conf" ] && tmux source-file "${XDG_CONFIG_HOME:-$HOME/.config/}/tmux/tmux.conf"
 
