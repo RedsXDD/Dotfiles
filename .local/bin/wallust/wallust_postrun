@@ -26,60 +26,39 @@ restart_processes() {
 }
 #: }}}
 #: Mpv theme {{{
-gen_mpv_theme(){
+gen_mpv_theme() {
 	[ ! -f "$wallust_cache_dir/colors.sh" ] && return 1
 
-	gen_mpv_config_theme(){
-		cat <<- MPVEOF
-		# $wallust_header_txt
+	gen_mpv_stats() {
+		cat <<-MPV_STATS_EOF
+			# $wallust_header_txt
 
-		background-color='$background'
-		osd-back-color='$color8'
-		osd-border-color='$background'
-		osd-color='$foreground'
-		osd-shadow-color='$background'
+			# NOTE: Colors are in #BBGGRR format
+			border_color=$background
+			font_color=$foreground
+			plot_bg_border_color=$color11
+			plot_bg_color=$background
+			plot_color=$color11
 
-		# $wallust_footer_txt
-		MPVEOF
-	}
-
-	gen_mpv_stats(){
-		cat <<- MPV_STATS_EOF
-		# $wallust_header_txt
-
-		# NOTE: Colors are in #BBGGRR format
-		border_color=$background
-		font_color=$foreground
-		plot_bg_border_color=$color11
-		plot_bg_color=$background
-		plot_color=$color11
-
-		# $wallust_footer_txt
+			# $wallust_footer_txt
 		MPV_STATS_EOF
 	}
 
-	mpv_config_dir="${XDG_CONFIG_HOME:-$HOME/.config}/${1:-mpv}"
 	mpv_script_opts_dir="${XDG_CONFIG_HOME:-$HOME/.config}/${1:-mpv}/script-opts"
 	[ ! -d "$mpv_script_opts_dir" ] && mkdir -vp "$mpv_script_opts_dir"
-
-	# Generate mpv.conf theme.
-	tmp_mpv="$(mktemp)"
-	[ -f "${mpv_config_dir}/mpv.conf" ] && sed "/$wallust_header_txt/,/$wallust_footer_txt/d" "${mpv_config_dir}/mpv.conf" > "$tmp_mpv"
-	gen_mpv_config_theme >> "$tmp_mpv"
-	mv -vf "$tmp_mpv" "${mpv_config_dir}/mpv.conf"
 
 	# This creates the stats.conf theme under "$tmp_mpv_stats", and the awk command converts the colors to BBGGRR format.
 	tmp_mpv_stats="$(mktemp)"
 	trap 'rm -rf "$tmp_mpv_stats"' 0 1 15
 
-	[ -f "${mpv_script_opts_dir}/stats.conf" ] && sed "/$wallust_header_txt/,/$wallust_footer_txt/d" "${mpv_script_opts_dir}/stats.conf" > "$tmp_mpv_stats"
-	gen_mpv_stats >> "$tmp_mpv_stats"
+	[ -f "${mpv_script_opts_dir}/stats.conf" ] && sed "/$wallust_header_txt/,/$wallust_footer_txt/d" "${mpv_script_opts_dir}/stats.conf" >"$tmp_mpv_stats"
+	gen_mpv_stats >>"$tmp_mpv_stats"
 	awk 'BEGIN {FS= OFS= "="} $2 ~ /^#[A-Fa-f0-9]{6}$/ {
 		a=substr($2,2,2);
 		b=substr($2,4,2);
 		c=substr($2,6,2);
 		$2 = c b a
-	} 1' "$tmp_mpv_stats" > "$mpv_script_opts_dir/stats.conf"
+	} 1' "$tmp_mpv_stats" >"$mpv_script_opts_dir/stats.conf"
 }
 #: }}}
 #: Oomox theming {{{

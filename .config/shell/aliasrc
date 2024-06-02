@@ -57,7 +57,9 @@ alias \
 	q='exit' \
 	cbonsai='cbonsai -li' \
 	sl='sl -e || clear' \
-	dua='dua i'
+	dua='dua i' \
+	mpv='mpv_wallust' \
+	mvi='mvi_wallust'
 #: }}}
 #: Power aliases {{{
 alias \

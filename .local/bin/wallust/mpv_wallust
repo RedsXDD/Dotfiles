@@ -1,0 +1,20 @@
+#!/usr/bin/env sh
+
+# shellcheck disable=2154
+# shellcheck source=/dev/null
+wallust_cache_dir="${XDG_CACHE_HOME:-$HOME/.cache}/wallust"
+if [ -f "${wallust_cache_dir}/colors.sh" ]; then
+	. "${wallust_cache_dir}/colors.sh" || return 1
+
+	set -- \
+		--background-color="${background}" \
+		--osd-back-color="${color8}" \
+		--osd-border-color="${background}" \
+		--osd-color="${foreground}" \
+		--osd-shadow-color="${background}" \
+		"$@"
+
+	mpv "$@"
+fi
+
+# vim:fileencoding=utf-8:foldmethod=marker
