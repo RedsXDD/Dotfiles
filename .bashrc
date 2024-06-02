@@ -70,12 +70,8 @@ bind -x '"\t": fzf_bash_completion'
 shopt -s histappend # Do not overwrite history
 shopt -s cmdhist    # Save multi-line commands in history as single line
 
-# Search backwards in history from letter:
-bind -m vi-command '"\C-p": history-substring-search-backward'
+# Search backwards/forwards in history from letter:
 bind -m vi-insert '"\C-p": history-substring-search-backward'
-
-# Search forwards in history from letter:
-bind -m vi-command '"\C-n": history-substring-search-forward'
 bind -m vi-insert '"\C-n": history-substring-search-forward'
 #: }}}
 #: Shell prompt {{{
