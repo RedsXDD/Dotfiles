@@ -144,7 +144,7 @@ keybinds clear-defaults=true{
 		bind "I" { SwitchToMode "RenameTab"; TabNameInput 0; }
 
 		// Session manager:
-		bind "W" {
+		bind "w" {
 			SwitchToMode "Normal"
 			LaunchOrFocusPlugin "zellij:session-manager" {
 				floating true
