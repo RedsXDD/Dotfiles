@@ -62,6 +62,9 @@ bind "set completion-map-case on"       # Treats hyphens and underscores as equi
 bind "set completion-ignore-case on"    # Ignore upper and lowercase with TAB completion.
 bind "set completion-display-width 0"   # number of screen columns used to display possible matches when performing completion.
 bind "set completion-query-items 1000"  # Amount of completions that can be displayed.
+
+[ -f "${XDG_CONFIG_HOME:-$HOME/.config}/bash/fzf-bash-completion.sh" ] && source "${XDG_CONFIG_HOME:-$HOME/.config}/bash/fzf-bash-completion.sh"
+bind -x '"\t": fzf_bash_completion'
 #: }}}
 #: History {{{
 shopt -s histappend # Do not overwrite history
