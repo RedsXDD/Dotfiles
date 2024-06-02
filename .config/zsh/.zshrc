@@ -40,33 +40,19 @@ setopt \
 	nomatch \
 	notify \
 	pushdignoredups \
-	completeinword
-#: }}}
-#: Tab complete menu {{{
-# Enable tab complete:
-autoload -U compinit
-zstyle ':completion:*' menu select
+	completeinword \
+	incappendhistory \
+	histignoredups \
+	appendhistory \
+	sharehistory \
+	histignorespace \
+	histignorealldups \
+	histsavenodups \
+	histfindnodups
 
-# Include hidden files on completion:
-zmodload zsh/complist
-compinit
-_comp_options+=(globdots)
-
-# Auto complete with case insenstivity:
-zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
-zstyle ':completion::complete:*' gain-privileges 1
-
-# Completion styling:
-zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
-
-# Navigate completion menu with vim keys:
-bindkey -M menuselect '^h' vi-backward-char
-bindkey -M menuselect '^k' vi-up-line-or-history
-bindkey -M menuselect '^l' vi-forward-char
-bindkey -M menuselect '^j' vi-down-line-or-history
-
-# Fix backspace bug when switching modes:
-bindkey -v '^?' backward-delete-char
+# Default zsh history search:
+bindkey '^p' history-search-backward
+bindkey '^n' history-search-forward
 #: }}}
 #: Fix basics keybindings: {{{
 # Create a zkbd compatible hash, to add other keys to this hash, see: man 5 terminfo.
@@ -168,6 +154,32 @@ zle -N zle-line-init
 echo -ne "$ins_mode_cursor"               # Use custom shapep cursor on startup.
 preexec(){ echo -ne "$ins_mode_cursor"; } # Use custom shapep cursor for each new prompt.
 #: }}}
+#: Tab complete menu {{{
+# Enable tab complete:
+autoload -U compinit
+# zstyle ':completion:*' menu select
+
+# Include hidden files on completion:
+zmodload zsh/complist
+compinit
+_comp_options+=(globdots)
+
+# # Auto complete with case insenstivity:
+zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
+zstyle ':completion::complete:*' gain-privileges 1
+
+# Completion styling:
+zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
+
+# Navigate completion menu with vim keys:
+bindkey -M menuselect '^h' vi-backward-char
+bindkey -M menuselect '^k' vi-up-line-or-history
+bindkey -M menuselect '^l' vi-forward-char
+bindkey -M menuselect '^j' vi-down-line-or-history
+
+# Fix backspace bug when switching modes:
+bindkey -v '^?' backward-delete-char
+#: }}}
 #: Plugins {{{
 #: Plugin manager {{{
 # Add plugin function:
@@ -205,24 +217,6 @@ zstyle ':completion:*' menu no
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
 zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
 
-# Unset functions from plugin manager:
-unset -f zsh_add_plugin zsh_load_plugin
-#: }}}
-#: History {{{
-setopt \
-	incappendhistory \
-	histignoredups \
-	appendhistory \
-	sharehistory \
-	histignorespace \
-	histignorealldups \
-	histsavenodups \
-	histfindnodups
-
-# Default zsh history search:
-bindkey '^p' history-search-backward
-bindkey '^n' history-search-forward
-
 # Zsh history substring search:
 bindkey '^k' history-substring-search-up
 bindkey '^j' history-substring-search-down
@@ -233,6 +227,9 @@ HISTORY_SUBSTRING_SEARCH_GLOBBING_FLAGS='i'
 HISTORY_SUBSTRING_SEARCH_ENSURE_UNIQUE=''
 HISTORY_SUBSTRING_SEARCH_FUZZY='1'
 HISTORY_SUBSTRING_SEARCH_PREFIXED=''
+
+# Unset functions from plugin manager:
+unset -f zsh_add_plugin zsh_load_plugin
 #: }}}
 #: Shell prompt {{{
 # Function to set the PS1 prompt:
