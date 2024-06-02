@@ -62,19 +62,19 @@ size = 14
 builtin_box_drawing = true
 
 [font.normal]
-family = "FiraCodeNerdFont"
+family = "FiraMonoNerdFont"
 style = "Regular"
 
 [font.italic]
-family = "FiraCodeNerdFont"
+family = "FiraMonoNerdFont"
 style = "Italic"
 
 [font.bold]
-family = "FiraCodeNerdFont"
+family = "FiraMonoNerdFont"
 style = "Bold"
 
 [font.bold_italic]
-family = "FiraCodeNerdFont"
+family = "FiraMonoNerdFont"
 style = "Bold Italic"
 
 [font.offset]
