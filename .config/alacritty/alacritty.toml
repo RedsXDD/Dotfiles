@@ -13,7 +13,7 @@
 import = ["/home/Reds/.config/alacritty/alacritty_wallust.toml"]
 
 [colors]
-draw_bold_text_with_bright_colors = true
+draw_bold_text_with_bright_colors = false
 
 [cursor]
 blink_interval = 300
@@ -58,23 +58,23 @@ x = 0
 y = 0
 
 [font]
+size = 14
 builtin_box_drawing = true
-size = 12
 
 [font.normal]
-family = "JetBrainsMonoNerdFont"
+family = "FiraCodeNerdFont"
 style = "Regular"
 
 [font.italic]
-family = "JetBrainsMonoNerdFont"
+family = "FiraCodeNerdFont"
 style = "Italic"
 
 [font.bold]
-family = "JetBrainsMonoNerdFont"
+family = "FiraCodeNerdFont"
 style = "Bold"
 
 [font.bold_italic]
-family = "JetBrainsMonoNerdFont"
+family = "FiraCodeNerdFont"
 style = "Bold Italic"
 
 [font.offset]
