@@ -1,18 +1,6 @@
 # vim:fileencoding=utf-8:foldmethod=marker:filetype=sh:foldenable
 # shellcheck disable=2139
 
-#: EDITOR aliases {{{
-alias V='neovide'
-alias sv='doasedit'
-if [ -n "$EDITOR" ]; then
-	alias v='$EDITOR'
-else
-	for editor in nvim vim vi; do
-		[ -x "$(command -v "$editor")" ] && alias v="$editor" && export EDITOR="$editor" && continue
-	done
-	unset editor
-fi
-#: }}}
 #: Improvement aliases {{{
 alias \
 	bc='bc -lq' \
@@ -21,14 +9,10 @@ alias \
 	chmod='chmod --preserve-root -c' \
 	chown='sudo chown --preserve-root -c' \
 	diff='diff --color=auto -Ebsu' \
-	dl='\du -shx -- * | sort -rh | head -20' \
-	egrep='grep -E' \
 	fc-cache='fc-cache -rv' \
 	fd='fd --color auto --hidden' \
-	fgrep='grep -F' \
 	free='free -hwtl' \
 	grep='grep --color=auto' \
-	mpv='mpv --fs' \
 	mv='mv -vi' \
 	cp='cp -rvi' \
 	ln='ln -svi' \
@@ -38,17 +22,9 @@ alias \
 	df='df -Th' \
 	du='du -sh' \
 	ps='ps -aux'
-
-# Alternative aliases:
-alias df='duf'
-alias du='dust'
-alias ps='procs'
 #: }}}
 #: Misc aliases {{{
 alias \
-	fzf-tmux='\fzf-tmux -p 75% -w 75%' \
-	ktmux='tmux kill-server' \
-	kzel='\zellij kill-all-sessions' \
 	lynx='lynx -vikeys' \
 	tty-clock='tty-clock -sbcC 4 -f "%A, %B %d, %Y"' \
 	cmatrix='cmatrix -abC blue -u 3' \
@@ -56,25 +32,8 @@ alias \
 	info='info --vi-keys --init-file ~/.config/infokey' \
 	q='exit' \
 	cbonsai='cbonsai -li' \
-	sl='sl -e || clear' \
-	dua='dua i' \
-	mpv='mpv_wallust' \
-	mvi='mvi_wallust'
-#: }}}
-#: Power aliases {{{
-alias \
-	shutdown='\systemctl poweroff' \
-	reboot='\systemctl reboot' \
-	suspend='\systemctl suspend' \
-	hibernate='\systemctl hibernate'
-#: }}}
-#: Git aliases {{{
-alias \
-	stow_dots='stow --adopt -d "$HOME/.local/sources/Reds/dotfiles" -t "$HOME"' \
-	stow_undots='stow -d "$HOME/.local/sources/Reds/dotfiles" -t "$HOME" -D' \
-	dots='/usr/bin/git --git-dir="$HOME/.local/sources/Reds/dotfiles/.git" --work-tree="$HOME/.local/sources/Reds/dotfiles"' \
-	lg='lazygit' \
-	lgd='lazygit -p "$HOME/.local/sources/Reds/dotfiles"'
+	mpv='mpv_wallust --fs' \
+	mvi='mvi_wallust --fs'
 #: }}}
 #: Ls aliases {{{
 # Default ls:
@@ -95,14 +54,7 @@ alias \
 alias \
 	p='pacman --color=auto' \
 	sp='sudo pacman --color=auto' \
-	pp='paru --color=auto' \
-	fp='fparu' \
-	pc='paru -Qqd | paru -Rsu --print -' \
-	pcl='sudo pacman -Rusnv $(paru -Qdtq)' \
-	mirror='sudo reflector -f 30 -l 30 --number 10 --verbose --save /etc/pacman.d/mirrorlist && sudo pacman -Syy' \
-	mirrord='sudo reflector --latest 50 --number 20 --sort delay --verbose --save /etc/pacman.d/mirrorlist && sudo pacman -Syy' \
-	mirrors='sudo reflector --latest 50 --number 20 --sort score --verbose --save /etc/pacman.d/mirrorlist && sudo pacman -Syy' \
-	mirrora='sudo reflector --latest 50 --number 20 --sort age --verbose --save /etc/pacman.d/mirrorlist && sudo pacman -Syy'
+	pp='paru --color=auto'
 #: }}}
 #: Sudo aliases {{{
 alias \
@@ -113,58 +65,19 @@ alias \
 for command in locale-gen make mount passwd mandb systemctl umount updatedb useradd userdel usermod smartctl; do
 	alias "${command}"="sudo ${command}"
 done
-alias grubcfg='sudo grub-mkconfig -o /boot/grub/grub.cfg'
-
-# Switch between shells (not recommended to switch default SHELL from bash).
-alias \
-	tobash='sudo chsh "$USER" -s /bin/bash && echo "Now log out."' \
-	tozsh='sudo chsh "$USER" -s /bin/zsh && echo "Now log out."' \
-	tofish='sudo chsh "$USER" -s /bin/fish && echo "Now log out."'
-#: }}}
-#: Yt-dlp aliases {{{
-alias yt-dlp='\yt-dlp --color=auto --embed-subs --embed-thumbnail --embed-metadata --output "%(title)s [%(id)s].%(ext)s"'
-
-# Yt-dlp audio only:
-alias \
-	yta-aac='yt-dlp --extract-audio --audio-format aac' \
-	yta-best='yt-dlp --extract-audio --audio-format best' \
-	yta-flac='yt-dlp --extract-audio --audio-format flac' \
-	yta-m4a='yt-dlp --extract-audio --audio-format m4a' \
-	yta-mp3='yt-dlp --extract-audio --audio-format mp3' \
-	yta-opus='yt-dlp --extract-audio --audio-format opus' \
-	yta-vorbis='yt-dlp --extract-audio --audio-format vorbis' \
-	yta-wav='yt-dlp --extract-audio --audio-format wav'
-
-# Yt-dlp video:
-alias \
-	ytv-aac='yt-dlp --audio-format aac' \
-	ytv-best='yt-dlp --audio-format best' \
-	ytv-flac='yt-dlp --audio-format flac' \
-	ytv-m4a='yt-dlp --audio-format m4a' \
-	ytv-mp3='yt-dlp --audio-format mp3' \
-	ytv-opus='yt-dlp --audio-format opus' \
-	ytv-vorbis='yt-dlp --audio-format vorbis' \
-	ytv-wav='yt-dlp --audio-format wav' \
-	ytv-best='yt-dlp -f bestvideo+bestaudio'
 #: }}}
 #: TTY aliases {{{
 if [ -z "$DISPLAY" ]; then
 	alias \
-		zellij='zellij --config="${XDG_CONFIG_HOME:-$HOME/.config}/zellij_tty/config.kdl"' \
 		btop='btop -t' \
-		rr='mpv https://youtu.be/dQw4w9WgXcQ' \
 		duf='duf -style ascii' \
 		lsblk='lsblk -if' \
 		bat='bat --decorations=never' \
 		eza='eza --group-directories-first --color=always' \
-		fastfetch='\fastfetch --load-config "${XDG_CONFIG_HOME:-$HOME/.config}/fastfetch/config-tty.jsonc"' \
-		cl='clear; \fastfetch --load-config "${XDG_CONFIG_HOME:-$HOME/.config}/fastfetch/config-tty.jsonc"'
+		fastfetch='\fastfetch --load-config "${XDG_CONFIG_HOME:-$HOME/.config}/fastfetch/config-tty.jsonc"'
 else
 	alias \
-		rr='curl -sL https://raw.githubusercontent.com/keroserene/rickrollrc/master/roll.sh | bash' \
-		RR='mpv https://youtu.be/dQw4w9WgXcQ' \
 		lsblk='lsblk -f' \
-		eza='eza --group-directories-first --color=always --icons' \
-		cl='clear; fastfetch'
+		eza='eza --group-directories-first --color=always --icons'
 fi
 #: }}}

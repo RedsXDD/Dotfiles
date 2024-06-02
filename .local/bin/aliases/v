@@ -1,0 +1,11 @@
+#!/usr/bin/env sh
+
+if [ -z "$EDITOR" ]; then
+	for editor in nvim vim vi; do
+		[ -x "$(command -v "$editor")" ] && EDITOR="$editor" && continue
+	done
+fi
+
+"$EDITOR" "$@"
+
+# vim:fileencoding=utf-8:foldmethod=marker

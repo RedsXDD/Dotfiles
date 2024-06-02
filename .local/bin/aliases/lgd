@@ -1,0 +1,10 @@
+#!/usr/bin/env sh
+
+if ! which lazygit >/dev/null; then
+	echo 'ERROR: lazygit not installed!'
+	exit 1
+fi
+
+lazygit -p "$HOME/.local/sources/Reds/dotfiles"
+
+# vim:fileencoding=utf-8:foldmethod=marker

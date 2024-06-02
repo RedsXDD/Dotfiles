@@ -1,0 +1,10 @@
+#!/usr/bin/env sh
+
+if ! which stow >/dev/null; then
+	echo 'ERROR: stow not installed!'
+	exit 1
+fi
+
+stow --adopt -d "$HOME/.local/sources/Reds/dotfiles" -t "$HOME" .
+
+# vim:fileencoding=utf-8:foldmethod=marker

@@ -1,0 +1,5 @@
+#!/usr/bin/env sh
+
+sudo chsh "$USER" -s /bin/zsh && echo "Now log out."
+
+# vim:fileencoding=utf-8:foldmethod=marker

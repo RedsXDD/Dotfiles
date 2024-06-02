@@ -1,0 +1,10 @@
+#!/usr/bin/env sh
+
+if ! which reflector >/dev/null 2>&1; then
+	echo 'ERROR: reflector not installed!'
+	exit 1
+fi
+
+sudo reflector -f 30 -l 30 --number 10 --verbose --save /etc/pacman.d/mirrorlist
+
+# vim:fileencoding=utf-8:foldmethod=marker

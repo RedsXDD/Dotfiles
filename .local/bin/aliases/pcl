@@ -1,0 +1,12 @@
+#!/usr/bin/env sh
+
+if ! which paru >/dev/null 2>&1; then
+	pkg_list() { pacman -Qdtq; }
+else
+	pkg_list() { paru -Qdtq; }
+fi
+
+# shellcheck disable=2046
+sudo pacman -Rusnv $(pkg_list)
+
+# vim:fileencoding=utf-8:foldmethod=marker

@@ -1,0 +1,15 @@
+#!/usr/bin/env sh
+
+clear
+
+if ! which fastfetch >/dev/null 2>&1; then
+	exit 1
+fi
+
+if [ -z "$DISPLAY" ]; then
+	fastfetch --load-config "${XDG_CONFIG_HOME:-$HOME/.config}/fastfetch/config-tty.jsonc"
+else
+	fastfetch
+fi
+
+# vim:fileencoding=utf-8:foldmethod=marker

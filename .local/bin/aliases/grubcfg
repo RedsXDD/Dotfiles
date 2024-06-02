@@ -1,0 +1,10 @@
+#!/usr/bin/env sh
+
+if ! which grub-mkconfig >/dev/null 2>&1; then
+	echo 'ERROR: grub-mkconfig not installed!'
+	exit 1
+fi
+
+sudo grub-mkconfig -o /boot/grub/grub.cfg
+
+# vim:fileencoding=utf-8:foldmethod=marker

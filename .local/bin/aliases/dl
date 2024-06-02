@@ -1,0 +1,5 @@
+#!/usr/bin/env sh
+
+du -shx -- * | sort -rh | head -20
+
+# vim:fileencoding=utf-8:foldmethod=marker

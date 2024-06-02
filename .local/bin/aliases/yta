@@ -1,0 +1,35 @@
+#!/usr/bin/env sh
+
+if ! which yt-dlp >/dev/null 2>&1; then
+	echo 'ERROR: yt-dlp must be installed!'
+	exit 1
+fi
+
+main_cmd() {
+	yt-dlp \
+		--color=auto \
+		--embed-subs \
+		--embed-thumbnail \
+		--embed-metadata \
+		--output '%(title)s [%(id)s].%(ext)s' \
+		--extract-audio \
+		"$@"
+}
+
+case "$1" in
+'')
+	echo 'ERROR: No arguments given!'
+	exit 1
+	;;
+
+'aac' | 'best' | 'flac' | 'm4a' | 'mp3' | 'opus' | 'vorbis' | 'wav')
+	audio_format="$1"
+	shift
+	;;
+
+*) audio_format='best' ;;
+esac
+
+main_cmd --audio-format "$audio_format" "$@"
+
+# vim:fileencoding=utf-8:foldmethod=marker

@@ -1,0 +1,11 @@
+#!/usr/bin/env sh
+
+if ! which paru >/dev/null 2>&1; then
+	main_cmd() { pacman "$@"; }
+else
+	main_cmd() { paru "$@"; }
+fi
+
+main_cmd -Qqd | main_cmd -Rsu --print -
+
+# vim:fileencoding=utf-8:foldmethod=marker
