@@ -60,7 +60,7 @@ file_list(){
 }
 
 # shellcheck disable=2016
-file="$(file_list | sort | sed "s|$HOME|~|g" | fzf-tmux -p 75% -w 75% --preview 'cat "$(echo {} | sed "s|~|$HOME|g")"' --prompt '> Edit File > ' | sed "s|~|$HOME|g")"
+file="$(file_list | sort | sed "s|$HOME|~|g" | fzf-tmux --preview 'cat "$(echo {} | sed "s|~|$HOME|g")"' --prompt '> Edit File > ' | sed "s|~|$HOME|g")"
 [ -n "$file" ] && [ -f "$file" ] && file_editor "$file"
 
 # vim:fileencoding=utf-8:foldmethod=marker

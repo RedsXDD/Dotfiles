@@ -6,7 +6,7 @@ wikidir='/usr/share/doc/arch-wiki/html/en'
 fzf_cmd(){
 	find "$wikidir" -type f -iname '*.html' |
 		awk -F '/' -v n=8 'BEGIN{OFS="/"} {gsub(/\.html/, ""); for (i=n; i<=NF; i++) printf "%s%s", $i, (i<NF ? OFS : ORS)}' | # This huge awk command is just a fancier way of doing `cut -d'/' -f8- | sed 's/.html//g'`
-		sort | fzf-tmux -p 50% -w 50% --prompt '> Search docs > '
+		sort | fzf-tmux --prompt '> Search docs > '
 }
 
 doc="$(fzf_cmd)"
