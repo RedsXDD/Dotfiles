@@ -4,34 +4,8 @@ local wezterm = require("wezterm")
 return {
 	color_scheme = "Wallust",
 	font_size = 14,
-	font = wezterm.font("FiraCodeNerdFont", { weight = "Medium", stretch = "Normal", style = "Normal" }),
-
-	font_rules = {
-		-- Italic:
-		{
-			italic = true,
-			font = wezterm.font("FiraCodeNerdFont", { weight = "Medium", stretch = "Normal", style = "Italic" }),
-		},
-		-- Bold:
-		{
-			intensity = "Bold",
-			font = wezterm.font("FiraCodeNerdFont", { weight = "Bold", stretch = "Normal", style = "Normal" }),
-		},
-		-- Bold-Italic:
-		{
-			intensity = "Bold",
-			italic = true,
-			font = wezterm.font("FiraCodeNerdFont", { weight = "Bold", stretch = "Normal", style = "Italic" }),
-		},
-	},
-
-	window_padding = {
-		left = 5,
-		right = 5,
-		top = 5,
-		bottom = 5,
-	},
-
+	font = wezterm.font("FiraMonoNerdFont"),
+	warn_about_missing_glyphs = false,
 	window_background_opacity = 0.85,
 	window_decorations = "NONE",
 	enable_tab_bar = false,
