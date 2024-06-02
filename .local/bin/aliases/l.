@@ -1,0 +1,19 @@
+#!/usr/bin/env sh
+
+# shellcheck disable=2145
+# shellcheck disable=2012
+if ! which eza >/dev/null 2>&1; then
+	[ -z "$1" ] && ls --group-directories-first --color -1d .* && return 0
+	ls --group-directories-first --color -1d -- "$@"/.* | awk -F '/' '{print $NF}'
+	return 0
+fi
+
+if [ -z "$DISPLAY" ]; then
+	[ -z "$1" ] && eza --group-directories-first --color=always -1d .* && return 0
+	eza --group-directories-first --color=always -1d -- "$@"/.* | awk -F '/' '{print $NF}'
+else
+	[ -z "$1" ] && eza --group-directories-first --color=always --icons -1d .* && return 0
+	eza --group-directories-first --color=always --icons -1d -- "$@"/.* | awk -F '/' '{print $NF}'
+fi
+
+# vim:fileencoding=utf-8:foldmethod=marker
