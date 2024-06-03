@@ -13,6 +13,7 @@ return {
 	scrollback_lines = 100000,
 	enable_scroll_bar = false,
 	check_for_updates = false,
+	exit_behavior = "CloseOnCleanExit",
 
 	-- Keybindings:
 	disable_default_key_bindings = true,
