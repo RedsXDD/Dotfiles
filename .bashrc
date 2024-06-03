@@ -11,6 +11,7 @@
 
 # ---------------------------------------------- #
 
+# shellcheck source=/dev/null
 # If not running interactively, don't do anything.
 [[ $- != *i* ]] && return
 
@@ -69,8 +70,6 @@ setup_fzf_tab_completion(){
 
 	local FZF_TAB_PLUGIN_DIR="${PLUGIN_DIR}/fzf-tab-completion"
 	[ ! -d "${FZF_TAB_PLUGIN_DIR}" ] && git clone https://github.com/lincheney/fzf-tab-completion "${FZF_TAB_PLUGIN_DIR}"
-
-	# shellcheck source=/dev/null
 	[ -f "${FZF_TAB_PLUGIN_DIR}/bash/fzf-bash-completion.sh" ] && source "${FZF_TAB_PLUGIN_DIR}/bash/fzf-bash-completion.sh"
 	bind -x '"\t": fzf_bash_completion'
 
