@@ -24,9 +24,6 @@ oomox.target = "~/.config/oomox/colors/wallust"
 rofi.template = "templates/colors_rofi.rasi"
 rofi.target = "~/.config/rofi/colors.rasi"
 
-starship.template = "templates/colors_starship.toml"
-starship.target = "~/.config/starship.toml"
-
 swaync.template = "templates/colors_swaync.css"
 swaync.target = "~/.config/swaync/swaync_wallust.css"
 

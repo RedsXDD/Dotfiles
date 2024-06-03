@@ -62,6 +62,9 @@ bin_files="$(find "${HOME}/.local/bin" -follow -type d -not -path "${HOME}/.loca
 export PATH="$PATH:${bin_files}${HOME}/Applications:${CARGO_HOME}/bin/"
 unset bin_files
 
+# Starship configuration:
+[ -f "${XDG_CONFIG_HOME:-$HOME/.config}/starship/starship.toml" ] && export STARSHIP_CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/starship/starship.toml"
+
 # FZF config:
 # shellcheck source=/dev/null
 # Import wallust colors.
@@ -169,6 +172,6 @@ if [ -z "$DISPLAY" ]; then
 	[ "$(tty)" = '/dev/tty1' ] && Hyprland
 
 	export FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS} --no-unicode"
-	[ -f "${XDG_CONFIG_HOME:-$HOME/.config}/starship_tty.toml" ] && export STARSHIP_CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/starship_tty.toml"
+	[ -f "${XDG_CONFIG_HOME:-$HOME/.config}/starship/starship_tty.toml" ] && export STARSHIP_CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/starship/starship_tty.toml"
 	[ -f "${XDG_CACHE_HOME:-$HOME/.cache}/wallust/colors_tty.sh" ] && . "${XDG_CACHE_HOME:-$HOME/.cache}/wallust/colors_tty.sh"
 fi

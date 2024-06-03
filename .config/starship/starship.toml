@@ -1,0 +1,242 @@
+# vim:fileencoding=utf-8:foldmethod=marker:foldenable
+
+# ---------------------------------------------------------- #
+
+# ███████╗████████╗ █████╗ ██████╗ ███████╗██╗  ██╗██╗██████╗
+# ██╔════╝╚══██╔══╝██╔══██╗██╔══██╗██╔════╝██║  ██║██║██╔══██╗
+# ███████╗   ██║   ███████║██████╔╝███████╗███████║██║██████╔╝
+# ╚════██║   ██║   ██╔══██║██╔══██╗╚════██║██╔══██║██║██╔═══╝
+# ███████║   ██║   ██║  ██║██║  ██║███████║██║  ██║██║██║
+# ╚══════╝   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝╚═╝╚═╝
+
+# ---------------------------------------------------------- #
+
+#: Formatting {{{
+format = """
+╭─\
+$os$username$hostname\
+$directory\
+$shell\
+$git_branch\
+$git_status\
+$aws$azure$buf$c$conda$crystal$dart$elixir$elm$fennel$golang$haskell$haxe$java$julia$kotlin$lua$meson$nim$nodejs$ocaml$perl$php$purescript$python$rlang$ruby$rust$scala$swift$terraform$zig\
+$docker_context\
+$line_break\
+╰─\
+$cmd_duration$character
+"""
+#: }}}
+#: OS {{{
+[os]
+disabled = false
+style = "fg:blue"
+
+[os.symbols]
+Alpaquita = "󰂚 "
+Alpine = " "
+Amazon = " "
+Android = " "
+Arch = " "
+Artix = " "
+CentOS = " "
+Debian = " "
+DragonFly = " "
+Emscripten = " "
+EndeavourOS = " "
+Fedora = " "
+FreeBSD = " "
+Garuda = "󰛓 "
+Gentoo = " "
+HardenedBSD = "󰞌 "
+Illumos = "󰈸 "
+Linux = " "
+Mabox = " "
+Macos = " "
+Manjaro = " "
+Mariner = " "
+MidnightBSD = " "
+Mint = " "
+NetBSD = " "
+NixOS = " "
+OpenBSD = "󰈺 "
+openSUSE = " "
+OracleLinux = "󰌷 "
+Pop = " "
+Raspbian = " "
+Redhat = " "
+RedHatEnterprise = " "
+Redox = "󰀘 "
+Solus = "󰠳 "
+SUSE = " "
+Ubuntu = " "
+Unknown = " "
+Windows = "󰍲 "
+#: }}}
+#: Username {{{
+[username]
+show_always = true
+style_user = "fg:blue bold"
+style_root = "fg:blue bold"
+format = '[$user]($style)'
+#: }}}
+#: Hostname {{{
+[hostname]
+ssh_only = false
+ssh_symbol = " "
+style = "fg:blue bold"
+format = ' at [$ssh_symbol$hostname]($style)'
+#: }}}
+#: Directory {{{
+[directory]
+read_only = "󰌾 "
+truncation_length = 3
+truncation_symbol = "…/"
+style = "fg:cyan bold"
+format = " on [󰉋 $path ]($style)"
+
+[directory.substitutions]
+'Applications' = ' '
+'Documents' = '󰈙 '
+'Downloads' = ' '
+'Music' = '󰝚 '
+'Pictures' = ' '
+'Videos' = ' '
+#: }}}
+#: Shell {{{
+[shell]
+disabled = false
+bash_indicator = 'bash'
+cmd_indicator = 'cmd'
+elvish_indicator = 'esh'
+fish_indicator = 'fish'
+ion_indicator = 'ion'
+nu_indicator = 'nu'
+powershell_indicator = 'psh'
+tcsh_indicator = 'tsh'
+xonsh_indicator = 'xsh'
+zsh_indicator = 'zsh'
+unknown_indicator = '?sh'
+style = "fg:green bold"
+format = "with [ $indicator ]($style)"
+#: }}}
+#: Git {{{
+[git_branch]
+symbol = " "
+style = ""
+format = '[on [$symbol$branch ](fg:purple bold)]($style)'
+#: }}}
+#: Languages {{{
+[aws]
+symbol = "  "
+
+[azure]
+symbol = "  "
+
+[buf]
+symbol = " "
+
+[c]
+symbol = " "
+
+[conda]
+symbol = " "
+
+[crystal]
+symbol = " "
+
+[dart]
+symbol = " "
+
+[elixir]
+symbol = " "
+
+[elm]
+symbol = " "
+
+[fennel]
+symbol = " "
+
+[golang]
+symbol = " "
+
+[haskell]
+symbol = " "
+
+[haxe]
+symbol = " "
+
+[java]
+symbol = " "
+
+[julia]
+symbol = " "
+
+[kotlin]
+symbol = " "
+
+[lua]
+symbol = " "
+
+[nodejs]
+symbol = " "
+
+[meson]
+symbol = "󰔷 "
+
+[nim]
+symbol = " "
+
+[ocaml]
+symbol = " "
+
+[perl]
+symbol = " "
+
+[php]
+symbol = " "
+
+[purescript]
+symbol = " "
+
+[python]
+symbol = " "
+
+[rlang]
+symbol = "󰟔 "
+
+[ruby]
+symbol = " "
+
+[rust]
+symbol = " "
+
+[scala]
+symbol = " "
+
+[swift]
+symbol = " "
+
+[terraform]
+symbol = " "
+
+[zig]
+symbol = " "
+#: }}}
+#: Docker {{{
+[docker_context]
+symbol = " "
+#: }}}
+#: Cmd duration {{{
+[cmd_duration]
+style = "fg:yellow bold"
+format = 'took [$duration]($style) '
+#: }}}
+#: Line break & Character {{{
+[character]
+success_symbol = '[❯](bold fg:green)'
+error_symbol = '[󰖭](bold fg:red)'
+vimcmd_symbol = '[❮](bold fg:yellow)'
+vimcmd_visual_symbol = '[❮](bold fg:purple)'
+vimcmd_replace_symbol = '[❮](bold fg:purple)'
+vimcmd_replace_one_symbol = '[❮](bold fg:purple)'
+#: }}}
