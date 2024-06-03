@@ -6,17 +6,17 @@ cursor_fg = "{{background}}"
 cursor_border = "{{foreground}}"
 selection_fg = "{{color5}}"
 selection_bg = "{{background | darken(0.3)}}"
-scrollbar_thumb = "{{background | lighten(0.4)}}"
+scrollbar_thumb = "{{background | lighten(0.2)}}"
 split = "{{foreground}}"
 compose_cursor = "{{color11}}"
-copy_mode_active_highlight_bg = { Color = "{{color0}}" }
-copy_mode_active_highlight_fg = { Color = "{{background}}" }
+copy_mode_active_highlight_bg   = { Color = "{{background | darken(0.3)}}" }
+copy_mode_active_highlight_fg   = { Color = "{{foreground}}" }
 copy_mode_inactive_highlight_bg = { Color = "{{color2}}" }
-copy_mode_inactive_highlight_fg = { Color = "{{foreground}}" }
+copy_mode_inactive_highlight_fg = { Color = "{{background}}" }
 quick_select_label_bg = { Color = "{{color3}}" }
-quick_select_label_fg = { Color = "{{foreground}}" }
+quick_select_label_fg = { Color = "{{background}}" }
 quick_select_match_bg = { Color = "{{color4}}" }
-quick_select_match_fg = { Color = "{{foreground}}" }
+quick_select_match_fg = { Color = "{{background}}" }
 
 ansi = [ "{{color0}}", "{{color1}}", "{{color2}}", "{{color3}}", "{{color4}}", "{{color5}}", "{{color6}}", "{{color7}}" ]
 brights = [ "{{color8}}", "{{color9}}", "{{color10}}", "{{color11}}", "{{color12}}", "{{color13}}", "{{color14}}", "{{color15}}" ]
