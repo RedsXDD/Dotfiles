@@ -2,6 +2,7 @@
 local wezterm = require("wezterm")
 
 return {
+	term = "wezterm",
 	color_scheme = "Wallust",
 	font_size = 14,
 	font = wezterm.font("FiraMonoNerdFont"),
