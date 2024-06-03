@@ -96,10 +96,10 @@ shopt -s histappend # Do not overwrite history
 shopt -s cmdhist    # Save multi-line commands in history as single line
 
 # Search backwards/forwards in history from letter:
+bind -m vi-insert '"\C-p": history-search-backward'
+bind -m vi-insert '"\C-n": history-search-forward'
 bind -m vi-insert '"\C-k": history-substring-search-backward'
 bind -m vi-insert '"\C-j": history-substring-search-forward'
-bind -m vi-insert '"\C-p": history-substring-search-backward'
-bind -m vi-insert '"\C-n": history-substring-search-forward'
 #: }}}
 #: Shell prompt {{{
 # Function to set the PS1 prompt:
