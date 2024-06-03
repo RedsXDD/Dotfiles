@@ -1,7 +1,6 @@
 #!/usr/bin/env sh
 
 # TODO: Add more comments.
-# TODO: Error for invalid options.
 
 # Start swww daemon if it's not running already.
 [ -z "$(pgrep swww-daemon)" ] && swww-daemon >/dev/null 2>&1 &
@@ -68,7 +67,6 @@ echoerr(){
 	[ -n "$QUIET" ] && exit 1
 	message="$1"
 	echo "$(tput setaf 1 bold)ERROR: $(tput sgr0; tput bold)${message}"
-	exit 1
 }
 
 # Function to display success messages:
@@ -126,11 +124,11 @@ directory_search(){
 	elif [ "$RECURSIVENESS" -eq 0 ]; then
 		wallpaper="$(find_random_file "$search_directory")"
 	else
-		echoerr "the value '$RECURSIVENESS' used for --recurse is invalid, it must either be a positive integer or 0."
+		echoerr "the value '$RECURSIVENESS' used for --recurse is invalid, it must either be a positive integer or 0." && exit 1
 	fi
 
        # Error if no valid file was found inside the specified directory:
-       [ -z "$wallpaper" ] && echoerr "no valid file was found inside the specified directory, try increasing the recursiveness value for directory searches with the --recurse option."
+       [ -z "$wallpaper" ] && echoerr "no valid file was found inside the specified directory, try increasing the recursiveness value for directory searches with the --recurse option." && exit 1
 }
 #: }}}
 #: Wallpaper setting functions {{{
@@ -219,7 +217,7 @@ set_wallpaper(){
 					set_video_wallpaper "$wallpaper" "$video_thumbnail"
 				;;
 
-				*) echoerr "no valid option or wallpaper path specified." ;;
+				*) echoerr "no valid option or wallpaper path specified." && exit 1 ;;
 			esac
 		;;
 	esac
@@ -237,7 +235,11 @@ main(){
 			'-f' | '--use-fd')    USE_FD='true'       ;;
 			'-m' | '--use-mimes') USE_MIMES='true'    ;;
 			'-Q' | '--quiet')     QUIET='true'        ;;
-			'-h' | '--help' | '-'*) help_page         ;;
+			'-h' | '--help' | '-'*)
+				echoerr "Could not load option '$1'"
+				echo ''
+				help_page
+			;;
 		esac
 
 		# Make sure the wallpaper path is the last argument to be read.
