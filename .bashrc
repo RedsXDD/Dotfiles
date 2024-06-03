@@ -63,8 +63,21 @@ bind "set completion-ignore-case on"    # Ignore upper and lowercase with TAB co
 bind "set completion-display-width 0"   # number of screen columns used to display possible matches when performing completion.
 bind "set completion-query-items 1000"  # Amount of completions that can be displayed.
 
-[ -f "${XDG_CONFIG_HOME:-$HOME/.config}/bash/fzf-bash-completion.sh" ] && source "${XDG_CONFIG_HOME:-$HOME/.config}/bash/fzf-bash-completion.sh"
-bind -x '"\t": fzf_bash_completion'
+setup_fzf_tab_completion(){
+	local PLUGIN_DIR="${XDG_DATA_HOME:-$HOME/.local/share}/bash/plugins"
+	[ ! -d "$PLUGIN_DIR" ] && mkdir -vp "$PLUGIN_DIR"
+
+	local FZF_TAB_PLUGIN_DIR="${PLUGIN_DIR}/fzf-tab-completion"
+	[ ! -d "${FZF_TAB_PLUGIN_DIR}" ] && git clone https://github.com/lincheney/fzf-tab-completion "${FZF_TAB_PLUGIN_DIR}"
+
+	# shellcheck source=/dev/null
+	[ -f "${FZF_TAB_PLUGIN_DIR}/bash/fzf-bash-completion.sh" ] && source "${FZF_TAB_PLUGIN_DIR}/bash/fzf-bash-completion.sh"
+	bind -x '"\t": fzf_bash_completion'
+
+	unset -f setup_fzf_tab_completion
+}
+setup_fzf_tab_completion
+
 # Add scripts to the list of valid fzf-tab commands.
 complete -o bashdefault -o default -F _fzf_path_completion l.
 complete -o bashdefault -o default -F _fzf_path_completion v
