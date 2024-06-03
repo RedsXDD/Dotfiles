@@ -60,8 +60,8 @@ unset nrm_mode_cursor ins_mode_cursor
 #: }}}
 #: Tab complete options {{{
 bind 'TAB:menu-complete'                # Tab menu.
-bind "set colored-stats On"             # Color on tab completion for files and dirs.
-bind "set colored-completion-prefix On" # Color on tab completion matches.
+bind "set colored-stats on"             # Color on tab completion for files and dirs.
+bind "set colored-completion-prefix on" # Color on tab completion matches.
 bind "set show-all-if-ambiguous on"     # Hit tab once to complete.
 bind "set completion-map-case on"       # Treats hyphens and underscores as equivalent when performing case-insensitive filename matching and completion.
 bind "set completion-ignore-case on"    # Ignore upper and lowercase with TAB completion.
