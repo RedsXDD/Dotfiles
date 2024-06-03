@@ -221,26 +221,11 @@ HISTORY_SUBSTRING_SEARCH_PREFIXED=''
 # Unset functions from plugin manager:
 unset -f zsh_add_plugin zsh_load_plugin
 #: }}}
-#: Shell prompt {{{
-# Function to set the PS1 prompt:
-set_ps1(){
-	export PROMPT='%B%F{blue}%n %f%b'
-	export PROMPT="${PROMPT}%B%F{white}at %f%b"
-	export PROMPT="${PROMPT}%B%F{cyan}%M %f%b"
-	export PROMPT="${PROMPT}%B%F{white}on %f%b"
-	export PROMPT="${PROMPT}%B%F{magenta}%D{%r - %d/%m/%Y} %f%b"
-	export PROMPT="${PROMPT}%B%F{white}using %f%b"
-	export PROMPT="${PROMPT}%B%F{green}zsh%f%b"
-	export PROMPT="${PROMPT}%B%F"$'\n'"%(?.%F{white}%5~ >.%F{red}%5~ >)%f%b "
-}
 
-eval "$(starship init zsh)" || set_ps1
-unset -f set_ps1
-#: }}}
-
-# Shell integrations (Must be after compinit is called):
-eval "$(zoxide init --cmd cd zsh)"
+# Shell integrations (must be after compinit is called):
 eval "$(fzf --zsh)"
+eval "$(zoxide init --cmd cd zsh)"
+eval "$(starship init zsh)"
 
 # Run fastfetch:
 fastfetch

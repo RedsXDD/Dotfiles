@@ -100,53 +100,11 @@ bind -m vi-insert '"\C-n": history-search-forward'
 bind -m vi-insert '"\C-k": history-substring-search-backward'
 bind -m vi-insert '"\C-j": history-substring-search-forward'
 #: }}}
-#: Shell prompt {{{
-# Function to set the PS1 prompt:
-set_ps1(){
-	# Color variables:
-	local black=''
-	local red=''
-	local green=''
-	local yellow=''
-	local blue=''
-	local magenta=''
-	local cyan=''
-	local white=''
-	local bold=''
-	local reset=''
-
-	# \[ and \] are required to define the cursor position
-	black="\[$(tput setaf 0)\]"
-	red="\[$(tput setaf 1)\]"
-	green="\[$(tput setaf 2)\]"
-	yellow="\[$(tput setaf 3)\]"
-	blue="\[$(tput setaf 4)\]"
-	magenta="\[$(tput setaf 5)\]"
-	cyan="\[$(tput setaf 6)\]"
-	white="\[$(tput setaf 7)\]"
-	bold="\[$(tput bold)\]"
-	reset="\[$(tput sgr0)\]"
-
-	# Prompt:
-	export PROMPT_DIRTRIM='5' # Depth of "current directory" when using \w or \W
-	export PS1=''
-	export PS1+="${bold}${blue}\u ${reset}"
-	export PS1+="${bold}${white}at ${reset}"
-	export PS1+="${bold}${cyan}\H ${reset}"
-	export PS1+="${bold}${white}on ${reset}"
-	export PS1+="${bold}${magenta}\D{%r - %d/%m/%Y} ${reset}"
-	export PS1+="${bold}${white}using ${reset}"
-	export PS1+="${bold}${green}bash${reset}"
-	export PS1+="\n${bold}\`[ \$? = 0 ] && echo \"${white}\w >\" || echo \"${red}\w >\"\`${reset} "
-}
-
-eval "$(starship init bash)" || set_ps1
-unset -f set_ps1
-#: }}}
 
 # Shell integrations:
 eval "$(fzf --bash)"
 eval "$(zoxide init --cmd cd bash)"
+eval "$(starship init bash)"
 
 # Run fastfetch:
 fastfetch
