@@ -19,9 +19,8 @@
 BLESH_FILE='/usr/share/blesh/ble.sh'
 [ -f "$BLESH_FILE" ] && source "$BLESH_FILE"
 
-# Source main shell configs:
+# Source main shell config:
 source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/aliasrc"
-files="$(find "${XDG_CONFIG_HOME:-$HOME/.config}/shell/functions" -follow -type f -printf '; source %p')"; eval "source ${files##; source}"; unset files
 
 #: Options {{{
 # ^C no longer shows on C-c keypress:

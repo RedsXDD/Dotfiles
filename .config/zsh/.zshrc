@@ -14,9 +14,8 @@
 # If not running interactively, don't do anything.
 [[ $- != *i* ]] && return
 
-# Source main shell configs:
+# Source main shell config:
 source "${XDG_CONFIG_HOME:-$HOME/.config}/shell/aliasrc"
-files="$(find "${XDG_CONFIG_HOME:-$HOME/.config}/shell/functions" -follow -type f -printf '; source %p')"; eval "source ${files##; source}"; unset files
 
 #: Options {{{
 # Enable colors:
