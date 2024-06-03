@@ -110,7 +110,7 @@ yazicd(){
 		builtin cd -- "$zoxide_query" || :
 	fi
 
-	STARSHIP_CONFIG="/dev/null" command yazi --cwd-file="$exited_path" "${*:-"$(pwd)"}"
+	STARSHIP_CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/yazi/starship.toml" command yazi --cwd-file="$exited_path" "${*:-"$(pwd)"}"
 
 	if cwd="$(< "$exited_path")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
 		builtin cd -- "$cwd" || return 1

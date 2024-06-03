@@ -1,0 +1,145 @@
+# vim:fileencoding=utf-8:foldmethod=marker:foldenable
+
+# ---------------------------------------------------------- #
+
+# ███████╗████████╗ █████╗ ██████╗ ███████╗██╗  ██╗██╗██████╗
+# ██╔════╝╚══██╔══╝██╔══██╗██╔══██╗██╔════╝██║  ██║██║██╔══██╗
+# ███████╗   ██║   ███████║██████╔╝███████╗███████║██║██████╔╝
+# ╚════██║   ██║   ██╔══██║██╔══██╗╚════██║██╔══██║██║██╔═══╝
+# ███████║   ██║   ██║  ██║██║  ██║███████║██║  ██║██║██║
+# ╚══════╝   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝╚═╝╚═╝
+
+# ---------------------------------------------------------- #
+
+#: Formatting {{{
+format = """
+$directory\
+$git_branch\
+$git_status\
+$aws$azure$buf$c$conda$crystal$dart$elixir$elm$fennel$golang$haskell$haxe$java$julia$kotlin$lua$meson$nim$nodejs$ocaml$perl$php$purescript$python$rlang$ruby$rust$scala$swift$terraform$zig\
+$docker_context\
+"""
+#: }}}
+#: Directory {{{
+[directory]
+style = "fg:cyan bold"
+format = " [ 󰉋 $path ]($style)"
+read_only = "󰌾 "
+truncation_length = 3
+truncation_symbol = "…/"
+
+[directory.substitutions]
+'Applications' = ' '
+'Documents' = '󰈙 '
+'Downloads' = ' '
+'Music' = '󰝚 '
+'Pictures' = ' '
+'Videos' = ' '
+#: }}}
+#: Git {{{
+[git_branch]
+symbol = " "
+style = ""
+format = '[on [$symbol$branch ](fg:purple bold)]($style)'
+#: }}}
+#: Languages {{{
+[aws]
+symbol = "  "
+
+[azure]
+symbol = "  "
+
+[buf]
+symbol = " "
+
+[c]
+symbol = " "
+
+[conda]
+symbol = " "
+
+[crystal]
+symbol = " "
+
+[dart]
+symbol = " "
+
+[elixir]
+symbol = " "
+
+[elm]
+symbol = " "
+
+[fennel]
+symbol = " "
+
+[golang]
+symbol = " "
+
+[haskell]
+symbol = " "
+
+[haxe]
+symbol = " "
+
+[java]
+symbol = " "
+
+[julia]
+symbol = " "
+
+[kotlin]
+symbol = " "
+
+[lua]
+symbol = " "
+
+[nodejs]
+symbol = " "
+
+[meson]
+symbol = "󰔷 "
+
+[nim]
+symbol = " "
+
+[ocaml]
+symbol = " "
+
+[perl]
+symbol = " "
+
+[php]
+symbol = " "
+
+[purescript]
+symbol = " "
+
+[python]
+symbol = " "
+
+[rlang]
+symbol = "󰟔 "
+
+[ruby]
+symbol = " "
+
+[rust]
+symbol = " "
+
+[scala]
+symbol = " "
+
+[swift]
+symbol = " "
+
+[terraform]
+symbol = " "
+
+[zig]
+symbol = " "
+#: }}}
+#: Docker {{{
+[docker_context]
+symbol = " "
+#: }}}
