@@ -3,6 +3,8 @@
 
 #: Improvement aliases {{{
 alias \
+	..='builtin cd -- ..' \
+	~='builtin cd -- ~' \
 	bc='bc -lq' \
 	cal='cal --color=auto -sy' \
 	cat='bat' \
