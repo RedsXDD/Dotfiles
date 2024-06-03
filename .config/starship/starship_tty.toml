@@ -18,9 +18,7 @@ $directory\
 $shell\
 $git_branch\
 $git_status\
-$buf$c$conda$crystal$dart$elixir$elm$fennel$golang$haskell$haxe$java$julia$kotlin$lua$meson$nim$nodejs$ocaml$perl$php$purescript$python$rlang$ruby$rust$scala$swift$terraform$zig\
-$aws$azure\
-$docker_context\
+$all\
 $line_break\
 `-\
 $cmd_duration$character
@@ -120,9 +118,6 @@ format = 'using [$indicator ]($style)'
 [git_commit]
 tag_symbol = "tag:"
 
-[git_branch]
-symbol = ""
-
 [git_status]
 ahead = ">"
 behind = "<"
@@ -130,15 +125,12 @@ diverged = "<>"
 renamed = "r"
 deleted = "x"
 #: }}}
-#: Languages {{{
+#: Plain text {{{
 [aws]
 symbol = "aws "
 
 [azure]
 symbol = "az "
-
-[buf]
-symbol = "buf "
 
 [bun]
 symbol = "bun "
@@ -170,6 +162,9 @@ symbol = "deno "
 [dotnet]
 symbol = ".NET "
 
+[docker_context]
+symbol = "docker "
+
 [elixir]
 symbol = "exs "
 
@@ -179,11 +174,23 @@ symbol = "elm "
 [fennel]
 symbol = "fnl "
 
+[fossil_branch]
+symbol = "fossil "
+
+[gcloud]
+symbol = "gcp "
+
 [golang]
 symbol = "go "
 
 [gradle]
 symbol = "gradle "
+
+[guix_shell]
+symbol = "guix "
+
+[hg_branch]
+symbol = "hg "
 
 [java]
 symbol = "java "
@@ -200,11 +207,17 @@ symbol = "lua "
 [nodejs]
 symbol = "nodejs "
 
+[memory_usage]
+symbol = "memory "
+
 [meson]
 symbol = "meson "
 
 [nim]
 symbol = "nim "
+
+[nix_shell]
+symbol = "nix "
 
 [ocaml]
 symbol = "ml "
@@ -212,11 +225,17 @@ symbol = "ml "
 [opa]
 symbol = "opa "
 
+[package]
+symbol = "pkg "
+
 [perl]
 symbol = "pl "
 
 [php]
 symbol = "php "
+
+[pijul_channel]
+symbol = "pijul "
 
 [pulumi]
 symbol = "pulumi "
@@ -245,18 +264,20 @@ symbol = "spack "
 [solidity]
 symbol = "solidity "
 
+[sudo]
+symbol = "sudo "
+
 [swift]
 symbol = "swift "
+
+[typst]
+symbol = "typst "
 
 [terraform]
 symbol = "terraform "
 
 [zig]
 symbol = "zig "
-#: }}}
-#: Docker {{{
-[docker_context]
-symbol = "docker "
 #: }}}
 #: Cmd duration {{{
 [cmd_duration]
