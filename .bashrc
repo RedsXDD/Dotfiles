@@ -146,8 +146,8 @@ unset -f set_ps1
 #: }}}
 
 # Shell integrations:
-eval "$(zoxide init --cmd cd bash)"
 eval "$(fzf --bash)"
+eval "$(zoxide init --cmd cd bash)"
 
 # Run fastfetch:
 fastfetch
