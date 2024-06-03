@@ -19,7 +19,8 @@ $directory\
 $shell\
 $git_branch\
 $git_status\
-$aws$azure$buf$c$conda$crystal$dart$elixir$elm$fennel$golang$haskell$haxe$java$julia$kotlin$lua$meson$nim$nodejs$ocaml$perl$php$purescript$python$rlang$ruby$rust$scala$swift$terraform$zig\
+$buf$c$conda$crystal$dart$elixir$elm$fennel$golang$haskell$haxe$java$julia$kotlin$lua$meson$nim$nodejs$ocaml$perl$php$purescript$python$rlang$ruby$rust$scala$swift$terraform$zig\
+$aws$azure\
 $docker_context\
 $line_break\
 ╰─\
