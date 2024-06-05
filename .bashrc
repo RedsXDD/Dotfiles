@@ -84,6 +84,7 @@ setup_fzf_tab_completion
 complete -o bashdefault -o default -F _fzf_path_completion v
 complete -o bashdefault -o default -F _fzf_path_completion sv
 complete -o bashdefault -o default -F _fzf_path_completion doasedit
+complete -o bashdefault -o default -F _fzf_path_completion delta
 complete -o bashdefault -o default -F _fzf_path_completion lustbg
 complete -o bashdefault -o default -F _fzf_path_completion waybg
 complete -o bashdefault -o default -F _fzf_path_completion mpv
