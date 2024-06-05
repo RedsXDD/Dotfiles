@@ -4,19 +4,54 @@
 	editor = neovim
 
 [core]
-    pager = delta
+	pager = delta
 
 [interactive]
-    diffFilter = delta --color-only
-
-[delta]
-    navigate = true    # use n and N to move between diff sections
+	diffFilter = delta --color-only
 
 [merge]
-    conflictstyle = diff3
+	conflictstyle = diff3
 
 [diff]
-    colorMoved = default
+	colorMoved = default
 
 [rerere]
 	enabled = true
+
+[delta]
+	navigate = true # use n and N to move between diff sections
+	side-by-side = false
+
+	line-numbers = true
+	line-numbers-zero-style = 15
+	line-numbers-minus-style = red
+	line-numbers-plus-style = green
+	line-numbers-left-format = "{nm:>4}:"
+	line-numbers-right-format = "{np:>4}| "
+	line-numbers-left-style = 4
+	line-numbers-right-style = 4
+
+	commit-style                  = omit
+	file-style                    = cyan ul
+	file-decoration-style         = none
+	hunk-header-style             = omit
+	keep-plus-minus-markers       = true
+	zero-style                    = normal
+	minus-style                   = red
+	plus-style                    = green
+	minus-non-emph-style          = red
+	plus-non-emph-style           = green
+	minus-emph-style              = red bold reverse
+	plus-emph-style               = green bold reverse
+	minus-empty-line-marker-style = red
+	grep-file-style               = cyan
+	grep-line-number-style        = cyan
+	whitespace-error-style        = cyan
+	blame-code-style              = omit
+	true-color                    = never
+	file-modified-label           = changed:
+	right-arrow                   = >
+	hyperlinks                    = false
+	diff-stat-align-width         = cyan
+	syntax-theme                  = none
+	width                         = variable
