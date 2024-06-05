@@ -20,7 +20,7 @@ alias \
 	ln='ln -svi' \
 	rm='rm -rvI' \
 	mkdir='mkdir -pv' \
-	tree='tree -aF --dirsfirst --gitignore' \
+	tree='tree --dirsfirst --gitignore -aFL 2 ' \
 	df='df -Th' \
 	du='du -sh' \
 	ps='ps -aux'
@@ -84,13 +84,14 @@ else
 fi
 #: }}}
 #: Functions {{{
-up(){
+up() {
 	local d=""
 	local limit="$1"
 
 	# Default to limit of 1.
 	if [ -z "$limit" ] || [ "$limit" -le 0 ]; then local limit=1; fi
-	for ((i=1; i<=limit; i++)); do local d="../$d"; done; unset i
+	for ((i = 1; i <= limit; i++)); do local d="../$d"; done
+	unset i
 
 	# Perform cd. Show error if cd fails.
 	if ! builtin cd "$d"; then echo "Couldn't go up $limit dirs."; fi
@@ -101,7 +102,7 @@ alias \
 	y='yazicd' \
 	yi='cdi && yazicd'
 
-yazicd(){
+yazicd() {
 	local cwd
 	local exited_path
 	local zoxide_query
@@ -114,7 +115,7 @@ yazicd(){
 
 	STARSHIP_CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/yazi/starship.toml" command yazi --cwd-file="$exited_path" "${*:-"$(pwd)"}"
 
-	if cwd="$(< "$exited_path")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+	if cwd="$(<"$exited_path")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
 		builtin cd -- "$cwd" || return 1
 	fi
 
