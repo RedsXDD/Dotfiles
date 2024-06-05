@@ -23,7 +23,8 @@ alias \
 	tree='tree --dirsfirst --gitignore -aFL 2 ' \
 	df='df -Th' \
 	du='du -sh' \
-	ps='ps -aux'
+	ps='ps -aux' \
+	ls='eza -a'
 #: }}}
 #: Misc aliases {{{
 alias \
@@ -36,21 +37,6 @@ alias \
 	cbonsai='cbonsai -li' \
 	mpv='mpv_wallust --fs' \
 	mvi='mvi_wallust --fs'
-#: }}}
-#: Ls aliases {{{
-# Default ls:
-# alias \
-# 	ls='ls --group-directories-first --color -A' \
-# 	la='ls -1' \
-# 	ll='ls -lh'
-
-# Ls to eza:
-alias \
-	ls='eza -a' \
-	la='eza -1a' \
-	ll='eza -lah --git' \
-	lt='eza --git-ignore -aTL 2' \
-	lT='eza --git-ignore -aT'
 #: }}}
 #: Package management aliases {{{
 alias \

@@ -1,0 +1,15 @@
+#!/usr/bin/env sh
+
+if [ "${USE_LS}" ] || ! which eza >/dev/null 2>&1; then
+	ls --group-directories-first --color -1A "$@"
+	return 0
+fi
+
+main_cmd() { eza --group-directories-first --color=always "$@"; }
+if [ -z "$DISPLAY" ]; then
+	main_cmd -1a "$@"
+else
+	main_cmd --icons -1a "$@"
+fi
+
+# vim:fileencoding=utf-8:foldmethod=marker

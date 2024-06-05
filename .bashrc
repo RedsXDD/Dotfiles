@@ -81,7 +81,6 @@ setup_fzf_tab_completion(){
 setup_fzf_tab_completion
 
 # Add scripts to the list of valid fzf-tab commands.
-complete -o bashdefault -o default -F _fzf_path_completion l.
 complete -o bashdefault -o default -F _fzf_path_completion v
 complete -o bashdefault -o default -F _fzf_path_completion sv
 complete -o bashdefault -o default -F _fzf_path_completion doasedit
@@ -89,6 +88,11 @@ complete -o bashdefault -o default -F _fzf_path_completion lustbg
 complete -o bashdefault -o default -F _fzf_path_completion waybg
 complete -o bashdefault -o default -F _fzf_path_completion mpv
 complete -o bashdefault -o default -F _fzf_path_completion mvi
+complete -o bashdefault -o default -F _fzf_path_completion l.
+complete -o bashdefault -o default -F _fzf_path_completion ll
+complete -o bashdefault -o default -F _fzf_path_completion la
+complete -o bashdefault -o default -F _fzf_path_completion lt
+complete -o bashdefault -o default -F _fzf_path_completion lT
 #: }}}
 #: History {{{
 shopt -s histappend # Do not overwrite history

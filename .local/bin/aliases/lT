@@ -1,0 +1,36 @@
+#!/usr/bin/env sh
+
+printf '%s\n' \
+	'WARNING: This command recursevily tree lists all files within the current working directory.' \
+	'This process could hang the program depending on the directory structure!'
+
+printf 'Proceed? (y\N): '
+read -r answer
+
+case "$(echo "$answer" | tr '[:upper:]' '[:lower:]')" in
+'y' | 'yes') ;;
+*)
+	echo 'User choose to not list files.'
+	return 0
+	;;
+esac
+
+if [ "${USE_LS}" ] || ! which eza >/dev/null 2>&1; then
+	if which tree; then
+		tree --dirsfirst --gitignore -aF "$@"
+		return 0
+	fi
+
+	ls --group-directories-first --color -R "$@"
+
+	return 0
+fi
+
+main_cmd() { eza --group-directories-first --color=always --git-ignore --tree -a "$@"; }
+if [ -z "$DISPLAY" ]; then
+	main_cmd "$@"
+else
+	main_cmd --icons "$@"
+fi
+
+# vim:fileencoding=utf-8:foldmethod=marker
