@@ -13,11 +13,6 @@ return {
 					vim.keymap.set("n", keys, func, { noremap = true, desc = "" .. desc })
 				end
 
-				--stylua: ignore start
-				lsp_map("[d", vim.diagnostic.goto_prev, "Go to previous diagnostic message.")
-				lsp_map("]d", vim.diagnostic.goto_next, "Go to next diagnostic message.")
-				lsp_map("<Leader>lj", vim.diagnostic.goto_prev, "Go to previous diagnostic message.")
-				lsp_map("<Leader>lk", vim.diagnostic.goto_next, "Go to next diagnostic message.")
 				lsp_map("<Leader>le", vim.diagnostic.open_float, "Show diagnostic error messages.")
 				lsp_map("<Leader>lq", vim.diagnostic.setloclist, "Open diagnostic quickfix list.")
 				lsp_map("<Leader>ld", vim.lsp.buf.definition, "Goto definition.")
@@ -27,7 +22,6 @@ return {
 				lsp_map("<Leader>lI", vim.lsp.buf.implementation, "Goto implementation.")
 				lsp_map("<Leader>lR", vim.lsp.buf.references, "Goto references.")
 				lsp_map("<Leader>lr", vim.lsp.buf.rename, "Rename.")
-				--stylua: ignore end
 			end,
 		})
 	end,
@@ -89,9 +83,11 @@ return {
 	},
 	config = function(_, opts)
 		-- Hover/signatureHelp window configurations:
-		local hover_opts = opts.diagnostics.float
-		vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, hover_opts)
-		vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, hover_opts)
+		if not package.loaded["noice"] then
+			local hover_opts = opts.diagnostics.float
+			vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, hover_opts)
+			vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, hover_opts)
+		end
 
 		-- Configure diagnostics signs:
 		if vim.fn.has("nvim-0.10.0") == 0 then
