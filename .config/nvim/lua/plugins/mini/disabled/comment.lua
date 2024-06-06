@@ -9,10 +9,10 @@ return {
 	},
 	opts = {
 		mappings = {
-			comment = '<Leader>c',        -- Toggle comment on Normal and Visual modes.
-			comment_visual = '<Leader>c', -- Toggle comment on visual selection.
-			comment_line = '<Leader>cc',  -- Toggle comment on current line.
-			textobject = '<Leader>c', -- Define 'comment' textobject (like `d<Leader>c` - delete whole comment block). Works also in Visual mode if mapping differs from `comment_visual`.
+			comment = "<Leader>c", -- Toggle comment on Normal and Visual modes.
+			comment_visual = "<Leader>c", -- Toggle comment on visual selection.
+			comment_line = "<Leader>cc", -- Toggle comment on current line.
+			textobject = "<Leader>c", -- Define 'comment' textobject (like `d<Leader>c` - delete whole comment block). Works also in Visual mode if mapping differs from `comment_visual`.
 		},
 		options = {
 			ignore_blank_line = true,
