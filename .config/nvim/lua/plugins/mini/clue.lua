@@ -4,19 +4,18 @@ return {
 		{ "echasnovski/mini.bracketed", opts = {} }, -- NOTE: Setting `mini.bracketed` as a dependency is needed to load it's clues correctly.
 	},
 	keys = {
-		-- stylua: ignore start
-		{ "<C-r>",    mode = { "i", "c" } },
-		{ "<C-x>",    mode = { "i" } },
-		{ "<C-w>",    mode = { "n" } },
+
+		{ "<C-r>", mode = { "i", "c" } },
+		{ "<C-x>", mode = { "i" } },
+		{ "<C-w>", mode = { "n" } },
 		{ "<Leader>", mode = { "n", "x" } },
-		{ "g",        mode = { "n", "x" } },
-		{ "'",        mode = { "n", "x" } },
-		{ "`",        mode = { "n", "x" } },
-		{ '"',        mode = { "n", "x" } },
-		{ "z",        mode = { "n", "x" } },
-		{ "[",        mode = { "n", "x" } },
-		{ "]",        mode = { "n", "x" } },
-		-- stylua: ignore end
+		{ "g", mode = { "n", "x" } },
+		{ "'", mode = { "n", "x" } },
+		{ "`", mode = { "n", "x" } },
+		{ '"', mode = { "n", "x" } },
+		{ "z", mode = { "n", "x" } },
+		{ "[", mode = { "n", "x" } },
+		{ "]", mode = { "n", "x" } },
 	},
 	config = function()
 		local clue = require("mini.clue")
