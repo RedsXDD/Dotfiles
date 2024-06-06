@@ -9,27 +9,41 @@ return {
 	branch = "v3.x",
 	cmd = "Neotree",
 	keys = {
-		{ "<Leader>gf", function() require("neo-tree.command").execute({ toggle = true, dir = vim.uv.cwd() }) end, desc = "Open Neotree on CWD." },
+		{
+			"<Leader>gf",
+			function()
+				---@diagnostic disable-next-line: undefined-field
+				require("neo-tree.command").execute({ toggle = true, dir = vim.uv.cwd() })
+			end,
+			desc = "Open Neotree on CWD.",
+		},
+		{
+			"<Leader>gF",
+			function()
+				---@diagnostic disable-next-line: undefined-field
+				local filepath = vim.api.nvim_buf_get_name(0)
+				local dir = vim.fn.fnamemodify(filepath, ":h")
+				require("neo-tree.command").execute({ toggle = true, dir = dir })
+			end,
+			desc = "Open Neotree on directory of current file..",
+		},
 	},
-	-- NOTE: The init function allows the plugin to be lazy loaded without breaking the netrw hijack functionality.
+	-- FIX: use `autocmd` for lazy-loading neo-tree instead of directly requiring it, because `cwd` is not set up properly.
 	init = function()
-		vim.g.loaded_netrwPlugin = 1
-		vim.g.loaded_netrw = 1
-
-		local group_name = "augroup_neotree_netrw_hijack"
-		local augroup = vim.api.nvim_create_augroup(group_name, { clear = true })
 		vim.api.nvim_create_autocmd("BufEnter", {
-			desc = "Auto open Neotree when loading a directory.",
-			group = augroup,
-			callback = function(args)
-				if vim.fn.argc(-1) == 1 then
-					local stat = vim.uv.fs_stat(vim.fn.argv(0))
-					if stat and stat.type == "directory" then
-						require("neo-tree.command").execute({ toggle = true, dir = vim.uv.cwd() })
+			desc = "Start Neo-tree with directory",
+			group = vim.api.nvim_create_augroup("augroup_neotree_start_directory", { clear = true }),
+			once = true,
+			callback = function()
+				if package.loaded["neo-tree"] then
+					return
+				else
+					---@diagnostic disable-next-line: undefined-field
+					local stats = vim.uv.fs_stat(vim.fn.argv(0))
+					if stats and stats.type == "directory" then
+						require("neo-tree")
 					end
 				end
-
-				vim.api.nvim_clear_autocmds({ group = group_name })
 			end,
 		})
 	end,
