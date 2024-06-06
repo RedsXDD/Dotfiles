@@ -1,5 +1,12 @@
 return {
 	"echasnovski/mini.animate",
+	cond = function()
+		if vim.g.neovide then
+			return false
+		end
+
+		return true
+	end,
 	event = { "BufReadPost", "BufNewFile", "BufUnload" },
 	keys = function()
 		local M = {}
