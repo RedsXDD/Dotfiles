@@ -63,15 +63,8 @@ set_icons("misc", {
 })
 
 set_icons("mini_files", {
-	content = {
-		prefix = function(fs_entry)
-			if fs_entry.fs_type == "directory" then
-				return " ", "MiniFilesDirectory"
-			end
-			return MiniFiles.default_prefix(fs_entry)
-		end,
-	},
-}, { content = { prefix = function() end } })
+	directory_icon = " ",
+}, {})
 
 set_icons("dap", {
 	Stopped = { "󰁕 ", "DiagnosticWarn", "DapStoppedLine" },
