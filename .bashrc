@@ -39,7 +39,8 @@ stty -ixon              # Disable Ctrl-s and Ctrl-q.
 set -o vi
 
 # Clear screen on vi mode with C-l.
-bind -m vi-command '"\C-l":clear-screen'; bind -m vi-insert '"\C-l":clear-screen'
+bind -m vi-command '"\C-l":clear-screen'
+bind -m vi-insert '"\C-l":clear-screen'
 
 # Vi mode cursor style:
 nrm_mode_cursor='\1\e[1 q\2'
@@ -67,7 +68,7 @@ bind "set completion-ignore-case on"    # Ignore upper and lowercase with TAB co
 bind "set completion-display-width 0"   # number of screen columns used to display possible matches when performing completion.
 bind "set completion-query-items 1000"  # Amount of completions that can be displayed.
 
-setup_fzf_tab_completion(){
+setup_fzf_tab_completion() {
 	local PLUGIN_DIR="${XDG_DATA_HOME:-$HOME/.local/share}/bash/plugins"
 	[ ! -d "$PLUGIN_DIR" ] && mkdir -vp "$PLUGIN_DIR"
 
