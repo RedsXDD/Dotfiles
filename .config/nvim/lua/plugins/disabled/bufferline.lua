@@ -13,21 +13,21 @@ return {
 			modified_icon = "●",
 			left_trunc_marker = "",
 			right_trunc_marker = "",
-			max_name_length = 18,
+			-- max_name_length = 20,
 			max_prefix_length = 15,
 			truncate_names = false,
 			tab_size = 10,
 			diagnostics = "nvim_lsp",
 			always_show_bufferline = true,
-			separator_style = "thin", -- "slant" | "slope" | "thick" | "thin" | { 'any', 'any' }
+			separator_style = "slope", -- "slant" | "slope" | "thick" | "thin" | { 'any', 'any' }
 			offsets = {
 				{
+					highlight = "BufferLineFill",
 					filetype = "neo-tree",
 					text = "Neo-tree",
-					highlight = "Directory",
-					text_align = "left",
+					text_align = "center",
 				},
 			},
 		},
-	}
+	},
 }
