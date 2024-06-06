@@ -14,8 +14,6 @@
 -- Set variables for ease of typing:
 local g = vim.g
 local o = vim.opt
-local wo = vim.wo
-local bo = vim.bo
 
 o.sessionoptions = { "buffers", "curdir", "tabpages", "winsize", "help", "globals", "skiprtp", "folds" }
 g.netrw_banner = 0                          -- Disable netrw banner text.
