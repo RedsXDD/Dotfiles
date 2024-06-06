@@ -49,30 +49,35 @@ return {
 		header = table.concat({ header, "\n" .. padding .. [[TIP: To exit Neovim, just run $sudo rm -rf /*]] }, "\n")
 		--: }}}
 		--: Footer text {{{
-		local footer = (function()
-			--[[
-				NOTE:
-					This timer is needed because, without it, the time delay displayed for the loading of neovim plugins is always 0ms,
-					as the call of the require("mini.starter").refresh() function is needed in order for the right delay to be displayed on the footer.
-				NOTE:
-					The call to the require("mini.starter").refresh() function is only needed when opening neovim on a terminal.
-			]]
-			-- stylua: ignore start
-			local delay = 1
-			vim.wait(delay, vim.schedule_wrap(function()
-				if vim.bo.filetype ~= "starter" then
-					return false
-				end
-				pcall(starter.refresh)
-			end), delay, true)
-			-- stylua: ignore end
+		local footer = function()
+			local stats = require("lazy").stats()
+			local ms = (math.floor(stats.startuptime * 100 + 0.5) / 100)
+			return padding .. icons.footer .. "Neovim loaded " .. stats.count .. " plugins in " .. ms .. "ms"
+		end
 
-			return function()
-				local stats = require("lazy").stats()
-				local ms = (math.floor(stats.startuptime * 100 + 0.5) / 100)
-				return padding .. icons.footer .. "Neovim loaded " .. stats.count .. " plugins in " .. ms .. "ms"
-			end
-		end)()
+		if not vim.g.neovide then
+			vim.wait(
+				1,
+				vim.schedule_wrap(function()
+					if vim.bo.filetype ~= "starter" then
+						return false
+					end
+					pcall(starter.refresh)
+				end),
+				1,
+				true
+			)
+		else
+			vim.api.nvim_create_autocmd("User", {
+				group = vim.api.nvim_create_augroup("augroup_refresh_mini_starter", { clear = true }),
+				callback = function(ev)
+					-- INFO: based on @echasnovski's recommendation (thanks a lot!!!)
+					if vim.bo[ev.buf].filetype == "starter" then
+						pcall(starter.refresh)
+					end
+				end,
+			})
+		end
 		--: }}}
 		--: starter.sections.recent_files_modified {{{
 		-- stylua: ignore start
