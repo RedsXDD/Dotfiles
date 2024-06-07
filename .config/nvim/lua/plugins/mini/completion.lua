@@ -12,7 +12,7 @@ return {
 		},
 
 		lsp_completion = {
-			source_func = "completefunc", -- Should be one of 'completefunc' or 'omnifunc'.
+			source_func = "omnifunc", -- Should be one of 'completefunc' or 'omnifunc'.
 		},
 
 		mappings = {
