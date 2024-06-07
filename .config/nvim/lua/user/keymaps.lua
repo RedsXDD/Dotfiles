@@ -123,33 +123,6 @@ if vim.tbl_contains(complete_opts, "longest") then
 		"Auto open & select first item on completion menu."
 	)
 end
-
--- Select completion menu item with enter.
-local cr_keys = {
-	["cr"] = vim.api.nvim_replace_termcodes("<CR>", true, true, true),
-	["ctrl-y"] = vim.api.nvim_replace_termcodes("<C-y>", true, true, true),
-	["ctrl-y_cr"] = vim.api.nvim_replace_termcodes("<C-y><CR>", true, true, true),
-}
-
-_G.cr_action = function()
-	if vim.fn.pumvisible() ~= 0 then
-		-- If popup is visible, confirm selected item or add new line otherwise
-		local item_selected = vim.fn.complete_info()["selected"] ~= -1
-		return item_selected and cr_keys["ctrl-y"] or cr_keys["ctrl-y_cr"]
-	else
-		-- If popup is not visible, use plain `<CR>`. You might want to customize
-		-- according to other plugins. For example, to use 'mini.pairs', replace
-		-- next line with `return require('mini.pairs').cr()`
-		return cr_keys["cr"]
-	end
-end
-
-vim.keymap.set(
-	"i",
-	"<CR>",
-	"v:lua._G.cr_action()",
-	{ noremap = true, expr = true, desc = "Select completion menu item with enter." }
-)
 --: }}}
 --: Split management {{{
 -- Create splits:
