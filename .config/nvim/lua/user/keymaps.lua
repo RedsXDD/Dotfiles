@@ -110,12 +110,14 @@ pum_map("<Tab>", "<C-n>", "<Tab>", "Navigate completion menu down with tab.")
 pum_map("<S-Tab>", "<C-p>", "<S-Tab>", "Navigate completion menu up with Shift-tab.")
 pum_map("<C-c>", "<C-e>", "<C-c>", "Cancel completion menu with Ctrl-c.")
 
--- This keymap auto selects the first item of the complete menu when Ctrl-n is pressed.
--- NOTE: This keymap is only set when the option `completeopt` has the option `longest` on it, as that option changes the behaviour of the complete menu so that it no longer auto selects the first item in the completion list.
--- irrelevant
+--[[
+	This keymap auto selects the first item of the complete menu when Ctrl-n is pressed.
+	NOTE: This keymap is only set when the option `completeopt` has the option `longest` on it,
+	as that option changes the behaviour of the complete menu so that it no longer auto selects the first item in the completion list.
+]]
 local complete_opts = vim.opt.completeopt:get()
 if vim.tbl_contains(complete_opts, "longest") then
-	pum_map("<C-n>", "<C-n>", [[<C-n><C-r>=pumvisible() ? "\<lt>C-n>" : ""<CR>]], "Auto open & select first item on completion menu.")
+	pum_map("<C-n>", "<C-n>", [[ <C-n><C-r>=pumvisible() ? "\<lt>C-n>" : ""<CR> ]], "Auto open & select first item on completion menu.")
 end
 --: }}}
 --: Split management {{{
