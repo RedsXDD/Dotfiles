@@ -1,5 +1,7 @@
 #!/usr/bin/env sh
 
+WALLUST_COLORSCHEMES_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/wallust/colorschemes"
+
 search_dir() {
 	directory="$1"
 	find "${directory}" -type f -name '*.json' | sed "s|$directory||g" |
@@ -32,11 +34,16 @@ search_dir() {
 }
 
 file_list() {
-	search_dir "${XDG_CONFIG_HOME:-$HOME/.config}/wallust/colorschemes/dark/"
-	search_dir "${XDG_CONFIG_HOME:-$HOME/.config}/wallust/colorschemes/light/"
-	search_dir "${XDG_CONFIG_HOME:-$HOME/.config}/wallust/colorschemes/wallust/"
+	search_dir "${WALLUST_COLORSCHEMES_DIR}/dark/"
+	search_dir "${WALLUST_COLORSCHEMES_DIR}/light/"
+	search_dir "${WALLUST_COLORSCHEMES_DIR}/wallust/"
 }
 
-file_list | column -ts '§' -o '->' | fzf-tmux --prompt '> Select Colorscheme > ' --preview 'echo {} | sed "s/.*-> //g" | xargs -ro -I {} wallust cs -T {}' | sed "s/.*-> //g" | xargs -ro -I {} wallust cs "{}"
+file_list |
+	column -ts '§' -o '->' |
+	sed "s|${WALLUST_COLORSCHEMES_DIR}/||g" |
+	fzf-tmux --prompt '> Select Colorscheme > ' --preview "echo {} | sed 's/.*-> //g' | xargs -ro -I {} wallust cs -T ${WALLUST_COLORSCHEMES_DIR}/{}" |
+	sed "s/.*-> //g" |
+	xargs -ro -I {} wallust cs "${WALLUST_COLORSCHEMES_DIR}/{}"
 
 # vim:fileencoding=utf-8:foldmethod=marker
