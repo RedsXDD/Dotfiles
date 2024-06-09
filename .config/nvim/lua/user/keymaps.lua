@@ -38,12 +38,10 @@ map("v", "<Leader>gs", ":s///g<Left><Left><Left>", "Replace on selected text.")
 map("v", "<Leader>gS", ":s///g<Left><Left><Left>", "Replace on selected text.")
 
 -- Remap left/down/up/right.
-for _, mode in ipairs({ "n", "i", "v" }) do
-	map(mode, "<Up>", "<C-y>", "Scroll up.")
-	map(mode, "<Down>", "<C-e>", "Scroll down.")
-	map(mode, "<Left>", "<S-{>", "Move to the start of previous block.")
-	map(mode, "<Right>", "<S-}>", "Move to the end of next block.")
-end
+map({ "n", "v" }, "<Up>", "<C-y>", "Scroll up.")
+map({ "n", "v" }, "<Down>", "<C-e>", "Scroll down.")
+map({ "n", "v" }, "<Left>", "<S-{>", "Move to the start of previous block.")
+map({ "n", "v" }, "<Right>", "<S-}>", "Move to the end of next block.")
 --: Automatically center cursor {{{
 local center_map = function(keys, desc)
 	vim.keymap.set("", keys, keys .. "zvzz", { noremap = true, silent = true, desc = "" .. desc })
