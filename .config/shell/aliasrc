@@ -24,7 +24,8 @@ alias \
 	df='df -Th' \
 	du='du -sh' \
 	ps='ps -aux' \
-	ls='eza -a'
+	ls='eza -a' \
+	p='paru --color=auto'
 #: }}}
 #: Misc aliases {{{
 alias \
@@ -37,12 +38,6 @@ alias \
 	cbonsai='cbonsai -li' \
 	mpv='mpv_wallust --fs' \
 	mvi='mvi_wallust --fs'
-#: }}}
-#: Package management aliases {{{
-alias \
-	p='pacman --color=auto' \
-	sp='sudo pacman --color=auto' \
-	pp='paru --color=auto'
 #: }}}
 #: Sudo aliases {{{
 alias \
