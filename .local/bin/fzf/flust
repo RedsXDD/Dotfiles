@@ -1,13 +1,11 @@
 #!/usr/bin/env sh
 
-FZFLUST_COLORSCHEMES_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/wallust/colorschemes"
-FZFLUST_STYLE="${1:-dark}"
-
-search_dir="${FZFLUST_COLORSCHEMES_DIR:-${XDG_CONFIG_HOME:-$HOME/.config}/wallust/colorschemes}/${FZFLUST_STYLE}/"
-find "${search_dir}" -type f -name '*.json' | sed "s|$search_dir||g" |
-	awk '{
+search_dir() {
+	directory="$1"
+	find "${directory}" -type f -name '*.json' | sed "s|$directory||g" |
+		awk '{
 		# Store the original line in the "orig" variable
-		orig = "'"$search_dir"'" $0;
+		orig = "'"$directory"'" $0;
 
 		# Replace underscores and hyphens with spaces
 		gsub(/-/, " ");
@@ -30,9 +28,15 @@ find "${search_dir}" -type f -name '*.json' | sed "s|$search_dir||g" |
 
 		# Add the string " § " and the original line to the end of the line
 		$0 = $0 " § " orig;
-	}1' |
-	column -ts '§' -o '->' |
-	fzf-tmux --prompt '> Change Colorscheme > ' --preview 'echo {} | sed "s/.*-> //g" | xargs -ro -I {} wallust cs -T {}' |
-	sed "s/.*-> //g" | xargs -ro -I {} wallust cs "{}"
+	}1'
+}
+
+file_list() {
+	search_dir "${XDG_CONFIG_HOME:-$HOME/.config}/wallust/colorschemes/dark/"
+	search_dir "${XDG_CONFIG_HOME:-$HOME/.config}/wallust/colorschemes/light/"
+	search_dir "${XDG_CONFIG_HOME:-$HOME/.config}/wallust/colorschemes/wallust/"
+}
+
+file_list | column -ts '§' -o '->' | fzf-tmux --prompt '> Select Colorscheme > ' --preview 'echo {} | sed "s/.*-> //g" | xargs -ro -I {} wallust cs -T {}' | sed "s/.*-> //g" | xargs -ro -I {} wallust cs "{}"
 
 # vim:fileencoding=utf-8:foldmethod=marker
