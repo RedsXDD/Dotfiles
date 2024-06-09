@@ -15,6 +15,9 @@
 local g = vim.g
 local o = vim.opt
 
+-- Gui options:
+o.guifont = "JetBrainsMono Nerd Font:h14"   -- The font used in graphical neovim applications.
+
 o.sessionoptions = { "buffers", "curdir", "tabpages", "winsize", "help", "globals", "skiprtp", "folds" }
 g.netrw_banner = 0                          -- Disable netrw banner text.
 g.netrw_browse_split=4                      -- Open in prior window.
@@ -41,7 +44,6 @@ o.jumpoptions = "view"                      -- Preserve view while jumping.
 o.splitkeep = "screen"                      -- Stable buffer content on window open/close events.
 o.inccommand = "split"                      -- Preview substitutions live, as you type!
 o.backspace = { "indent", "eol", "start" }  -- Influences the working of <BS>, <Del>, CTRL-W and CTRL-U in Insert mode.
-o.guifont = "JetBrainsMono Nerd Font:h12"   -- The font used in graphical neovim applications.
 o.whichwrap = "bs<>[]hl"                    -- Which "horizontal" keys are allowed to travel to prev/next line.
 o.scrolloff = 8                             -- Minimal number of screen lines to keep above and below the cursor.
 o.sidescrolloff = 8                         -- Minimal number of screen columns either side of cursor if wrap is `false`.
