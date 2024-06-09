@@ -27,8 +27,6 @@ blinking = "Always"
 shape = "Beam"
 
 [env]
-LANG = "en_US.UTF-8"
-LC_ALL = "en_US.UTF-8"
 TERM = "alacritty"
 
 [scrolling]
@@ -58,23 +56,23 @@ x = 0
 y = 0
 
 [font]
-size = 14
+size = 14.5
 builtin_box_drawing = true
 
 [font.normal]
-family = "FiraMonoNerdFont"
+family = "JetBrainsMonoNerdFont"
 style = "Regular"
 
 [font.italic]
-family = "FiraMonoNerdFont"
+family = "JetBrainsMonoNerdFont"
 style = "Italic"
 
 [font.bold]
-family = "FiraMonoNerdFont"
+family = "JetBrainsMonoNerdFont"
 style = "Bold"
 
 [font.bold_italic]
-family = "FiraMonoNerdFont"
+family = "JetBrainsMonoNerdFont"
 style = "Bold Italic"
 
 [font.offset]
