@@ -7,15 +7,11 @@ if ! which waybg || ! which waybg_postrun || ! which wallust || ! which wallust_
 	exit 1
 fi >/dev/null 2>&1
 
-apply_colorscheme(){
-	wallust cs "$1" && wallust_postrun
-}
+apply_colorscheme() { wallust cs "$1" && wallust_postrun; }
 
-set_wall_theme(){
-	wallust run -b wal -k "$(head -n1 "$HOME/.cache/waybg/wallpaper")" || wallust run -b full -k "$(head -n1 "$HOME/.cache/waybg/wallpaper")"
-}
+set_wall_theme() { wallust run -k "$(head -n1 "$HOME/.cache/waybg/wallpaper")"; }
 
-apply_wallpaper(){
+apply_wallpaper() {
 	waybg "$1" && waybg_postrun &&
 		notify-send -t 2000 'Wallust theming' 'Generating wallust theme.' &&
 		set_wall_theme && wallust_postrun
@@ -39,6 +35,6 @@ file="$(dirname "$1")/$(basename "$1")"
 file_extension="$(basename -- "$file" | awk 'BEGIN { FS = "." } { print "." tolower($NF) }')"
 
 case "$file_extension" in
-	'.json') apply_colorscheme "$file" ;;
-	*)       apply_wallpaper   "$file" ;;
+'.json') apply_colorscheme "$file" ;;
+*) apply_wallpaper "$file" ;;
 esac
