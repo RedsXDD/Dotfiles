@@ -13,6 +13,7 @@ if [ "$(grep 'USE_ICON' "$theme" | cut -d'=' -f2)" = 'YES' ]; then
 	combi_icon=' '
 	drun_icon=' '
 	emoji_icon='󰱫 '
+	calc_icon=' '
 	filebrowser_icon=' '
 	keys_icon=' '
 	recursivebrowser_icon=' '
@@ -24,6 +25,7 @@ elif [ "$(grep 'USE_TEXT' "$theme" | cut -d'=' -f2)" = 'YES' ]; then
 	combi_icon='Combi'
 	drun_icon='Apps'
 	emoji_icon='Emoji'
+	calc_icon='Calc'
 	filebrowser_icon='Files'
 	keys_icon='Keys'
 	recursivebrowser_icon='Recurse'
@@ -34,6 +36,7 @@ else
 	combi_icon=' Combi'
 	drun_icon=' Apps'
 	emoji_icon='󰱫 Emoji'
+	calc_icon=' Calc'
 	filebrowser_icon=' Files'
 	keys_icon=' Keys'
 	recursivebrowser_icon=' Recurse'
@@ -61,6 +64,7 @@ rofi -i -show "$show" \
 				display-keys:             \"$keys_icon\";
 				display-combi:            \"$combi_icon\";
 				display-emoji:            \"$emoji_icon\";
+				display-calc:             \"$calc_icon\";
 				display-window:           \"$window_icon\";
 				display-filebrowser:      \"$filebrowser_icon\";
 				display-recursivebrowser: \"$recursivebrowser_icon\";
