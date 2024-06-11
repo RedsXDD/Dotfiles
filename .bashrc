@@ -91,6 +91,8 @@ complete -o bashdefault -o default -F _fzf_path_completion lustbg
 complete -o bashdefault -o default -F _fzf_path_completion waybg
 complete -o bashdefault -o default -F _fzf_path_completion mpv
 complete -o bashdefault -o default -F _fzf_path_completion mvi
+complete -o bashdefault -o default -F _fzf_path_completion mf
+complete -o bashdefault -o default -F _fzf_path_completion ms
 complete -o bashdefault -o default -F _fzf_path_completion l.
 complete -o bashdefault -o default -F _fzf_path_completion ll
 complete -o bashdefault -o default -F _fzf_path_completion la
