@@ -4,12 +4,20 @@ return {
 		lazy = true,
 		name = "catppuccin",
 		priority = 1000,
+		opts = {
+			dim_inactive = {
+				enabled = true,
+			},
+		},
 	},
 	{
 		"folke/tokyonight.nvim",
 		name = "tokyonight",
 		lazy = true,
 		priority = 1000,
+		opts = {
+			dim_inactive = true,
+		},
 	},
 	{
 		"RedsXDD/neopywal.nvim",
@@ -19,9 +27,8 @@ return {
 		priority = 1000,
 		opts = {
 			use_wallust = true,
-			transparent = true,
-			default_fileformats = true,
-			default_plugins = true,
+			transparent = false,
+			dim_inactive = true,
 			custom_highlights = function(colors)
 				local U = require("neopywal.util")
 				return {
