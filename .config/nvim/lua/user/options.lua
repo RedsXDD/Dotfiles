@@ -70,6 +70,7 @@ o.updatetime = 250                          -- Faster completion (4000ms default
 o.timeoutlen = 300                          -- Time to wait for a mapped sequence to complete (in milliseconds).
 -- o.spell = true                             -- Enable spell checking by default.
 o.spelllang = "en_us"                       -- Main language for spell checking.
+o.winblend = 0                              -- Enables pseudo-transparency for a floating window.
 o.pumblend = 0                              -- Pop up menu transparency.
 o.pumheight = 15                            -- Pop up menu height.
 o.completeopt = { "menuone", "longest", "preview" } -- Options for neovim's complete menu.
