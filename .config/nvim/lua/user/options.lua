@@ -16,7 +16,7 @@ local g = vim.g
 local o = vim.opt
 
 -- Gui options:
-o.guifont = "JetBrainsMono Nerd Font:h14"   -- The font used in graphical neovim applications.
+o.guifont = "JetBrainsMono Nerd Font,Noto_Color_Emoji:h14"   -- The font used in graphical neovim applications.
 
 o.sessionoptions = { "buffers", "curdir", "tabpages", "winsize", "help", "globals", "skiprtp", "folds" }
 g.netrw_banner = 0                          -- Disable netrw banner text.
