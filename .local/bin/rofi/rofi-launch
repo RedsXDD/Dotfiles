@@ -19,7 +19,7 @@ if [ "$(grep 'USE_ICON' "$theme" | cut -d'=' -f2)" = 'YES' ]; then
 	run_icon=' '
 	ssh_icon=' '
 	window_icon=' '
-	button_setup='button { width: 50px; padding: 8px 8px 8px 13px; }'
+	button_setup='button { width: 50px; padding: 8px 8px 8px 9px; }'
 elif [ "$(grep 'USE_TEXT' "$theme" | cut -d'=' -f2)" = 'YES' ]; then
 	combi_icon='Combi'
 	drun_icon='Apps'
