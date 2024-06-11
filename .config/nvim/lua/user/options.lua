@@ -15,6 +15,7 @@
 local g = vim.g
 local o = vim.opt
 
+-- stylua: ignore start
 -- Gui options:
 o.guifont = "JetBrainsMono Nerd Font,Noto_Color_Emoji:h14"   -- The font used in graphical neovim applications.
 
@@ -109,6 +110,7 @@ o.shortmess:append({ W = true, I = true, c = true, C = true })
 o.complete:append(",kspell")              -- Enable auto complete with spell checking.
 o.formatoptions:remove({ "c", "r", "o" }) -- Don"t insert comments on newlines.
 o.runtimepath:remove("/usr/share/vim/vimfiles") -- Separate vim plugins from neovim in case vim still in use.
+-- stylua: ignore end
 
 if vim.fn.has("nvim-0.10") == 1 then
 	o.smoothscroll = true
