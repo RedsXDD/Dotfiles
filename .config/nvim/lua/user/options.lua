@@ -35,7 +35,6 @@ o.cmdheight = 2                             -- More space in the neovim command 
 o.history = 10000                           -- Set the amount of commands to be saved in history.
 o.clipboard = "unnamedplus"                 -- Use system clipboard.
 o.mouse = "a"                               -- Enable mouse support.
-o.compatible = false                        -- Disable compatibility to old-time vi.
 o.hidden = true                             -- Does not close file when opening a new one.
 o.ttyfast = true                            -- Speed up scrolling in vim.
 o.wrap = false                              -- Enable/disable text wrapping.
