@@ -5,7 +5,7 @@
 
 configuration {
 	/*---------- General setting ----------*/
-	modi: "drun,run,window,emoji:rofimoji,filebrowser,recursivebrowser";
+	modi: "drun,run,window,emoji,calc,filebrowser,recursivebrowser";
 	case-sensitive: false;
 	cycle: true;
 	filter: "";
