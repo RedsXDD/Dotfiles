@@ -45,7 +45,7 @@ alias \
 	doas='\doas --' \
 	su='\su -lw DISPLAY'
 
-for command in locale-gen make mount passwd mandb systemctl umount updatedb useradd userdel usermod smartctl; do
+for command in locale-gen make mount passwd mandb umount updatedb useradd userdel usermod smartctl; do
 	alias "${command}"="sudo ${command}"
 done
 #: }}}
