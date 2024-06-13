@@ -1,0 +1,10 @@
+#!/usr/bin/env sh
+
+if ! which gitui >/dev/null 2>&1; then
+	echo 'ERROR: gitui not installed!'
+	exit 1
+fi
+
+eval "$(ssh-agent)" >/dev/null && ssh-add "$HOME/.ssh/id_rsa" 2>/dev/null && gitui "$@"
+
+# vim:fileencoding=utf-8:foldmethod=marker

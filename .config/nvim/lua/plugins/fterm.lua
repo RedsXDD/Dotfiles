@@ -16,7 +16,7 @@ return {
 		term_map("<Leader>gg", function()
 			local gitui = fterm:new({
 				ft = "fterm_gitui", -- You can also override the default filetype, if you want
-				cmd = { "gitui", "-d", vim.api.nvim_buf_get_name(0) },
+				cmd = { "gg", "-d", vim.api.nvim_buf_get_name(0) }, -- Uses custom gitui script that fixes ssh.
 				blend = 0,
 				dimensions = {
 					height = 0.9,
