@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-if ! which tmux >/dev/null; then
+if ! which tmux >/dev/null 2>&1; then
 	exit 1
 fi
 

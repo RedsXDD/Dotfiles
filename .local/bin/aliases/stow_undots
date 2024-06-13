@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-if ! which stow >/dev/null; then
+if ! which stow >/dev/null 2>&1; then
 	echo 'ERROR: stow not installed!'
 	exit 1
 fi
