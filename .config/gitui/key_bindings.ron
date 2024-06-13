@@ -1,5 +1,5 @@
 (
-	open_help: Some(( code: F(1), modifiers: "")),
+	open_help: Some(( code: Char('?'), modifiers: "")),
 
 	move_left: Some(( code: Char('h'), modifiers: "")),
 	move_right: Some(( code: Char('l'), modifiers: "")),
@@ -28,4 +28,70 @@
 	stash_open: Some(( code: Char('l'), modifiers: "")),
 
 	abort_merge: Some(( code: Char('M'), modifiers: "SHIFT")),
+
+	// tab_status:
+	// tab_log:
+	// tab_files:
+	// tab_stashing:
+	// tab_stashes:
+	// tab_toggle:
+	// tab_toggle_reverse:
+	// toggle_workarea:
+	// exit:
+	// quit:
+	// exit_popup:
+	// open_commit:
+	// open_commit_editor:
+	// open_options:
+	// tree_collapse_recursive:
+	// tree_expand_recursive:
+	// enter:
+	// blame:
+	// file_history:
+	// status_stage_all:
+	// status_ignore_file:
+	// stashing_toggle_untracked:
+	// stash_apply:
+	// stash_drop:
+	// cmd_bar_toggle:
+	// log_tag_commit:
+	// log_mark_commit:
+	// log_checkout_commit:
+	// log_reset_commit:
+	// log_reword_commit:
+	// log_find:
+	// find_commit_sha:
+	// commit_amend:
+	// toggle_signoff:
+	// toggle_verify:
+	// copy:
+	// create_branch:
+	// rename_branch:
+	// select_branch:
+	// delete_branch:
+	// merge_branch:
+	// rebase_branch:
+	// reset_branch:
+	// compare_commits:
+	// tags:
+	// delete_tag:
+	// select_tag:
+	// push:
+	// open_file_tree:
+	// file_find:
+	// branch_find:
+	// force_push:
+	// fetch:
+	// pull:
+	// undo_commit:
+	// diff_hunk_next:
+	// diff_hunk_prev:
+	// stage_unstage_item:
+	// tag_annotate:
+	// view_submodules:
+	// view_submodule_parent:
+	// update_submodule:
+	// commit_history_next:
+	// commit:
+	// newline:
 )
