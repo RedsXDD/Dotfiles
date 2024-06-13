@@ -27,7 +27,7 @@ return {
 		priority = 1000,
 		opts = {
 			use_wallust = true,
-			transparent = false,
+			transparent_background = true,
 			dim_inactive = true,
 			custom_highlights = function(colors)
 				local U = require("neopywal.util")
