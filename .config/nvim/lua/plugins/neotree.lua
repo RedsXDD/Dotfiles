@@ -25,7 +25,7 @@ return {
 				local dir = vim.fn.fnamemodify(filepath, ":h")
 				require("neo-tree.command").execute({ toggle = true, dir = dir })
 			end,
-			desc = "Open Neotree on directory of current file..",
+			desc = "Open Neotree on directory of current file.",
 		},
 	},
 	-- FIX: use `autocmd` for lazy-loading neo-tree instead of directly requiring it, because `cwd` is not set up properly.
