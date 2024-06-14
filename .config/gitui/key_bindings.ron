@@ -6,92 +6,101 @@
 	move_up: Some(( code: Char('k'), modifiers: "")),
 	move_down: Some(( code: Char('j'), modifiers: "")),
 
-	popup_up: Some(( code: Char('p'), modifiers: "CONTROL")),
-	popup_down: Some(( code: Char('n'), modifiers: "CONTROL")),
 	page_up: Some(( code: Char('b'), modifiers: "CONTROL")),
 	page_down: Some(( code: Char('f'), modifiers: "CONTROL")),
 	home: Some(( code: Char('g'), modifiers: "")),
 	end: Some(( code: Char('G'), modifiers: "SHIFT")),
 	shift_up: Some(( code: Char('K'), modifiers: "SHIFT")),
 	shift_down: Some(( code: Char('J'), modifiers: "SHIFT")),
+	tree_collapse_recursive: Some(( code: Char('H'), modifiers: "SHIFT")),
+	tree_expand_recursive: Some(( code: Char('L'), modifiers: "SHIFT")),
 
-	edit_file: Some(( code: Char('I'), modifiers: "SHIFT")),
+	popup_up: Some(( code: Char('k'), modifiers: "")),
+	popup_down: Some(( code: Char('j'), modifiers: "")),
 
-	status_reset_item: Some(( code: Char('U'), modifiers: "SHIFT")),
+	// push: // p
+	// force_push: // P
+	pull: Some(( code: Char('p'), modifiers: "CONTROL")),
 
-	diff_reset_lines: Some(( code: Char('u'), modifiers: "")),
-	diff_stage_lines: Some(( code: Char('s'), modifiers: "")),
+	diff_hunk_next: Some(( code: Char(']'), modifiers: "")),
+	diff_hunk_prev: Some(( code: Char('['), modifiers: "")),
 
-	stashing_save: Some(( code: Char('w'), modifiers: "")),
-	stashing_toggle_index: Some(( code: Char('m'), modifiers: "")),
+	diff_stage_lines: Some(( code: Char(' '), modifiers: "")),
+	stage_unstage_item: Some(( code: Char(' '), modifiers: "")),
 
 	stash_open: Some(( code: Char('l'), modifiers: "")),
 
-	abort_merge: Some(( code: Char('M'), modifiers: "SHIFT")),
+	toggle_workarea: Some(( code: Tab, modifiers: "")),
 
-	// tab_status:
-	// tab_log:
-	// tab_files:
-	// tab_stashing:
-	// tab_stashes:
-	// tab_toggle:
-	// tab_toggle_reverse:
-	// toggle_workarea:
-	// exit:
-	// quit:
-	// exit_popup:
-	// open_commit:
-	// open_commit_editor:
-	// open_options:
-	// tree_collapse_recursive:
-	// tree_expand_recursive:
-	// enter:
-	// blame:
-	// file_history:
-	// status_stage_all:
-	// status_ignore_file:
-	// stashing_toggle_untracked:
-	// stash_apply:
-	// stash_drop:
-	// cmd_bar_toggle:
-	// log_tag_commit:
-	// log_mark_commit:
-	// log_checkout_commit:
-	// log_reset_commit:
-	// log_reword_commit:
-	// log_find:
-	// find_commit_sha:
-	// commit_amend:
-	// toggle_signoff:
-	// toggle_verify:
-	// copy:
-	// create_branch:
-	// rename_branch:
-	// select_branch:
-	// delete_branch:
-	// merge_branch:
-	// rebase_branch:
-	// reset_branch:
-	// compare_commits:
-	// tags:
-	// delete_tag:
-	// select_tag:
-	// push:
-	// open_file_tree:
-	// file_find:
-	// branch_find:
-	// force_push:
-	// fetch:
-	// pull:
-	// undo_commit:
-	// diff_hunk_next:
-	// diff_hunk_prev:
-	// stage_unstage_item:
-	// tag_annotate:
-	// view_submodules:
-	// view_submodule_parent:
-	// update_submodule:
-	// commit_history_next:
-	// commit:
-	// newline:
+	// stash_apply: // a
+	// stash_drop: // D
+	// copy: // y
+	// compare_commits: // C
+	// diff_reset_lines: // d
+	// status_reset_item: // D
+	// status_stage_all: // a
+	// log_mark_commit: // Space
+	// status_ignore_file: // i
+	// stashing_toggle_untracked: // u
+	// stashing_toggle_index: // i
+	// open_options: // o
+	// enter: // Enter // Pop stash & Accept fuzzy find.
+	// blame: // B
+	// stashing_save: // s
+	// edit_file: // e
+	// exit: // ^c
+	// quit: // q
+	// exit_popup: // Esc
+
+	// Commits:
+	commit: Some(( code: Char(' '), modifiers: "CONTROL")),
+	// commit_amend: // ^a
+	// open_commit_editor: // ^e
+	// toggle_signoff: // ^s
+	toggle_verify: Some(( code: Char('k'), modifiers: "CONTROL")), // Disable hooks.
+	commit_history_next: Some(( code: Char('p'), modifiers: "CONTROL")),
+
+	// Tab switching:
+	// tab_status: // 1
+	// tab_log: // 2
+	// tab_files: // 3
+	// tab_stashing: // 4
+	// tab_stashes: // 5
+	tab_toggle: Some(( code: Char(']'), modifiers: "")),
+	tab_toggle_reverse: Some(( code: Char('['), modifiers: "")),
+
+	// tags: // T
+	// delete_tag: // D
+	// select_tag: // Enter
+	// tag_annotate: // ^a
+	// log_tag_commit: // t
+
+	log_checkout_commit: Some(( code: Char('c'), modifiers: "")),
+	// log_reset_commit: // R
+	// log_reword_commit: // r
+	log_find: Some(( code: Char('/'), modifiers: "")),
+
+	// undo_commit: // U
+	// open_commit: // c // Overwritten by log_checkout_commit.
+	// find_commit_sha: // ^j
+	// file_history: // H
+	// cmd_bar_toggle: // .
+
+	// create_branch: // c
+	// rename_branch: // r
+	// select_branch: // b
+	delete_branch: Some(( code: Char('d'), modifiers: "")),
+	// merge_branch: // m
+	// abort_merge: // A
+	// rebase_branch: // R
+	// reset_branch: // s
+	branch_find: Some(( code: Char('/'), modifiers: "")),
+
+	// open_file_tree: // F
+	file_find: Some(( code: Char('/'), modifiers: "")),
+	fetch: Some(( code: Char('f'), modifiers: "")),
+	// view_submodules: // S
+	// view_submodule_parent: // p
+	// update_submodule: // u
+	// newline: // Enter
 )
