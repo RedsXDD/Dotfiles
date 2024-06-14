@@ -25,7 +25,8 @@ alias \
 	du='du -sh' \
 	ps='ps -aux' \
 	ls='eza -a' \
-	p='paru --color=auto'
+	p='paru --color=auto' \
+	g='git'
 #: }}}
 #: Misc aliases {{{
 alias \
