@@ -5,8 +5,6 @@ git:
 
   parseEmoji: true
 
-  log:
-    showWholeGraph: true
   truncateCopiedCommitHashesTo: 40
 
 os:
