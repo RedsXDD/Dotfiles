@@ -14,7 +14,7 @@ return {
 		end, "Open a floating terminal.")
 
 		term_map("<Leader>gg", function()
-			local use_lazygit = true
+			local use_lazygit = false
 			local git_integration = fterm:new({
 				ft = use_lazygit and "fterm_lazygit" or "fterm_gitui",
 				cmd = use_lazygit and "lazygit" or { "gg", "-d", vim.api.nvim_buf_get_name(0) }, -- Uses custom gitui script that fixes ssh.
