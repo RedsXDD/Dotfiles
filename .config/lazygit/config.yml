@@ -166,7 +166,7 @@ keybinding:
 #     mergeIntoCurrentBranch: M
     viewGitFlowOptions: <disabled>
 #     fastForward: f
-    createTag: t
+    createTag: T
     pushTag: p
     setUpstream: <c-u>
 #     fetchRemote: f
@@ -186,11 +186,11 @@ keybinding:
 #     amendToCommit: A
 #     resetCommitAuthor: a
 #     pickCommit: p
-    revertCommit: T
+    revertCommit: t
     cherryPickCopy: Y
     pasteCommits: P
 #     markCommitAsBaseForRebase: B
-    tagCommit: t
+    tagCommit: T
     checkoutCommit: c
     resetCherryPick: <disabled>
 #     copyCommitAttributeToClipboard: "y"
