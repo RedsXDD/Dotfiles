@@ -53,7 +53,7 @@
 	// exit_popup: // Esc
 
 	// Commits:
-	commit: Some(( code: Char(' '), modifiers: "CONTROL")),
+	// commit: // ^d
 	// commit_amend: // ^a
 	// open_commit_editor: // ^e
 	// toggle_signoff: // ^s
