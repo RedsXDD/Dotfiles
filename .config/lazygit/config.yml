@@ -56,164 +56,61 @@ gui:
     defaultFgColor:
       - default
 
-# Keybindings
 keybinding:
-  universal:
-#     quit: q
-#     quit-alt1: <c-c>
-#     return: <esc>
-#     quitWithoutChangingDirectory: Q
-#     togglePanel: <tab>
-    prevItem: k
-    nextItem: j
-    prevItem-alt: <disabled>
-    nextItem-alt: <disabled>
-    prevPage: <pgup>
-    nextPage: <pgdown>
-    scrollLeft: <disabled>
-    scrollRight: <disabled>
-    gotoTop: g
-    gotoBottom: G
-#     toggleRangeSelect: v
-    rangeSelectUp: K
-    rangeSelectDown: J
-    prevBlock: h
-    nextBlock: l
-    prevBlock-alt: <disabled>
-    nextBlock-alt: <disabled>
-    nextBlock-alt2: <disabled>
-    prevBlock-alt2: <disabled>
-#     jumpToBlock:
-#       - "1"
-#       - "2"
-#       - "3"
-#       - "4"
-#       - "5"
-#     nextMatch: "n"
-#     prevMatch: "N"
-#     startSearch: /
-#     optionMenu: <disabled>
-    optionMenu-alt1: "?"
-#     select: <space>
-#     goInto: <enter>
-#     confirm: <enter>
-#     confirmInEditor: <a-enter>
-#     remove: d
-#     new: "n"
-#     edit: e
-#     openFile: o
-    scrollUpMain: <c-k>
-    scrollDownMain: <c-j>
-    scrollUpMain-alt1: <disabled>
-    scrollDownMain-alt1: <disabled>
-    scrollUpMain-alt2: <disabled>
-    scrollDownMain-alt2: <disabled>
-#     executeCustomCommand: ":"
-#     createRebaseOptionsMenu: m
+    universal:
+        prevItem: k # <up>
+        nextItem: j # <down>
+        prevItem-alt: <disabled> # k
+        nextItem-alt: <disabled> # j
+        prevPage: <pgup> # ','
+        nextPage: <pgdown> # .
+        scrollLeft: <disabled> # H
+        scrollRight: <disabled> # L
+        gotoTop: g # <
+        gotoBottom: G # >
+        toggleRangeSelect: v
+        rangeSelectUp: K # <s-up>
+        rangeSelectDown: J # <s-down>
+        prevBlock: h # <left>
+        nextBlock: l # <right>
+        prevBlock-alt: <disabled> # h
+        nextBlock-alt: <disabled> # l
+        nextBlock-alt2: <disabled> # <tab>
+        prevBlock-alt2: <disabled> # <backtab>
+        scrollUpMain-alt1: <c-k> # K
+        scrollDownMain-alt1: <c-j> # J
+        scrollUpMain-alt2: <disabled> # <c-u>
+        scrollDownMain-alt2: <disabled> # <c-d>
+        nextScreenMode: "=" # +
+        prevScreenMode: "-" # _
+        undo: u # z
+        redo: <c-r> # <c-z>
+        diffingMenu-alt: <disabled> # <c-e>
+        copyToClipboard: <c-y> # <c-o>
+        openRecentRepos: <disabled> # <c-r>
+        toggleWhitespaceInDiffView: <c-t> # <c-w>
+        openDiffTool: <c-w> # <c-t>
 
-    pushFiles: p
-    pullFiles: <c-p>
+    status:
+        checkForUpdate: z # u
 
-    refresh: "#"
-    createPatchOptionsMenu: P
-#     nextTab: "]"
-#     prevTab: "["
-    nextScreenMode: "="
-    prevScreenMode: "-"
-    undo: u
-    redo: <c-r>
-    filteringMenu: <c-f>
-    diffingMenu: W
-    diffingMenu-alt: <disabled>
-    copyToClipboard: <c-y>
-    openRecentRepos: <disabled>
-#     submitEditorText: <enter>
-#     extrasMenu: "@"
-    toggleWhitespaceInDiffView: <c-t>
-#     increaseContextInDiffView: "}"
-#     decreaseContextInDiffView: "{"
-    openDiffTool: <disabled>
-  status:
-    checkForUpdate: U
-#     recentRepos: <enter>
-#     allBranchesLogGraph: a
-  files:
-#     commitChanges: c
-#     commitChangesWithEditor: C
-#     commitChangesWithoutHook: w
-#     amendLastCommit: A
-    findBaseCommitForFixup: <c-b>
-#     confirmDiscard: x
-#     ignoreFile: i
-#     refreshFiles: r
-#     stashAllChanges: s
-#     viewStashOptions: S
-#     toggleStagedAll: a
-#     viewResetOptions: D
-#     fetch: f
-    toggleTreeView: "!"
-    openMergeTool: <disabled>
-    openStatusFilter: <c-s>
-#     copyFileInfoToClipboard: "y"
-  branches:
-#     createPullRequest: o
-#     viewPullRequestOptions: O
-    copyPullRequestURL: <c-o>
-#     checkoutBranchByName: c
-    forceCheckoutBranch: C
-    renameBranch: r
-    rebaseBranch: R
-#     mergeIntoCurrentBranch: M
-    viewGitFlowOptions: <disabled>
-#     fastForward: f
-    createTag: T
-    pushTag: p
-    setUpstream: <c-u>
-#     fetchRemote: f
-#     sortOrder: s
-#   worktrees:
-#     viewWorktreeOptions: w
-  commits:
-#     squashDown: s
-#     renameCommit: r
-#     renameCommitWithEditor: R
-    viewResetOptions: U
-#     markCommitAsFixup: f
-#     createFixupCommit: F
-#     squashAboveCommits: S
-    moveDownCommit: <c-n>
-    moveUpCommit: <c-p>
-#     amendToCommit: A
-#     resetCommitAuthor: a
-#     pickCommit: p
-    revertCommit: t
-    cherryPickCopy: Y
-    pasteCommits: P
-#     markCommitAsBaseForRebase: B
-    tagCommit: T
-    checkoutCommit: c
-    resetCherryPick: <disabled>
-#     copyCommitAttributeToClipboard: "y"
-#     openLogMenu: <c-l>
-#     openInBrowser: o
-#     viewBisectOptions: b
-#     startInteractiveRebase: i
-#   amendAttribute:
-#     resetAuthor: a
-#     setAuthor: A
-#     addCoAuthor: c
-  stash:
-    popStash: p
-#     renameStash: r
-#   commitFiles:
-#     checkoutCommitFile: c
-#   main:
-#     toggleSelectHunk: a
-#     pickBothHunks: b
-#     editSelectHunk: E
-  submodules:
-#     init: i
-    update: U
-#     bulkMenu: b
-#   commitMessage:
-#     commitMenu: <c-o>
+    files:
+        findBaseCommitForFixup: <c-b> # <c-f>
+        refreshFiles: <disabled> # r
+        toggleTreeView: <disabled> # '`'
+        openStatusFilter: <c-f> # <c-b>
+
+    branches:
+        copyPullRequestURL: <c-o> # <c-y>
+        setUpstream: <c-u> # u
+
+    commits:
+        viewResetOptions: U # g
+        moveDownCommit: <c-d> # <c-j>
+        moveUpCommit: <c-u> # <c-k>
+        checkoutCommit: c # <space>
+        resetCherryPick: <disabled> # <c-R>
+        copyCommitAttributeToClipboard: y # <c-y>
+
+    submodules:
+        update: z # u
