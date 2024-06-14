@@ -2,30 +2,32 @@
 	selection_bg: Some("Blue"),
 	selection_fg: Some("Black"),
 
-	selected_tab: Some("Reset"),
-
 	command_fg: Some("Black"),
-
 	cmdbar_bg: Some("Blue"),
-	cmdbar_extra_lines_bg: Some("Blue"),
-
 	disabled_fg: Some("DarkGray"),
+	cmdbar_extra_lines_bg: Some("Cyan"),
 
-	diff_line_add:      Some("Green"),
-	diff_line_delete:   Some("Red"),
-	diff_file_added:    Some("LightGreen"),
-	diff_file_removed:  Some("LightRed"),
-	diff_file_moved:    Some("LightMagenta"),
+	diff_line_add: Some("Green"),
+	diff_line_delete: Some("Red"),
 	diff_file_modified: Some("Yellow"),
+	diff_file_added: Some("LightGreen"),
+	diff_file_removed: Some("LightRed"),
+	diff_file_moved: Some("LightCyan"),
 
-	commit_hash:   Some("Magenta"),
-	commit_time:   Some("LightCyan"),
+	commit_hash: Some("Magenta"),
+	commit_time: Some("LightCyan"),
 	commit_author: Some("Green"),
 
-	danger_fg:     Some("Red"),
-	push_gauge_bg: Some("Blue"),
-	push_gauge_fg: Some("Reset"),
+	danger_fg: Some("Red"),
 
-	tag_fg:    Some("LightMagenta"),
+	push_gauge_bg: Some("Yellow"),
+	push_gauge_fg: Some("Black"),
+
+	tag_fg: Some("Cyan"),
 	branch_fg: Some("LightYellow"),
+
+	block_title_focused: Some("Green"),
+	selected_tab: Some("Cyan"),
+
+	line_break: Some(""),
 )
