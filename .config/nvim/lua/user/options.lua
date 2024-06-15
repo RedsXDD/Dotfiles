@@ -19,7 +19,16 @@ local o = vim.opt
 -- Gui options:
 o.guifont = "JetBrainsMono Nerd Font,Noto_Color_Emoji:h14"   -- The font used in graphical neovim applications.
 
-o.sessionoptions = { "buffers", "curdir", "tabpages", "winsize", "help", "globals", "skiprtp", "folds" }
+o.sessionoptions = {
+	"buffers",
+	"curdir",
+	"tabpages",
+	"winsize",
+	"help",
+	"globals",
+	"skiprtp",
+	"folds",
+}
 g.netrw_banner = 0                          -- Disable netrw banner text.
 g.netrw_browse_split=4                      -- Open in prior window.
 g.netrw_altv = 1                            -- Change from left splitting to right splitting.
@@ -39,11 +48,19 @@ o.hidden = true                             -- Does not close file when opening 
 o.ttyfast = true                            -- Speed up scrolling in vim.
 o.wrap = false                              -- Enable/disable text wrapping.
 o.wildmenu = true                           -- Enable auto completion menu after pressing TAB.
-o.wildmode = { "longest", "list", "full" } -- Make wildmenu behave like similar to bash completion.
+o.wildmode = {
+	"longest",
+	"list",
+	"full",
+} -- Make wildmenu behave like similar to bash completion.
 o.jumpoptions = "view"                      -- Preserve view while jumping.
 o.splitkeep = "screen"                      -- Stable buffer content on window open/close events.
 o.inccommand = "split"                      -- Preview substitutions live, as you type!
-o.backspace = { "indent", "eol", "start" }  -- Influences the working of <BS>, <Del>, CTRL-W and CTRL-U in Insert mode.
+o.backspace = {
+	"indent",
+	"eol",
+	"start",
+}  -- Influences the working of <BS>, <Del>, CTRL-W and CTRL-U in Insert mode.
 o.whichwrap = "bs<>[]hl"                    -- Which "horizontal" keys are allowed to travel to prev/next line.
 o.scrolloff = 8                             -- Minimal number of screen lines to keep above and below the cursor.
 o.sidescrolloff = 8                         -- Minimal number of screen columns either side of cursor if wrap is `false`.
@@ -73,7 +90,11 @@ o.spelllang = "en_us"                       -- Main language for spell checking.
 o.winblend = 0                              -- Enables pseudo-transparency for a floating window.
 o.pumblend = 0                              -- Pop up menu transparency.
 o.pumheight = 15                            -- Pop up menu height.
-o.completeopt = { "menuone", "longest", "preview" } -- Options for neovim's complete menu.
+o.completeopt = {
+	"menuone",
+	"longest",
+	"preview",
+} -- Options for neovim's complete menu.
 o.textwidth = 300                           -- Maximum width of text that is being inserted.
 -- o.expandtab = true                          -- Expand tabs to individual space characters.
 o.smarttab = true                           -- Typing a <Tab> in front of a line inserts blanks according to `shiftwidth`.
