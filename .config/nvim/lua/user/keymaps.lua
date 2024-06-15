@@ -21,11 +21,22 @@
 	"t" = terminal mode.
 ]]
 
---: General {{{
+--: Main functions {{{
 local map = function(modes, keys, func, desc)
 	vim.keymap.set(modes, keys, func, { noremap = true, desc = "" .. desc })
 end
 
+local center_map = function(keys, desc)
+	vim.keymap.set("", keys, keys .. "zvzz", { noremap = true, silent = true, desc = "" .. desc })
+end
+
+local pum_map = function(keys, pum_action, normal_action, desc)
+	vim.keymap.set("i", keys, function()
+		return vim.fn.pumvisible() == 1 and pum_action or normal_action
+	end, { noremap = true, expr = true, desc = "" .. desc })
+end
+--: }}}
+--: General {{{
 map("n", "<Esc>", ":noh<CR><Esc>", "Clear highlighted searches.")
 map("v", ".", ":norm .<CR>", "Perform dot commands over visual blocks.")
 map({ "n", "v" }, "j", "gj", "Remap j to gj for better movement on warped lines.")
@@ -43,10 +54,6 @@ map({ "n", "v" }, "<Down>", "<C-e>", "Scroll down.")
 map({ "n", "v" }, "<Left>", "<S-{>", "Move to the start of previous block.")
 map({ "n", "v" }, "<Right>", "<S-}>", "Move to the end of next block.")
 --: Automatically center cursor {{{
-local center_map = function(keys, desc)
-	vim.keymap.set("", keys, keys .. "zvzz", { noremap = true, silent = true, desc = "" .. desc })
-end
-
 center_map("n", "Center cursor when moving to the next match during a search.")
 center_map("N", "Center cursor when moving to the previous match during a search.")
 center_map("G", "Center cursor when moving to the last line of buffer.")
@@ -97,12 +104,6 @@ map({ "n", "v" }, "<Leader>tc", ":setlocal formatoptions-=cro<CR>", "Enable auto
 map({ "n", "v" }, "<Leader>tC", ":setlocal formatoptions=cro<CR>", "Disable auto commenting.")
 --: }}}
 --: Complete menu {{{
-local pum_map = function(keys, pum_action, normal_action, desc)
-	vim.keymap.set("i", keys, function()
-		return vim.fn.pumvisible() == 1 and pum_action or normal_action
-	end, { noremap = true, expr = true, desc = "" .. desc })
-end
-
 -- General completion mappings.
 pum_map("<Tab>", "<C-n>", "<Tab>", "Navigate completion menu down with tab.")
 pum_map("<S-Tab>", "<C-p>", "<S-Tab>", "Navigate completion menu up with Shift-tab.")
