@@ -35,6 +35,36 @@ local pum_map = function(keys, pum_action, normal_action, desc)
 		return vim.fn.pumvisible() == 1 and pum_action or normal_action
 	end, { noremap = true, expr = true, desc = "" .. desc })
 end
+
+local toggle_map = function(modes, keys, options, desc)
+	vim.keymap.set(modes, keys, function()
+		local state = false
+
+		if type(options) == "string" then
+			state = vim.o[options]
+			state = not state
+			vim.o[options] = state
+		end
+
+		if type(options) == "table" then
+			for _, option in ipairs(options) do
+				state = vim.o[option]
+				state = not state
+				vim.o[option] = state
+			end
+		end
+
+		vim.notify(state and "Enabled " .. desc or "Disabled " .. desc, vim.log.levels.INFO)
+	end, { noremap = true, silent = true, desc = "Toggle " .. desc })
+end
+
+local toggleStr_map = function(modes, keys, option, str, desc)
+	vim.keymap.set(modes, keys, function()
+		local has_str = vim.o[option]:find("" .. str) ~= nil
+		vim.opt[option] = has_str and vim.o[option]:gsub("" .. str, "") or vim.o[option] .. "" .. str
+		vim.notify(has_str and "Disabled " .. desc or "Enabled " .. desc, vim.log.levels.INFO)
+	end, { noremap = true, silent = true, desc = "Toggle " .. desc })
+end
 --: }}}
 --: General {{{
 map("n", "<Esc>", ":noh<CR><Esc>", "Clear highlighted searches.")
@@ -95,13 +125,12 @@ map("", "<Leader>p", '"+p', "Paste from primary clipboard.")
 map("", "<Leader>P", '"+P', "Paste from primary clipboard.")
 --: }}}
 --: Toggles {{{
-map({ "n", "v" }, "<Leader>ts", ":set spell!<CR>", "Toggle spell checking.")
-map({ "n", "v" }, "<Leader>tw", ":set wrap!<CR>", "Toggle line wrapping.")
-map({ "n", "v" }, "<Leader>tn", ":set number!<CR>", "Toggle line numbers.")
-map({ "n", "v" }, "<Leader>tr", ":set relativenumber!<CR>", "Toggle relative line numbers.")
-map({ "n", "v" }, "<Leader>tl", ":set cursorline! cursorcolumn!<CR>", "Toggle CursorLine/column.")
-map({ "n", "v" }, "<Leader>tc", ":setlocal formatoptions-=cro<CR>", "Enable auto commenting.")
-map({ "n", "v" }, "<Leader>tC", ":setlocal formatoptions=cro<CR>", "Disable auto commenting.")
+toggle_map("", "<Leader>ts", "spell", "spell checking.")
+toggle_map("", "<Leader>tw", "wrap", "line wrapping.")
+toggle_map("", "<Leader>tn", { "number", "relativenumber" }, "line numbers.")
+toggle_map("", "<Leader>tr", "relativenumber", "relative line numbers.")
+toggle_map("", "<Leader>tl", { "cursorline", "cursorcolumn" }, "Toggle cursorline/cursorcolumn.")
+toggleStr_map("", "<Leader>tc", "formatoptions", "cro", "newline auto commenting.")
 --: }}}
 --: Complete menu {{{
 -- General completion mappings.
