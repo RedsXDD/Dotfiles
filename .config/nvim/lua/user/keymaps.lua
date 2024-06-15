@@ -33,7 +33,7 @@ end
 local pum_map = function(keys, pum_action, normal_action, desc)
 	vim.keymap.set("i", keys, function()
 		return vim.fn.pumvisible() == 1 and pum_action or normal_action
-	end, { noremap = true, expr = true, desc = "" .. desc })
+	end, { noremap = true, silent = true, expr = true, desc = "" .. desc })
 end
 
 local toggle_map = function(modes, keys, options, desc)
