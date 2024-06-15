@@ -155,8 +155,8 @@ end
 --: }}}
 --: Split management {{{
 -- Create splits:
-map("", "<Leader>-", ":vsplit|lua MiniStarter.open()<CR>", "Create vertical split.")
-map("", "<Leader>_", ":split|lua MiniStarter.open()<CR>", "Create horizontal split.")
+map("", "<Leader>-", ":vsplit | enew<CR>", "Create vertical split.")
+map("", "<Leader>_", ":split | enew<CR>", "Create horizontal split.")
 
 -- Move across splits:
 map("", "<C-h>", "<C-W>h", "Move to the left split window.")
@@ -179,10 +179,10 @@ map("", "<C-S-Right>", "<C-W>L", "Move split window to the right.")
 --: Tab & buffer management {{{
 -- Buffer management:
 map("", "<Leader>bb", "<C-w>T", "Break split into a new tab.")
-map("", "<Leader>bc", ":badd ", "Open a new buffer.")
 map("", "<Leader>bx", ":bdelete<CR>", "Close current buffer.")
 map("", "<Leader>bX", ":tabclose<CR>", "Close current tab.")
-map("", "<Leader>bC", ":tabnew ", "Open a new tab.")
+map("", "<Leader>bc", ":badd | enew<CR>", "Open a new buffer.")
+map("", "<Leader>bC", ":tabnew | enew<CR>", "Open a new tab.")
 map("", "<Leader>.", ":tabn<CR>", "Move to the next tab.")
 map("", "<Leader>,", ":tabp<CR>", "Move to the previous tab.")
 -- map("", "<Tab>", ":bnext<CR>", "Switch to the next buffer.")
