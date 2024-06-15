@@ -145,7 +145,12 @@ pum_map("<C-c>", "<C-e>", "<C-c>", "Cancel completion menu with Ctrl-c.")
 ]]
 local complete_opts = vim.opt.completeopt:get()
 if vim.tbl_contains(complete_opts, "longest") then
-	pum_map("<C-n>", "<C-n>", [[<C-n><C-r>=pumvisible() ? "\<lt>C-n>" : ""<CR>]], "Auto open & select first item on completion menu.")
+	pum_map(
+		"<C-n>",
+		"<C-n>",
+		[[<C-n><C-r>=pumvisible() ? "\<lt>C-n>" : ""<CR>]],
+		"Auto open & select first item on completion menu."
+	)
 end
 --: }}}
 --: Split management {{{
