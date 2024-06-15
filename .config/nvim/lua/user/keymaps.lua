@@ -144,16 +144,6 @@ map("", "<C-S-Right>", "<C-W>L", "Move split window to the right.")
 --: }}}
 --: Tab & buffer management {{{
 -- Buffer management:
-
--- Select buffer using Alt + <NUM> (Requires Bufferline.nvim).
-for i = 1, 9, 1 do
-	map(
-		"n",
-		string.format("<A-%s>", i),
-		string.format(":buffer %s<CR>", i),
-		"Directly switch to buffer [N] with Alt+[N]."
-	)
-end
 map("", "<Leader>bb", "<C-w>T", "Break split into a new tab.")
 map("", "<Leader>bc", ":badd ", "Open a new buffer.")
 map("", "<Leader>bx", ":bdelete<CR>", "Close current buffer.")
