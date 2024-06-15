@@ -30,6 +30,6 @@ if ! which stow >/dev/null 2>&1; then
 fi
 
 # Symlink dotfiles with stow.
-stow --adopt -d "${current_pwd}" -t "${HOME}" --ignore '^/install.sh' .
+stow --adopt -d "${current_pwd}" -t "${HOME}" .
 
 # vim:fileencoding=utf-8:foldmethod=marker
