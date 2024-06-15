@@ -39,8 +39,8 @@ end
 --: General {{{
 map("n", "<Esc>", ":noh<CR><Esc>", "Clear highlighted searches.")
 map("v", ".", ":norm .<CR>", "Perform dot commands over visual blocks.")
-map({ "n", "v" }, "j", "gj", "Remap j to gj for better movement on warped lines.")
-map({ "n", "v" }, "k", "gk", "Remap k to gk for better movement on warped lines.")
+map("", "j", "gj", "Remap j to gj for better movement on warped lines.")
+map("", "k", "gk", "Remap k to gk for better movement on warped lines.")
 
 -- Replace commands:
 map("n", "<Leader>gs", ":s///g<Left><Left><Left>", "Replace string on the current line.")
@@ -49,10 +49,10 @@ map("v", "<Leader>gs", ":s///g<Left><Left><Left>", "Replace on selected text.")
 map("v", "<Leader>gS", ":s///g<Left><Left><Left>", "Replace on selected text.")
 
 -- Remap left/down/up/right.
-map({ "n", "v" }, "<Up>", "<C-y>", "Scroll up.")
-map({ "n", "v" }, "<Down>", "<C-e>", "Scroll down.")
-map({ "n", "v" }, "<Left>", "<S-{>", "Move to the start of previous block.")
-map({ "n", "v" }, "<Right>", "<S-}>", "Move to the end of next block.")
+map("", "<Up>", "<C-y>", "Scroll up.")
+map("", "<Down>", "<C-e>", "Scroll down.")
+map("", "<Left>", "<S-{>", "Move to the start of previous block.")
+map("", "<Right>", "<S-}>", "Move to the end of next block.")
 --: Automatically center cursor {{{
 center_map("n", "Center cursor when moving to the next match during a search.")
 center_map("N", "Center cursor when moving to the previous match during a search.")
@@ -90,9 +90,9 @@ map("v", ">", ">gv", "Move selected lines to the right.")
 --: }}}
 --: }}}
 --: Clipboard management {{{
-map({ "n", "v" }, "<Leader>y", '"+y', "Copy to primary clipboard.")
-map({ "n", "v" }, "<Leader>p", '"+p', "Paste from primary clipboard.")
-map({ "n", "v" }, "<Leader>P", '"+P', "Paste from primary clipboard.")
+map("", "<Leader>y", '"+y', "Copy to primary clipboard.")
+map("", "<Leader>p", '"+p', "Paste from primary clipboard.")
+map("", "<Leader>P", '"+P', "Paste from primary clipboard.")
 --: }}}
 --: Toggles {{{
 map({ "n", "v" }, "<Leader>ts", ":set spell!<CR>", "Toggle spell checking.")
@@ -121,38 +121,29 @@ end
 --: }}}
 --: Split management {{{
 -- Create splits:
-map({ "n", "v" }, "<Leader>-", ":vsplit|lua MiniStarter.open()<CR>", "Create vertical split.")
-map({ "n", "v" }, "<Leader>_", ":split|lua MiniStarter.open()<CR>", "Create horizontal split.")
+map("", "<Leader>-", ":vsplit|lua MiniStarter.open()<CR>", "Create vertical split.")
+map("", "<Leader>_", ":split|lua MiniStarter.open()<CR>", "Create horizontal split.")
 
 -- Move across splits:
-map({ "n", "v" }, "<C-h>", "<C-W>h", "Move to the left split window.")
-map({ "n", "v" }, "<C-j>", "<C-W>j", "Move to the split window below.")
-map({ "n", "v" }, "<C-k>", "<C-W>k", "Move to the split window above.")
-map({ "n", "v" }, "<C-l>", "<C-W>l", "Move to the right split window.")
+map("", "<C-h>", "<C-W>h", "Move to the left split window.")
+map("", "<C-j>", "<C-W>j", "Move to the split window below.")
+map("", "<C-k>", "<C-W>k", "Move to the split window above.")
+map("", "<C-l>", "<C-W>l", "Move to the right split window.")
 
 -- Resize split windows:
-map({ "n", "v" }, "<C-Left>", "<C-w>>", "Increase width of split window.")
-map({ "n", "v" }, "<C-Down>", "<C-w>-", "Decrease height of split window.")
-map({ "n", "v" }, "<C-Up>", "<C-w>+", "Increase height of split window.")
-map({ "n", "v" }, "<C-Right>", "<C-w><", "Decrease width of split window.")
+map("", "<C-Left>", "<C-w>>", "Increase width of split window.")
+map("", "<C-Down>", "<C-w>-", "Decrease height of split window.")
+map("", "<C-Up>", "<C-w>+", "Increase height of split window.")
+map("", "<C-Right>", "<C-w><", "Decrease width of split window.")
 
 -- Move currently actively selected split to the left/bottom/top/right:
-map({ "n", "v" }, "<C-S-Left>", "<C-W>H", "Move split window to the left.")
-map({ "n", "v" }, "<C-S-Down>", "<C-W>J", "Move split window to the bottom.")
-map({ "n", "v" }, "<C-S-Up>", "<C-W>K", "Move split window to the top.")
-map({ "n", "v" }, "<C-S-Right>", "<C-W>L", "Move split window to the right.")
+map("", "<C-S-Left>", "<C-W>H", "Move split window to the left.")
+map("", "<C-S-Down>", "<C-W>J", "Move split window to the bottom.")
+map("", "<C-S-Up>", "<C-W>K", "Move split window to the top.")
+map("", "<C-S-Right>", "<C-W>L", "Move split window to the right.")
 --: }}}
 --: Tab & buffer management {{{
 -- Buffer management:
-map({ "n", "v" }, "<Leader>bb", "<C-w>T", "Break split into a new tab.")
-map({ "n", "v" }, "<Leader>bc", ":badd ", "Open a new buffer.")
-map({ "n", "v" }, "<Leader>bx", ":w!<CR>:bdelete<CR>:bprev<CR>", "Close current buffer.")
-map({ "n", "v" }, "<Leader>bC", ":tabnew ", "Open a new tab.")
-map({ "n", "v" }, "<Leader>bX", ":tabc<CR>", "Close current tab.")
-map({ "n", "v" }, "<Leader>.", ":tabn<CR>", "Move to the next tab.")
-map({ "n", "v" }, "<Leader>,", ":tabp<CR>", "Move to the previous tab.")
--- map({ "n", "v" }, "<Tab>", ":bnext<CR>", "Switch to the next buffer.")
--- map({ "n", "v" }, "<S-Tab>", ":bprevious<CR>", "Switch to the previous buffer.")
 
 -- Select buffer using Alt + <NUM> (Requires Bufferline.nvim).
 for i = 1, 9, 1 do
@@ -163,4 +154,13 @@ for i = 1, 9, 1 do
 		"Directly switch to buffer [N] with Alt+[N]."
 	)
 end
+map("", "<Leader>bb", "<C-w>T", "Break split into a new tab.")
+map("", "<Leader>bc", ":badd ", "Open a new buffer.")
+map("", "<Leader>bx", ":bdelete<CR>", "Close current buffer.")
+map("", "<Leader>bX", ":tabclose<CR>", "Close current tab.")
+map("", "<Leader>bC", ":tabnew ", "Open a new tab.")
+map("", "<Leader>.", ":tabn<CR>", "Move to the next tab.")
+map("", "<Leader>,", ":tabp<CR>", "Move to the previous tab.")
+-- map("", "<Tab>", ":bnext<CR>", "Switch to the next buffer.")
+-- map("", "<S-Tab>", ":bprevious<CR>", "Switch to the previous buffer.")
 --: }}}
