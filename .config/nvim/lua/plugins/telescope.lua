@@ -148,18 +148,8 @@ return {
 						"--trim",
 					},
 					mappings = {
-						n = {
-							["<C-c>"] = actions.close,
-							["cd"] = function(prompt_bufnr)
-								local selection = require("telescope.actions.state").get_selected_entry()
-								local dir = vim.fn.fnamemodify(selection.path, ":p:h")
-								require("telescope.actions").close(prompt_bufnr)
-								-- Depending on what you want put `cd`, `lcd`, `tcd`
-								vim.cmd(string.format("silent cd %s", dir))
-							end,
-						},
 						i = {
-							-- ["<esc>"] = actions.close,
+							["<Esc>"] = actions.close,
 							["<C-u>"] = false,
 							["<C-d>"] = actions.delete_buffer + actions.move_to_top,
 							["<C-k>"] = {
