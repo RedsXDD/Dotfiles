@@ -94,6 +94,7 @@ o.completeopt = {
 	"menuone",
 	"longest",
 	"preview",
+	"fuzzy",
 } -- Options for neovim's complete menu.
 o.textwidth = 300                           -- Maximum width of text that is being inserted.
 -- o.expandtab = true                          -- Expand tabs to individual space characters.
