@@ -119,6 +119,14 @@ return {
 					{ mode = "n", keys = "<Leader>fe", desc = "+Extra" },
 				}),
 
+				-- Telescope:
+				clue.mkclue_with_dependency("telescope", {
+					{ mode = "n", keys = "<Leader>f", desc = "+Telescope" },
+					{ mode = "n", keys = "<Leader>fg", desc = "+Grep & Git" },
+					{ mode = "n", keys = "<Leader>fl", desc = "+LSP" },
+					{ mode = "n", keys = "<Leader>fe", desc = "+Extra" },
+				}),
+
 				-- Gitsigns:
 				clue.mkclue_with_dependency("gitsigns", {
 					{ mode = "n", keys = "<Leader>gh", desc = "+Gitsigns" },
