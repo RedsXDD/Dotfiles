@@ -28,12 +28,24 @@ return {
 			-- Misc:
 			tele_map("<Leader>?", function() builtin.keymaps() end, "Search keymaps.")
 			tele_map("<Leader>f?", function() builtin.help_tags() end, "Search help tags.")
-			tele_map("<Leader>fc", function() builtin.command() end, "Search commands.")
-			tele_map("<Leader>fC", function() builtin.colorscheme() end, "Search colorschemes.")
+			tele_map("<Leader>ft", function() builtin.treesitter() end, "Search treesitter nodes.")
 			tele_map("<Leader>fh", function() builtin.command_history() end, "Search command history.")
+			tele_map("<Leader>fS", function() builtin.search_history() end, "Search search history.")
 			tele_map("<Leader>fr", function() builtin.registers() end, "Search registers.")
 			tele_map("<Leader>fs", function() builtin.spell_suggest() end, "Search spell suggestions.")
 			tele_map("<Leader>fn", function() builtin.find_files({ cwd = vim.fn.stdpath("config") }) end, "Search Neovim configuration files.")
+			tele_map("<Leader>fm", function() builtin.marks() end, "Search marks.")
+			tele_map("<Leader>fM", function() builtin.man_pages() end, "Search man pages.")
+
+			-- Extra
+			tele_map("<Leader>feo", function() builtin.vim_options() end, "Search options.")
+			tele_map("<Leader>fec", function() builtin.commands() end, "Search commands.")
+			tele_map("<Leader>feC", function() builtin.colorscheme() end, "Search colorschemes.")
+			tele_map("<Leader>fea", function() builtin.autocommands() end, "Search autocommands.")
+			tele_map("<Leader>fet", function() builtin.filetypes() end, "Search filetypes.")
+			tele_map("<Leader>feh", function() builtin.highlights() end, "Search highlight groups.")
+			tele_map("<Leader>fet", function() builtin.tags() end, "Search tags.")
+			tele_map("<Leader>feT", function() builtin.current_buffer_fuzzy_find() end, "Search tags on current buffer.")
 
 			-- Lists:
 			tele_map("<Leader>fq", function() builtin.quickfix() end, "Search quickfix list.")
@@ -64,9 +76,12 @@ return {
 			tele_map("<Leader>fld", function() builtin.lsp_definitions() end, "Search definition(s).")
 			tele_map("<Leader>fls", function() builtin.lsp_document_symbols() end, "Search document symbol(s).")
 			tele_map("<Leader>fli", function() builtin.lsp_implementations() end, "Search implementation(s).")
+			tele_map("<Leader>flI", function() builtin.lsp_incoming_calls() end, "Search incoming call(s).")
+			tele_map("<Leader>flo", function() builtin.lsp_outgoing_calls() end, "Search outgoing call(s).")
 			tele_map("<Leader>flr", function() builtin.lsp_references() end, "Search reference(s).")
 			tele_map("<Leader>flt", function() builtin.lsp_type_definitions() end, "Search type definition(s).")
-			tele_map("<Leader>flw", function() builtin.lsp_dynamic_workspace_symbols() end, "Search workspace symbol(s).")
+			tele_map("<Leader>flw", function() builtin.lsp_workspace_symbols() end, "Search workspace symbol(s).")
+			tele_map("<Leader>flW", function() builtin.lsp_dynamic_workspace_symbols() end, "Search workspace symbol(s) dynamically.")
 			-- stylua: ignore end
 
 			return M
