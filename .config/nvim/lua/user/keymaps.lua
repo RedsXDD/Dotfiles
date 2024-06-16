@@ -30,9 +30,9 @@ local center_map = function(keys, desc)
 	vim.keymap.set("", keys, keys .. "zvzz", { noremap = true, silent = true, desc = "" .. desc })
 end
 
-local pum_map = function(keys, pum_action, normal_action, desc)
+local pum_map = function(keys, pum_action, desc)
 	vim.keymap.set("i", keys, function()
-		return vim.fn.pumvisible() ~= 0 and pum_action or normal_action
+		return vim.fn.pumvisible() ~= 0 and pum_action or keys
 	end, { noremap = true, silent = true, expr = true, desc = "" .. desc })
 end
 
@@ -134,9 +134,9 @@ toggleStr_map("", "<Leader>tc", "formatoptions", "cro", "newline auto commenting
 --: }}}
 --: Complete menu {{{
 -- General completion mappings.
-pum_map("<Tab>", "<C-n>", "<Tab>", "Navigate completion menu down with tab.")
-pum_map("<S-Tab>", "<C-p>", "<S-Tab>", "Navigate completion menu up with Shift-tab.")
-pum_map("<C-c>", "<C-e>", "<C-c>", "Cancel completion menu with Ctrl-c.")
+pum_map("<Tab>", "<C-n>", "Navigate completion menu down with tab.")
+pum_map("<S-Tab>", "<C-p>", "Navigate completion menu up with Shift-tab.")
+pum_map("<C-c>", "<C-e>", "Cancel completion menu with Ctrl-c.")
 
 --[[
 	This keymap auto selects the first item of the complete menu when Ctrl-n is pressed.
