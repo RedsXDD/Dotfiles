@@ -162,14 +162,13 @@ pum_map({
 ]]
 local complete_opts = vim.opt.completeopt:get()
 if vim.tbl_contains(complete_opts, "longest") then
-	vim.keymap.set("i", "<C-n>", function()
-		if vim.fn.pumvisible() ~= 0 then
-			return "<C-n>"
-		else
-			local has_fuzzy = vim.o.completeopt:find("fuzzy") ~= nil
-			return has_fuzzy and [[<C-n><C-r>=pumvisible() ? "\<lt>C-n>\<lt>C-p>" : ""<CR>]] or [[<C-n><C-r>=pumvisible() ? "\<lt>C-n>" : ""<CR>]]
-		end
-	end, { noremap = true, silent = true, expr = true, desc = "Auto open & select first item on completion menu." })
+	local has_fuzzy = vim.o.completeopt:find("fuzzy") ~= nil
+	pum_map({
+		key = "<C-n>",
+		pum = "<C-n>",
+		normal = has_fuzzy and [[<C-n><C-r>=pumvisible() ? "\<lt>C-n>\<lt>C-p>" : ""<CR>]]
+			or [[<C-n><C-r>=pumvisible() ? "\<lt>C-n>" : ""<CR>]],
+	}, "Auto open & select first item on completion menu.")
 end
 --: }}}
 --: Split management {{{
