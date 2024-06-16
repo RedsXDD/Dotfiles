@@ -28,7 +28,8 @@ return {
 			-- Misc:
 			tele_map("<Leader>?", function() builtin.keymaps() end, "Search keymaps.")
 			tele_map("<Leader>f?", function() builtin.help_tags() end, "Search help tags.")
-			tele_map("<Leader>ft", function() builtin.treesitter() end, "Search treesitter nodes.")
+			tele_map("<Leader>ft", function() builtin.tags() end, "Search tags.")
+			tele_map("<Leader>fT", function() builtin.current_buffer_fuzzy_find() end, "Search tags on current buffer.")
 			tele_map("<Leader>fh", function() builtin.command_history() end, "Search command history.")
 			tele_map("<Leader>fS", function() builtin.search_history() end, "Search search history.")
 			tele_map("<Leader>fr", function() builtin.registers() end, "Search registers.")
@@ -44,8 +45,7 @@ return {
 			tele_map("<Leader>fea", function() builtin.autocommands() end, "Search autocommands.")
 			tele_map("<Leader>fet", function() builtin.filetypes() end, "Search filetypes.")
 			tele_map("<Leader>feh", function() builtin.highlights() end, "Search highlight groups.")
-			tele_map("<Leader>fet", function() builtin.tags() end, "Search tags.")
-			tele_map("<Leader>feT", function() builtin.current_buffer_fuzzy_find() end, "Search tags on current buffer.")
+			tele_map("<Leader>fet", function() builtin.treesitter() end, "Search treesitter nodes.")
 
 			-- Lists:
 			tele_map("<Leader>fq", function() builtin.quickfix() end, "Search quickfix list.")

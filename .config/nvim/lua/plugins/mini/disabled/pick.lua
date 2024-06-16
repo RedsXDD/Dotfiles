@@ -27,7 +27,6 @@ return {
 		pick_map("<Leader>fm", function() extra.marks() end, "Pick marks.")
 		pick_map("<Leader>fr", function() extra.registers() end, "Pick registers.")
 		pick_map("<Leader>fs", function() extra.spellsuggest() end, "Pick spell suggestions.")
-		pick_map("<Leader>ft", function() extra.treesitter() end, "Pick treesitter nodes.")
 
 		pick_map("<Leader>fq", function() extra.list({ scope = "quickfix" }) end, "Pick quickfix list.")
 		pick_map("<Leader>fL", function() extra.list({ scope = "location-list" }) end, "Pick location list.")
@@ -39,6 +38,7 @@ return {
 		pick_map("<Leader>fep", function() extra.hipatterns() end, "Pick hipatterns.")
 		pick_map("<Leader>feh", function() extra.hl_groups() end, "Pick highlight groups.")
 		pick_map("<Leader>feo", function() extra.options() end, "Pick options.")
+		pick_map("<Leader>fet", function() extra.treesitter() end, "Pick treesitter nodes.")
 
 		-- Grep & git
 		pick_map("<Leader>fgg", function() pick.builtin.grep() end, "Grep for files on CWD.")
