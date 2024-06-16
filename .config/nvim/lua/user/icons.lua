@@ -1,10 +1,10 @@
 local M = {}
 
 --[[
-NOTE: The `set_icons` function creates a table inside M.icons with the name given from the `table_name` argument.
-The table `table_name` either:
-- Contains a set of icons for when neovim is not opened on a TTY enviroment
-- Contains a set strings of text that are TTY compatible for when neovim is opened on a TTY enviroment
+	NOTE: The `set_icons` function creates a table inside M.icons with the name given from the `table_name` argument.
+	The table `table_name` either:
+	- Contains a set of icons for when neovim is not opened on a TTY enviroment
+	- Contains a set strings of text that are TTY compatible for when neovim is opened on a TTY enviroment
 --]]
 local function set_icons(table_name, normal_icons, tty_icons)
 	if vim.env.DISPLAY ~= nil then
