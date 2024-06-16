@@ -233,7 +233,7 @@ return {
 				starter.gen_hook.padding(6, 0),
 			},
 			items = {
-				starter.new_section(icons.actions.new_file .. "New File", "ene | startinsert", actions_section),
+				starter.new_section(icons.actions.new_file .. "New File", "enew | startinsert", actions_section),
 				starter.new_section(icons.actions.quit .. "Quit", "q!", actions_section),
 
 				starter.new_section(icons.actions.file_explorer .. "Open File Explorer", function()
