@@ -114,10 +114,9 @@ return {
 				-- Mini.pick:
 				clue.mkclue_with_dependency("mini.pick", {
 					{ mode = "n", keys = "<Leader>f", desc = "+MiniPick" },
-					{ mode = "n", keys = "<Leader>fg", desc = "+Grep" },
-					{ mode = "n", keys = "<Leader>fG", desc = "+Git" },
+					{ mode = "n", keys = "<Leader>fg", desc = "+Grep & Git" },
 					{ mode = "n", keys = "<Leader>fl", desc = "+LSP" },
-					{ mode = "n", keys = "<Leader>fL", desc = "+List" },
+					{ mode = "n", keys = "<Leader>fe", desc = "+Extra" },
 				}),
 
 				-- Gitsigns:
