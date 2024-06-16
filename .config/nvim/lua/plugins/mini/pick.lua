@@ -36,6 +36,9 @@ return {
 
 		pick_map("<Leader>fel", function() extra.buf_lines() end, "Pick buffer lines.")
 		pick_map("<Leader>fec", function() extra.commands() end, "Pick commands.")
+		pick_map("<Leader>fep", function() extra.hipatterns() end, "Pick hipatterns.")
+		pick_map("<Leader>feh", function() extra.hl_groups() end, "Pick highlight groups.")
+		pick_map("<Leader>feo", function() extra.options() end, "Pick options.")
 
 		-- Grep & git
 		pick_map("<Leader>fgg", function() pick.builtin.grep() end, "Grep for files on CWD.")
