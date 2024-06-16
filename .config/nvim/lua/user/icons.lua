@@ -1,5 +1,4 @@
 local M = {}
-M.icons = {}
 
 --[[
 NOTE: The `set_icons` function creates a table inside M.icons with the name given from the `table_name` argument.
@@ -9,9 +8,9 @@ The table `table_name` either:
 --]]
 local function set_icons(table_name, normal_icons, tty_icons)
 	if vim.env.DISPLAY ~= nil then
-		M.icons[table_name] = normal_icons
+		M[table_name] = normal_icons
 	else
-		M.icons[table_name] = tty_icons
+		M[table_name] = tty_icons
 	end
 end
 

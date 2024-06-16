@@ -3,6 +3,6 @@ return {
 	event = { "BufReadPost", "BufNewFile" },
 	opts = {
 		lsp_progress = { enable = true },
-		window = { config = { border = require("user.icons").icons.misc.border } },
+		window = { config = { border = require("user.icons").misc.border } },
 	},
 }

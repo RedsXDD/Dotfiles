@@ -7,7 +7,7 @@ return {
 		--: Main variables {{{
 		local starter = require("mini.starter")
 		local padding = string.rep(" ", 15) -- Padding to center sections and actions.
-		local icons = require("user.icons").icons.starter
+		local icons = require("user.icons").starter
 
 		local function lazy_load(plugin)
 			require("lazy").load({ plugins = plugin })

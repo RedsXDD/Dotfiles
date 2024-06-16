@@ -3,7 +3,7 @@ return {
 	dependencies = { "nvim-tree/nvim-web-devicons" },
 	event = { "BufReadPost", "BufNewFile", "BufUnload" },
 	opts = function()
-		local icons = require("user.icons").icons
+		local icons = require("user.icons")
 
 		local opts = {
 			options = {

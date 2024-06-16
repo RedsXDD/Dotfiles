@@ -7,8 +7,8 @@ return {
 
 		-- Configuration for actions window:
 		window = {
-			info = { height = 25, width = 80, border = require("user.icons").icons.misc.border },
-			signature = { height = 25, width = 80, border = require("user.icons").icons.misc.border },
+			info = { height = 25, width = 80, border = require("user.icons").misc.border },
+			signature = { height = 25, width = 80, border = require("user.icons").misc.border },
 		},
 
 		lsp_completion = {

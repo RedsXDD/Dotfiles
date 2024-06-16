@@ -11,8 +11,8 @@ return {
 	cmd = "Mason",
 	build = ":MasonUpdate",
 	config = function()
-		local border_style = require("user.icons").icons.misc.border
-		local icons = require("user.icons").icons.mason
+		local border_style = require("user.icons").misc.border
+		local icons = require("user.icons").mason
 		local mason = require("mason")
 		local mason_lspconfig = require("mason-lspconfig")
 		local mason_tool_installer = require("mason-tool-installer")

@@ -31,7 +31,7 @@ return {
 	end,
 	opts = {
 		ft = "FTerm",
-		border = require("user.icons").icons.misc.border,
+		border = require("user.icons").misc.border,
 		auto_close = true,
 		hl = "NormalFloat",
 		blend = 0,

@@ -94,7 +94,7 @@ return {
 			local action_layout = require("telescope.actions.layout")
 			local previewers = require("telescope.previewers")
 			local Job = require("plenary.job")
-			local icons = require("user.icons").icons.telescope
+			local icons = require("user.icons").telescope
 
 			-- Load telescope extensions:
 			pcall(telescope.load_extension, "fzf")

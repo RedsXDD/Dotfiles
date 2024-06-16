@@ -10,7 +10,7 @@ return {
 		{ "<Leader>gh", mode = { "n" } },
 	},
 	opts = function()
-		local icons = require("user.icons").icons
+		local icons = require("user.icons")
 
 		return {
 			signs = {
