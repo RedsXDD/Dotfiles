@@ -133,7 +133,7 @@ return {
 			telescope.setup({
 				file_ignore_patterns = { "%.git/." },
 				defaults = {
-					preview = false,
+					preview = true,
 					prompt_prefix = icons.prompt_prefix,
 					selection_caret = icons.selection_caret,
 					file_ignore_patterns = { "node_modules", "package-lock.json" },
@@ -234,7 +234,7 @@ return {
 					},
 					["ui-select"] = {
 						themes.get_dropdown({
-							previewer = false,
+							previewer = true,
 							initial_mode = "normal",
 							sorting_strategy = "ascending",
 							layout_strategy = "horizontal",
