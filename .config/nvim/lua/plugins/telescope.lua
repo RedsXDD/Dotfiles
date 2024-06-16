@@ -25,7 +25,7 @@ return {
 			end
 
 			-- stylua: ignore start
-			-- Misc:
+			-- Main:
 			tele_map("<Leader>?", function() builtin.keymaps() end, "Search keymaps.")
 			tele_map("<Leader>f?", function() builtin.help_tags() end, "Search help tags.")
 			tele_map("<Leader>ft", function() builtin.tags() end, "Search tags.")
@@ -37,15 +37,6 @@ return {
 			tele_map("<Leader>fn", function() builtin.find_files({ cwd = vim.fn.stdpath("config") }) end, "Search Neovim configuration files.")
 			tele_map("<Leader>fm", function() builtin.marks() end, "Search marks.")
 			tele_map("<Leader>fM", function() builtin.man_pages() end, "Search man pages.")
-
-			-- Extra
-			tele_map("<Leader>feo", function() builtin.vim_options() end, "Search options.")
-			tele_map("<Leader>fec", function() builtin.commands() end, "Search commands.")
-			tele_map("<Leader>feC", function() builtin.colorscheme() end, "Search colorschemes.")
-			tele_map("<Leader>fea", function() builtin.autocommands() end, "Search autocommands.")
-			tele_map("<Leader>fet", function() builtin.filetypes() end, "Search filetypes.")
-			tele_map("<Leader>feh", function() builtin.highlights() end, "Search highlight groups.")
-			tele_map("<Leader>fet", function() builtin.treesitter() end, "Search treesitter nodes.")
 
 			-- Lists:
 			tele_map("<Leader>fq", function() builtin.quickfix() end, "Search quickfix list.")
@@ -60,6 +51,15 @@ return {
 			-- File searching:
 			tele_map("<Leader>ff", function() builtin.find_files({ follow = true, no_ignore = true, hidden = true }) end, "Find files on CWD (+ hidden files).")
 			tele_map("<Leader>fo", function() builtin.oldfiles() end, "Search recently opened files.")
+
+			-- Extra
+			tele_map("<Leader>feo", function() builtin.vim_options() end, "Search options.")
+			tele_map("<Leader>fec", function() builtin.commands() end, "Search commands.")
+			tele_map("<Leader>feC", function() builtin.colorscheme() end, "Search colorschemes.")
+			tele_map("<Leader>fea", function() builtin.autocommands() end, "Search autocommands.")
+			tele_map("<Leader>fet", function() builtin.filetypes() end, "Search filetypes.")
+			tele_map("<Leader>feh", function() builtin.highlights() end, "Search highlight groups.")
+			tele_map("<Leader>fet", function() builtin.treesitter() end, "Search treesitter nodes.")
 
 			-- Grep & git:
 			tele_map("<Leader>fgw", function() builtin.grep_string() end, "Search word under cursor.")
