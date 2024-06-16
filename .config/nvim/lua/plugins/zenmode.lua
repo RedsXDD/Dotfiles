@@ -2,7 +2,14 @@ return {
 	"folke/zen-mode.nvim",
 	cmd = "ZenMode",
 	keys = {
-		{ "<leader>tz", ":ZenMode<CR>", desc = "Toggle Zenmode." },
+		{
+			"<leader>tz",
+			function()
+				require("zen-mode").toggle()
+				vim.notify("Toggled zenmode", vim.log.levels.INFO)
+			end,
+			desc = "Toggle Zenmode.",
+		},
 	},
 	opts = {
 		window = {
