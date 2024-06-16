@@ -92,10 +92,10 @@ set_icons("mason", {
 
 set_icons("telescope", {
 	prompt_prefix = "  ",
-	selection_caret = "  ",
+	selection_caret = " ◆ ",
 }, {
-	prompt_prefix = " [?] ",
-	selection_caret = " -> ",
+	prompt_prefix = " > ",
+	selection_caret = " * ",
 })
 
 set_icons("pick", {
