@@ -163,11 +163,12 @@ pum_map({
 local complete_opts = vim.opt.completeopt:get()
 if vim.tbl_contains(complete_opts, "longest") then
 	local has_fuzzy = vim.o.completeopt:find("fuzzy") ~= nil
+	local fuzzy_keys = [[<C-n><C-r>=pumvisible() ? "\<lt>C-n>\<lt>C-p>" : ""<CR>]]
+	local longest_keys = [[<C-n><C-r>=pumvisible() ? "\<lt>C-n>" : ""<CR>]]
 	pum_map({
 		key = "<C-n>",
 		pum = "<C-n>",
-		normal = has_fuzzy and [[<C-n><C-r>=pumvisible() ? "\<lt>C-n>\<lt>C-p>" : ""<CR>]]
-			or [[<C-n><C-r>=pumvisible() ? "\<lt>C-n>" : ""<CR>]],
+		normal = has_fuzzy and fuzzy_keys or longest_keys,
 	}, "Auto open & select first item on completion menu.")
 end
 --: }}}
