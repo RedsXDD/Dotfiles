@@ -34,7 +34,7 @@ return {
 		pick_map("<Leader>fj", function() extra.list({ scope = "jumplist" }) end, "Pick jumplist.")
 		pick_map("<Leader>fc", function() extra.list({ scope = "changelist" }) end, "Pick changelist.")
 
-		pick_map("<Leader>fel", function() extra.buf_lines() end, "Pick buffer lines.")
+		pick_map("<Leader>fB", function() extra.buf_lines() end, "Pick buffer lines.")
 		pick_map("<Leader>fec", function() extra.commands() end, "Pick commands.")
 		pick_map("<Leader>fep", function() extra.hipatterns() end, "Pick hipatterns.")
 		pick_map("<Leader>feh", function() extra.hl_groups() end, "Pick highlight groups.")

@@ -27,51 +27,46 @@ return {
 			-- stylua: ignore start
 			-- Misc:
 			tele_map("<Leader>?", function() builtin.keymaps() end, "Search keymaps.")
-			tele_map("<Leader>fr", function() builtin.resume() end, "Search resumes.")
 			tele_map("<Leader>f?", function() builtin.help_tags() end, "Search help tags.")
 			tele_map("<Leader>fc", function() builtin.command() end, "Search commands.")
 			tele_map("<Leader>fC", function() builtin.colorscheme() end, "Search colorschemes.")
 			tele_map("<Leader>fh", function() builtin.command_history() end, "Search command history.")
-			tele_map("<Leader>fR", function() builtin.registers() end, "Search registers.")
+			tele_map("<Leader>fr", function() builtin.registers() end, "Search registers.")
 			tele_map("<Leader>fs", function() builtin.spell_suggest() end, "Search spell suggestions.")
 			tele_map("<Leader>fn", function() builtin.find_files({ cwd = vim.fn.stdpath("config") }) end, "Search Neovim configuration files.")
 
+			-- Lists:
+			tele_map("<Leader>fq", function() builtin.quickfix() end, "Search quickfix list.")
+			tele_map("<Leader>fQ", function() builtin.quickfixhistory() end, "Search quickfix list history.")
+			tele_map("<Leader>fL", function() builtin.loclist() end, "Search location list.")
+			tele_map("<Leader>fj", function() builtin.jumplist() end, "Search jumplist.")
+
 			-- Buffers:
 			tele_map("<Leader>fb", function() builtin.buffers() end, "Search buffers.")
-			tele_map("<Leader>fB", function() builtin.current_buffer_fuzzy_find() end, "Fuzzily search in current buffer.")
+			tele_map("<Leader>fB", function() builtin.current_buffer_fuzzy_find() end, "Search lines in current buffer.")
 
 			-- File searching:
-			tele_map("<Leader>ff", function() builtin.find_files() end, "Find files on CWD.")
+			tele_map("<Leader>ff", function() builtin.find_files({ follow = true, no_ignore = true, hidden = true }) end, "Find files on CWD (+ hidden files).")
 			tele_map("<Leader>fo", function() builtin.oldfiles() end, "Search recently opened files.")
-			tele_map("<Leader>fF", function() builtin.find_files({ follow = true, no_ignore = true, hidden = true }) end, "Find files (+ hidden files).")
 
-			-- Grep:
+			-- Grep & git:
 			tele_map("<Leader>fgw", function() builtin.grep_string() end, "Search word under cursor.")
 			tele_map("<Leader>fgl", function() builtin.live_grep() end, "Live grep for files on CWD.")
 			tele_map("<Leader>fgo", function() builtin.live_grep({ grep_open_files = true, prompt_title = "Grep on open files." }) end, "Grep on open files.")
-
-			-- Git:
-			tele_map("<Leader>fGb", function() builtin.git_branches() end, "Search git branches.")
-			tele_map("<Leader>fGc", function() builtin.git_commits() end, "Search git commits.")
-			tele_map("<Leader>fGC", function() builtin.git_bcommits() end, "Search git bcommits.")
-			tele_map("<Leader>fGf", function() builtin.git_files() end, "Search git files.")
-			tele_map("<Leader>fGh", function() builtin.git_stash() end, "Search git stash.")
-			tele_map("<Leader>fGs", function() builtin.git_status() end, "Search git status.")
+			tele_map("<Leader>fgb", function() builtin.git_branches() end, "Search git branches.")
+			tele_map("<Leader>fgc", function() builtin.git_commits() end, "Search git commits.")
+			tele_map("<Leader>fgf", function() builtin.git_files() end, "Search git files.")
+			tele_map("<Leader>fgh", function() builtin.git_status() end, "Search git hunks.")
+			tele_map("<Leader>fgs", function() builtin.git_stash() end, "Search git stash.")
 
 			-- LSP:
 			tele_map("<Leader>fd", function() builtin.diagnostics() end, "Search diagnostics.")
 			tele_map("<Leader>fld", function() builtin.lsp_definitions() end, "Search definition(s).")
-			tele_map("<Leader>flS", function() builtin.lsp_document_symbols() end, "Search document symbol(s).")
+			tele_map("<Leader>fls", function() builtin.lsp_document_symbols() end, "Search document symbol(s).")
 			tele_map("<Leader>fli", function() builtin.lsp_implementations() end, "Search implementation(s).")
 			tele_map("<Leader>flr", function() builtin.lsp_references() end, "Search reference(s).")
 			tele_map("<Leader>flt", function() builtin.lsp_type_definitions() end, "Search type definition(s).")
 			tele_map("<Leader>flw", function() builtin.lsp_dynamic_workspace_symbols() end, "Search workspace symbol(s).")
-
-			-- Lists:
-			tele_map("<Leader>fLq", function() builtin.quickfix() end, "Search quickfix list.")
-			tele_map("<Leader>fLQ", function() builtin.quickfixhistory() end, "Search quickfix list history.")
-			tele_map("<Leader>fLl", function() builtin.loclist() end, "Search location list.")
-			tele_map("<Leader>fLj", function() builtin.jumplist() end, "Search jumplist.")
 			-- stylua: ignore end
 
 			return M
