@@ -18,7 +18,7 @@ return {
 			local state = vim.g.minipairs_disable
 			state = not state
 			vim.g.minipairs_disable = state
-			vim.notify(state and "Enabled " .. "mini.pairs" or "Disabled " .. "mini.pairs", vim.log.levels.INFO)
+			vim.notify(state and "Disabled " .. "mini.pairs" or "Enabled " .. "mini.pairs", vim.log.levels.INFO)
 		end, "Toggle Mini.pairs.")
 
 		return M
