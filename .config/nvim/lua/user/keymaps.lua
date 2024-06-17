@@ -168,13 +168,20 @@ pum_map({
 local complete_opts = vim.opt.completeopt:get()
 if vim.tbl_contains(complete_opts, "longest") then
 	local has_fuzzy = vim.o.completeopt:find("fuzzy") ~= nil
-	local fuzzy_keys = [[<C-n><C-r>=pumvisible() ? "\<lt>C-n>\<lt>C-p>" : ""<CR>]]
-	local longest_keys = [[<C-n><C-r>=pumvisible() ? "\<lt>C-n>" : ""<CR>]]
+
+	local action = ""
+
+	local fuzzy_action = [["\<lt>C-n>\<lt>C-p>"]]
+	local longest_action = [["\<lt>C-n>"]]
+
+	action = has_fuzzy and fuzzy_action or longest_action
+
 	pum_map({
 		key = "<C-n>",
 		pum = "<C-n>",
-		normal = has_fuzzy and fuzzy_keys or longest_keys,
+		normal = [[<C-n><C-r>=pumvisible()]] .. " ? " .. action .. " : " .. [[""<CR>]],
 	}, "Auto open & select first item on completion menu.")
+
 end
 --: }}}
 --: Split management {{{
