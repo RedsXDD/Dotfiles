@@ -172,35 +172,32 @@ pum_map({
 	NOTE: This keymap is only set when the option `completeopt` has the option `longest` on it,
 	as that option changes the behaviour of the complete menu so that it no longer auto selects the first item in the completion list.
 ]]
-local complete_opts = vim.opt.completeopt:get()
-if vim.tbl_contains(complete_opts, "longest") then
-	local has_fuzzy = vim.o.completeopt:find("fuzzy") ~= nil
+pum_map({
+	key = "<C-n>",
+	pum = "<C-n>",
+	normal = function()
+		local action = ""
+		local complete_opts = vim.opt.completeopt:get()
+		local has_longest = vim.tbl_contains(complete_opts, "longest")
+		local has_fuzzy = vim.tbl_contains(complete_opts, "fuzzy")
 
-	local action = ""
+		local has_cmp, _ = pcall(require, "cmp")
+		if has_cmp or not has_longest then
+			return "<C-n>"
+		elseif has_longest and has_fuzzy then
+			action = [[\<lt>C-n>\<lt>C-p>]]
+		elseif has_longest then
+			action = [[\<lt>C-n>]]
+		end
 
-	local fuzzy_action = [[\<lt>C-n>\<lt>C-p>]]
-	local longest_action = [[\<lt>C-n>]]
+		local has_mini, _ = pcall(require, "mini.completion")
+		if has_mini then
+			action = [[\<lt>C-n>\<lt>C-n>\<lt>C-p>]]
+		end
 
-	action = has_fuzzy and fuzzy_action or longest_action
-
-	pum_map({
-		key = "<C-n>",
-		pum = "<C-n>",
-		normal = function()
-			local has_cmp, _ = pcall(require, "cmp")
-			if has_cmp then
-				return "<C-n>"
-			end
-
-			local has_mini, _ = pcall(require, "mini.completion")
-			if has_mini then
-				action = [[\<lt>C-n>\<lt>C-n>\<lt>C-p>]]
-			end
-
-			return [[<C-n><C-r>=pumvisible()]] .. " ? " .. '"' .. action .. '"' .. " : " .. [[""<CR>]]
-		end,
-	}, "Auto open & select first item on completion menu.")
-end
+		return [[<C-n><C-r>=pumvisible()]] .. " ? " .. '"' .. action .. '"' .. " : " .. [[""<CR>]]
+	end,
+}, "Auto open & select first item on completion menu.")
 --: }}}
 --: Split management {{{
 -- Create splits:
