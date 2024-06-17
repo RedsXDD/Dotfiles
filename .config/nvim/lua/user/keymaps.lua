@@ -187,6 +187,11 @@ if vim.tbl_contains(complete_opts, "longest") then
 		key = "<C-n>",
 		pum = "<C-n>",
 		normal = function()
+			local has_cmp, _ = pcall(require, "cmp")
+			if has_cmp then
+				return "<C-n>"
+			end
+
 			local has_mini, _ = pcall(require, "mini.completion")
 			if has_mini then
 				action = [["\<lt>C-n>\<lt>C-n>\<lt>C-p>"]]
