@@ -178,8 +178,8 @@ if vim.tbl_contains(complete_opts, "longest") then
 
 	local action = ""
 
-	local fuzzy_action = [["\<lt>C-n>\<lt>C-p>"]]
-	local longest_action = [["\<lt>C-n>"]]
+	local fuzzy_action = [[\<lt>C-n>\<lt>C-p>]]
+	local longest_action = [[\<lt>C-n>]]
 
 	action = has_fuzzy and fuzzy_action or longest_action
 
@@ -194,10 +194,10 @@ if vim.tbl_contains(complete_opts, "longest") then
 
 			local has_mini, _ = pcall(require, "mini.completion")
 			if has_mini then
-				action = [["\<lt>C-n>\<lt>C-n>\<lt>C-p>"]]
+				action = [[\<lt>C-n>\<lt>C-n>\<lt>C-p>]]
 			end
 
-			return [[<C-n><C-r>=pumvisible()]] .. " ? " .. action .. " : " .. [[""<CR>]]
+			return [[<C-n><C-r>=pumvisible()]] .. " ? " .. '"' .. action .. '"' .. " : " .. [[""<CR>]]
 		end,
 	}, "Auto open & select first item on completion menu.")
 end
