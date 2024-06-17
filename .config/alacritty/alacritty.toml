@@ -36,7 +36,7 @@ multiplier = 5
 [window]
 decorations = "none"
 dynamic_padding = true
-opacity = 0.95
+opacity = 1
 startup_mode = "Maximized"
 
 [window.dimensions]
@@ -44,8 +44,8 @@ columns = 0
 lines = 0
 
 [window.padding]
-x = 0
-y = 0
+x = 10
+y = 10
 
 [window.position]
 x = 0

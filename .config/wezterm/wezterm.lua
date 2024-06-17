@@ -7,7 +7,7 @@ return {
 	font_size = 14,
 	font = wezterm.font("JetBrainsMonoNerdFont"),
 	warn_about_missing_glyphs = false,
-	window_background_opacity = 0.95,
+	window_background_opacity = 1,
 	window_decorations = "NONE",
 	enable_tab_bar = false,
 	scrollback_lines = 100000,
@@ -16,10 +16,10 @@ return {
 	exit_behavior = "Close",
 
 	window_padding = {
-		left = 0,
-		right = 0,
-		top = 0,
-		bottom = 0,
+		left = 10,
+		right = 10,
+		top = 10,
+		bottom = 10,
 	},
 
 	-- Keybindings:
