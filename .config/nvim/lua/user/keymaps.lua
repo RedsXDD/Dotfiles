@@ -182,17 +182,18 @@ pum_map({
 		local has_fuzzy = vim.tbl_contains(complete_opts, "fuzzy")
 
 		local has_cmp, _ = pcall(require, "cmp")
-		if has_cmp or not has_longest then
+		local has_mini, _ = pcall(require, "mini.completion")
+
+		if has_cmp then
 			return "<C-n>"
+		elseif has_mini then
+			action = [[\<lt>C-n>\<lt>C-n>\<lt>C-p>]]
 		elseif has_longest and has_fuzzy then
 			action = [[\<lt>C-n>\<lt>C-p>]]
 		elseif has_longest then
 			action = [[\<lt>C-n>]]
-		end
-
-		local has_mini, _ = pcall(require, "mini.completion")
-		if has_mini then
-			action = [[\<lt>C-n>\<lt>C-n>\<lt>C-p>]]
+		else
+			return "<C-n>"
 		end
 
 		return [[<C-n><C-r>=pumvisible()]] .. " ? " .. '"' .. action .. '"' .. " : " .. [[""<CR>]]
