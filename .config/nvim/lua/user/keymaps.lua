@@ -154,6 +154,11 @@ pum_map({
 	normal = "<C-c>",
 	pum = "<C-e>",
 }, "Cancel completion menu with Ctrl-c.")
+pum_map({
+	key = "<C-p>",
+	pum = "<C-p>",
+	normal = "<C-x><C-o>",
+}, "Open omni completion menu with Ctrl-p.")
 
 --[[
 	This keymap auto selects the first item of the complete menu when Ctrl-n is pressed.
