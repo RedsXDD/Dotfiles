@@ -39,8 +39,15 @@ local pum_map = function(actions, desc)
 		actions.key = actions.normal
 	end
 
+	local normal_action = ""
+	if type(actions.normal) == "function" then
+		normal_action = actions.normal()
+	else
+		normal_action = actions.normal
+	end
+
 	vim.keymap.set("i", actions.key, function()
-		return vim.fn.pumvisible() ~= 0 and actions.pum or actions.normal
+		return vim.fn.pumvisible() ~= 0 and actions.pum or normal_action
 	end, { noremap = true, silent = true, expr = true, desc = "" .. desc })
 end
 
@@ -179,9 +186,15 @@ if vim.tbl_contains(complete_opts, "longest") then
 	pum_map({
 		key = "<C-n>",
 		pum = "<C-n>",
-		normal = [[<C-n><C-r>=pumvisible()]] .. " ? " .. action .. " : " .. [[""<CR>]],
-	}, "Auto open & select first item on completion menu.")
+		normal = function()
+			local has_mini, _ = pcall(require, "mini.completion")
+			if has_mini then
+				action = [["\<lt>C-n>\<lt>C-n>\<lt>C-p>"]]
+			end
 
+			return [[<C-n><C-r>=pumvisible()]] .. " ? " .. action .. " : " .. [[""<CR>]]
+		end,
+	}, "Auto open & select first item on completion menu.")
 end
 --: }}}
 --: Split management {{{
