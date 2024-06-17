@@ -7,7 +7,7 @@ theme_tags="${XDG_CONFIG_HOME:-$HOME/.config}/rofi/themes/launchers/type-2/style
 theme_sort="${XDG_CONFIG_HOME:-$HOME/.config}/rofi/themes/launchers/type-2/style-1.rasi"
 
 # Setup output directory:
-walls_dir="$HOME/Pictures/wallpapers/all"
+walls_dir="$HOME/Pictures/wallpapers/wallhaven"
 [ ! -d "$walls_dir" ] && mkdir -p "$walls_dir"
 
 rofi_tags(){
