@@ -39,15 +39,8 @@ local pum_map = function(actions, desc)
 		actions.key = actions.normal
 	end
 
-	local normal_action = ""
-	if type(actions.normal) == "function" then
-		normal_action = actions.normal()
-	else
-		normal_action = actions.normal
-	end
-
 	vim.keymap.set("i", actions.key, function()
-		return vim.fn.pumvisible() ~= 0 and actions.pum or normal_action
+		return vim.fn.pumvisible() ~= 0 and actions.pum or actions.normal
 	end, { noremap = true, silent = true, expr = true, desc = "" .. desc })
 end
 
@@ -172,32 +165,34 @@ pum_map({
 	NOTE: This keymap is only set when the option `completeopt` has the option `longest` on it,
 	as that option changes the behaviour of the complete menu so that it no longer auto selects the first item in the completion list.
 ]]
+local ctrn_n_action = function()
+	local action = ""
+	local complete_opts = vim.opt.completeopt:get()
+	local has_longest = vim.tbl_contains(complete_opts, "longest")
+	local has_fuzzy = vim.tbl_contains(complete_opts, "fuzzy")
+
+	local has_cmp, _ = pcall(require, "cmp")
+	local has_mini, _ = pcall(require, "mini.completion")
+
+	if has_cmp then
+		return "<C-n>"
+	elseif has_mini then
+		action = [[\<lt>C-n>\<lt>C-n>\<lt>C-p>]]
+	elseif has_longest and has_fuzzy then
+		action = [[\<lt>C-n>\<lt>C-p>]]
+	elseif has_longest then
+		action = [[\<lt>C-n>]]
+	else
+		return "<C-n>"
+	end
+
+	return [[<C-n><C-r>=pumvisible()]] .. " ? " .. '"' .. action .. '"' .. " : " .. [[""<CR>]]
+end
+
 pum_map({
 	key = "<C-n>",
 	pum = "<C-n>",
-	normal = function()
-		local action = ""
-		local complete_opts = vim.opt.completeopt:get()
-		local has_longest = vim.tbl_contains(complete_opts, "longest")
-		local has_fuzzy = vim.tbl_contains(complete_opts, "fuzzy")
-
-		local has_cmp, _ = pcall(require, "cmp")
-		local has_mini, _ = pcall(require, "mini.completion")
-
-		if has_cmp then
-			return "<C-n>"
-		elseif has_mini then
-			action = [[\<lt>C-n>\<lt>C-n>\<lt>C-p>]]
-		elseif has_longest and has_fuzzy then
-			action = [[\<lt>C-n>\<lt>C-p>]]
-		elseif has_longest then
-			action = [[\<lt>C-n>]]
-		else
-			return "<C-n>"
-		end
-
-		return [[<C-n><C-r>=pumvisible()]] .. " ? " .. '"' .. action .. '"' .. " : " .. [[""<CR>]]
-	end,
+	normal = ctrn_n_action(),
 }, "Auto open & select first item on completion menu.")
 --: }}}
 --: Split management {{{
