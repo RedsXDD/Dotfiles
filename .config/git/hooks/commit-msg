@@ -1,0 +1,129 @@
+#!/usr/bin/env sh
+
+COMMIT_FILE="$1"
+COMMIT_SUBJECT="$(head -n1 "$COMMIT_FILE")"
+COMMIT_BODY="$(tail -n+2 "$COMMIT_FILE" | sed '/^#/d')"
+
+VALID_QUOTES="'"'"''`'
+VALID_COMMIT_TYPES='build chore ci docs feat fix perf refactor revert style test'
+VALID_COMMIT_TYPES="$(echo "$VALID_COMMIT_TYPES" | sed 's/ /\\|/g')"
+
+ERROR_COUNT=0
+echoerr() {
+	ERROR_COUNT="$((ERROR_COUNT + 1))"
+
+	message="$1"
+	if [ -z "$DISPLAY" ]; then
+		error_char='ERROR:'
+	else
+		error_char='󱎘'
+	fi
+
+	echo "$(tput setaf 1 bold)${error_char} $(tput sgr0)${message}"
+}
+
+committing_guide() {
+	cat <<-EOF
+		Make sure your commit message follows the following commit rules:
+
+		1- Limit the subject line to 50 characters.
+		2- Separate subject from the body with a blank line (done automatically).
+		3- Do not capitalize any letter from subject line.
+		4- Do not end the subject line with a period.
+		5- Use the imperative mood in the subject line.
+		6- Wrap the body at 72 characters (done automatically).
+		7- Use the body to explain what and why vs. how.
+		8- The commit message should obey the following commit structure:
+
+		type(scope?): subject
+
+		<body>?
+
+		scope is optional; Currently supported scope delimiters are: "/", "\" and ","
+
+		Here are the supported commit types:
+		- build    -> Build system or external dependencies changes.
+		- chore    -> Maintenance changes.
+		- ci       -> CI configurations and script changes.
+		- docs     -> Documentation changes.
+		- feat     -> Addition of a new feature.
+		- fix      -> Bug fix.
+		- perf     -> Performance improvements.
+		- refactor -> Neither fixes a bug or adds a feature.
+		- revert   -> Reverts a previous commit.
+		- style    -> Formatting, missing semi colons, etc.
+		- test     -> Adding missing tests.
+	EOF
+}
+
+# Lint commit subject.
+
+COMMIT_SUBJECT_LENGHT="$(head -n1 "$COMMIT_FILE")"
+if [ "${#COMMIT_SUBJECT_LENGHT}" -eq 0 ]; then
+	echoerr 'subject cannot be empty'
+	exit 1
+elif [ "${#COMMIT_SUBJECT_LENGHT}" -gt 50 ]; then
+	echoerr 'subject cannot be longer than 50 characters.'
+fi
+
+if echo "$COMMIT_SUBJECT" | grep -q '[A-Z]'; then
+	echoerr 'subject cannot have upper case characters.'
+fi
+
+if echo "$COMMIT_SUBJECT" | grep -q '\.$'; then
+	echoerr 'subject cannot end with a period.'
+fi
+
+if echo "$COMMIT_SUBJECT" | grep -q "[^[:alnum:]${VALID_QUOTES}]$"; then
+	echoerr 'subject cannot end with a non-alphanumeric character.'
+fi
+
+if ! echo "$COMMIT_SUBJECT" | grep -q "^\(${VALID_COMMIT_TYPES}\):.*\|^\(${VALID_COMMIT_TYPES}\)(.*):.*"; then
+	echoerr 'invalid commit type.'
+fi
+
+if echo "$COMMIT_SUBJECT" | grep -q "^\(${VALID_COMMIT_TYPES}\)([^)]*:.*"; then
+	echoerr 'scope was never closed.'
+fi
+
+if echo "$COMMIT_SUBJECT" | grep -q "^\(${VALID_COMMIT_TYPES}\)():.*"; then
+	echoerr 'scope cannot be empty.'
+fi
+
+if echo "$COMMIT_SUBJECT" | grep -q "^\(${VALID_COMMIT_TYPES}\)([,\/].*):.*"; then
+	echoerr 'scope cannot begin with a delimiter.'
+fi
+
+if echo "$COMMIT_SUBJECT" | grep -q "^\(${VALID_COMMIT_TYPES}\)(.*[,\/]):.*"; then
+	echoerr 'scope cannot end with a delimiter.'
+fi
+
+if echo "$COMMIT_SUBJECT" | grep -q "^\(${VALID_COMMIT_TYPES}\)(.*\.):.*"; then
+	echoerr 'scope cannot end with a period.'
+fi
+
+if echo "$COMMIT_SUBJECT" | grep -q "^\(${VALID_COMMIT_TYPES}\)(.*[^[:alnum:],\/]\+.*):.*"; then
+	echoerr 'scope contains invalid non-alphanumeric characters.'
+fi
+
+if [ "$ERROR_COUNT" -gt 0 ]; then
+	echo ''
+	echo "Found ${ERROR_COUNT} errors with your commit message."
+	committing_guide
+	exit 1
+fi
+
+# Format body of commit message.
+
+tmp_commit_file="$(mktemp)"
+trap 'rm -rf "${tmp_commit_file}"' 0 1 15
+
+echo "$COMMIT_SUBJECT" >"$tmp_commit_file"
+if [ -n "$(head -n2 "$COMMIT_FILE" | tail -n1)" ]; then
+	echo '' >>"$tmp_commit_file"
+fi
+echo "$COMMIT_BODY" | fold --spaces --width=72 >>"$tmp_commit_file"
+
+cat "$tmp_commit_file" >"$COMMIT_FILE"
+
+# vim:fileencoding=utf-8:foldmethod=marker
