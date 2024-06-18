@@ -10,8 +10,6 @@ return {
 			table.insert(M, keymap_table)
 		end
 
-		map_map("<Leader>mo", function() map.open()         end, "Open MiniMap.")
-		map_map("<Leader>mc", function() map.close()        end, "Close MiniMap.")
 		map_map("<Leader>mf", function() map.toggle_focus() end, "Focus on MiniMap.")
 		map_map("<Leader>ms", function() map.toggle_side()  end, "Toggle MiniMap's display side.")
 		map_map("<Leader>mr", function() map.refresh()      end, "Refresh MiniMap.")
