@@ -4,7 +4,7 @@ return {
 	cmd = "ConformInfo",
 	keys = {
 		{
-			"<leader>lf",
+			"<Leader>lf",
 			function()
 				require("conform").format()
 			end,
