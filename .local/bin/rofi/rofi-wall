@@ -5,25 +5,25 @@
 killall rofi >/dev/null 2>&1
 
 # Import current theme:
-theme="${XDG_CONFIG_HOME:-$HOME/.config}/rofi/themes/launchers/type-6/style-1.rasi"
+THEME="${XDG_CONFIG_HOME:-$HOME/.config}/rofi/themes/launchers/type-6/style-1.rasi"
 
-wallpapers_dir="${1:-$HOME/Pictures/wallpapers/anime}"
+WALLPAPERS_DIRECTORY="${1:-$HOME/Pictures/wallpapers/anime}"
 rofi_cmd(){
-	[ "$(awk '/fullscreen:/ {print $2}' "$theme")" != 'true;' ] && border_setup='window { border: 0px solid; border-color: @border-colour; }'
+	[ "$(awk '/fullscreen:/ {print $2}' "$THEME")" != 'true;' ] && border_setup='window { border: 0px solid; border-color: @border-colour; }'
 
 	# Use find to search for files in the specified directory ($wallpapers_dir) with a maximum depth of 1 (i.e., only in the specified directory, not subdirectories), and of type 'f' (regular files).
-	find "$wallpapers_dir" -maxdepth 1 -type f |
+	find "$WALLPAPERS_DIRECTORY" -maxdepth 1 -type f |
 
 	# Use awk to process each line of output from find.
 	# Set the 'dir' variable in awk to the value of $wallpapers_dir.
-	awk -v dir="$wallpapers_dir" '
+	awk -v dir="$WALLPAPERS_DIRECTORY" '
 	    # Match lines that end with one of the specified file extensions.
 	    /.*\.(jpeg|jpg|png|gif|pnm|tga|tiff|webp|bmp|farbfelp|mp4|mov|wmv|flv|avi|webm|mkv)$/ {
 	        gsub(/ /, "\\ ");                      # Replace spaces with escaped spaces in the filename.
 	        file=substr($0, length(dir)+2);        # Extract the filename portion by taking a substring starting from the length of the directory path plus 2 (to skip the directory separator).
 	        print file "\000icon\037" dir "/" file # Print the filename followed by the desired separator characters and the directory path.
 	    }' | rofi -i -dmenu \
-			-theme "$theme" \
+			-theme "$THEME" \
 			-theme-str "configuration { show-icons: true; }
 							$border_setup
 							button selected         { text-color: @background; }
@@ -41,7 +41,7 @@ rofi_cmd(){
 			-p "󰸉 "
 }
 choosen_wallpaper="$(rofi_cmd)"
-[ -n "$choosen_wallpaper" ] && waybg "${wallpapers_dir}/${choosen_wallpaper}"
+[ -n "$choosen_wallpaper" ] && waybg "${WALLPAPERS_DIRECTORY}/${choosen_wallpaper}"
 
 if which waybg_postrun 2>/dev/null; then
 	[ -n "$choosen_wallpaper" ] && waybg_postrun

@@ -3,47 +3,47 @@
 killall rofi >/dev/null 2>&1
 
 # Import current theme:
-theme="${XDG_CONFIG_HOME:-$HOME/.config}/rofi/themes/launchers/type-2/style-1.rasi"
-result_theme="${XDG_CONFIG_HOME:-$HOME/.config}/rofi/themes/launchers/type-2/style-1.rasi"
+THEME="${XDG_CONFIG_HOME:-$HOME/.config}/rofi/themes/launchers/type-2/style-1.rasi"
+RESULT_THEME="${XDG_CONFIG_HOME:-$HOME/.config}/rofi/themes/launchers/type-2/style-1.rasi"
 
 # Setup cache file:
-rofibc_cache="${XDG_CACHE_HOME:-$HOME/.cache}/rofi/rofibc"
-[ ! -d "$(dirname "$rofibc_cache")" ] && mkdir -p "$(dirname "$rofibc_cache")"
-[ ! -f "$rofibc_cache" ] && touch "$rofibc_cache"
+ROFIBC_CACHE_FILE="${XDG_CACHE_HOME:-$HOME/.cache}/rofi/rofibc"
+[ ! -d "$(dirname "$ROFIBC_CACHE_FILE")" ] && mkdir -p "$(dirname "$ROFIBC_CACHE_FILE")"
+[ ! -f "$ROFIBC_CACHE_FILE" ] && touch "$ROFIBC_CACHE_FILE"
 
-calc_err_msg='Failed to calculate'
-opt_1='󰆏 Copy result to clipboard'
-opt_2='󰃬 Calculate again'
-opt_3='󰅖 Close'
+ERROR_MESSAGE='Failed to calculate'
+OPTION_COPY_TO_CLIPBOARD='󰆏 Copy result to clipboard'
+OPTION_CALCULATE_AGAIN='󰃬 Calculate again'
+OPTION_CLOSE='󰅖 Close'
 
 run_rofi(){
-	[ "$(awk '/fullscreen:/ {print $2}' "$theme")" != 'true;' ] && border_setup='window { border: 0px solid; border-color: @border-colour; }'
+	[ "$(awk '/fullscreen:/ {print $2}' "$THEME")" != 'true;' ] && border_setup='window { border: 0px solid; border-color: @border-colour; }'
 
 	rofi -i -dmenu \
-		-theme "$theme" \
+		-theme "$THEME" \
 		-theme-str "configuration { show-icons: false; }
 				entry { placeholder: \"Calculate\"; }
 				$border_setup" \
-		-p '󰃬 ' < "$rofibc_cache"
+		-p '󰃬 ' < "$ROFIBC_CACHE_FILE"
 	unset border_setup
 }
 
 run_options(){
-	[ "$(awk '/fullscreen:/ {print $2}' "$result_theme")" != 'true;' ] && border_setup='window { border: 0px solid; border-color: @border-colour; }'
+	[ "$(awk '/fullscreen:/ {print $2}' "$RESULT_THEME")" != 'true;' ] && border_setup='window { border: 0px solid; border-color: @border-colour; }'
 
-	if [ "$result" = "$calc_err_msg" ]; then
+	if [ "$result" = "$ERROR_MESSAGE" ]; then
 		height='13.3%'
 		result_str='!>'
-		rofi_opts(){ printf '%s\n' "$opt_2" "$opt_3" ; }
+		rofi_opts(){ printf '%s\n' "$OPTION_CALCULATE_AGAIN" "$OPTION_CLOSE" ; }
 	else
 		height='17.41%'
 		result_str='='
-		rofi_opts(){ printf '%s\n' "$opt_1" "$opt_2" "$opt_3" ; }
+		rofi_opts(){ printf '%s\n' "$OPTION_COPY_TO_CLIPBOARD" "$OPTION_CALCULATE_AGAIN" "$OPTION_CLOSE" ; }
 	fi
 
 	rofi_opts |
 		rofi -i -dmenu \
-			-theme "$result_theme" \
+			-theme "$RESULT_THEME" \
 			-theme-str "configuration { show-icons: false; }
 					entry { placeholder: \"$result\"; }
 					window { height: $height; }
@@ -56,9 +56,9 @@ main(){
 	formula="$(run_rofi)"
 	[ -z "$formula" ] && exit 1
 
-	if ! grep -qF "$formula" "$rofibc_cache"; then
+	if ! grep -qF "$formula" "$ROFIBC_CACHE_FILE"; then
 		result="$(echo "$formula" | bc -l 2>/dev/null)"
-		[ -n "$result" ] && echo "$formula = $result" >> "$rofibc_cache" || result="$calc_err_msg"
+		[ -n "$result" ] && echo "$formula = $result" >> "$ROFIBC_CACHE_FILE" || result="$ERROR_MESSAGE"
 		choosen_option="$(run_options)"
 	else
 		result="${formula##* }"
@@ -66,8 +66,8 @@ main(){
 	fi
 
 	case "$choosen_option" in
-		"$opt_1") wl-copy "$result" && notify-send -t 2000 'Copied Result' "Successfully copied the result of \"${formula%% *}\" to the clipboard" ;;
-		"$opt_2") main; exit ;;
+		"$OPTION_COPY_TO_CLIPBOARD") wl-copy "$result" && notify-send -t 2000 'Copied Result' "Successfully copied the result of \"${formula%% *}\" to the clipboard" ;;
+		"$OPTION_CALCULATE_AGAIN") main; exit ;;
 		*) exit 1 ;;
 	esac
 }

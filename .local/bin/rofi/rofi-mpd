@@ -3,11 +3,11 @@
 killall rofi >/dev/null 2>&1
 
 # Import current theme:
-theme="${XDG_CONFIG_HOME:-$HOME/.config}/rofi/themes/applets/type-4/style-2.rasi"
+THEME="${XDG_CONFIG_HOME:-$HOME/.config}/rofi/themes/applets/type-4/style-2.rasi"
 
 # Set default appearence:
-list_col="$(grep 'list_col' "$theme" | cut -d'=' -f2)"
-list_row="$(grep 'list_row' "$theme" | cut -d'=' -f2)"
+list_col="$(grep 'list_col' "$THEME" | cut -d'=' -f2)"
+list_row="$(grep 'list_row' "$THEME" | cut -d'=' -f2)"
 
 # Theme Elements:
 status="$(mpc status)"
@@ -21,50 +21,50 @@ else
 fi
 
 # Options
-if [ "$(grep 'USE_ICON' "$theme" | cut -d'=' -f2)" = 'NO' ]; then
+if [ "$(grep 'USE_ICON' "$THEME" | cut -d'=' -f2)" = 'NO' ]; then
 	case "$status" in
-		*'[playing]'*) opt_1='󰏤 Pause' ;;
-		*'[paused]'*)  opt_1='󰐊 Play' ;;
-		*) opt_1='󰐊 Play' ;;
+		*'[playing]'*) OPTION_PAUSE='󰏤 Pause' ;;
+		*'[paused]'*)  OPTION_PAUSE='󰐊 Play' ;;
+		*) OPTION_PAUSE='󰐊 Play' ;;
 	esac
-	opt_2='󰓛 Stop'
-	opt_3='󰒮 Previous'
-	opt_4='󰒭 Next'
-	opt_5=' Repeat'
-	opt_6='󰒝 Random'
+	OPTION_STOP='󰓛 Stop'
+	OPTION_PREVIOUS='󰒮 Previous'
+	OPTION_NEXT='󰒭 Next'
+	OPTION_REPEAT=' Repeat'
+	OPTION_RANDOM='󰒝 Random'
 else
 	case "$status" in
-		*'[playing]'*) opt_1='󰏤' ;;
-		*'[paused]'*)  opt_1='󰐊' ;;
-		*) opt_1='󰐊' ;;
+		*'[playing]'*) OPTION_PAUSE='󰏤' ;;
+		*'[paused]'*)  OPTION_PAUSE='󰐊' ;;
+		*) OPTION_PAUSE='󰐊' ;;
 	esac
-	opt_2='󰓛'
-	opt_3='󰒮'
-	opt_4='󰒭'
-	opt_5=''
-	opt_6='󰒝'
+	OPTION_STOP='󰓛'
+	OPTION_PREVIOUS='󰒮'
+	OPTION_NEXT='󰒭'
+	OPTION_REPEAT=''
+	OPTION_RANDOM='󰒝'
 fi
 
 # Repeat:
 case "$status" in
 	*'single: on'*)  [ -n "$active" ] && active="$active,4" || active='-a 4' ;;
 	*'single: off'*) [ -n "$urgent" ] && urgent="$urgent,4" || urgent='-u 4' ;;
-	*) opt_5='󱈸 Parsing Error' ;;
+	*) OPTION_REPEAT='󱈸 Parsing Error' ;;
 esac
 
 # Random:
 case "$status" in
 	*'random: on'*)  [ -n "$active" ] && active="$active,5" || active='-a 5' ;;
 	*'random: off'*) [ -n "$urgent" ] && urgent="$urgent,5" || urgent='-u 5' ;;
-	*) opt_6='󱈸 Parsing Error' ;;
+	*) OPTION_RANDOM='󱈸 Parsing Error' ;;
 esac
 
 # Pass variables to rofi dmenu
 run_rofi(){
-	[ "$(awk '/fullscreen:/ {print $2}' "$theme")" != 'true;' ] && border_setup='window { border: 0px solid; border-color: @border-colour; }'
+	[ "$(awk '/fullscreen:/ {print $2}' "$THEME")" != 'true;' ] && border_setup='window { border: 0px solid; border-color: @border-colour; }'
 
 	# shellcheck disable=SC2086
-	printf '%s\n' "$opt_1" "$opt_2" "$opt_3" "$opt_4" "$opt_5" "$opt_6" |
+	printf '%s\n' "$OPTION_PAUSE" "$OPTION_STOP" "$OPTION_PREVIOUS" "$OPTION_NEXT" "$OPTION_REPEAT" "$OPTION_RANDOM" |
 		rofi -i -dmenu \
 			-theme-str "$border_setup
 					listview { columns: $list_col; lines: $list_row; }
@@ -84,16 +84,16 @@ run_rofi(){
 			-mesg "$mesg" \
 			${active} ${urgent} \
 			-markup-rows \
-			-theme "$theme"
+			-theme "$THEME"
 }
 
 # Actions
 case "$(run_rofi)" in
-	"$opt_1") mpc -q toggle && notify-send -u low -t 2000 "󰝚  $(mpc current)" ;;
-	"$opt_2") mpc -q stop   && notify-send -u low -t 2000 '󰝚  Stopped Music' ;;
-	"$opt_3") mpc -q prev   && notify-send -u low -t 2000 "󰝚  $(mpc current)" ;;
-	"$opt_4") mpc -q next   && notify-send -u low -t 2000 "󰝚  $(mpc current)" ;;
-	"$opt_5") mpc -q single && notify-send -u low -t 2000 '󰝚  Single mode toggled' ;;
-    	"$opt_6") mpc -q random && notify-send -u low -t 2000 '󰝚  Random mode toggled' ;;
+	"$OPTION_PAUSE") mpc -q toggle && notify-send -u low -t 2000 "󰝚  $(mpc current)" ;;
+	"$OPTION_STOP") mpc -q stop   && notify-send -u low -t 2000 '󰝚  Stopped Music' ;;
+	"$OPTION_PREVIOUS") mpc -q prev   && notify-send -u low -t 2000 "󰝚  $(mpc current)" ;;
+	"$OPTION_NEXT") mpc -q next   && notify-send -u low -t 2000 "󰝚  $(mpc current)" ;;
+	"$OPTION_REPEAT") mpc -q single && notify-send -u low -t 2000 '󰝚  Single mode toggled' ;;
+    	"$OPTION_RANDOM") mpc -q random && notify-send -u low -t 2000 '󰝚  Random mode toggled' ;;
 	*) exit 1 ;;
 esac

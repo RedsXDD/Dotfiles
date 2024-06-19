@@ -3,19 +3,19 @@
 killall rofi >/dev/null 2>&1
 
 # Import current theme:
-theme_tags="${XDG_CONFIG_HOME:-$HOME/.config}/rofi/themes/launchers/type-2/style-1.rasi"
-theme_sort="${XDG_CONFIG_HOME:-$HOME/.config}/rofi/themes/launchers/type-2/style-1.rasi"
+TAGS_THEME="${XDG_CONFIG_HOME:-$HOME/.config}/rofi/themes/launchers/type-2/style-1.rasi"
+SORT_THEME="${XDG_CONFIG_HOME:-$HOME/.config}/rofi/themes/launchers/type-2/style-1.rasi"
 
 # Setup output directory:
-walls_dir="$HOME/Pictures/wallpapers/wallhaven"
-[ ! -d "$walls_dir" ] && mkdir -p "$walls_dir"
+WALLPAPERS_DIRECTORY="$HOME/Pictures/wallpapers/wallhaven"
+[ ! -d "$WALLPAPERS_DIRECTORY" ] && mkdir -p "$WALLPAPERS_DIRECTORY"
 
 rofi_tags(){
-	[ "$(awk '/fullscreen:/ {print $2}' "$theme_tags")" != 'true;' ] && border_setup='window { border: 0px solid; border-color: @border-colour; }'
+	[ "$(awk '/fullscreen:/ {print $2}' "$TAGS_THEME")" != 'true;' ] && border_setup='window { border: 0px solid; border-color: @border-colour; }'
 
 	printf '%s\n' '4k' 'Cyberpunk 2077' 'Japan' 'abstract' 'anime' 'code' 'dark fantasy' 'digital art' 'fantasy girl' 'futuristic' 'minimalism' 'nature' 'pixel art' 'programming' 'sunset' |
 		rofi -i -dmenu \
-			-theme "$theme_tags" \
+			-theme "$TAGS_THEME" \
 			-theme-str "configuration { show-icons: false; }
 					$border_setup
 					entry { placeholder: \"Select Tag ...\"; }" \
@@ -24,11 +24,11 @@ rofi_tags(){
 }
 
 rofi_sort(){
-	[ "$(awk '/fullscreen:/ {print $2}' "$theme_sort")" != 'true;' ] && border_setup='window { border: 0px solid; border-color: @border-colour; }'
+	[ "$(awk '/fullscreen:/ {print $2}' "$SORT_THEME")" != 'true;' ] && border_setup='window { border: 0px solid; border-color: @border-colour; }'
 
 	printf '%s\n' 'Date_added' 'Relevance' 'Random' 'Views' 'Favorites' 'Toplist' |
 		rofi -i -dmenu \
-			-theme "$theme_sort" \
+			-theme "$SORT_THEME" \
 			-theme-str "configuration { show-icons: false; }
 					$border_setup
 					entry { placeholder: \"Select Tag ...\"; }" \
@@ -46,7 +46,7 @@ if [ -n "$sorting" ]; then
 	maxpage='5'
 	while [ ! "$i" -gt "$maxpage" ]
 	do
-		curl -s https://wallhaven.cc/api/v1/search\?atleast=1920x1080\&sorting="$sorting"\&q="$query"\&page="$i" | jq '.' | grep -Eoh 'https://w\.wallhaven.cc/full/.*(jpg|png)\b' | xargs -ro -I {} wget -nc -P "$walls_dir" "{}"
+		curl -s https://wallhaven.cc/api/v1/search\?atleast=1920x1080\&sorting="$sorting"\&q="$query"\&page="$i" | jq '.' | grep -Eoh 'https://w\.wallhaven.cc/full/.*(jpg|png)\b' | xargs -ro -I {} wget -nc -P "$WALLPAPERS_DIRECTORY" "{}"
 		i="$((i + 1))"
 	done
 	notify-send '✅ Download Finished!'

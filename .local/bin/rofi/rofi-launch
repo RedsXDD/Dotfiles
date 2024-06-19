@@ -4,12 +4,12 @@ show="${1:-drun}"
 killall rofi >/dev/null 2>&1
 
 # Import current theme:
-theme="${XDG_CONFIG_HOME:-$HOME/.config}/rofi/themes/launchers/type-7/style-2.rasi"
+THEME="${XDG_CONFIG_HOME:-$HOME/.config}/rofi/themes/launchers/type-7/style-2.rasi"
 
 # Random theme cuz why not?
-# theme="$(find "${XDG_CONFIG_HOME:-$HOME/.config}/rofi/themes/launchers" -maxdepth 2 -type f -regextype posix-extended -regex '.*\.rasi' | shuf -n1)"
+# THEME="$(find "${XDG_CONFIG_HOME:-$HOME/.config}/rofi/themes/launchers" -maxdepth 2 -type f -regextype posix-extended -regex '.*\.rasi' | shuf -n1)"
 
-if [ "$(grep 'USE_ICON' "$theme" | cut -d'=' -f2)" = 'YES' ]; then
+if [ "$(grep 'USE_ICON' "$THEME" | cut -d'=' -f2)" = 'YES' ]; then
 	combi_icon=' '
 	drun_icon=' '
 	emoji_icon='󰱫 '
@@ -21,7 +21,7 @@ if [ "$(grep 'USE_ICON' "$theme" | cut -d'=' -f2)" = 'YES' ]; then
 	ssh_icon=' '
 	window_icon=' '
 	button_setup='button { width: 50px; padding: 8px 8px 8px 9px; }'
-elif [ "$(grep 'USE_TEXT' "$theme" | cut -d'=' -f2)" = 'YES' ]; then
+elif [ "$(grep 'USE_TEXT' "$THEME" | cut -d'=' -f2)" = 'YES' ]; then
 	combi_icon='Combi'
 	drun_icon='Apps'
 	emoji_icon='Emoji'
@@ -45,10 +45,10 @@ else
 	window_icon=' Windows'
 fi
 
-[ "$(awk '/fullscreen:/ {print $2}' "$theme")" != 'true;' ] && border_setup='window { border: 0px solid; border-color: @border-colour; }'
+[ "$(awk '/fullscreen:/ {print $2}' "$THEME")" != 'true;' ] && border_setup='window { border: 0px solid; border-color: @border-colour; }'
 
 rofi -i -show "$show" \
-	-theme "$theme" \
+	-theme "$THEME" \
 	-theme-str "$border_setup
 			$button_setup
 			button selected         { text-color: @background; }

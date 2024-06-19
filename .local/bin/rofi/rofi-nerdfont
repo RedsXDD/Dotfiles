@@ -3,16 +3,16 @@
 killall rofi >/dev/null 2>&1
 
 # Import current theme:
-theme="${XDG_CONFIG_HOME:-$HOME/.config}/rofi/themes/launchers/type-7/style-1.rasi"
+THEME="${XDG_CONFIG_HOME:-$HOME/.config}/rofi/themes/launchers/type-7/style-1.rasi"
 
 # Cheatsheet file (by groovykiwi at https://github.com/groovykiwi/rofi-nerdfont):
-nerdfont_cheatsheet="${XDG_CONFIG_HOME:-$HOME/.config}/rofi/misc_files/nerdfont_cheatsheet.txt"
+NERDFONT_CHEATSHEET_FILE="${XDG_CONFIG_HOME:-$HOME/.config}/rofi/misc_files/nerdfont_cheatsheet.txt"
 
 run_rofi(){
-	[ "$(awk '/fullscreen:/ {print $2}' "$theme")" != 'true;' ] && border_setup='window { border: 0px solid; border-color: @border-colour; }'
+	[ "$(awk '/fullscreen:/ {print $2}' "$THEME")" != 'true;' ] && border_setup='window { border: 0px solid; border-color: @border-colour; }'
 
 	rofi -i -dmenu \
-		-theme "$theme" \
+		-theme "$THEME" \
 		-theme-str "configuration { show-icons: false; }
 				entry { placeholder: \"Select icon ...\"; }
 				button selected         { text-color: @background; }
@@ -22,7 +22,7 @@ run_rofi(){
 				element selected.urgent { text-color: @background; }
 				element selected.active { text-color: @background; }
 				$border_setup" \
-		-p ' ' < "$nerdfont_cheatsheet"
+		-p ' ' < "$NERDFONT_CHEATSHEET_FILE"
 }
 
 icon="$(run_rofi | cut -d' ' -f2)"

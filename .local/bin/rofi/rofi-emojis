@@ -3,20 +3,20 @@
 killall rofi >/dev/null 2>&1
 
 # Import current theme:
-theme="${XDG_CONFIG_HOME:-$HOME/.config}/rofi/themes/launchers/type-7/style-1.rasi"
+THEME="${XDG_CONFIG_HOME:-$HOME/.config}/rofi/themes/launchers/type-7/style-1.rasi"
 
-if [ "$(grep 'USE_ICON' "$theme" | cut -d'=' -f2)" = 'YES' ]; then
+if [ "$(grep 'USE_ICON' "$THEME" | cut -d'=' -f2)" = 'YES' ]; then
 	emoji_icon='😎'
-elif [ "$(grep 'USE_TEXT' "$theme" | cut -d'=' -f2)" = 'YES' ]; then
+elif [ "$(grep 'USE_TEXT' "$THEME" | cut -d'=' -f2)" = 'YES' ]; then
 	emoji_icon='Emoji'
 else
 	emoji_icon='😎 Emoji'
 fi
 
-[ "$(awk '/fullscreen:/ {print $2}' "$theme")" != 'true;' ] && border_setup='window { border: 0px solid; border-color: @border-colour; }'
+[ "$(awk '/fullscreen:/ {print $2}' "$THEME")" != 'true;' ] && border_setup='window { border: 0px solid; border-color: @border-colour; }'
 
 rofi -i -modi emoji -show emoji \
-	-theme "$theme" \
+	-theme "$THEME" \
 	-theme-str "configuration { display-emoji: \"$emoji_icon\"; }
 			button { padding: 0px; }
 			button selected         { text-color: @background; }

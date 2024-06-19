@@ -3,11 +3,11 @@
 killall rofi >/dev/null 2>&1
 
 # Import current theme:
-theme="${XDG_CONFIG_HOME:-$HOME/.config}/rofi/themes/powermenu/type-1/style-1.rasi"
-confirm_theme="${XDG_CONFIG_HOME:-$HOME/.config}/rofi/themes/powermenu/type-1/style-1.rasi"
+THEME="${XDG_CONFIG_HOME:-$HOME/.config}/rofi/themes/powermenu/type-1/style-1.rasi"
+CONFIRMATION_THEME="${XDG_CONFIG_HOME:-$HOME/.config}/rofi/themes/powermenu/type-1/style-1.rasi"
 
 # Random theme cuz why not?
-# theme="$(find "${XDG_CONFIG_HOME:-$HOME/.config}/rofi/themes/powermenu" -maxdepth 2 -type f -regextype posix-extended -regex '.*\.rasi' | shuf -n1)"
+# THEME="$(find "${XDG_CONFIG_HOME:-$HOME/.config}/rofi/themes/powermenu" -maxdepth 2 -type f -regextype posix-extended -regex '.*\.rasi' | shuf -n1)"
 
 # Setup main ctl function based on init system:
 case "$(readlink -f /sbin/init)" in
@@ -20,7 +20,7 @@ prompt="Goodbye $USER"
 uptime="$(uptime -p | sed 's/up //g')"
 
 # Options
-if [ "$(grep 'USE_BUTTONS' "$confirm_theme" | cut -d'=' -f2)" = 'YES' ]; then
+if [ "$(grep 'USE_BUTTONS' "$CONFIRMATION_THEME" | cut -d'=' -f2)" = 'YES' ]; then
 	yes='󰄬'
 	no='󰅖'
 else
@@ -28,7 +28,7 @@ else
 	no='󰅖 No'
 fi
 
-if [ "$(grep 'USE_BUTTONS' "$theme" | cut -d'=' -f2)" = 'YES' ]; then
+if [ "$(grep 'USE_BUTTONS' "$THEME" | cut -d'=' -f2)" = 'YES' ]; then
 	shutdown='󰐥'
 	reboot='󰜉'
 	suspend='󰤄'
@@ -46,7 +46,7 @@ fi
 
 # Pass variables to rofi dmenu
 run_rofi(){
-	[ "$(awk '/fullscreen:/ {print $2}' "$theme")" != 'true;' ] && border_setup='window { border: 0px solid; border-color: @border-colour; }'
+	[ "$(awk '/fullscreen:/ {print $2}' "$THEME")" != 'true;' ] && border_setup='window { border: 0px solid; border-color: @border-colour; }'
 
 	printf '%s\n' "$shutdown" "$reboot" "$suspend" "$hibernate" "$logout" "$lock" |
 		rofi -i -dmenu \
@@ -59,7 +59,7 @@ run_rofi(){
 				element selected.active { text-color: @background; }" \
 			-p "$prompt" \
 			-mesg "Uptime: $uptime" \
-			-theme "$theme"
+			-theme "$THEME"
 }
 
 # Ask for confirmation
@@ -80,7 +80,7 @@ confirm_exit(){
 				}" \
 			-p 'Confirmation' \
 			-mesg 'Are you Sure?' \
-			-theme "$confirm_theme"
+			-theme "$CONFIRMATION_THEME"
 }
 
 # Actions
