@@ -51,6 +51,19 @@ check(){
 	fi
 }
 
+not_check(){
+	CHECK_STR='' # Reset previous CHECK_STR.
+	ERROR_MESSAGE='' # Reset previous ERROR_MESSAGE.
+
+	CHECK_STR="$1"
+	ERROR_MESSAGE="$2"
+
+	if ! echo "$COMMIT_SUBJECT" | grep -q "${CHECK_STR}"; then
+		echoerr "$ERROR_MESSAGE"
+	fi
+}
+
+
 committing_guide() {
 	cat <<-EOF
 		Make sure your commit message follows the following commit rules:
@@ -102,11 +115,7 @@ fi
 check '[A-Z]' 'subject cannot have upper case characters.'
 check '\.$' 'subject cannot end with a period.'
 check "[^[:alnum:]${VALID_QUOTES}]$" 'subject cannot end with a non-alphanumeric character.'
-
-if ! echo "$COMMIT_SUBJECT" | grep -q "${VALID_COMMIT_TYPES}!\?:.*\|${VALID_COMMIT_TYPES}(.*)!\?:.*"; then
-	echoerr 'invalid commit type.'
-fi
-
+not_check "${VALID_COMMIT_TYPES}!\?:.*\|${VALID_COMMIT_TYPES}(.*)!\?:.*" 'invalid commit type.'
 check "${VALID_COMMIT_TYPES}([^)]*!\?:.*" 'scope was never closed.'
 check "${VALID_COMMIT_TYPES}()!\?:.*" 'scope cannot be empty.'
 check "${VALID_COMMIT_TYPES}([,\/].*)!\?:.*" 'scope cannot begin with a delimiter.'
