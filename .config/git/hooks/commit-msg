@@ -106,6 +106,10 @@ if echo "$COMMIT_SUBJECT" | grep -q "^\(${VALID_COMMIT_TYPES}\)(.*)[^!]\+:.*"; t
 	echoerr "'!' is the only valid character after scope."
 fi
 
+if echo "$COMMIT_SUBJECT" | grep -q "^\(${VALID_COMMIT_TYPES}\)(.*)!\?:[^ ].*"; then
+	echoerr "must add space after ':'."
+fi
+
 if [ "$ERROR_COUNT" -gt 0 ]; then
 	echo ''
 	echo "Found ${ERROR_COUNT} errors with your commit message."
