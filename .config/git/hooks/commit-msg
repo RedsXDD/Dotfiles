@@ -35,7 +35,7 @@ committing_guide() {
 		7- Use the body to explain what and why vs. how.
 		8- The commit message should obey the following commit structure:
 
-		type(scope?): subject
+		type(scope?)[optional "!"]: subject
 
 		<body>?
 
@@ -78,32 +78,36 @@ if echo "$COMMIT_SUBJECT" | grep -q "[^[:alnum:]${VALID_QUOTES}]$"; then
 	echoerr 'subject cannot end with a non-alphanumeric character.'
 fi
 
-if ! echo "$COMMIT_SUBJECT" | grep -q "^\(${VALID_COMMIT_TYPES}\):.*\|^\(${VALID_COMMIT_TYPES}\)(.*):.*"; then
+if ! echo "$COMMIT_SUBJECT" | grep -q "^\(${VALID_COMMIT_TYPES}\)!\?:.*\|^\(${VALID_COMMIT_TYPES}\)(.*)!\?:.*"; then
 	echoerr 'invalid commit type.'
 fi
 
-if echo "$COMMIT_SUBJECT" | grep -q "^\(${VALID_COMMIT_TYPES}\)([^)]*:.*"; then
+if echo "$COMMIT_SUBJECT" | grep -q "^\(${VALID_COMMIT_TYPES}\)([^)]*!\?:.*"; then
 	echoerr 'scope was never closed.'
 fi
 
-if echo "$COMMIT_SUBJECT" | grep -q "^\(${VALID_COMMIT_TYPES}\)():.*"; then
+if echo "$COMMIT_SUBJECT" | grep -q "^\(${VALID_COMMIT_TYPES}\)()!\?:.*"; then
 	echoerr 'scope cannot be empty.'
 fi
 
-if echo "$COMMIT_SUBJECT" | grep -q "^\(${VALID_COMMIT_TYPES}\)([,\/].*):.*"; then
+if echo "$COMMIT_SUBJECT" | grep -q "^\(${VALID_COMMIT_TYPES}\)([,\/].*)!\?:.*"; then
 	echoerr 'scope cannot begin with a delimiter.'
 fi
 
-if echo "$COMMIT_SUBJECT" | grep -q "^\(${VALID_COMMIT_TYPES}\)(.*[,\/]):.*"; then
+if echo "$COMMIT_SUBJECT" | grep -q "^\(${VALID_COMMIT_TYPES}\)(.*[,\/])!\?:.*"; then
 	echoerr 'scope cannot end with a delimiter.'
 fi
 
-if echo "$COMMIT_SUBJECT" | grep -q "^\(${VALID_COMMIT_TYPES}\)(.*\.):.*"; then
+if echo "$COMMIT_SUBJECT" | grep -q "^\(${VALID_COMMIT_TYPES}\)(.*\.)!\?:.*"; then
 	echoerr 'scope cannot end with a period.'
 fi
 
 if echo "$COMMIT_SUBJECT" | grep -q "^\(${VALID_COMMIT_TYPES}\)(.*[^[:alnum:],\/]\+.*):.*"; then
 	echoerr 'scope contains invalid non-alphanumeric characters.'
+fi
+
+if echo "$COMMIT_SUBJECT" | grep -q "^\(${VALID_COMMIT_TYPES}\)(.*)[^!]\+:.*"; then
+	echoerr "'!' is the only valid character after scope."
 fi
 
 if [ "$ERROR_COUNT" -gt 0 ]; then
