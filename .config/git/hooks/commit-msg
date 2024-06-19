@@ -14,7 +14,39 @@ format_commit() {
 	if [ "$ERROR_COUNT" -gt 0 ]; then
 		echo ''
 		echo "Found ${ERROR_COUNT} errors with your commit message."
-		committing_guide
+
+		cat <<-EOF
+			Make sure your commit message follows the following commit rules:
+
+			1- Limit the subject line to 50 characters.
+			2- Separate subject from the body with a blank line (done automatically).
+			3- Do not capitalize any letter from subject line.
+			4- Do not end the subject line with a period.
+			5- Use the imperative mood in the subject line.
+			6- Wrap the body at 72 characters (done automatically).
+			7- Use the body to explain what and why vs. how.
+			8- The commit message should obey the following commit structure:
+
+			[type(optional scope)optional "!"]: subject]
+
+			[optional body]
+
+			scope is optional; Currently supported scope delimiters are: "/", "\" and ","
+
+			Here are the supported commit types:
+			- build    -> Build system or external dependencies changes.
+			- chore    -> Maintenance changes.
+			- ci       -> CI configurations and script changes.
+			- docs     -> Documentation changes.
+			- feat     -> Addition of a new feature.
+			- fix      -> Bug fix.
+			- perf     -> Performance improvements.
+			- refactor -> Neither fixes a bug or adds a feature.
+			- revert   -> Reverts a previous commit.
+			- style    -> Formatting, missing semi colons, etc.
+			- test     -> Adding missing tests.
+		EOF
+
 		exit 1
 	fi
 
@@ -68,40 +100,6 @@ not_check() {
 	if ! echo "$COMMIT_SUBJECT" | grep -q "${CHECK_STR}"; then
 		echoerr "$ERROR_MESSAGE"
 	fi
-}
-
-committing_guide() {
-	cat <<-EOF
-		Make sure your commit message follows the following commit rules:
-
-		1- Limit the subject line to 50 characters.
-		2- Separate subject from the body with a blank line (done automatically).
-		3- Do not capitalize any letter from subject line.
-		4- Do not end the subject line with a period.
-		5- Use the imperative mood in the subject line.
-		6- Wrap the body at 72 characters (done automatically).
-		7- Use the body to explain what and why vs. how.
-		8- The commit message should obey the following commit structure:
-
-		[type(optional scope)optional "!"]: subject]
-
-		[optional body]
-
-		scope is optional; Currently supported scope delimiters are: "/", "\" and ","
-
-		Here are the supported commit types:
-		- build    -> Build system or external dependencies changes.
-		- chore    -> Maintenance changes.
-		- ci       -> CI configurations and script changes.
-		- docs     -> Documentation changes.
-		- feat     -> Addition of a new feature.
-		- fix      -> Bug fix.
-		- perf     -> Performance improvements.
-		- refactor -> Neither fixes a bug or adds a feature.
-		- revert   -> Reverts a previous commit.
-		- style    -> Formatting, missing semi colons, etc.
-		- test     -> Adding missing tests.
-	EOF
 }
 
 if echo "$COMMIT_FILE" | grep -q 'MERGE_MSG' || echo "$COMMIT_SUBJECT" | grep -q '^Merge'; then
