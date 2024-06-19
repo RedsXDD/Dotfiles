@@ -1,5 +1,7 @@
 #!/usr/bin/env sh
 
+BODY_CAN_BE_EMPTY="${BODY_CAN_BE_EMPTY:-true}"
+
 COMMIT_FILE="$1"
 COMMIT_SUBJECT="$(head -n1 "$COMMIT_FILE")"
 COMMIT_BODY="$(tail -n+2 "$COMMIT_FILE" | sed '/^#/d')"
@@ -32,6 +34,10 @@ format_commit() {
 			[optional body]
 
 			scope is optional; Currently supported scope delimiters are: "/", "\" and ","
+
+			note that body can only be optionally empty if the enviroment variable
+			BODY_CAN_BE_EMPTY is set to true when the script runs. Otherwise
+			an extra linting check will be performed to make sure the body is not empty.
 
 			Here are the supported commit types:
 			- build    -> Build system or external dependencies changes.
@@ -109,6 +115,11 @@ if [ "${#COMMIT_SUBJECT_LENGHT}" -eq 0 ]; then
 	exit 1
 elif [ "${#COMMIT_SUBJECT_LENGHT}" -gt 50 ]; then
 	echoerr 'subject cannot be longer than 50 characters.'
+fi
+
+# Perform empty body check only if $BODY_CAN_BE_EMPTY = false.
+if [ "$BODY_CAN_BE_EMPTY" != true ] && [ -z "$COMMIT_BODY" ]; then
+	echoerr "body cannot be empty. (to allow it set 'BODY_CAN_BE_EMPTY' to true)"
 fi
 
 if echo "$COMMIT_FILE" | grep -q 'MERGE_MSG' || echo "$COMMIT_SUBJECT" | grep -q '^Merge'; then
