@@ -2,9 +2,9 @@ alacritty
 arch-wiki-docs
 bat
 bc
+bottom
 breeze-gtk
 breeze5
-btop
 cava-git
 chaotic-keyring
 chaotic-mirrorlist
@@ -26,6 +26,7 @@ grimblast-git
 hyprland
 hyprlock
 hyprpicker-git
+intel-ucode
 keepassxc
 lazygit
 libnotify
@@ -56,6 +57,7 @@ paru
 pcmanfm-gtk3
 pipewire
 pipewire-pulse
+pipr-bin
 polkit-gnome
 qt5ct
 qt6ct
@@ -72,9 +74,9 @@ stow
 stylua
 swaync
 swww
+tealdeer
 terminus-font
 themix-full-git
-tlrc
 transmission-cli
 tree
 tree-sitter-git
