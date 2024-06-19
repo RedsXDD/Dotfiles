@@ -116,7 +116,7 @@ if echo "$COMMIT_FILE" | grep -q 'MERGE_MSG' || echo "$COMMIT_SUBJECT" | grep -q
 	exit 0
 fi
 
-check '[A-Z]' 'subject cannot have upper case characters.'
+check "${VALID_COMMIT_TYPES}!\?:[[:space:]]\?[A-Z]\+\|${VALID_COMMIT_TYPES}(.*)!\?:[[:space:]]\?[A-Z]\+" 'subject cannot start with upper case characters.'
 check '\.$' 'subject cannot end with a period.'
 check "[^[:alnum:]${VALID_QUOTES}]$" 'subject cannot end with a non-alphanumeric character.'
 not_check "${VALID_COMMIT_TYPES}!\?:.*\|${VALID_COMMIT_TYPES}(.*)!\?:.*" 'invalid commit type.'
