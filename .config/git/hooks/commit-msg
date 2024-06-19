@@ -46,8 +46,8 @@ echoerr() {
 	echo "$(tput setaf 1 bold)${error_char} $(tput sgr0)${message}"
 }
 
-check(){
-	CHECK_STR='' # Reset previous CHECK_STR.
+check() {
+	CHECK_STR=''     # Reset previous CHECK_STR.
 	ERROR_MESSAGE='' # Reset previous ERROR_MESSAGE.
 
 	CHECK_STR="$1"
@@ -58,8 +58,8 @@ check(){
 	fi
 }
 
-not_check(){
-	CHECK_STR='' # Reset previous CHECK_STR.
+not_check() {
+	CHECK_STR=''     # Reset previous CHECK_STR.
 	ERROR_MESSAGE='' # Reset previous ERROR_MESSAGE.
 
 	CHECK_STR="$1"
@@ -69,7 +69,6 @@ not_check(){
 		echoerr "$ERROR_MESSAGE"
 	fi
 }
-
 
 committing_guide() {
 	cat <<-EOF
