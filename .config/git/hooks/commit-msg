@@ -1,6 +1,7 @@
 #!/usr/bin/env sh
 
 BODY_CAN_BE_EMPTY="${BODY_CAN_BE_EMPTY:-true}"
+UPPERCASE_BYPASS="${UPPERCASE_BYPASS:-true}"
 
 COMMIT_FILE="$1"
 COMMIT_SUBJECT="$(head -n1 "$COMMIT_FILE")"
@@ -123,6 +124,11 @@ if [ "$BODY_CAN_BE_EMPTY" != true ] && [ -z "$COMMIT_BODY" ]; then
 fi
 
 if echo "$COMMIT_FILE" | grep -q 'MERGE_MSG' || echo "$COMMIT_SUBJECT" | grep -q '^Merge'; then
+	format_commit
+	exit 0
+fi
+
+if [ "$UPPERCASE_BYPASS" = true ] && echo "$COMMIT_SUBJECT" | grep -q '^[A-Z]'; then
 	format_commit
 	exit 0
 fi
