@@ -29,7 +29,7 @@ opt_7='Edit bookmarks file'
 actions_rofi(){
 	[ "$(awk '/fullscreen:/ {print $2}' "$theme")" != 'true;' ] && border_setup='window { border: 0px solid; border-color: @border-colour; }'
 
-	printf '%s\n' "$opt_1" "$opt_2" "$opt_3" "$opt_4" "$opt_5" "$opt_6" "$opt_7" |
+	printf '%s\n' "$opt_2" "$opt_1" "$opt_3" "$opt_4" "$opt_5" "$opt_6" "$opt_7" |
 		rofi -i -dmenu \
 			-theme "$actions_theme" \
 			-theme-str "configuration { show-icons: false; }
