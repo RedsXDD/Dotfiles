@@ -35,9 +35,9 @@ committing_guide() {
 		7- Use the body to explain what and why vs. how.
 		8- The commit message should obey the following commit structure:
 
-		type(scope?)[optional "!"]: subject
+		[type(optional scope)optional "!"]: subject]
 
-		<body>?
+		[optional body]
 
 		scope is optional; Currently supported scope delimiters are: "/", "\" and ","
 
