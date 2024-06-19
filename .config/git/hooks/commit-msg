@@ -102,10 +102,6 @@ if echo "$COMMIT_SUBJECT" | grep -q "^\(${VALID_COMMIT_TYPES}\)(.*\.)!\?:.*"; th
 	echoerr 'scope cannot end with a period.'
 fi
 
-if echo "$COMMIT_SUBJECT" | grep -q "^\(${VALID_COMMIT_TYPES}\)(.*[^[:alnum:],\/]\+.*):.*"; then
-	echoerr 'scope contains invalid non-alphanumeric characters.'
-fi
-
 if echo "$COMMIT_SUBJECT" | grep -q "^\(${VALID_COMMIT_TYPES}\)(.*)[^!]\+:.*"; then
 	echoerr "'!' is the only valid character after scope."
 fi
