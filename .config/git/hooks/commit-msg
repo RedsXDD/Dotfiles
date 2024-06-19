@@ -102,11 +102,6 @@ not_check() {
 	fi
 }
 
-if echo "$COMMIT_FILE" | grep -q 'MERGE_MSG' || echo "$COMMIT_SUBJECT" | grep -q '^Merge'; then
-	format_commit
-	exit 0
-fi
-
 # Lint commit subject.
 COMMIT_SUBJECT_LENGHT="$(head -n1 "$COMMIT_FILE")"
 if [ "${#COMMIT_SUBJECT_LENGHT}" -eq 0 ]; then
@@ -114,6 +109,11 @@ if [ "${#COMMIT_SUBJECT_LENGHT}" -eq 0 ]; then
 	exit 1
 elif [ "${#COMMIT_SUBJECT_LENGHT}" -gt 50 ]; then
 	echoerr 'subject cannot be longer than 50 characters.'
+fi
+
+if echo "$COMMIT_FILE" | grep -q 'MERGE_MSG' || echo "$COMMIT_SUBJECT" | grep -q '^Merge'; then
+	format_commit
+	exit 0
 fi
 
 check '[A-Z]' 'subject cannot have upper case characters.'
