@@ -9,6 +9,22 @@ VALID_COMMIT_TYPES='build chore ci docs feat fix perf refactor revert style test
 VALID_COMMIT_TYPES="$(echo "$VALID_COMMIT_TYPES" | sed 's/ /\\|/g')"
 VALID_COMMIT_TYPES="^\(${VALID_COMMIT_TYPES}\)"
 
+# Format body of commit message.
+format_commit(){
+	tmp_commit_file="$(mktemp)"
+	trap 'rm -rf "${tmp_commit_file}"' 0 1 15
+
+	echo "$COMMIT_SUBJECT" >"$tmp_commit_file"
+
+	if [ -n "$(head -n2 "$COMMIT_FILE" | tail -n1)" ]; then
+		echo '' >>"$tmp_commit_file"
+	fi
+
+	echo "$COMMIT_BODY" | fold --spaces --width=72 >>"$tmp_commit_file"
+
+	cat "$tmp_commit_file" >"$COMMIT_FILE"
+}
+
 ERROR_COUNT=0
 echoerr() {
 	ERROR_COUNT="$((ERROR_COUNT + 1))"
@@ -102,17 +118,6 @@ if [ "$ERROR_COUNT" -gt 0 ]; then
 	exit 1
 fi
 
-# Format body of commit message.
-
-tmp_commit_file="$(mktemp)"
-trap 'rm -rf "${tmp_commit_file}"' 0 1 15
-
-echo "$COMMIT_SUBJECT" >"$tmp_commit_file"
-if [ -n "$(head -n2 "$COMMIT_FILE" | tail -n1)" ]; then
-	echo '' >>"$tmp_commit_file"
-fi
-echo "$COMMIT_BODY" | fold --spaces --width=72 >>"$tmp_commit_file"
-
-cat "$tmp_commit_file" >"$COMMIT_FILE"
+format_commit
 
 # vim:fileencoding=utf-8:foldmethod=marker
