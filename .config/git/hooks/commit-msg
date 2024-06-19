@@ -125,8 +125,8 @@ check "${VALID_COMMIT_TYPES}()!\?:.*" 'scope cannot be empty.'
 check "${VALID_COMMIT_TYPES}([,\/].*)!\?:.*" 'scope cannot begin with a delimiter.'
 check "${VALID_COMMIT_TYPES}(.*[,\/])!\?:.*" 'scope cannot end with a delimiter.'
 check "${VALID_COMMIT_TYPES}(.*\.)!\?:.*" 'scope cannot end with a period.'
-check "${VALID_COMMIT_TYPES}(.*)[^!:]\+.*" "'!' and ':' are the only valid characters after scope."
-check "${VALID_COMMIT_TYPES}(.*)!\?:[^ ].*" "must add space after ':'."
+not_check "${VALID_COMMIT_TYPES}!\?:.*\|${VALID_COMMIT_TYPES}(.*)!\?:.*" "'!' and ':' are the only valid characters after scope."
+check "${VALID_COMMIT_TYPES}!\?:[^[:space:]].*\|${VALID_COMMIT_TYPES}(.*)!\?:[^[:space:]].*" "must add space after ':'."
 
 format_commit
 
