@@ -33,7 +33,7 @@
 }
 
 window#waybar {
-	background: mix(@background, black, 0.3);
+	background: mix(@background, black, 0.2);
 	border-radius: 0;
 	transition-property: background;
 	transition-duration: .2s;
@@ -61,7 +61,7 @@ window#waybar.hidden {
 /* }}} */
 /* Tooltip {{{ */
 tooltip {
-	background: mix(@background, black, 0.3);
+	background: mix(@background, black, 0.1);
 }
 
 tooltip label {

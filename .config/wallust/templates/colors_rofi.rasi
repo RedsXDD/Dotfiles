@@ -1,6 +1,6 @@
 * {
-	background: {{background | darken(0.3)}};
-	background-alt: {{background | lighten(0.05)}};
+	background: {{background}};
+	background-alt: {{background | darken(0.2)}};
 	foreground: {{foreground}};
 	selected: {{color4}};
 	active: {{color2}};
