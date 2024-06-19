@@ -1,6 +1,42 @@
 -- Pull in the wezterm API
 local wezterm = require("wezterm")
 
+wezterm.on("reduce_opacity", function(window)
+	local overrides = window:get_config_overrides() or {}
+
+	if not overrides.window_background_opacity then
+		overrides.window_background_opacity = 1
+	end
+
+	overrides.window_background_opacity = math.max(0, overrides.window_background_opacity - 0.05)
+
+	window:set_config_overrides(overrides)
+end)
+
+wezterm.on("increase_opacity", function(window)
+	local overrides = window:get_config_overrides() or {}
+
+	if not overrides.window_background_opacity then
+		overrides.window_background_opacity = 1
+	end
+
+	overrides.window_background_opacity = math.min(overrides.window_background_opacity + 0.05, 1)
+
+	window:set_config_overrides(overrides)
+end)
+
+wezterm.on("toggle_opacity", function(window)
+	local overrides = window:get_config_overrides() or {}
+
+	if not overrides.window_background_opacity then
+		overrides.window_background_opacity = 0.5
+	else
+		overrides.window_background_opacity = nil
+	end
+
+	window:set_config_overrides(overrides)
+end)
+
 return {
 	term = "wezterm",
 	color_scheme = "Wallust",
@@ -63,6 +99,22 @@ return {
 			key = "0",
 			mods = "CTRL",
 			action = wezterm.action.ResetFontSize,
+		},
+		-- Opacity
+		{
+			key = "-",
+			mods = "CTRL|ALT",
+			action = wezterm.action.EmitEvent("reduce_opacity"),
+		},
+		{
+			key = "=",
+			mods = "CTRL|ALT",
+			action = wezterm.action.EmitEvent("increase_opacity"),
+		},
+		{
+			key = "0",
+			mods = "CTRL|ALT",
+			action = wezterm.action.EmitEvent("toggle_opacity"),
 		},
 	},
 }
