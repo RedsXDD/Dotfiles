@@ -7,6 +7,7 @@ COMMIT_BODY="$(tail -n+2 "$COMMIT_FILE" | sed '/^#/d')"
 VALID_QUOTES="'"'"''`'
 VALID_COMMIT_TYPES='build chore ci docs feat fix perf refactor revert style test'
 VALID_COMMIT_TYPES="$(echo "$VALID_COMMIT_TYPES" | sed 's/ /\\|/g')"
+VALID_COMMIT_TYPES="^\(${VALID_COMMIT_TYPES}\)"
 
 ERROR_COUNT=0
 echoerr() {
@@ -20,6 +21,18 @@ echoerr() {
 	fi
 
 	echo "$(tput setaf 1 bold)${error_char} $(tput sgr0)${message}"
+}
+
+check(){
+	CHECK_STR='' # Reset previous CHECK_STR.
+	ERROR_MESSAGE='' # Reset previous ERROR_MESSAGE.
+
+	CHECK_STR="$1"
+	ERROR_MESSAGE="$2"
+
+	if echo "$COMMIT_SUBJECT" | grep -q "${CHECK_STR}"; then
+		echoerr "$ERROR_MESSAGE"
+	fi
 }
 
 committing_guide() {
@@ -66,49 +79,21 @@ elif [ "${#COMMIT_SUBJECT_LENGHT}" -gt 50 ]; then
 	echoerr 'subject cannot be longer than 50 characters.'
 fi
 
-if echo "$COMMIT_SUBJECT" | grep -q '[A-Z]'; then
-	echoerr 'subject cannot have upper case characters.'
-fi
+check '[A-Z]' 'subject cannot have upper case characters.'
+check '\.$' 'subject cannot end with a period.'
+check "[^[:alnum:]${VALID_QUOTES}]$" 'subject cannot end with a non-alphanumeric character.'
 
-if echo "$COMMIT_SUBJECT" | grep -q '\.$'; then
-	echoerr 'subject cannot end with a period.'
-fi
-
-if echo "$COMMIT_SUBJECT" | grep -q "[^[:alnum:]${VALID_QUOTES}]$"; then
-	echoerr 'subject cannot end with a non-alphanumeric character.'
-fi
-
-if ! echo "$COMMIT_SUBJECT" | grep -q "^\(${VALID_COMMIT_TYPES}\)!\?:.*\|^\(${VALID_COMMIT_TYPES}\)(.*)!\?:.*"; then
+if ! echo "$COMMIT_SUBJECT" | grep -q "${VALID_COMMIT_TYPES}!\?:.*\|${VALID_COMMIT_TYPES}(.*)!\?:.*"; then
 	echoerr 'invalid commit type.'
 fi
 
-if echo "$COMMIT_SUBJECT" | grep -q "^\(${VALID_COMMIT_TYPES}\)([^)]*!\?:.*"; then
-	echoerr 'scope was never closed.'
-fi
-
-if echo "$COMMIT_SUBJECT" | grep -q "^\(${VALID_COMMIT_TYPES}\)()!\?:.*"; then
-	echoerr 'scope cannot be empty.'
-fi
-
-if echo "$COMMIT_SUBJECT" | grep -q "^\(${VALID_COMMIT_TYPES}\)([,\/].*)!\?:.*"; then
-	echoerr 'scope cannot begin with a delimiter.'
-fi
-
-if echo "$COMMIT_SUBJECT" | grep -q "^\(${VALID_COMMIT_TYPES}\)(.*[,\/])!\?:.*"; then
-	echoerr 'scope cannot end with a delimiter.'
-fi
-
-if echo "$COMMIT_SUBJECT" | grep -q "^\(${VALID_COMMIT_TYPES}\)(.*\.)!\?:.*"; then
-	echoerr 'scope cannot end with a period.'
-fi
-
-if echo "$COMMIT_SUBJECT" | grep -q "^\(${VALID_COMMIT_TYPES}\)(.*)[^!:]\+.*"; then
-	echoerr "'!' and ':' are the only valid characters after scope."
-fi
-
-if echo "$COMMIT_SUBJECT" | grep -q "^\(${VALID_COMMIT_TYPES}\)(.*)!\?:[^ ].*"; then
-	echoerr "must add space after ':'."
-fi
+check "${VALID_COMMIT_TYPES}([^)]*!\?:.*" 'scope was never closed.'
+check "${VALID_COMMIT_TYPES}()!\?:.*" 'scope cannot be empty.'
+check "${VALID_COMMIT_TYPES}([,\/].*)!\?:.*" 'scope cannot begin with a delimiter.'
+check "${VALID_COMMIT_TYPES}(.*[,\/])!\?:.*" 'scope cannot end with a delimiter.'
+check "${VALID_COMMIT_TYPES}(.*\.)!\?:.*" 'scope cannot end with a period.'
+check "${VALID_COMMIT_TYPES}(.*)[^!:]\+.*" "'!' and ':' are the only valid characters after scope."
+check "${VALID_COMMIT_TYPES}(.*)!\?:[^ ].*" "must add space after ':'."
 
 if [ "$ERROR_COUNT" -gt 0 ]; then
 	echo ''
