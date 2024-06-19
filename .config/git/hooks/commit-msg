@@ -102,7 +102,7 @@ not_check() {
 	fi
 }
 
-# Lint commit subject.
+# Check if subject lenght = 0 or > 50 characters long.
 COMMIT_SUBJECT_LENGHT="$(head -n1 "$COMMIT_FILE")"
 if [ "${#COMMIT_SUBJECT_LENGHT}" -eq 0 ]; then
 	echoerr 'subject cannot be empty'
