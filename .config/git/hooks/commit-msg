@@ -8,7 +8,7 @@ COMMIT_SUBJECT="$(head -n1 "$COMMIT_FILE")"
 COMMIT_BODY="$(tail -n+2 "$COMMIT_FILE" | sed '/^#/d')"
 
 VALID_QUOTES="'"'"''`'
-VALID_COMMIT_TYPES='build chore ci docs feat fix perf refactor revert style test'
+VALID_COMMIT_TYPES='build chore ci docs feat fix perf refactor revert style test README'
 VALID_COMMIT_TYPES="$(echo "$VALID_COMMIT_TYPES" | sed 's/ /\\|/g')"
 VALID_COMMIT_TYPES="^\(${VALID_COMMIT_TYPES}\)"
 
@@ -52,6 +52,7 @@ format_commit() {
 			- revert   -> Reverts a previous commit.
 			- style    -> Formatting, missing semi colons, etc.
 			- test     -> Adding missing tests.
+			- README   -> Any changes to the README file.
 		EOF
 
 		exit 1
@@ -128,7 +129,7 @@ if echo "$COMMIT_FILE" | grep -q 'MERGE_MSG' || echo "$COMMIT_SUBJECT" | grep -q
 	exit 0
 fi
 
-if [ "$UPPERCASE_BYPASS" = true ] && echo "$COMMIT_SUBJECT" | grep -q '^[A-Z]'; then
+if [ "$UPPERCASE_BYPASS" = true ] && echo "$COMMIT_SUBJECT" | grep -q '^[A-Z]' && ! echo "$COMMIT_SUBJECT" | grep -q '^README'; then
 	format_commit
 	exit 0
 fi
