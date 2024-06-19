@@ -10,7 +10,14 @@ VALID_COMMIT_TYPES="$(echo "$VALID_COMMIT_TYPES" | sed 's/ /\\|/g')"
 VALID_COMMIT_TYPES="^\(${VALID_COMMIT_TYPES}\)"
 
 # Format body of commit message.
-format_commit(){
+format_commit() {
+	if [ "$ERROR_COUNT" -gt 0 ]; then
+		echo ''
+		echo "Found ${ERROR_COUNT} errors with your commit message."
+		committing_guide
+		exit 1
+	fi
+
 	tmp_commit_file="$(mktemp)"
 	trap 'rm -rf "${tmp_commit_file}"' 0 1 15
 
@@ -123,13 +130,6 @@ check "${VALID_COMMIT_TYPES}(.*[,\/])!\?:.*" 'scope cannot end with a delimiter.
 check "${VALID_COMMIT_TYPES}(.*\.)!\?:.*" 'scope cannot end with a period.'
 check "${VALID_COMMIT_TYPES}(.*)[^!:]\+.*" "'!' and ':' are the only valid characters after scope."
 check "${VALID_COMMIT_TYPES}(.*)!\?:[^ ].*" "must add space after ':'."
-
-if [ "$ERROR_COUNT" -gt 0 ]; then
-	echo ''
-	echo "Found ${ERROR_COUNT} errors with your commit message."
-	committing_guide
-	exit 1
-fi
 
 format_commit
 
