@@ -135,7 +135,6 @@ fi
 
 check "${VALID_COMMIT_TYPES}!\?:[[:space:]]\?[A-Z]\+\|${VALID_COMMIT_TYPES}(.*)!\?:[[:space:]]\?[A-Z]\+" 'subject cannot start with upper case characters.'
 check '\.$' 'subject cannot end with a period.'
-check "[^[:alnum:]${VALID_QUOTES}]$" 'subject cannot end with a non-alphanumeric character.'
 not_check "${VALID_COMMIT_TYPES}!\?:.*\|${VALID_COMMIT_TYPES}(.*)!\?:.*" 'invalid commit type.'
 check "${VALID_COMMIT_TYPES}([^)]*!\?:.*" 'scope was never closed.'
 check "${VALID_COMMIT_TYPES}()" 'scope cannot be empty.'
