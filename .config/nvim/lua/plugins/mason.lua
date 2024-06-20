@@ -41,6 +41,11 @@ return {
 				"yamlls",
 				"rust-analyzer",
 				"shfmt",
+				"prettier",
+				"eslint_d",
+				"isort",
+				"black",
+				"pylint",
 			},
 		})
 	end,
