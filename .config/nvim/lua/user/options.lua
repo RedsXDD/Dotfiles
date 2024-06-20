@@ -19,6 +19,12 @@ local o = vim.opt
 -- Gui options:
 o.guifont = "JetBrainsMono Nerd Font,Noto_Color_Emoji:h14"   -- The font used in graphical neovim applications.
 
+-- Netrw settings:
+g.netrw_banner = 0     -- Disable netrw banner text.
+g.netrw_browse_split=4 -- Open in prior window.
+g.netrw_altv = 1       -- Change from left splitting to right splitting.
+g.netrw_liststyle=3    -- Tree style view in netrw.
+
 o.sessionoptions = {
 	"buffers",
 	"curdir",
@@ -29,10 +35,6 @@ o.sessionoptions = {
 	"skiprtp",
 	"folds",
 }
-g.netrw_banner = 0                          -- Disable netrw banner text.
-g.netrw_browse_split=4                      -- Open in prior window.
-g.netrw_altv = 1                            -- Change from left splitting to right splitting.
-g.netrw_liststyle=3                         -- Tree style view in netrw.
 o.confirm = true                            -- Confirm to save changes before exiting modified buffer.
 o.grepformat = "%f:%l:%c:%m"
 o.grepprg = "rg --vimgrep"
