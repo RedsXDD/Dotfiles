@@ -125,13 +125,6 @@ vim.api.nvim_create_autocmd({ "BufWritePre" }, {
 	end,
 })
 
--- Disable newline auto commenting.
-autocmd("FileType", {
-	desc = "Disable newline auto commenting.",
-	group = augroup("disable_autocommenting"),
-	command = "set formatoptions-=cro",
-})
-
 -- Set tmux filetype for *.tmux files.
 autocmd({ "BufRead", "BufNewFile" }, {
 	desc = "Set tmux filetype for *.tmux files.",

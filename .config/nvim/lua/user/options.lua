@@ -126,11 +126,10 @@ o.writebackup = true                        -- Creates a backup file before over
 o.undodir = os.getenv('HOME') .. '/.cache/nvim/'   -- Directory to store undo files.
 o.backupdir = os.getenv('HOME') .. '/.cache/nvim/' -- Directory to store backup files.
 o.directory = os.getenv('HOME') .. '/.cache/nvim/' -- Directory to store swap files.
-
 o.iskeyword:append({ "-", "_" })          -- Add the "-" and "_" symbols as part of keywords.
 o.shortmess:append({ W = true, I = true, c = true, C = true })
 o.complete:append(",kspell")              -- Enable auto complete with spell checking.
-o.formatoptions:remove({ "c", "r", "o" }) -- Don't insert comments on newlines.
+o.formatoptions = "jql"                   -- Don't insert comments on newlines.
 o.runtimepath:remove("/usr/share/vim/vimfiles") -- Separate vim plugins from neovim in case vim still in use.
 -- stylua: ignore end
 
