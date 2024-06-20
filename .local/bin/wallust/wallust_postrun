@@ -123,7 +123,7 @@ gen_oomox_icon_theme() {
 #: Main function {{{
 main() {
 	# Auto reload tmux theming:
-	[ -n "$TMUX" ] && [ -f "${XDG_CONFIG_HOME:-$HOME/.config/}/tmux/tmux.conf" ] && tmux source-file "${XDG_CONFIG_HOME:-$HOME/.config/}/tmux/tmux.conf"
+	[ -n "$TMUX" ] && [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/tmux/tmux.conf" ] && tmux source-file "${XDG_CONFIG_HOME:-$HOME/.config}/tmux/tmux.conf"
 
 	# Restart main programs:
 	restart_processes
