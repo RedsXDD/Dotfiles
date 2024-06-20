@@ -5,9 +5,13 @@ return {
 	opts = function()
 		local icons = require("user.icons")
 
+		local location = function()
+			return "ln:" .. "%l" .. " " .. "cl:" .. "%v"
+		end
+
 		local opts = {
 			options = {
-				theme = "neopywal",
+				theme = "auto",
 				icons_enabled = true,
 				always_divide_middle = true,
 				component_separators = "|",
@@ -89,7 +93,11 @@ return {
 					{ "progress" },
 				},
 				lualine_z = {
-					{ "location", separator = { left = "", right = "" }, padding = { left = 0, right = 0 } },
+					{
+						location,
+						separator = { left = "", right = "" },
+						padding = { left = 0, right = 0 },
+					},
 				},
 			},
 		}
@@ -109,7 +117,7 @@ return {
 					"progress",
 				},
 				lualine_z = {
-					"location",
+					location,
 				},
 			},
 		}
