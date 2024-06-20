@@ -137,6 +137,11 @@ map("v", ">", ">gv", "Move selected lines to the right.")
 -- map("i", '/*', '/**/<Left><Left>', "")
 --: }}}
 --: }}}
+--: Terminal mappings {{{
+map("t", "<ESC><ESC>", "<C-\\><C-n>", "Enter normal mode.")
+map("t", "<C-/>", "<C-\\><C-n><CMD>bdelete!<CR>", "Close terminal.")
+map("t", "<C-_>", "<C-\\><C-n><CMD>bdelete!<CR>", "Close terminal.")
+--: }}}
 --: Clipboard management {{{
 map("", "<Leader>y", '"+y', "Copy to primary clipboard.")
 map("", "<Leader>p", '"+p', "Paste from primary clipboard.")
