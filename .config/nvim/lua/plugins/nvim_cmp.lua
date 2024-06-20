@@ -64,7 +64,7 @@ return {
 							cmp.select_next_item()
 						elseif luasnip.expand_or_jumpable() then
 							luasnip.expand_or_jump()
-						else
+						elseif not pcall(cmp.mapping.complete()) then
 							fallback()
 						end
 					end, { "i", "s" }),
@@ -73,7 +73,7 @@ return {
 							cmp.select_prev_item()
 						elseif luasnip.jumpable(-1) then
 							luasnip.jump(-1)
-						else
+						elseif not pcall(cmp.mapping.complete()) then
 							fallback()
 						end
 					end, { "i", "s" }),
