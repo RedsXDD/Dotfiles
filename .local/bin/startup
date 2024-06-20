@@ -8,6 +8,7 @@ pgrep -x mpd >/dev/null 2>&1 || mpd &
 pgrep -x keepassxc >/dev/null 2>&1 || keepassxc &
 pgrep -x gammastep >/dev/null 2>&1 || gammastep &
 pgrep -x transmission-daemon >/dev/null 2>&1 || transmission-daemon &
+pgrep -x swww-daemon >/dev/null 2>&1 || swww-daemon &
 
 # # Polkit agent:
 pgrep -f polkit-gnome-authentication-agent-1 >/dev/null 2>&1 || /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
