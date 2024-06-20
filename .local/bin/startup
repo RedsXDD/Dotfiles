@@ -1,7 +1,5 @@
 #!/usr/bin/env sh
 
-sleep 1
-
 pgrep -x waybar >/dev/null 2>&1 || waybar &
 pgrep -x swaync >/dev/null 2>&1 || swaync &
 pgrep -x mpd >/dev/null 2>&1 || mpd &
@@ -22,6 +20,7 @@ fi
 
 # Wallpaper:
 if which waybg >/dev/null 2>&1; then
+	sleep 1
 	waybg -R
 fi
 
