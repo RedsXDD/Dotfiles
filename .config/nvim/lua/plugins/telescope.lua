@@ -199,7 +199,6 @@ return {
 					buffers = {
 						previewer = false,
 						path_display = formattedName,
-						initial_mode = "normal",
 						-- theme = "dropdown",
 						layout_config = {
 							height = 0.4,
@@ -235,7 +234,6 @@ return {
 					["ui-select"] = {
 						themes.get_dropdown({
 							previewer = true,
-							initial_mode = "normal",
 							sorting_strategy = "ascending",
 							layout_strategy = "horizontal",
 							layout_config = {
