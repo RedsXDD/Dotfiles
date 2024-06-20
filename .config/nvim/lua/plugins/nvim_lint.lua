@@ -18,6 +18,7 @@ return {
 		local M = {}
 
 		local lint = require("lint")
+
 		for name, linter in pairs(opts.linters) do
 			if type(linter) == "table" and type(lint.linters[name]) == "table" then
 				lint.linters[name] = vim.tbl_deep_extend("force", lint.linters[name], linter)
@@ -26,17 +27,6 @@ return {
 			end
 		end
 		lint.linters_by_ft = opts.linters_by_ft
-
-		function M.debounce(ms, fn)
-			local timer = vim.uv.new_timer()
-			return function(...)
-				local argv = { ... }
-				timer:start(ms, 0, function()
-					timer:stop()
-					vim.schedule_wrap(fn)(unpack(argv))
-				end)
-			end
-		end
 
 		function M.lint()
 			-- Use nvim-lint's logic first:
@@ -75,7 +65,7 @@ return {
 
 		vim.api.nvim_create_autocmd(opts.events, {
 			group = vim.api.nvim_create_augroup("nvim-lint", { clear = true }),
-			callback = M.debounce(100, M.lint),
+			callback = M.lint,
 		})
 	end,
 }
