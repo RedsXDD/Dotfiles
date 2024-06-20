@@ -1,8 +1,8 @@
 #!/usr/bin/env sh
 
-pgrep -x waybar >/dev/null 2>&1 || waybar &
 sleep 1
 
+pgrep -x waybar >/dev/null 2>&1 || waybar &
 pgrep -x swaync >/dev/null 2>&1 || swaync &
 pgrep -x mpd >/dev/null 2>&1 || mpd &
 pgrep -x keepassxc >/dev/null 2>&1 || keepassxc &
