@@ -241,4 +241,6 @@ map("", "<Leader>bC", ":tabnew | enew<CR>", "Open a new tab.")
 map("", "<Leader>x", "<C-w>q", "Close current buffer.")
 map("", "<Leader>.", ":tabn<CR>", "Move to the next tab.")
 map("", "<Leader>,", ":tabp<CR>", "Move to the previous tab.")
+map("n", "[b", "<CMD>bprevious<CR>", "Prev Buffer")
+map("n", "]b", "<CMD>bnext<CR>", "Next Buffer")
 --: }}}
