@@ -47,6 +47,7 @@ return {
 				markdown = { "prettier" },
 				graphql = { "prettier" },
 				liquid = { "prettier" },
+				python = { "isort", "black" },
 			},
 		}
 	end,
