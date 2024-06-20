@@ -199,7 +199,6 @@ return {
 					buffers = {
 						previewer = false,
 						path_display = formattedName,
-						-- theme = "dropdown",
 						layout_config = {
 							height = 0.4,
 							width = 0.6,
