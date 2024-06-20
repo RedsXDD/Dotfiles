@@ -33,6 +33,8 @@ return {
 				fish = { "fish_indent" },
 				sh = { "shfmt" },
 				rust = { "rustfmt" },
+				c = { "clang-format" },
+				cpp = { "clang-format" },
 			},
 		}
 	end,
