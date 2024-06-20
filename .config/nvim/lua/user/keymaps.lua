@@ -91,6 +91,16 @@ map("", "<Up>", "<C-y>", "Scroll up.")
 map("", "<Down>", "<C-e>", "Scroll down.")
 map("", "<Left>", "<S-{>", "Move to the start of previous block.")
 map("", "<Right>", "<S-}>", "Move to the end of next block.")
+
+-- Saner behavior of n and N.
+-- stylua: ignore start
+vim.keymap.set("n", "n", "'Nn'[v:searchforward].'zv'", { noremap = true, silent = true, expr = true, desc = "Next Search Result" })
+vim.keymap.set("x", "n", "'Nn'[v:searchforward]",      { noremap = true, silent = true, expr = true, desc = "Next Search Result" })
+vim.keymap.set("o", "n", "'Nn'[v:searchforward]",      { noremap = true, silent = true, expr = true, desc = "Next Search Result" })
+vim.keymap.set("n", "N", "'nN'[v:searchforward].'zv'", { noremap = true, silent = true, expr = true, desc = "Prev Search Result" })
+vim.keymap.set("x", "N", "'nN'[v:searchforward]",      { noremap = true, silent = true, expr = true, desc = "Prev Search Result" })
+vim.keymap.set("o", "N", "'nN'[v:searchforward]",      { noremap = true, silent = true, expr = true, desc = "Prev Search Result" })
+-- stylua: ignore end
 --: Automatically center cursor {{{
 center_map("n", "Center cursor when moving to the next match during a search.")
 center_map("N", "Center cursor when moving to the previous match during a search.")
