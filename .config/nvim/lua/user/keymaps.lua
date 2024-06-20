@@ -243,4 +243,5 @@ map("", "<Leader>.", ":tabn<CR>", "Move to the next tab.")
 map("", "<Leader>,", ":tabp<CR>", "Move to the previous tab.")
 map("n", "[b", "<CMD>bprevious<CR>", "Prev Buffer")
 map("n", "]b", "<CMD>bnext<CR>", "Next Buffer")
+map("n", "<Leader>bb", "<CMD>e #<CR>", "Switch to previously active buffer")
 --: }}}
