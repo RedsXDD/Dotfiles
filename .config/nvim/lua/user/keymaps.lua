@@ -214,6 +214,9 @@ pum_map({
 -- Create splits:
 map("", "<Leader>-", ":vsplit | enew<CR>", "Create vertical split.")
 map("", "<Leader>_", ":split | enew<CR>", "Create horizontal split.")
+map("", "<Leader>z", function()
+	require("user.utils").maximize()
+end, "Maximize current window.")
 
 -- Move across splits:
 map("", "<C-h>", "<C-W>h", "Move to the left split window.")
