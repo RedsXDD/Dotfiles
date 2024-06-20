@@ -92,12 +92,6 @@ return {
 				-- Mini.map:
 				clue.mkclue_with_dependency("mini.map", { mode = "n", keys = "<Leader>m", desc = "+MiniMap" }),
 
-				-- Mini.surround:
-				clue.mkclue_with_dependency("mini.surround", {
-					{ mode = "n", keys = "<Leader>s", desc = "+Surround" },
-					{ mode = "x", keys = "<Leader>s", desc = "+Surround" },
-				}),
-
 				-- Mini.diff:
 				clue.mkclue_with_dependency("mini.diff", {
 					{ mode = "n", keys = "<Leader>d", desc = "+MiniDiff" },
