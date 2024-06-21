@@ -1,5 +1,11 @@
 #!/usr/bin/env sh
 
+open_nvim() {
+	[ ! -d "${XDG_CONFIG_HOME:-$HOME/.config}/${selected_nvim}" ] && echo "ERROR: could not load '${selected_nvim}' configuration." && exit 1
+	NVIM_APPNAME="$selected_nvim" nvim "$@"
+	exit 0
+}
+
 options() {
 	cat <<-EOF
 		default
@@ -12,11 +18,9 @@ options() {
 
 selected_nvim="$(options | fzf)"
 if [ -z "$selected_nvim" ] || [ "$selected_nvim" = "default" ]; then
-	nvim "$@"
-	exit 0
-else
-	[ ! -d "${XDG_CONFIG_HOME:-$HOME/.config}/${selected_nvim}" ] && echo "ERROR: could not load '${selected_nvim}' configuration." && exit 1
-	NVIM_APPNAME="${selected_nvim}" nvim "$@"
+	selected_nvim=""
 fi
+
+open_nvim
 
 # vim:fileencoding=utf-8:foldmethod=marker
