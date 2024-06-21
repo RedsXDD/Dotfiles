@@ -166,6 +166,9 @@ export LESS_TERMCAP_ZV
 export LESS_TERMCAP_ZO
 export LESS_TERMCAP_ZW
 
+# Rust sccache configuration:
+export RUSTC_WRAPPER=sccache
+
 # shellcheck source=/dev/null
 # TTY commands:
 if [ -z "$DISPLAY" ]; then
