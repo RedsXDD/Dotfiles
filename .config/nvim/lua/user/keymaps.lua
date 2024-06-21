@@ -186,11 +186,7 @@ local ctrn_n_action = function()
 	local has_longest = vim.tbl_contains(complete_opts, "longest")
 	local has_fuzzy = vim.tbl_contains(complete_opts, "fuzzy")
 
-	local has_cmp, _ = pcall(require, "cmp")
-
-	if has_cmp then
-		return "<C-n>"
-	elseif has_longest and has_fuzzy then
+	if has_longest and has_fuzzy then
 		action = [[\<lt>C-n>\<lt>C-p>]]
 	elseif has_longest then
 		action = [[\<lt>C-n>]]
