@@ -27,9 +27,9 @@ require("lazy").setup({
 		version = false, -- Always use the latest git commit.
 		-- version = "*", -- Try installing the latest stable version for plugins that support semver.
 	},
-	-- install = {
-	-- 	colorscheme = { "tokyonight" },
-	-- },
+	install = {
+		colorscheme = { "neopywal" },
+	},
 	-- Automatically check for plugin updates.
 	checker = {
 		enabled = true,
