@@ -29,6 +29,7 @@ return {
 			use_wallust = true,
 			transparent_background = false,
 			dim_inactive = true,
+			show_split_lines = false,
 			custom_highlights = function(colors)
 				local U = require("neopywal.util")
 				return {
