@@ -16,6 +16,12 @@ options() {
 	EOF
 }
 
+if [ -n "$1" ] && options | grep -iq "$1"; then
+	selected_nvim="$(options | grep -i "$1" | head -n1)"
+	shift
+	open_nvim "$@"
+fi
+
 selected_nvim="$(options | fzf)"
 if [ -z "$selected_nvim" ] || [ "$selected_nvim" = "default" ]; then
 	selected_nvim=""
