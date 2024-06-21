@@ -62,6 +62,16 @@ bin_files="$(find "${HOME}/.local/bin" -follow -type d -not -path "${HOME}/.loca
 export PATH="$PATH:${bin_files}${HOME}/Applications:${CARGO_HOME}/bin/"
 unset bin_files
 #: }}}
+#: Rust sccache {{{
+export RUSTC_WRAPPER=sccache
+#: }}}
+#: Bat {{{
+export BAT_THEME='ansi'
+#: }}}
+#: Zellij {{{
+export ZELLIJ_AUTO_ATTACH='true'
+export ZELLIJ_AUTO_EXIT='true'
+#: }}}
 #: Starship {{{
 [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/starship/starship.toml" ] && export STARSHIP_CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/starship/starship.toml"
 #: }}}
@@ -100,13 +110,6 @@ export FZF_DEFAULT_OPTS="\
 
 # Unset importted wallust colors.
 unset background foreground color0 color1 color2 color3 color4 color5 color6 color7 color8 color9 color10 color11 color12 color13 color14 color15
-#: }}}
-#: Bat {{{
-export BAT_THEME='ansi'
-#: }}}
-#: Zellij {{{
-export ZELLIJ_AUTO_ATTACH='true'
-export ZELLIJ_AUTO_EXIT='true'
 #: }}}
 #: GTK/QT {{{
 export QT_QPA_PLATFORMTHEME='qt6ct'
@@ -181,9 +184,6 @@ export LESS_TERMCAP_ZN
 export LESS_TERMCAP_ZV
 export LESS_TERMCAP_ZO
 export LESS_TERMCAP_ZW
-#: }}}
-#: Rust sccache {{{
-export RUSTC_WRAPPER=sccache
 #: }}}
 #: TTY stuff (must be last!) {{{
 # shellcheck source=/dev/null
