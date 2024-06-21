@@ -138,19 +138,36 @@ export LESSHISTFILE="${XDG_CACHE_HOME}/lesshst"
 export LESSHISTSIZE='10000'
 
 # Less color configuration, tput information can be found at man terminfo.
-LESS_TERMCAP_mb="$(tput bold; tput setaf 2)"            # Start blinking, green
-LESS_TERMCAP_md="$(tput bold; tput setaf 6)"            # Start bold, cyan
-LESS_TERMCAP_me="$(tput sgr0)"                          # End bold, blinking, standout, underline
-LESS_TERMCAP_so="$(tput bold; tput setaf 6; tput rev)"  # Start stand out, cyan, reverse.
-LESS_TERMCAP_se="$(tput rmso; tput sgr0)"               # End standout, reset
-LESS_TERMCAP_us="$(tput smul; tput bold; tput setaf 1)" # Start underline, bold, red
-LESS_TERMCAP_ue="$(tput sgr0)"                          # End Underline
-LESS_TERMCAP_mr="$(tput rev)"                           # Reverse background/foreground colors.
-LESS_TERMCAP_mh="$(tput dim)"                           # Enter dim mode.
-LESS_TERMCAP_ZN="$(tput ssubm)"                         # Enter subscript mode.
-LESS_TERMCAP_ZV="$(tput rsubm)"                         # End subscript mode.
-LESS_TERMCAP_ZO="$(tput ssupm)"                         # Enter superscript mode.
-LESS_TERMCAP_ZW="$(tput rsupm)"                         # End superscript mode.
+LESS_TERMCAP_mb="$(
+	tput bold
+	tput setaf 2
+)" # Start blinking, green
+LESS_TERMCAP_md="$(
+	tput bold
+	tput setaf 6
+)"                             # Start bold, cyan
+LESS_TERMCAP_me="$(tput sgr0)" # End bold, blinking, standout, underline
+LESS_TERMCAP_so="$(
+	tput bold
+	tput setaf 6
+	tput rev
+)" # Start stand out, cyan, reverse.
+LESS_TERMCAP_se="$(
+	tput rmso
+	tput sgr0
+)" # End standout, reset
+LESS_TERMCAP_us="$(
+	tput smul
+	tput bold
+	tput setaf 1
+)"                              # Start underline, bold, red
+LESS_TERMCAP_ue="$(tput sgr0)"  # End Underline
+LESS_TERMCAP_mr="$(tput rev)"   # Reverse background/foreground colors.
+LESS_TERMCAP_mh="$(tput dim)"   # Enter dim mode.
+LESS_TERMCAP_ZN="$(tput ssubm)" # Enter subscript mode.
+LESS_TERMCAP_ZV="$(tput rsubm)" # End subscript mode.
+LESS_TERMCAP_ZO="$(tput ssupm)" # Enter superscript mode.
+LESS_TERMCAP_ZW="$(tput rsupm)" # End superscript mode.
 export LESS_TERMCAP_mb
 export LESS_TERMCAP_md
 export LESS_TERMCAP_me
