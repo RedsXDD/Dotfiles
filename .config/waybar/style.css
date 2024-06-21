@@ -107,6 +107,11 @@ tooltip label {
 }
 /* }}} */
 /* Window {{{ */
+#window {
+	background: @color4;
+	color: @background;
+}
+
 #waybar.empty #window {
 	background: transparent;
 	margin: 0;
