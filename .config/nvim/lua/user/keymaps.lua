@@ -242,6 +242,21 @@ map("n", "]b", "<CMD>bnext<CR>", "Next Buffer")
 map("n", "<Leader>bb", "<CMD>e #<CR>", "Switch to previously active buffer")
 --: }}}
 --: File explorer {{{
+local function toggle_netrw()
+	pcall(require, "netrw") -- Try loading netrw.nvim if it's installed.
+
+	local bufnr = vim.api.nvim_get_current_buf()
+	local filetype = vim.api.nvim_get_option_value("filetype", { buf = bufnr })
+
+	if vim.g.netrw_is_open and filetype == "netrw" then
+		vim.api.nvim_buf_delete(0, { force = true })
+		vim.g.netrw_is_open = false
+	else
+		vim.g.netrw_is_open = true
+		vim.cmd("Lexplore")
+	end
+end
+
 map("n", "<Leader>gf", function()
 	local has_neotree, neotree = pcall(require, "neo-tree.command")
 	local has_minifiles, files = pcall(require, "mini.files")
@@ -259,6 +274,8 @@ map("n", "<Leader>gf", function()
 		neotree.execute({ toggle = true, dir = cwd })
 	elseif has_minifiles then
 		files_toggle(cwd, true)
+	else
+		toggle_netrw()
 	end
 end, "Open file explorer on CWD.")
 
@@ -281,6 +298,8 @@ map("n", "<Leader>gF", function()
 		neotree.execute({ toggle = true, dir = current_directory })
 	elseif has_minifiles then
 		files_toggle(current_directory, true)
+	else
+		toggle_netrw()
 	end
 end, "Open file explorer on directory of current file.")
 --: }}}
