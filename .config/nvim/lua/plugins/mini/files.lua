@@ -1,36 +1,6 @@
 return {
 	"echasnovski/mini.files",
 	dependencies = { "nvim-tree/nvim-web-devicons" },
-	keys = function()
-		local M = {}
-
-		local files = require("mini.files")
-
-		local files_toggle = function(path, use_lastest)
-			if not files.close() then
-				files.open(path, use_lastest)
-			end
-		end
-
-		local files_map = function(keys, func, desc)
-			local keymap_table = { keys, func, mode = { "n" }, noremap = true, desc = "" .. desc }
-			table.insert(M, keymap_table)
-		end
-
-		files_map("<Leader>gf", function()
-			---@diagnostic disable-next-line: undefined-field
-			files_toggle(vim.uv.cwd(), true)
-		end, "Open Mini.files on CWD.")
-
-		files_map("<Leader>gF", function()
-			files_toggle(vim.api.nvim_buf_get_name(0), true)
-			local cur_entry_path = files.get_fs_entry().path
-			local cur_directory = vim.fs.dirname(cur_entry_path)
-			vim.fn.chdir(cur_directory)
-		end, "Open Mini.files on directory of current file.")
-
-		return M
-	end,
 	-- FIX: use `autocmd` for lazy-loading mini.files instead of directly requiring it, because `cwd` is not set up properly.
 	init = function()
 		vim.g.loaded_netrwPlugin = 1

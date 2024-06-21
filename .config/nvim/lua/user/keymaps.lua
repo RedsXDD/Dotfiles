@@ -241,3 +241,46 @@ map("n", "[b", "<CMD>bprevious<CR>", "Prev Buffer")
 map("n", "]b", "<CMD>bnext<CR>", "Next Buffer")
 map("n", "<Leader>bb", "<CMD>e #<CR>", "Switch to previously active buffer")
 --: }}}
+--: File explorer {{{
+map("n", "<Leader>gf", function()
+	local has_neotree, neotree = pcall(require, "neo-tree.command")
+	local has_minifiles, files = pcall(require, "mini.files")
+
+	---@diagnostic disable-next-line: undefined-field
+	local cwd = vim.uv.cwd()
+
+	local files_toggle = function(path, use_lastest)
+		if not files.close() then
+			files.open(path, use_lastest)
+		end
+	end
+
+	if has_neotree then
+		neotree.execute({ toggle = true, dir = cwd })
+	elseif has_minifiles then
+		files_toggle(cwd, true)
+	end
+end, "Open file explorer on CWD.")
+
+map("n", "<Leader>gF", function()
+	local has_neotree, neotree = pcall(require, "neo-tree.command")
+	local has_minifiles, files = pcall(require, "mini.files")
+
+	local filepath = vim.api.nvim_buf_get_name(0)
+	local current_directory = vim.fs.dirname(filepath)
+	vim.fn.chdir(current_directory)
+
+	local files_toggle = function(path, use_lastest)
+		if not files.close() then
+			files.open(path, use_lastest)
+		end
+	end
+
+	if has_neotree then
+		---@diagnostic disable-next-line: undefined-field
+		neotree.execute({ toggle = true, dir = current_directory })
+	elseif has_minifiles then
+		files_toggle(current_directory, true)
+	end
+end, "Open file explorer on directory of current file.")
+--: }}}

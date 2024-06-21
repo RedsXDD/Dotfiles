@@ -8,26 +8,6 @@ return {
 	},
 	branch = "v3.x",
 	cmd = "Neotree",
-	keys = {
-		{
-			"<Leader>gf",
-			function()
-				---@diagnostic disable-next-line: undefined-field
-				require("neo-tree.command").execute({ toggle = true, dir = vim.uv.cwd() })
-			end,
-			desc = "Open Neotree on CWD.",
-		},
-		{
-			"<Leader>gF",
-			function()
-				---@diagnostic disable-next-line: undefined-field
-				local filepath = vim.api.nvim_buf_get_name(0)
-				local dir = vim.fn.fnamemodify(filepath, ":h")
-				require("neo-tree.command").execute({ toggle = true, dir = dir })
-			end,
-			desc = "Open Neotree on directory of current file.",
-		},
-	},
 	-- FIX: use `autocmd` for lazy-loading neo-tree instead of directly requiring it, because `cwd` is not set up properly.
 	init = function()
 		vim.api.nvim_create_autocmd("BufEnter", {
