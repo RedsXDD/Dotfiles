@@ -19,6 +19,9 @@ return {
 				lsp_map("<Leader>lD", vim.lsp.buf.declaration, "Goto declaration.")
 				lsp_map("<Leader>ls", vim.lsp.buf.signature_help, "Display signature help.")
 				lsp_map("<Leader>la", vim.lsp.buf.code_action, "List code actions.")
+				lsp_map("<Leader>li", function()
+					vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
+				end, "Toggle inlay hints.")
 				lsp_map("<Leader>lI", vim.lsp.buf.implementation, "Goto implementation.")
 				lsp_map("<Leader>lR", vim.lsp.buf.references, "Goto references.")
 				lsp_map("<Leader>lr", vim.lsp.buf.rename, "Rename.")
@@ -60,6 +63,7 @@ return {
 					Lua = {
 						completion = { callSnippet = "Replace" },
 						diagnostics = { globals = { "vim" } },
+						hint = { enable = true },
 						workspace = {
 							checkThirdParty = false,
 							library = {
