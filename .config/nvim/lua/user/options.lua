@@ -20,7 +20,7 @@ local cache_dir = os.getenv("HOME") .. "/.cache/nvim/"
 o.guifont = "JetBrainsMono Nerd Font,Noto_Color_Emoji:h14" -- The font used in graphical Neovim applications.
 --: Netrw {{{
 g.netrw_banner = 0 -- Enable/Disable netrw banner text.
-g.netrw_browse_split = 4 -- Open in prior window.
+g.netrw_browse_split = 3 -- Open file on a new tab.
 g.netrw_altv = 1 -- Change from left splitting to right splitting.
 g.netrw_liststyle = 3 -- Tree style view in netrw.
 --: }}}
