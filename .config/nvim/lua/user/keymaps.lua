@@ -212,29 +212,29 @@ map("", "<Leader>z", function()
 end, "Maximize current window.")
 
 -- Move across splits:
-map("", "<C-h>", "<C-W>h", "Move to the left split window.")
-map("", "<C-j>", "<C-W>j", "Move to the split window below.")
-map("", "<C-k>", "<C-W>k", "Move to the split window above.")
-map("", "<C-l>", "<C-W>l", "Move to the right split window.")
+map("", "<C-h>", "<CMD>wincmd h<CR>", "Move to the left split window.")
+map("", "<C-j>", "<CMD>wincmd j<CR>", "Move to the split window below.")
+map("", "<C-k>", "<CMD>wincmd k<CR>", "Move to the split window above.")
+map("", "<C-l>", "<CMD>wincmd l<CR>", "Move to the right split window.")
 
 -- Resize split windows:
-map("", "<C-Left>", "<C-w>>", "Increase width of split window.")
-map("", "<C-Down>", "<C-w>-", "Decrease height of split window.")
-map("", "<C-Up>", "<C-w>+", "Increase height of split window.")
-map("", "<C-Right>", "<C-w><", "Decrease width of split window.")
+map("", "<C-Left>", "<CMD>wincmd ><CR>", "Increase width of split window.")
+map("", "<C-Down>", "<CMD>wincmd -", "Decrease height of split window.")
+map("", "<C-Up>", "<CMD>wincmd +", "Increase height of split window.")
+map("", "<C-Right>", "<CMD>wincmd <", "Decrease width of split window.")
 
 -- Move currently actively selected split to the left/bottom/top/right:
-map("", "<C-S-Left>", "<C-W>H", "Move split window to the left.")
-map("", "<C-S-Down>", "<C-W>J", "Move split window to the bottom.")
-map("", "<C-S-Up>", "<C-W>K", "Move split window to the top.")
-map("", "<C-S-Right>", "<C-W>L", "Move split window to the right.")
+map("", "<C-S-Left>", "<CMD>wincmd H<CR>", "Move split window to the left.")
+map("", "<C-S-Down>", "<CMD>wincmd J<CR>", "Move split window to the bottom.")
+map("", "<C-S-Up>", "<CMD>wincmd K<CR>", "Move split window to the top.")
+map("", "<C-S-Right>", "<CMD>wincmd L<CR>", "Move split window to the right.")
 --: }}}
 --: Tab & buffer management {{{
 -- Buffer management:
-map("", "<Leader>bb", "<C-w>T", "Break split into a new tab.")
+map("", "<Leader>bb", "<CMD>wincmd T", "Break split into a new tab.")
 map("", "<Leader>bc", ":badd | enew<CR>", "Open a new buffer.")
 map("", "<Leader>bC", ":tabnew | enew<CR>", "Open a new tab.")
-map("", "<Leader>x", "<C-w>q", "Close current buffer.")
+map("", "<Leader>x", "<CMD>wincmd q", "Close current buffer.")
 map("", "<Leader>.", ":tabn<CR>", "Move to the next tab.")
 map("", "<Leader>,", ":tabp<CR>", "Move to the previous tab.")
 map("n", "[b", "<CMD>bprevious<CR>", "Prev Buffer")
@@ -349,10 +349,10 @@ vim.api.nvim_create_autocmd("FileType", {
 		buf_map("v", "v:lua netrw_split_file(true)<CR>", "Open file under cursor on a vertical split.")
 
 		buf_map("q", "<CMD>bd!<CR>", "Close netrw with q.")
-		buf_map("<C-h>", "<C-W>h", "Move to the left split window.")
-		buf_map("<C-j>", "<C-W>j", "Move to the split window below.")
-		buf_map("<C-k>", "<C-W>k", "Move to the split window above.")
-		buf_map("<C-l>", "<C-W>l", "Move to the right split window.")
+		buf_map("<C-h>", "<CMD>wincmd h<CR>", "Move to the left split window.")
+		buf_map("<C-j>", "<CMD>wincmd j<CR>", "Move to the split window below.")
+		buf_map("<C-k>", "<CMD>wincmd k<CR>", "Move to the split window above.")
+		buf_map("<C-l>", "<CMD>wincmd l<CR>", "Move to the right split window.")
 		buf_map("[b", "<Nop>", "Disable buffer switching inside netrw window.")
 		buf_map("]b", "<Nop>", "Disable buffer switching inside netrw window.")
 		buf_map("[B", "<Nop>", "Disable buffer switching inside netrw window.")
