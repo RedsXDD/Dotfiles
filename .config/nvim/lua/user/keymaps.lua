@@ -247,6 +247,8 @@ map("n", "<Leader>bb", "<CMD>e #<CR>", "Switch to previously active buffer")
 local function toggle_netrw()
 	pcall(require, "netrw") -- Try loading netrw.nvim if it's installed.
 
+	local netrw_winsize = vim.g.netrw_winsize or 30
+
 	local bufnr = vim.api.nvim_get_current_buf()
 	local filetype = vim.api.nvim_get_option_value("filetype", { buf = bufnr })
 
@@ -256,6 +258,7 @@ local function toggle_netrw()
 	else
 		vim.g.netrw_is_open = true
 		vim.cmd("Lexplore")
+		vim.cmd("vertical resize " .. netrw_winsize)
 	end
 end
 
