@@ -315,6 +315,39 @@ vim.api.nvim_create_autocmd("FileType", {
 			vim.api.nvim_buf_set_keymap(0, "n", keys, func, { noremap = true, silent = true, desc = "" .. desc })
 		end
 
+		---@param vsplit boolean
+		---@diagnostic disable-next-line: duplicate-set-field
+		function _G.netrw_split_file(vsplit)
+			if type(vsplit) ~= "boolean" then
+				error("netrw_split_file: expected boolean, got" .. type(vsplit))
+			end
+
+			---@param filepath string
+			local function openFile(filepath)
+				local split_method = vsplit and "vsplit " or "split "
+				toggle_netrw()
+				vim.cmd(split_method .. filepath)
+				toggle_netrw()
+			end
+
+			-- https://vi.stackexchange.com/questions/34790/how-to-get-path-in-netrw
+			vim.cmd([[let g:filepath=netrw#Call("NetrwTreePath", w:netrw_treetop)]])
+
+			local filepath = vim.g.filepath
+			if vim.fn.isdirectory(filepath) ~= 0 then
+				vim.cmd([[let g:filename=netrw#Call('NetrwFile', netrw#Call('NetrwGetWord'))]])
+				filepath = filepath .. vim.g.filename
+			end
+
+			openFile(filepath)
+			vim.g.filepath = nil
+		end
+
+		buf_map("_", "v:lua netrw_split_file(false)<CR>", "Open file under cursor on a horizontal split.")
+		buf_map("-", "v:lua netrw_split_file(true)<CR>", "Open file under cursor on a vertical split.")
+		buf_map("o", "v:lua netrw_split_file(false)<CR>", "Open file under cursor on a horizontal split.")
+		buf_map("v", "v:lua netrw_split_file(true)<CR>", "Open file under cursor on a vertical split.")
+
 		buf_map("q", "<CMD>bd!<CR>", "Close netrw with q.")
 		buf_map("<C-h>", "<C-W>h", "Move to the left split window.")
 		buf_map("<C-j>", "<C-W>j", "Move to the split window below.")
