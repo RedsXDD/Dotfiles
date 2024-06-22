@@ -303,3 +303,27 @@ map("n", "<Leader>gF", function()
 	end
 end, "Open file explorer on directory of current file.")
 --: }}}
+--: Netrw mappings {{{
+vim.api.nvim_create_autocmd("FileType", {
+	group = vim.api.nvim_create_augroup("augroup_netrw_keymaps", { clear = true }),
+	pattern = "netrw",
+	callback = function()
+		---@param keys string
+		---@param func string
+		---@param desc string
+		local buf_map = function(keys, func, desc)
+			vim.api.nvim_buf_set_keymap(0, "n", keys, func, { noremap = true, silent = true, desc = "" .. desc })
+		end
+
+		buf_map("q", "<CMD>bd!<CR>", "Close netrw with q.")
+		buf_map("<C-h>", "<C-W>h", "Move to the left split window.")
+		buf_map("<C-j>", "<C-W>j", "Move to the split window below.")
+		buf_map("<C-k>", "<C-W>k", "Move to the split window above.")
+		buf_map("<C-l>", "<C-W>l", "Move to the right split window.")
+		buf_map("[b", "<Nop>", "Disable buffer switching inside netrw window.")
+		buf_map("]b", "<Nop>", "Disable buffer switching inside netrw window.")
+		buf_map("[B", "<Nop>", "Disable buffer switching inside netrw window.")
+		buf_map("]B", "<Nop>", "Disable buffer switching inside netrw window.")
+	end,
+})
+--: }}}
