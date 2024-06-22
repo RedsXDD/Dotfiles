@@ -44,7 +44,7 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 })
 
 -- Resize splits if window got resized.
-vim.api.nvim_create_autocmd({ "VimResized" }, {
+vim.api.nvim_create_autocmd("VimResized", {
 	desc = "Resize splits if window got resized.",
 	group = augroup("resize_splits"),
 	callback = function()
@@ -101,7 +101,7 @@ vim.api.nvim_create_autocmd("FileType", {
 })
 
 -- Fix conceallevel for json files.
-vim.api.nvim_create_autocmd({ "FileType" }, {
+vim.api.nvim_create_autocmd("FileType", {
 	desc = "Fix conceallevel for json files.",
 	group = augroup("json_conceal"),
 	pattern = { "json", "jsonc", "json5" },
@@ -111,7 +111,7 @@ vim.api.nvim_create_autocmd({ "FileType" }, {
 })
 
 -- Auto create directories when saving a file, in case some intermediate directory does not exist.
-vim.api.nvim_create_autocmd({ "BufWritePre" }, {
+vim.api.nvim_create_autocmd("BufWritePre", {
 	desc = "Auto create directories when saving a file.",
 	group = augroup("auto_create_dir"),
 	callback = function(event)
