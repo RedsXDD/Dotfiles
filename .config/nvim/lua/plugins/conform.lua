@@ -1,7 +1,7 @@
 return {
 	"stevearc/conform.nvim",
 	dependencies = { "mason.nvim" },
-	event = "LazyFile",
+	lazy = true,
 	cmd = "ConformInfo",
 	keys = {
 		{
