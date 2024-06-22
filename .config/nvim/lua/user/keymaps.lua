@@ -353,8 +353,8 @@ vim.api.nvim_create_autocmd("FileType", {
 		buf_map("<C-j>", "<CMD>wincmd j<CR>", "Move to the split window below.")
 		buf_map("<C-k>", "<CMD>wincmd k<CR>", "Move to the split window above.")
 		buf_map("<C-l>", "<CMD>wincmd l<CR>", "Move to the right split window.")
-		buf_map("[b", "<Nop>", "Disable buffer switching inside netrw window.")
-		buf_map("]b", "<Nop>", "Disable buffer switching inside netrw window.")
+		buf_map("[b", "<CMD>wincmd p | bprev | wincmd p<CR>", "Buffer backward")
+		buf_map("]b", "<CMD>wincmd p | bnext | wincmd p<CR>", "Buffer forward")
 		buf_map("[B", "<Nop>", "Disable buffer switching inside netrw window.")
 		buf_map("]B", "<Nop>", "Disable buffer switching inside netrw window.")
 	end,
