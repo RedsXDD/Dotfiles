@@ -31,9 +31,9 @@ o.swapfile = true -- Creates a swap file.
 o.undolevels = 10000 -- Maximum number of changes that can be undone.
 o.history = 10000 -- Set the amount of commands to be saved in history.
 o.writebackup = true -- Creates a backup file before overwritting a file.
-o.backupdir = cache_dir -- Directory to store backup files.
-o.undodir = cache_dir -- Directory to store undo files.
-o.directory = cache_dir -- Directory to store swap files.
+o.backupdir = cache_dir .. "backup" -- Directory to store backup files.
+o.undodir = cache_dir .. "undo" -- Directory to store undo files.
+o.directory = cache_dir .. "swap" -- Directory to store swap files.
 --: }}}
 --: Complete menu {{{
 o.wildmenu = true -- When on, pressing <Tab> on the command-line will open a completion menu.
