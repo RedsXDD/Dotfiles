@@ -1,6 +1,6 @@
 return {
 	"echasnovski/mini.diff",
-	event = { "BufReadPost", "BufNewFile" },
+	event = "LazyFile",
 	keys = {
 		{ "[h", "]h", "[H", "]H" },
 		{ "<Leader>d" },

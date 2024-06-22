@@ -2,7 +2,7 @@ return {
 	"akinsho/bufferline.nvim",
 	dependencies = "nvim-tree/nvim-web-devicons",
 	version = "*",
-	event = { "BufReadPost", "BufNewFile", "BufUnload" },
+	event = "LazyFile",
 	opts = function()
 		return {
 			highlights = require("neopywal.bufferline").setup(),

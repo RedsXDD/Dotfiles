@@ -1,6 +1,6 @@
 return {
 	"echasnovski/mini.indentscope",
-	event = { "BufReadPost", "BufNewFile" },
+	event = "LazyFile",
 	init = function()
 		local group_name = "augroup_mini_indentscope_disable"
 		local augroup = vim.api.nvim_create_augroup(group_name, { clear = true })

@@ -4,7 +4,7 @@ return {
 		"williamboman/mason-lspconfig.nvim",
 		"WhoIsSethDaniel/mason-tool-installer.nvim",
 	},
-	event = { "BufReadPre", "BufNewFile" },
+	event = "LazyFile",
 	keys = {
 		{ "<Leader>gm", "<CMD>Mason<CR>", desc = "Open Mason UI." },
 	},

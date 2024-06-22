@@ -1,6 +1,6 @@
 return {
 	"echasnovski/mini.hipatterns",
-	event = { "BufReadPost", "BufNewFile" },
+	event = "LazyFile",
 	config = function()
 		local hipatterns = require("mini.hipatterns")
 		hipatterns.setup({
