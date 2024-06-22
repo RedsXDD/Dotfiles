@@ -29,8 +29,12 @@ return {
 		})
 	end,
 	opts = {
-		draw = { animation = function() return 1 end },
+		draw = {
+			animation = function()
+				return 1
+			end,
+		},
 		options = { try_as_border = true },
-		symbol = require("user.icons").misc.indent
+		symbol = require("user.icons").misc.indent,
 	},
 }
