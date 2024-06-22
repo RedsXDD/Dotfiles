@@ -23,7 +23,7 @@ return {
 		"RedsXDD/neopywal.nvim",
 		branch = "testing",
 		name = "neopywal",
-		lazy = false,
+		lazy = true,
 		priority = 1000,
 		opts = {
 			use_wallust = true,
