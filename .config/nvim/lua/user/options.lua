@@ -97,7 +97,6 @@ o.autowrite = true -- Write the contents of the file, if it has been modified, o
 o.clipboard = "unnamedplus" -- Use system clipboard.
 o.confirm = true -- Confirm to save changes before exiting modified buffer.
 -- o.fileencoding = "utf-8" -- The encoding written to a file.
-o.formatoptions = "jql" -- Don't insert comments on newlines.
 o.grepformat = "%f:%l:%c:%m" -- Format to recognize for the ":grep" command output.
 o.grepprg = "rg --vimgrep" -- Program to use for the |:grep| command.
 o.hidden = true -- Does not close file when opening a new one.

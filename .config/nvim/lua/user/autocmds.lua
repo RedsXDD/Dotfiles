@@ -54,6 +54,16 @@ vim.api.nvim_create_autocmd("VimResized", {
 	end,
 })
 
+-- Don't insert comments on newlines.
+vim.api.nvim_create_autocmd("FileType", {
+	desc = "Disable inserting comments when creating a newline below one.",
+	group = augroup("disable_newline_comments"),
+	pattern = "*",
+	callback = function()
+		vim.o.formatoptions = vim.o.formatoptions:gsub("cro", "")
+	end,
+})
+
 -- Close some filetypes with <q>.
 vim.api.nvim_create_autocmd("FileType", {
 	desc = "Close with <q>.",
