@@ -5,7 +5,7 @@ return {
 			"MunifTanjim/nui.nvim",
 			"rcarriga/nvim-notify",
 		},
-		event = "VeryLazy",
+		event = "CmdLineEnter",
 		keys = function()
 			local M = {}
 
