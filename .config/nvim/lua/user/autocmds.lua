@@ -1,5 +1,4 @@
 -- Set local variables/functions.
-local autocmd = vim.api.nvim_create_autocmd
 local function augroup(name)
 	return vim.api.nvim_create_augroup("augroup_" .. name, { clear = true })
 end
@@ -35,7 +34,7 @@ vim.api.nvim_create_autocmd({ "FocusGained", "TermClose", "TermLeave" }, {
 })
 
 -- Highlight when yanking (copying) text.
-autocmd("TextYankPost", {
+vim.api.nvim_create_autocmd("TextYankPost", {
 	desc = "Highlight when yanking (copying) text.",
 	group = augroup("highlight_yank"),
 	pattern = "*",
@@ -126,7 +125,7 @@ vim.api.nvim_create_autocmd({ "BufWritePre" }, {
 })
 
 -- Set tmux filetype for *.tmux files.
-autocmd({ "BufRead", "BufNewFile" }, {
+vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
 	desc = "Set tmux filetype for *.tmux files.",
 	group = augroup("set_tmux_filetype"),
 	pattern = "*.tmux",
@@ -134,7 +133,7 @@ autocmd({ "BufRead", "BufNewFile" }, {
 })
 
 --  Automatically deletes all trailing whitespace and newlines at end of file on save.
-autocmd("BufWritePre", {
+vim.api.nvim_create_autocmd("BufWritePre", {
 	desc = "Automatically deletes all trailing whitespace and newlines at end of file on save.",
 	group = augroup("delete_trailspace"),
 	command = [[
