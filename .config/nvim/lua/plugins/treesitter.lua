@@ -1,6 +1,9 @@
 return {
 	"nvim-treesitter/nvim-treesitter",
-	dependencies = { "nvim-treesitter/nvim-treesitter-textobjects" },
+	dependencies = {
+		{ "nvim-treesitter/nvim-treesitter-textobjects" },
+		{ "windwp/nvim-ts-autotag" },
+	},
 	lazy = vim.fn.argc(-1) == 0, -- load treesitter early when opening a file from the cmdline
 	event = { "LazyFile", "VeryLazy" },
 	cmd = { "TSUpdateSync", "TSUpdate", "TSInstall" },
