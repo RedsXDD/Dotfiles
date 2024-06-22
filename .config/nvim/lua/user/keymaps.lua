@@ -360,6 +360,7 @@ vim.api.nvim_create_autocmd("FileType", {
 		buf_map("<C-l>", "<CMD>wincmd l<CR>", "Move to the right split window.")
 		buf_map("[b", "<CMD>wincmd p | bprev | wincmd p<CR>", "Buffer backward")
 		buf_map("]b", "<CMD>wincmd p | bnext | wincmd p<CR>", "Buffer forward")
+		buf_map(".", "<CMD>call netrw#SetTreetop(0, netrw#Call('NetrwGetWord'))<CR>", "Buffer forward")
 	end,
 })
 --: }}}
