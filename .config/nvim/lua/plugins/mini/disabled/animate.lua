@@ -7,7 +7,7 @@ return {
 
 		return true
 	end,
-	event = { "BufReadPost", "BufNewFile", "BufUnload" },
+	event = "LazyFile",
 	keys = function()
 		local M = {}
 
