@@ -12,7 +12,7 @@ bufferline.setup({
 		diagnostics = "nvim_lsp",
 		separator_style = "slope", -- "slant" | "slope" | "thick" | "thin" | { 'any', 'any' }
 		diagnostics_indicator = function(_, _, diag)
-			local icons = require("user.icons").diagnostics
+			local icons = require("core.icons").diagnostics
 			local ret = (diag.error and icons.Error .. diag.error .. " " or "")
 				.. (diag.warning and icons.Warn .. diag.warning or "")
 				.. (diag.info and icons.Info .. diag.info or "")

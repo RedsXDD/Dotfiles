@@ -1,5 +1,5 @@
 local clue = require("mini.clue")
-local border_style = require("user.icons").misc.border
+local border_style = require("core.icons").misc.border
 
 clue.mkclue_with_dependency = function(dependency, clues)
 	if dependency and type(dependency) == "string" then

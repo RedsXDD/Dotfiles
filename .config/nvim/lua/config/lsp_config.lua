@@ -29,10 +29,10 @@ local opts = {
 		update_in_insert = false,
 		signs = {
 			text = {
-				[vim.diagnostic.severity.ERROR] = require("user.icons").diagnostics.Error,
-				[vim.diagnostic.severity.WARN] = require("user.icons").diagnostics.Warn,
-				[vim.diagnostic.severity.HINT] = require("user.icons").diagnostics.Hint,
-				[vim.diagnostic.severity.INFO] = require("user.icons").diagnostics.Info,
+				[vim.diagnostic.severity.ERROR] = require("core.icons").diagnostics.Error,
+				[vim.diagnostic.severity.WARN] = require("core.icons").diagnostics.Warn,
+				[vim.diagnostic.severity.HINT] = require("core.icons").diagnostics.Hint,
+				[vim.diagnostic.severity.INFO] = require("core.icons").diagnostics.Info,
 			},
 		},
 		virtual_text = {
@@ -44,7 +44,7 @@ local opts = {
 		float = {
 			focusable = false,
 			style = "minimal",
-			border = require("user.icons").misc.border,
+			border = require("core.icons").misc.border,
 			source = "always",
 			header = "",
 			prefix = "",
@@ -98,7 +98,7 @@ end
 if type(opts.diagnostics.virtual_text) == "table" and opts.diagnostics.virtual_text.prefix == "icons" then
 	opts.diagnostics.virtual_text.prefix = vim.fn.has("nvim-0.10.0") == 0 and "●"
 		or function(diagnostic)
-			local icons = require("user.icons").diagnostics
+			local icons = require("core.icons").diagnostics
 			for d, icon in pairs(icons) do
 				if diagnostic.severity == vim.diagnostic.severity[d:upper()] then
 					return icon

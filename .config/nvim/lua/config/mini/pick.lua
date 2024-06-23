@@ -1,6 +1,6 @@
 local pick = require("mini.pick")
-local border_style = require("user.icons").misc.border
-local icons = require("user.icons").pick
+local border_style = require("core.icons").misc.border
+local icons = require("core.icons").pick
 
 local win_config = function() -- Function to center mini.pick on screen.
 	local height = math.floor(0.618 * vim.o.lines)

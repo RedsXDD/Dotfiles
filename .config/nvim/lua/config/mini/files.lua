@@ -6,7 +6,7 @@ vim.api.nvim_create_autocmd("User", {
 	callback = function(args)
 		local win_id = args.data.win_id
 		-- vim.wo[win_id].winblend = 90 -- Window opacity.
-		vim.api.nvim_win_set_config(win_id, { border = require("user.icons").misc.border })
+		vim.api.nvim_win_set_config(win_id, { border = require("core.icons").misc.border })
 	end,
 })
 
@@ -90,7 +90,7 @@ files.setup({
 				return
 			end
 
-			local directory_icon = require("user.icons").mini_files.directory_icon
+			local directory_icon = require("core.icons").mini_files.directory_icon
 			if fs_entry.fs_type == "directory" then
 				return directory_icon, "MiniFilesDirectory"
 			end

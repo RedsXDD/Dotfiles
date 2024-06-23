@@ -1,4 +1,4 @@
-local kind_icons = require("user.icons").kinds
+local kind_icons = require("core.icons").kinds
 local cmp = require("cmp")
 local luasnip = require("luasnip")
 require("luasnip.loaders.from_vscode").lazy_load()

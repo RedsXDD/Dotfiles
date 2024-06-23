@@ -2,7 +2,7 @@ local starter = require("mini.starter")
 
 --: Main variables {{{
 local padding = string.rep(" ", 15) -- Padding to center sections and actions.
-local icons = require("user.icons").starter
+local icons = require("core.icons").starter
 
 local function lazy_load(plugin)
 	require("lazy").load({ plugins = plugin })
@@ -218,7 +218,7 @@ starter.setup({
 		starter.new_section(icons.actions.new_file .. "New File", "enew | startinsert", actions_section),
 		starter.new_section(icons.actions.quit .. "Quit", "q!", actions_section),
 		starter.new_section(icons.actions.file_explorer .. "Open File Explorer", function()
-			require("user.utils").toggle_file_explorer()
+			require("core.utils").toggle_file_explorer()
 		end, actions_section),
 
 		starter.new_section(icons.actions.list_buffers .. "List Buffers", function()

@@ -7,5 +7,5 @@ indentscope.setup({
 		end,
 	},
 	options = { try_as_border = true },
-	symbol = require("user.icons").misc.indent,
+	symbol = require("core.icons").misc.indent,
 })

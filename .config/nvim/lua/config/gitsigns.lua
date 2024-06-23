@@ -1,5 +1,5 @@
 local gitsigns = require("gitsigns")
-local icons = require("user.icons")
+local icons = require("core.icons")
 
 gitsigns.setup({
 	signs = {

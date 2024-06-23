@@ -208,7 +208,7 @@ pum_map({
 map("", "<Leader>-", ":vsplit | enew<CR>", "Create vertical split.")
 map("", "<Leader>_", ":split | enew<CR>", "Create horizontal split.")
 map("", "<Leader>z", function()
-	require("user.utils").maximize()
+	require("core.utils").maximize()
 end, "Maximize current window.")
 
 -- Move across splits:
@@ -245,11 +245,11 @@ map("n", "<Leader>bb", "<CMD>e #<CR>", "Switch to previously active buffer")
 --: }}}
 --: File explorer {{{
 map("n", "<Leader>gf", function()
-	require("user.utils").toggle_file_explorer()
+	require("core.utils").toggle_file_explorer()
 end, "Open file explorer on CWD.")
 
 map("n", "<Leader>gF", function()
-	require("user.utils").toggle_file_explorer(true)
+	require("core.utils").toggle_file_explorer(true)
 end, "Open file explorer on directory of current file.")
 --: }}}
 --: Netrw mappings {{{
@@ -274,9 +274,9 @@ vim.api.nvim_create_autocmd("FileType", {
 			---@param filepath string
 			local function openFile(filepath)
 				local split_method = vsplit and "vsplit " or "split "
-				require("user.utils").toggle_netrw()
+				require("core.utils").toggle_netrw()
 				vim.cmd(split_method .. filepath)
-				require("user.utils").toggle_netrw()
+				require("core.utils").toggle_netrw()
 			end
 
 			-- https://vi.stackexchange.com/questions/34790/how-to-get-path-in-netrw

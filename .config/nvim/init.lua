@@ -11,8 +11,8 @@
 
 -- ----------------------------------------------- --
 
-require("user.lazy")
-require("user.options")
-require("user.autocmds")
-require("user.keymaps")
-require("user.colorscheme")
+require("core.lazy")
+require("core.options")
+require("core.autocmds")
+require("core.keymaps")
+require("core.colorscheme")

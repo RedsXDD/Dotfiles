@@ -1,5 +1,5 @@
 local diff = require("mini.diff")
-local icons = require("user.icons").gitsigns
+local icons = require("core.icons").gitsigns
 
 diff.setup({
 	view = {

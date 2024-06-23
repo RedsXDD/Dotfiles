@@ -1,4 +1,4 @@
-local icons = require("user.icons")
+local icons = require("core.icons")
 local lualine = require("lualine")
 
 local location = function()

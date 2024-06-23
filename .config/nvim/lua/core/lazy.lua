@@ -23,7 +23,7 @@ Event.mappings.LazyFile = { id = "LazyFile", event = { "BufReadPost", "BufNewFil
 Event.mappings["User LazyFile"] = Event.mappings.LazyFile
 
 -- Initialize lazy.nvim:
-require("lazy").setup("user.plugins", {
+require("lazy").setup("core.plugins", {
 	defaults = {
 		lazy = false,
 		version = false, -- Always use the latest git commit.

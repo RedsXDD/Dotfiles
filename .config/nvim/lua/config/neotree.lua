@@ -1,7 +1,7 @@
 local neotree = require("neotree")
 
 neotree.setup({
-	popup_border_style = require("user.icons").misc.border,
+	popup_border_style = require("core.icons").misc.border,
 	enable_git_status = true,
 	enable_diagnostics = true,
 	sort_case_insensitive = true,

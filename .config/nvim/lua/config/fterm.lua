@@ -2,7 +2,7 @@ local fterm = require("FTerm")
 
 fterm.setup({
 	ft = "FTerm",
-	border = require("user.icons").misc.border,
+	border = require("core.icons").misc.border,
 	auto_close = true,
 	hl = "NormalFloat",
 	blend = 0,
