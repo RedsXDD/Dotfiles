@@ -197,7 +197,7 @@ local main = {
 			"MunifTanjim/nui.nvim",
 			"rcarriga/nvim-notify",
 		},
-		event = "VeryLazy",
+		event = { "CmdLineEnter", "LazyFile" },
 		keys = function()
 			local noice = require("noice")
 			local noice_lsp = require("noice.lsp")
