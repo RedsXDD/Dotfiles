@@ -13,6 +13,21 @@ local function load_config(plugin)
 	end
 end
 
+---@param keys string
+---@param func string|function
+---@param desc string
+---@param opts table?
+local function map(modes, keys, func, desc, opts)
+	local mapping = { keys, func, mode = modes, desc = "" .. desc }
+
+	opts = opts or { noremap = true }
+	for k, v in pairs(opts) do
+		mapping[k] = v
+	end
+
+	return mapping
+end
+
 local colorschemes = {
 	--: catppuccin {{{
 	{
@@ -150,33 +165,25 @@ local main = {
 	{
 		"numToStr/FTerm.nvim",
 		keys = function()
-			local M = {}
 			local fterm = require("FTerm")
 
-			local term_map = function(keys, func, desc)
-				local keymap_table = { keys, func, mode = { "n" }, noremap = true, desc = "" .. desc }
-				table.insert(M, keymap_table)
-			end
-
-			term_map("<Leader>gt", function()
-				fterm.toggle()
-			end, "Open a floating terminal.")
-
-			term_map("<Leader>gg", function()
-				local use_lazygit = true
-				local git_integration = fterm:new({
-					ft = use_lazygit and "fterm_lazygit" or "fterm_gitui",
-					cmd = use_lazygit and "lazygit" or { "gg", "-d", vim.api.nvim_buf_get_name(0) }, -- Uses custom gitui script that fixes ssh.
-					blend = 0,
-					dimensions = {
-						height = 0.9,
-						width = 0.9,
-					},
-				})
-				git_integration:toggle()
-			end, "Open git integration.")
-
-			return M
+			return {
+				-- stylua: ignore
+				map("", "<Leader>gt", function() fterm.toggle() end, "Open a floating terminal."),
+				map("", "<Leader>gg", function()
+					local use_lazygit = true
+					local git_integration = fterm:new({
+						ft = use_lazygit and "fterm_lazygit" or "fterm_gitui",
+						cmd = use_lazygit and "lazygit" or { "gg", "-d", vim.api.nvim_buf_get_name(0) }, -- Uses custom gitui script that fixes ssh.
+						blend = 0,
+						dimensions = {
+							height = 0.9,
+							width = 0.9,
+						},
+					})
+					git_integration:toggle()
+				end, "Open git integration."),
+			}
 		end,
 		config = function()
 			load_config("fterm")
@@ -192,62 +199,30 @@ local main = {
 		},
 		event = "VeryLazy",
 		keys = function()
-			local M = {}
-
 			local noice = require("noice")
 			local noice_lsp = require("noice.lsp")
 
-			local noice_map = function(mode, keys, func, desc)
-				local keymap_table = { keys, func, mode = { mode }, noremap = true, desc = "" .. desc }
-				table.insert(M, keymap_table)
-			end
+			return {
+				-- stylua: ignore start
+				map("c", "<S-Enter>", function() noice.redirect(vim.fn.getcmdline()) end, "Redirect Cmdline"),
+				map("n", "<Leader>gnl", function() noice.cmd("last") end, "Noice Last Message"),
+				map("n", "<Leader>gnh", function() noice.cmd("history") end, "Noice History"),
+				map("n", "<Leader>gna", function() noice.cmd("all") end, "Noice All"),
+				map("n", "<Leader>gnd", function() noice.cmd("dismiss")  end, "Dismiss All"),
+				-- stylua: ignore end
 
-			local noice_lsp_map = function(keys, func, desc)
-				local keymap_table = {
-					keys,
-					func,
-					mode = { "i", "n", "s" },
-					noremap = true,
-					silent = true,
-					expr = true,
-					desc = "" .. desc,
-				}
-				table.insert(M, keymap_table)
-			end
+				map({ "n", "i", "s" }, "<C-f>", function()
+					if not noice_lsp.scroll(4) then
+						return "<C-f>"
+					end
+				end, "Scroll Forward", { noremap = true, silent = true, expr = true }),
 
-			noice_map("c", "<S-Enter>", function()
-				noice.redirect(vim.fn.getcmdline())
-			end, "Redirect Cmdline")
-
-			noice_map("n", "<Leader>gnl", function()
-				noice.cmd("last")
-			end, "Noice Last Message")
-
-			noice_map("n", "<Leader>gnh", function()
-				noice.cmd("history")
-			end, "Noice History")
-
-			noice_map("n", "<Leader>gna", function()
-				noice.cmd("all")
-			end, "Noice All")
-
-			noice_map("n", "<Leader>gnd", function()
-				noice.cmd("dismiss")
-			end, "Dismiss All")
-
-			noice_lsp_map("<C-f>", function()
-				if not noice_lsp.scroll(4) then
-					return "<C-f>"
-				end
-			end, "Scroll Forward")
-
-			noice_lsp_map("<C-b>", function()
-				if not noice_lsp.scroll(-4) then
-					return "<C-b>"
-				end
-			end, "Scroll Backward")
-
-			return M
+				map({ "n", "i", "s" }, "<C-b>", function()
+					if not noice_lsp.scroll(-4) then
+						return "<C-b>"
+					end
+				end, "Scroll Backward", { noremap = true, silent = true, expr = true }),
+			}
 		end,
 		config = function()
 			load_config("noice")
@@ -355,39 +330,12 @@ local mini = {
 		"echasnovski/mini.completion",
 		event = "InsertEnter",
 		keys = function()
-			local M = {}
-
-			local pum_map = function(actions, desc)
-				if type(actions) ~= "table" then
-					error("Could not find `table` for `pum_map()`.")
-				end
-
-				if actions.key == nil then
-					actions.key = actions.normal
-				end
-
-				local keymap_table = {
-					actions.key,
-					function()
-						return vim.fn.pumvisible() ~= 0 and actions.pum or actions.normal
-					end,
-					mode = { "i" },
-					noremap = true,
-					silent = true,
-					expr = true,
-					desc = "" .. desc,
-				}
-
-				table.insert(M, keymap_table)
-			end
-
-			pum_map({
-				key = "<C-n>",
-				pum = "<C-n>",
-				normal = [[<C-n><C-r>=pumvisible() ? "\<lt>C-n>\<lt>C-n>\<lt>C-p>" : ""<CR>]],
-			}, "Auto open & select first item on completion menu.")
-
-			return M
+			return {
+				-- stylua: ignore
+				map("i", "<C-n>", function()
+						return vim.fn.pumvisible() ~= 0 and "<C-n>" or [[<C-n><C-r>=pumvisible() ? "\<lt>C-n>\<lt>C-n>\<lt>C-p>" : ""<CR>]]
+				end, "Auto open & select first item on completion menu.", { noremap = true, silent = true, expr = true }),
+			}
 		end,
 		config = function()
 			load_config("mini.completion")
@@ -410,64 +358,57 @@ local mini = {
 		dependencies = { "echasnovski/mini.extra", opts = {} },
 		cmd = "Pick",
 		keys = function()
-			local M = {}
-
 			local pick = require("mini.pick").builtin
 			local extra = require("mini.extra").pickers
 
-			local pick_map = function(keys, func, desc)
-				local keymap_table = { keys, func, mode = { "n" }, noremap = true, desc = "" .. desc }
-				table.insert(M, keymap_table)
-			end
+			return {
+				-- stylua: ignore start
+				-- Main pickers
+				map("n", "<Leader>ff", function() pick.files() end, "Pick files."),
+				map("n", "<Leader>fb", function() pick.buffers() end, "Pick buffers."),
+				map("n", "<Leader>f?", function() pick.help() end, "Pick help tags."),
 
-			-- stylua: ignore start
-			-- Main pickers
-			pick_map("<Leader>ff", function() pick.files() end, "Pick files.")
-			pick_map("<Leader>fb", function() pick.buffers() end, "Pick buffers.")
-			pick_map("<Leader>f?", function() pick.help() end, "Pick help tags.")
+				map("n", "<Leader>?", function() extra.keymaps() end, "Pick keymaps."),
+				map("n", "<Leader>f/", function() extra.explorer() end, "Open file explorer."),
+				map("n", "<Leader>fo", function() extra.oldfiles() end, "Pick recently opened files."),
+				map("n", "<Leader>fh", function() extra.history() end, "Pick command history."),
 
-			pick_map("<Leader>?", function() extra.keymaps() end, "Pick keymaps.")
-			pick_map("<Leader>f/", function() extra.explorer() end, "Open file explorer.")
-			pick_map("<Leader>fo", function() extra.oldfiles() end, "Pick recently opened files.")
-			pick_map("<Leader>fh", function() extra.history() end, "Pick command history.")
+				map("n", "<Leader>fm", function() extra.marks() end, "Pick marks."),
+				map("n", "<Leader>fr", function() extra.registers() end, "Pick registers."),
+				map("n", "<Leader>fs", function() extra.spellsuggest() end, "Pick spell suggestions."),
 
-			pick_map("<Leader>fm", function() extra.marks() end, "Pick marks.")
-			pick_map("<Leader>fr", function() extra.registers() end, "Pick registers.")
-			pick_map("<Leader>fs", function() extra.spellsuggest() end, "Pick spell suggestions.")
+				map("n", "<Leader>fq", function() extra.list({ scope = "quickfix" }) end, "Pick quickfix list."),
+				map("n", "<Leader>fL", function() extra.list({ scope = "location-list" }) end, "Pick location list."),
+				map("n", "<Leader>fj", function() extra.list({ scope = "jumplist" }) end, "Pick jumplist."),
+				map("n", "<Leader>fc", function() extra.list({ scope = "changelist" }) end, "Pick changelist."),
 
-			pick_map("<Leader>fq", function() extra.list({ scope = "quickfix" }) end, "Pick quickfix list.")
-			pick_map("<Leader>fL", function() extra.list({ scope = "location-list" }) end, "Pick location list.")
-			pick_map("<Leader>fj", function() extra.list({ scope = "jumplist" }) end, "Pick jumplist.")
-			pick_map("<Leader>fc", function() extra.list({ scope = "changelist" }) end, "Pick changelist.")
+				map("n", "<Leader>fB", function() extra.buf_lines() end, "Pick buffer lines."),
+				map("n", "<Leader>fec", function() extra.commands() end, "Pick commands."),
+				map("n", "<Leader>fep", function() extra.hipatterns() end, "Pick hipatterns."),
+				map("n", "<Leader>feh", function() extra.hl_groups() end, "Pick highlight groups."),
+				map("n", "<Leader>feo", function() extra.options() end, "Pick options."),
+				map("n", "<Leader>fet", function() extra.treesitter() end, "Pick treesitter nodes."),
 
-			pick_map("<Leader>fB", function() extra.buf_lines() end, "Pick buffer lines.")
-			pick_map("<Leader>fec", function() extra.commands() end, "Pick commands.")
-			pick_map("<Leader>fep", function() extra.hipatterns() end, "Pick hipatterns.")
-			pick_map("<Leader>feh", function() extra.hl_groups() end, "Pick highlight groups.")
-			pick_map("<Leader>feo", function() extra.options() end, "Pick options.")
-			pick_map("<Leader>fet", function() extra.treesitter() end, "Pick treesitter nodes.")
+				-- Grep & git,
+				map("n", "<Leader>fgg", function() pick.builtin.grep() end, "Grep for files on CWD."),
+				map("n", "<Leader>fgl", function() pick.builtin.grep_live() end, "Live grep for files on CWD."),
+				map("n", "<Leader>fgw", function() pick.builtin.grep({ pattern = vim.fn.expand("<cWORD>") }) end, "Pick string under cursor (Current buffer)."),
+				map("n", "<Leader>fgb", function() extra.git_branches() end, "Pick git branches."),
+				map("n", "<Leader>fgc", function() extra.git_commits() end, "Pick git commits."),
+				map("n", "<Leader>fgf", function() extra.git_files() end, "Pick git files."),
+				map("n", "<Leader>fgh", function() extra.git_hunks() end, "Pick git hunks."),
 
-			-- Grep & git
-			pick_map("<Leader>fgg", function() pick.builtin.grep() end, "Grep for files on CWD.")
-			pick_map("<Leader>fgl", function() pick.builtin.grep_live() end, "Live grep for files on CWD.")
-			pick_map("<Leader>fgw", function() pick.builtin.grep({ pattern = vim.fn.expand("<cWORD>") }) end, "Pick string under cursor (Current buffer).")
-			pick_map("<Leader>fgb", function() extra.git_branches() end, "Pick git branches.")
-			pick_map("<Leader>fgc", function() extra.git_commits() end, "Pick git commits.")
-			pick_map("<Leader>fgf", function() extra.git_files() end, "Pick git files.")
-			pick_map("<Leader>fgh", function() extra.git_hunks() end, "Pick git hunks.")
-
-			-- Lsp
-			pick_map("<Leader>fd", function() extra.diagnostic() end, "Pick diagnostics.")
-			pick_map("<Leader>fld", function() extra.lsp({ scope = "definition" }) end, "Pick definition(s).")
-			pick_map("<Leader>flD", function() extra.lsp({ scope = "declaration" }) end, "Pick declaration(s).")
-			pick_map("<Leader>fls", function() extra.lsp({ scope = "document_symbol" }) end, "Pick document symbol(s).")
-			pick_map("<Leader>fli", function() extra.lsp({ scope = "implementation" }) end, "Pick implementation(s).")
-			pick_map("<Leader>flr", function() extra.lsp({ scope = "references" }) end, "Pick reference(s).")
-			pick_map("<Leader>flt", function() extra.lsp({ scope = "type_definition" }) end, "Pick type definition(s).")
-			pick_map("<Leader>flw", function() extra.lsp({ scope = "workspace_symbol" }) end, "Pick workspace symbol(s).")
-			-- stylua: ignore end
-
-			return M
+				-- Lsp,
+				map("n", "<Leader>fd", function() extra.diagnostic() end, "Pick diagnostics."),
+				map("n", "<Leader>fld", function() extra.lsp({ scope = "definition" }) end, "Pick definition(s)."),
+				map("n", "<Leader>flD", function() extra.lsp({ scope = "declaration" }) end, "Pick declaration(s)."),
+				map("n", "<Leader>fls", function() extra.lsp({ scope = "document_symbol" }) end, "Pick document symbol(s)."),
+				map("n", "<Leader>fli", function() extra.lsp({ scope = "implementation" }) end, "Pick implementation(s)."),
+				map("n", "<Leader>flr", function() extra.lsp({ scope = "references" }) end, "Pick reference(s)."),
+				map("n", "<Leader>flt", function() extra.lsp({ scope = "type_definition" }) end, "Pick type definition(s)."),
+				map("n", "<Leader>flw", function() extra.lsp({ scope = "workspace_symbol" }) end, "Pick workspace symbol(s)."),
+				-- stylua: ignore end
+			}
 		end,
 		config = function()
 			load_config("mini.pick")
@@ -544,24 +485,19 @@ local mini = {
 		"echasnovski/mini.pairs",
 		event = "CmdlineEnter",
 		keys = function()
-			local M = {}
+			local M = {
+				map({ "n", "x" }, "<Leader>tp", function()
+					local state = vim.g.minipairs_disable
+					state = not state
+					vim.g.minipairs_disable = state
+					vim.notify(state and "Disabled " .. "mini.pairs" or "Enabled " .. "mini.pairs", vim.log.levels.INFO)
+				end, "Toggle Mini.pairs."),
+			}
 
 			local lazy_load_keys = { "'", '"', "`", "´", "(", ")", "[", "]", "{", "}", "<", ">" }
 			for _, key in ipairs(lazy_load_keys) do
 				table.insert(M, { key, mode = { "i" } })
 			end
-
-			local pairs_map = function(modes, keys, func, desc)
-				local keymap_table = { keys, func, mode = modes, noremap = true, desc = "" .. desc }
-				table.insert(M, keymap_table)
-			end
-
-			pairs_map({ "n", "x" }, "<Leader>tp", function()
-				local state = vim.g.minipairs_disable
-				state = not state
-				vim.g.minipairs_disable = state
-				vim.notify(state and "Disabled " .. "mini.pairs" or "Enabled " .. "mini.pairs", vim.log.levels.INFO)
-			end, "Toggle Mini.pairs.")
 
 			return M
 		end,
@@ -775,76 +711,69 @@ local disabled = {
 		branch = "0.1.x",
 		cmd = "Telescope",
 		keys = function()
-			local M = {}
-
 			local builtin = require("telescope.builtin")
 
-			local tele_map = function(keys, func, desc)
-				local keymap_table = { keys, func, mode = { "n" }, noremap = true, desc = "" .. desc }
-				table.insert(M, keymap_table)
-			end
+			return {
+				-- stylua: ignore start
+				-- Main:
+				map("n", "<Leader>?", function() builtin.keymaps() end, "Search keymaps."),
+				map("n", "<Leader>f?", function() builtin.help_tags() end, "Search help tags."),
+				map("n", "<Leader>ft", function() builtin.tags() end, "Search tags."),
+				map("n", "<Leader>fT", function() builtin.current_buffer_fuzzy_find() end, "Search tags on current buffer."),
+				map("n", "<Leader>fh", function() builtin.command_history() end, "Search command history."),
+				map("n", "<Leader>fS", function() builtin.search_history() end, "Search search history."),
+				map("n", "<Leader>fr", function() builtin.registers() end, "Search registers."),
+				map("n", "<Leader>fs", function() builtin.spell_suggest() end, "Search spell suggestions."),
+				map("n", "<Leader>fn", function() builtin.find_files({ cwd = vim.fn.stdpath("config") }) end, "Search Neovim configuration files."),
+				map("n", "<Leader>fm", function() builtin.marks() end, "Search marks."),
+				map("n", "<Leader>fM", function() builtin.man_pages() end, "Search man pages."),
 
-			-- stylua: ignore start
-			-- Main:
-			tele_map("<Leader>?", function() builtin.keymaps() end, "Search keymaps.")
-			tele_map("<Leader>f?", function() builtin.help_tags() end, "Search help tags.")
-			tele_map("<Leader>ft", function() builtin.tags() end, "Search tags.")
-			tele_map("<Leader>fT", function() builtin.current_buffer_fuzzy_find() end, "Search tags on current buffer.")
-			tele_map("<Leader>fh", function() builtin.command_history() end, "Search command history.")
-			tele_map("<Leader>fS", function() builtin.search_history() end, "Search search history.")
-			tele_map("<Leader>fr", function() builtin.registers() end, "Search registers.")
-			tele_map("<Leader>fs", function() builtin.spell_suggest() end, "Search spell suggestions.")
-			tele_map("<Leader>fn", function() builtin.find_files({ cwd = vim.fn.stdpath("config") }) end, "Search Neovim configuration files.")
-			tele_map("<Leader>fm", function() builtin.marks() end, "Search marks.")
-			tele_map("<Leader>fM", function() builtin.man_pages() end, "Search man pages.")
+				-- Lists:
+				map("n", "<Leader>fq", function() builtin.quickfix() end, "Search quickfix list."),
+				map("n", "<Leader>fQ", function() builtin.quickfixhistory() end, "Search quickfix list history."),
+				map("n", "<Leader>fL", function() builtin.loclist() end, "Search location list."),
+				map("n", "<Leader>fj", function() builtin.jumplist() end, "Search jumplist."),
 
-			-- Lists:
-			tele_map("<Leader>fq", function() builtin.quickfix() end, "Search quickfix list.")
-			tele_map("<Leader>fQ", function() builtin.quickfixhistory() end, "Search quickfix list history.")
-			tele_map("<Leader>fL", function() builtin.loclist() end, "Search location list.")
-			tele_map("<Leader>fj", function() builtin.jumplist() end, "Search jumplist.")
+				-- Buffers:
+				map("n", "<Leader>fb", function() builtin.buffers() end, "Search buffers."),
+				map("n", "<Leader>fB", function() builtin.current_buffer_fuzzy_find() end, "Search lines in current buffer."),
 
-			-- Buffers:
-			tele_map("<Leader>fb", function() builtin.buffers() end, "Search buffers.")
-			tele_map("<Leader>fB", function() builtin.current_buffer_fuzzy_find() end, "Search lines in current buffer.")
+				-- File searching:
+				map("n", "<Leader>ff", function() builtin.find_files({ follow = true, no_ignore = true, hidden = true }) end, "Find files on CWD (+ hidden files)."),
+				map("n", "<Leader>fo", function() builtin.oldfiles() end, "Search recently opened files."),
 
-			-- File searching:
-			tele_map("<Leader>ff", function() builtin.find_files({ follow = true, no_ignore = true, hidden = true }) end, "Find files on CWD (+ hidden files).")
-			tele_map("<Leader>fo", function() builtin.oldfiles() end, "Search recently opened files.")
+				-- Extra
+				map("n", "<Leader>feo", function() builtin.vim_options() end, "Search options."),
+				map("n", "<Leader>fec", function() builtin.commands() end, "Search commands."),
+				map("n", "<Leader>feC", function() builtin.colorscheme() end, "Search colorschemes."),
+				map("n", "<Leader>fea", function() builtin.autocommands() end, "Search autocommands."),
+				map("n", "<Leader>fet", function() builtin.filetypes() end, "Search filetypes."),
+				map("n", "<Leader>feh", function() builtin.highlights() end, "Search highlight groups."),
+				map("n", "<Leader>fet", function() builtin.treesitter() end, "Search treesitter nodes."),
 
-			-- Extra
-			tele_map("<Leader>feo", function() builtin.vim_options() end, "Search options.")
-			tele_map("<Leader>fec", function() builtin.commands() end, "Search commands.")
-			tele_map("<Leader>feC", function() builtin.colorscheme() end, "Search colorschemes.")
-			tele_map("<Leader>fea", function() builtin.autocommands() end, "Search autocommands.")
-			tele_map("<Leader>fet", function() builtin.filetypes() end, "Search filetypes.")
-			tele_map("<Leader>feh", function() builtin.highlights() end, "Search highlight groups.")
-			tele_map("<Leader>fet", function() builtin.treesitter() end, "Search treesitter nodes.")
+				-- Grep & git:
+				map("n", "<Leader>fgw", function() builtin.grep_string() end, "Search word under cursor."),
+				map("n", "<Leader>fgl", function() builtin.live_grep() end, "Live grep for files on CWD."),
+				map("n", "<Leader>fgo", function() builtin.live_grep({ grep_open_files = true, prompt_title = "Grep on open files." }) end, "Grep on open files."),
+				map("n", "<Leader>fgb", function() builtin.git_branches() end, "Search git branches."),
+				map("n", "<Leader>fgc", function() builtin.git_commits() end, "Search git commits."),
+				map("n", "<Leader>fgf", function() builtin.git_files() end, "Search git files."),
+				map("n", "<Leader>fgh", function() builtin.git_status() end, "Search git hunks."),
+				map("n", "<Leader>fgs", function() builtin.git_stash() end, "Search git stash."),
 
-			-- Grep & git:
-			tele_map("<Leader>fgw", function() builtin.grep_string() end, "Search word under cursor.")
-			tele_map("<Leader>fgl", function() builtin.live_grep() end, "Live grep for files on CWD.")
-			tele_map("<Leader>fgo", function() builtin.live_grep({ grep_open_files = true, prompt_title = "Grep on open files." }) end, "Grep on open files.")
-			tele_map("<Leader>fgb", function() builtin.git_branches() end, "Search git branches.")
-			tele_map("<Leader>fgc", function() builtin.git_commits() end, "Search git commits.")
-			tele_map("<Leader>fgf", function() builtin.git_files() end, "Search git files.")
-			tele_map("<Leader>fgh", function() builtin.git_status() end, "Search git hunks.")
-			tele_map("<Leader>fgs", function() builtin.git_stash() end, "Search git stash.")
-
-			-- LSP:
-			tele_map("<Leader>fd", function() builtin.diagnostics() end, "Search diagnostics.")
-			tele_map("<Leader>fld", function() builtin.lsp_definitions() end, "Search definition(s).")
-			tele_map("<Leader>fls", function() builtin.lsp_document_symbols() end, "Search document symbol(s).")
-			tele_map("<Leader>fli", function() builtin.lsp_implementations() end, "Search implementation(s).")
-			tele_map("<Leader>flI", function() builtin.lsp_incoming_calls() end, "Search incoming call(s).")
-			tele_map("<Leader>flo", function() builtin.lsp_outgoing_calls() end, "Search outgoing call(s).")
-			tele_map("<Leader>flr", function() builtin.lsp_references() end, "Search reference(s).")
-			tele_map("<Leader>flt", function() builtin.lsp_type_definitions() end, "Search type definition(s).")
-			tele_map("<Leader>flw", function() builtin.lsp_workspace_symbols() end, "Search workspace symbol(s).")
-			tele_map("<Leader>flW", function() builtin.lsp_dynamic_workspace_symbols() end, "Search workspace symbol(s) dynamically.")
-			-- stylua: ignore end
-
-			return M
+				-- LSP:
+				map("n", "<Leader>fd", function() builtin.diagnostics() end, "Search diagnostics."),
+				map("n", "<Leader>fld", function() builtin.lsp_definitions() end, "Search definition(s)."),
+				map("n", "<Leader>fls", function() builtin.lsp_document_symbols() end, "Search document symbol(s)."),
+				map("n", "<Leader>fli", function() builtin.lsp_implementations() end, "Search implementation(s)."),
+				map("n", "<Leader>flI", function() builtin.lsp_incoming_calls() end, "Search incoming call(s)."),
+				map("n", "<Leader>flo", function() builtin.lsp_outgoing_calls() end, "Search outgoing call(s)."),
+				map("n", "<Leader>flr", function() builtin.lsp_references() end, "Search reference(s)."),
+				map("n", "<Leader>flt", function() builtin.lsp_type_definitions() end, "Search type definition(s)."),
+				map("n", "<Leader>flw", function() builtin.lsp_workspace_symbols() end, "Search workspace symbol(s)."),
+				map("n", "<Leader>flW", function() builtin.lsp_dynamic_workspace_symbols() end, "Search workspace symbol(s) dynamically."),
+				-- stylua: ignore end
+			}
 		end,
 		config = function()
 			load_config("telescope")
@@ -969,29 +898,16 @@ local disabled = {
 	{
 		"echasnovski/mini.map",
 		keys = function()
-			local M = {}
-
 			local map = require("mini.map")
 
-			local map_map = function(keys, func, desc)
-				local keymap_table = { keys, func, mode = { "n" }, noremap = true, desc = "" .. desc }
-				table.insert(M, keymap_table)
-			end
-
-			map_map("<Leader>mf", function()
-				map.toggle_focus()
-			end, "Focus on MiniMap.")
-			map_map("<Leader>ms", function()
-				map.toggle_side()
-			end, "Toggle MiniMap's display side.")
-			map_map("<Leader>mr", function()
-				map.refresh()
-			end, "Refresh MiniMap.")
-			map_map("<Leader>mt", function()
-				map.toggle()
-			end, "Toggle MiniMap.")
-
-			return M
+			return {
+				-- stylua: ignore start
+				map("<Leader>mf", function() map.toggle_focus() end, "Focus on MiniMap."),
+				map("<Leader>ms", function() map.toggle_side() end, "Toggle MiniMap's display side."),
+				map("<Leader>mr", function() map.refresh() end, "Refresh MiniMap."),
+				map("<Leader>mt", function() map.toggle() end, "Toggle MiniMap."),
+				-- stylua ignore end
+			}
 		end,
 	},
 	--: }}}
