@@ -11,7 +11,7 @@
 
 -- ----------------------------------------------- --
 
-require("lazy_bootstrap")
+require("user.lazy")
 require("user.options")
 require("user.autocmds")
 require("user.keymaps")
