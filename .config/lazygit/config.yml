@@ -114,3 +114,6 @@ keybinding:
 
     submodules:
         update: z # u
+  stash:
+    popStash: o
+
