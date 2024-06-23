@@ -297,7 +297,7 @@ vim.api.nvim_create_autocmd("FileType", {
 		buf_map("o", "v:lua netrw_split_file(false)<CR>", "Open file under cursor on a horizontal split.")
 		buf_map("v", "v:lua netrw_split_file(true)<CR>", "Open file under cursor on a vertical split.")
 
-		buf_map("q", "<CMD>bd!<CR>", "Close netrw with q.")
+		buf_map("q", "<CMD>wincmd q<CR>", "Close netrw with q.")
 		buf_map("<C-h>", "<CMD>wincmd h<CR>", "Move to the left split window.")
 		buf_map("<C-j>", "<CMD>wincmd j<CR>", "Move to the split window below.")
 		buf_map("<C-k>", "<CMD>wincmd k<CR>", "Move to the split window above.")
