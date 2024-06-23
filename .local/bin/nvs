@@ -10,7 +10,7 @@ options() {
 	cat <<-EOF
 		default
 		LazyVim
-		AstroVIm
+		AstroVim
 		NvChad
 		Neopywal
 		nvim2k
