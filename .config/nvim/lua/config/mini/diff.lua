@@ -1,12 +1,14 @@
-require("mini.diff").setup({
+local diff = require("mini.diff")
+local icons = require("user.icons").gitsigns
+
+diff.setup({
 	delay = { text_change = 200 }, -- How much to wait before update following every text change.
 	view = {
-		-- Default: 'number' if line numbers are enabled, 'sign' otherwise.
 		style = "sign",
 		signs = {
-			add = require("user.icons").gitsigns.add,
-			change = require("user.icons").gitsigns.change,
-			delete = require("user.icons").gitsigns.delete,
+			add = icons.add,
+			change = icons.change,
+			delete = icons.delete,
 		},
 		priority = vim.highlight.priorities.user - 1, -- Priority of used visualization extmarks.
 	},
