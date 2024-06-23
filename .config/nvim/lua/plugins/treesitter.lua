@@ -5,7 +5,7 @@ return {
 		{ "windwp/nvim-ts-autotag" },
 	},
 	lazy = vim.fn.argc(-1) == 0, -- load treesitter early when opening a file from the cmdline
-	event = { "LazyFile", "VeryLazy" },
+	event = "LazyFile",
 	cmd = { "TSUpdateSync", "TSUpdate", "TSInstall" },
 	keys = {
 		{ "<C-Space>", desc = "Increment Selection" },
