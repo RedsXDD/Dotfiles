@@ -2,7 +2,7 @@ require("mini.diff").setup({
 	delay = { text_change = 200 }, -- How much to wait before update following every text change.
 	view = {
 		-- Default: 'number' if line numbers are enabled, 'sign' otherwise.
-		style = vim.go.number and "number" or "sign",
+		style = "sign",
 		signs = {
 			add = require("user.icons").gitsigns.add,
 			change = require("user.icons").gitsigns.change,
