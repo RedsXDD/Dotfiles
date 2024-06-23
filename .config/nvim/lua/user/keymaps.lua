@@ -244,68 +244,12 @@ map("n", "]B", "<CMD>blast<CR>", "Buffer last")
 map("n", "<Leader>bb", "<CMD>e #<CR>", "Switch to previously active buffer")
 --: }}}
 --: File explorer {{{
-local function toggle_netrw()
-	pcall(require, "netrw") -- Try loading netrw.nvim if it's installed.
-
-	local netrw_winsize = vim.g.netrw_winsize or 30
-
-	local bufnr = vim.api.nvim_get_current_buf()
-	local filetype = vim.api.nvim_get_option_value("filetype", { buf = bufnr })
-
-	if vim.g.netrw_is_open and filetype == "netrw" then
-		vim.api.nvim_buf_delete(0, { force = true })
-		vim.g.netrw_is_open = false
-	else
-		vim.g.netrw_is_open = true
-		vim.cmd("Lexplore")
-		vim.cmd("vertical resize " .. netrw_winsize)
-	end
-end
-
 map("n", "<Leader>gf", function()
-	local has_neotree, neotree = pcall(require, "neo-tree.command")
-	local has_minifiles, files = pcall(require, "mini.files")
-
-	---@diagnostic disable-next-line: undefined-field
-	local cwd = vim.uv.cwd()
-
-	local files_toggle = function(path, use_lastest)
-		if not files.close() then
-			files.open(path, use_lastest)
-		end
-	end
-
-	if has_neotree then
-		neotree.execute({ toggle = true, dir = cwd })
-	elseif has_minifiles then
-		files_toggle(cwd, true)
-	else
-		toggle_netrw()
-	end
+	require("user.utils").toggle_file_explorer()
 end, "Open file explorer on CWD.")
 
 map("n", "<Leader>gF", function()
-	local has_neotree, neotree = pcall(require, "neo-tree.command")
-	local has_minifiles, files = pcall(require, "mini.files")
-
-	local filepath = vim.api.nvim_buf_get_name(0)
-	local current_directory = vim.fs.dirname(filepath)
-	vim.fn.chdir(current_directory)
-
-	local files_toggle = function(path, use_lastest)
-		if not files.close() then
-			files.open(path, use_lastest)
-		end
-	end
-
-	if has_neotree then
-		---@diagnostic disable-next-line: undefined-field
-		neotree.execute({ toggle = true, dir = current_directory })
-	elseif has_minifiles then
-		files_toggle(current_directory, true)
-	else
-		toggle_netrw()
-	end
+	require("user.utils").toggle_file_explorer(true)
 end, "Open file explorer on directory of current file.")
 --: }}}
 --: Netrw mappings {{{
@@ -330,9 +274,9 @@ vim.api.nvim_create_autocmd("FileType", {
 			---@param filepath string
 			local function openFile(filepath)
 				local split_method = vsplit and "vsplit " or "split "
-				toggle_netrw()
+				require("user.utils").toggle_netrw()
 				vim.cmd(split_method .. filepath)
-				toggle_netrw()
+				require("user.utils").toggle_netrw()
 			end
 
 			-- https://vi.stackexchange.com/questions/34790/how-to-get-path-in-netrw
