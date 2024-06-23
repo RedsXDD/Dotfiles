@@ -57,63 +57,63 @@ gui:
       - default
 
 keybinding:
-    universal:
-        prevItem: k # <up>
-        nextItem: j # <down>
-        prevItem-alt: <disabled> # k
-        nextItem-alt: <disabled> # j
-        prevPage: <pgup> # ','
-        nextPage: <pgdown> # .
-        scrollLeft: <disabled> # H
-        scrollRight: <disabled> # L
-        gotoTop: g # <
-        gotoBottom: G # >
-        toggleRangeSelect: v
-        rangeSelectUp: K # <s-up>
-        rangeSelectDown: J # <s-down>
-        prevBlock: h # <left>
-        nextBlock: l # <right>
-        prevBlock-alt: <disabled> # h
-        nextBlock-alt: <disabled> # l
-        nextBlock-alt2: <disabled> # <tab>
-        prevBlock-alt2: <disabled> # <backtab>
-        scrollUpMain-alt1: <c-k> # K
-        scrollDownMain-alt1: <c-j> # J
-        scrollUpMain-alt2: <disabled> # <c-u>
-        scrollDownMain-alt2: <disabled> # <c-d>
-        nextScreenMode: "=" # +
-        prevScreenMode: "-" # _
-        undo: u # z
-        redo: <c-r> # <c-z>
-        diffingMenu-alt: <disabled> # <c-e>
-        copyToClipboard: <c-y> # <c-o>
-        openRecentRepos: <disabled> # <c-r>
-        toggleWhitespaceInDiffView: <c-t> # <c-w>
-        openDiffTool: <c-w> # <c-t>
+  universal:
+    prevItem: k # <up>
+    nextItem: j # <down>
+    prevItem-alt: <disabled> # k
+    nextItem-alt: <disabled> # j
+    prevPage: <pgup> # ','
+    nextPage: <pgdown> # .
+    scrollLeft: <disabled> # H
+    scrollRight: <disabled> # L
+    gotoTop: g # <
+    gotoBottom: G # >
+    toggleRangeSelect: v
+    rangeSelectUp: K # <s-up>
+    rangeSelectDown: J # <s-down>
+    prevBlock: h # <left>
+    nextBlock: l # <right>
+    prevBlock-alt: <disabled> # h
+    nextBlock-alt: <disabled> # l
+    nextBlock-alt2: <disabled> # <tab>
+    prevBlock-alt2: <disabled> # <backtab>
+    scrollUpMain-alt1: <c-k> # K
+    scrollDownMain-alt1: <c-j> # J
+    scrollUpMain-alt2: <disabled> # <c-u>
+    scrollDownMain-alt2: <disabled> # <c-d>
+    nextScreenMode: "=" # +
+    prevScreenMode: "-" # _
+    undo: u # z
+    redo: <c-r> # <c-z>
+    diffingMenu-alt: <disabled> # <c-e>
+    copyToClipboard: <c-y> # <c-o>
+    openRecentRepos: <disabled> # <c-r>
+    toggleWhitespaceInDiffView: <c-t> # <c-w>
+    openDiffTool: <c-w> # <c-t>
 
-    status:
-        checkForUpdate: z # u
+  status:
+    checkForUpdate: z # u
 
-    files:
-        findBaseCommitForFixup: <c-b> # <c-f>
-        refreshFiles: <disabled> # r
-        toggleTreeView: <disabled> # '`'
-        openStatusFilter: <c-f> # <c-b>
+  files:
+    findBaseCommitForFixup: <c-b> # <c-f>
+    refreshFiles: <disabled> # r
+    toggleTreeView: <disabled> # '`'
+    openStatusFilter: <c-f> # <c-b>
 
-    branches:
-        copyPullRequestURL: <c-o> # <c-y>
-        setUpstream: <c-u> # u
+  branches:
+    copyPullRequestURL: <c-o> # <c-y>
+    setUpstream: <c-u> # u
 
-    commits:
-        viewResetOptions: U # g
-        moveDownCommit: <c-d> # <c-j>
-        moveUpCommit: <c-u> # <c-k>
-        checkoutCommit: c # <space>
-        resetCherryPick: <disabled> # <c-R>
-        copyCommitAttributeToClipboard: y # <c-y>
+  commits:
+    viewResetOptions: U # g
+    moveDownCommit: <c-d> # <c-j>
+    moveUpCommit: <c-u> # <c-k>
+    checkoutCommit: c # <space>
+    resetCherryPick: <disabled> # <c-R>
+    copyCommitAttributeToClipboard: y # <c-y>
 
-    submodules:
-        update: z # u
   stash:
     popStash: o
 
+  submodules:
+    update: z # u
