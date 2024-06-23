@@ -235,25 +235,8 @@ return {
 			items = {
 				starter.new_section(icons.actions.new_file .. "New File", "enew | startinsert", actions_section),
 				starter.new_section(icons.actions.quit .. "Quit", "q!", actions_section),
-
 				starter.new_section(icons.actions.file_explorer .. "Open File Explorer", function()
-					local has_neotree, _ = pcall(require, "neo-tree")
-					local has_minifiles, mini_files = pcall(require, "mini.files")
-
-					if has_neotree then
-						lazy_load("neo-tree.nvim")
-						---@diagnostic disable-next-line: undefined-field
-						require("neo-tree.command").execute({ toggle = true, dir = vim.uv.cwd() })
-						return true
-					elseif has_minifiles then
-						lazy_load("mini.files")
-						---@diagnostic disable-next-line: undefined-field
-						mini_files.open(vim.uv.cwd(), true)
-						return true
-					else
-						vim.cmd([[Lex]])
-						return
-					end
+					require("user.utils").toggle_file_explorer()
 				end, actions_section),
 
 				starter.new_section(icons.actions.list_buffers .. "List Buffers", function()
