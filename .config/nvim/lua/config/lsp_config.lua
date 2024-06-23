@@ -1,3 +1,26 @@
+-- Keymappings
+vim.api.nvim_create_autocmd("LspAttach", {
+	group = vim.api.nvim_create_augroup("lsp_attach", { clear = true }),
+	callback = function()
+		local lsp_map = function(keys, func, desc)
+			vim.keymap.set("n", keys, func, { noremap = true, desc = "" .. desc })
+		end
+
+		lsp_map("<Leader>le", vim.diagnostic.open_float, "Show diagnostic error messages.")
+		lsp_map("<Leader>lq", vim.diagnostic.setloclist, "Open diagnostic quickfix list.")
+		lsp_map("<Leader>ld", vim.lsp.buf.definition, "Goto definition.")
+		lsp_map("<Leader>lD", vim.lsp.buf.declaration, "Goto declaration.")
+		lsp_map("<Leader>ls", vim.lsp.buf.signature_help, "Display signature help.")
+		lsp_map("<Leader>la", vim.lsp.buf.code_action, "List code actions.")
+		lsp_map("<Leader>li", function()
+			vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
+		end, "Toggle inlay hints.")
+		lsp_map("<Leader>lI", vim.lsp.buf.implementation, "Goto implementation.")
+		lsp_map("<Leader>lR", vim.lsp.buf.references, "Goto references.")
+		lsp_map("<Leader>lr", vim.lsp.buf.rename, "Rename.")
+	end,
+})
+
 local opts = {
 	capabilities = {},
 	diagnostics = {
