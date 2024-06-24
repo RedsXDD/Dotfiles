@@ -532,6 +532,16 @@ local misc = {
 }
 
 local disabled = {
+	--: alpha-nvim {{{
+	{
+		"goolord/alpha-nvim",
+		event = "VimEnter",
+		dependencies = { "nvim-tree/nvim-web-devicons" },
+		config = function()
+			load_config("alpha")
+		end,
+	},
+	--: }}}
 	--: nvim-autopairs {{{
 	{
 		"windwp/nvim-autopairs",
