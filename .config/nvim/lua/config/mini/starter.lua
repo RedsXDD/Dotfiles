@@ -26,6 +26,7 @@ local footer = function()
 	return padding .. icons.footer .. "Neovim loaded " .. stats.count .. " plugins in " .. ms .. "ms"
 end
 
+-- This autocmd fixes an issue were the footer load time is always 0ms.
 vim.api.nvim_create_autocmd("User", {
 	desc = "Refresh Mini.starter footer text.",
 	group = vim.api.nvim_create_augroup("augroup_refresh_mini_starter", { clear = true }),
