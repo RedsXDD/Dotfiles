@@ -760,6 +760,8 @@ local disabled = {
 	--: mini.comment {{{
 	{
 		"echasnovski/mini.comment",
+		-- Enabled if not on version 0.10.
+		enabled = vim.fn.has("nvim-0.10.0") == 0,
 		dependencies = {
 			"nvim-treesitter/nvim-treesitter",
 			{ "JoosepAlviste/nvim-ts-context-commentstring", opts = { enable_autocmd = false } },
