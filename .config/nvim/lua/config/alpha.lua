@@ -2,19 +2,19 @@ local alpha = require("alpha")
 local dashboard = require("alpha.themes.dashboard")
 local padding = string.rep(" ", 13)
 
--- Header.
-dashboard.section.header.val = {
-	[[                                                                     ]],
-	[[       ████ ██████           █████      ██                     ]],
-	[[      ███████████             █████                             ]],
-	[[      █████████ ███████████████████ ███   ███████████   ]],
-	[[     █████████  ███    █████████████ █████ ██████████████   ]],
-	[[    █████████ ██████████ █████████ █████ █████ ████ █████   ]],
-	[[  ███████████ ███    ███ █████████ █████ █████ ████ █████  ]],
-	[[ ██████  █████████████████████ ████ █████ █████ ████ ██████ ]],
-	"",
-	padding .. [[TIP: To exit Neovim, just run $sudo rm -rf /*]],
-}
+-- Header
+dashboard.section.header.val = function()
+	local M = {}
+
+	for _, line in ipairs(require("core.icons").header) do
+		table.insert(M, line)
+	end
+
+	table.insert(M, "")
+	table.insert(M, padding .. [[TIP: To exit Neovim, just run $sudo rm -rf /*]])
+
+	return M
+end
 
 -- Footer.
 vim.api.nvim_create_autocmd("User", {
