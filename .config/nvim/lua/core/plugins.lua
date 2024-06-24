@@ -194,6 +194,35 @@ local main = {
 		end,
 	},
 	--: }}}
+	--: nvim-cmp {{{
+	{
+		"hrsh7th/nvim-cmp",
+		event = "InsertEnter",
+		dependencies = {
+			"hrsh7th/cmp-nvim-lsp", -- Suggestions based on neovim lsp.
+			"hrsh7th/cmp-buffer", -- Suggestions based on current buffer.
+			"hrsh7th/cmp-path", -- Suggestions based on path(directories/files etc.).
+			"hrsh7th/cmp-nvim-lua", -- Suggestions for neovim api commands.
+			"saadparwaiz1/cmp_luasnip",
+			"rafamadriz/friendly-snippets",
+			{
+				"L3MON4D3/LuaSnip",
+				-- Build Step is needed for regex support in snippets.
+				-- This step is not supported in many windows environments.
+				-- Remove the below condition to re-enable on windows.
+				build = (function()
+					if vim.fn.has("win32") == 1 or vim.fn.executable("make") == 0 then
+						return
+					end
+					return "make install_jsregexp"
+				end)(),
+			},
+		},
+		config = function()
+			load_config("nvim_cmp")
+		end,
+	},
+	--: }}}
 }
 
 local lsp = {
@@ -287,23 +316,6 @@ local mini = {
 		event = "VimEnter",
 		config = function()
 			load_config("mini.starter")
-		end,
-	},
-	--: }}}
-	--: mini.completion {{{
-	{
-		"echasnovski/mini.completion",
-		event = "InsertEnter",
-		keys = function()
-			return {
-				-- stylua: ignore
-				map("i", "<C-n>", function()
-						return vim.fn.pumvisible() ~= 0 and "<C-n>" or [[<C-n><C-r>=pumvisible() ? "\<lt>C-n>\<lt>C-n>\<lt>C-p>" : ""<CR>]]
-				end, "Auto open & select first item on completion menu.", { noremap = true, silent = true, expr = true }),
-			}
-		end,
-		config = function()
-			load_config("mini.completion")
 		end,
 	},
 	--: }}}
@@ -532,6 +544,23 @@ local misc = {
 }
 
 local disabled = {
+	--: mini.completion {{{
+	{
+		"echasnovski/mini.completion",
+		event = "InsertEnter",
+		keys = function()
+			return {
+				-- stylua: ignore
+				map("i", "<C-n>", function()
+						return vim.fn.pumvisible() ~= 0 and "<C-n>" or [[<C-n><C-r>=pumvisible() ? "\<lt>C-n>\<lt>C-n>\<lt>C-p>" : ""<CR>]]
+				end, "Auto open & select first item on completion menu.", { noremap = true, silent = true, expr = true }),
+			}
+		end,
+		config = function()
+			load_config("mini.completion")
+		end,
+	},
+	--: }}}
 	--: alpha-nvim {{{
 	{
 		"goolord/alpha-nvim",
@@ -622,35 +651,6 @@ local disabled = {
 	{
 		"prichrd/netrw.nvim",
 		lazy = true,
-	},
-	--: }}}
-	--: nvim-cmp {{{
-	{
-		"hrsh7th/nvim-cmp",
-		event = "InsertEnter",
-		dependencies = {
-			"hrsh7th/cmp-nvim-lsp", -- Suggestions based on neovim lsp.
-			"hrsh7th/cmp-buffer", -- Suggestions based on current buffer.
-			"hrsh7th/cmp-path", -- Suggestions based on path(directories/files etc.).
-			"hrsh7th/cmp-nvim-lua", -- Suggestions for neovim api commands.
-			"saadparwaiz1/cmp_luasnip",
-			"rafamadriz/friendly-snippets",
-			{
-				"L3MON4D3/LuaSnip",
-				-- Build Step is needed for regex support in snippets.
-				-- This step is not supported in many windows environments.
-				-- Remove the below condition to re-enable on windows.
-				build = (function()
-					if vim.fn.has("win32") == 1 or vim.fn.executable("make") == 0 then
-						return
-					end
-					return "make install_jsregexp"
-				end)(),
-			},
-		},
-		config = function()
-			load_config("nvim_cmp")
-		end,
 	},
 	--: }}}
 	--: telescope.nvim {{{
