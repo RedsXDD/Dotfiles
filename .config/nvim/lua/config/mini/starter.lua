@@ -1,8 +1,6 @@
 local starter = require("mini.starter")
-
---: Main variables {{{
-local padding = string.rep(" ", 15) -- Padding to center sections and actions.
 local icons = require("core.icons").starter
+local padding = string.rep(" ", 15) -- Padding to center sections and actions.
 
 local function lazy_load(plugin)
 	require("lazy").load({ plugins = plugin })
@@ -12,7 +10,6 @@ local actions_section = icons.sections.actions .. "Actions"
 starter.new_section = function(name, action, section)
 	return { name = name, action = action, section = padding .. section }
 end
---: }}}
 --: Header text {{{
 local header = [[]]
 if vim.env.DISPLAY ~= nil then
