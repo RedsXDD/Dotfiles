@@ -22,6 +22,11 @@
 ]]
 
 --: Main functions {{{
+---@param modes string|table
+---@param keys string
+---@param func string|function
+---@param desc string
+---@param opts table?
 local map = function(modes, keys, func, desc, opts)
 	if opts ~= nil and type(opts) ~= "table" then
 		error("expect table under 'opts' for keymap set but got " .. type(opts))
@@ -33,10 +38,14 @@ local map = function(modes, keys, func, desc, opts)
 	vim.keymap.set(modes, keys, func, opts)
 end
 
+---@param keys string
+---@param desc string
 local center_map = function(keys, desc)
 	vim.keymap.set("", keys, keys .. "<CMD>norm! zvzz<CR>", { noremap = true, silent = true, desc = "" .. desc })
 end
 
+---@param actions table
+---@param desc string
 local pum_map = function(actions, desc)
 	if type(actions) ~= "table" then
 		error("Could not find `table` for `pum_map()`.")
@@ -51,6 +60,10 @@ local pum_map = function(actions, desc)
 	end, { noremap = true, silent = true, expr = true, desc = "" .. desc })
 end
 
+---@param modes string|table
+---@param keys string
+---@param options string|table
+---@param desc string
 local toggle_map = function(modes, keys, options, desc)
 	vim.keymap.set(modes, keys, function()
 		local state = false
@@ -73,6 +86,11 @@ local toggle_map = function(modes, keys, options, desc)
 	end, { noremap = true, silent = true, desc = "Toggle " .. desc })
 end
 
+---@param modes string|table
+---@param keys string
+---@param option string
+---@param str string
+---@param desc string
 local toggleStr_map = function(modes, keys, option, str, desc)
 	vim.keymap.set(modes, keys, function()
 		local has_str = vim.o[option]:find("" .. str) ~= nil
