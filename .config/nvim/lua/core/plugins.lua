@@ -649,7 +649,7 @@ local disabled = {
 			},
 		},
 		config = function()
-			load_config("nvim_cmd")
+			load_config("nvim_cmp")
 		end,
 	},
 	--: }}}
