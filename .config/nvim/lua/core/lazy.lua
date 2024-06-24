@@ -32,14 +32,13 @@ require("lazy").setup("core.plugins", {
 	install = {
 		colorscheme = { "neopywal", "sorbet" },
 	},
-	-- Automatically check for plugin updates.
 	checker = {
-		enabled = true,
-		notify = false,
+		enabled = true, -- Automatically check for plugin updates.
+		notify = true, -- Turn on/off notifications whenever plugin updates are avaliable.
 	},
 	change_detection = {
 		enabled = true, -- Automatically check for config file changes and reload the ui.
-		notify = false, -- Turn on/off notifications whenever plugin changes are made.
+		notify = true, -- Turn on/off notifications whenever plugin changes are made.
 	},
 	performance = {
 		rtp = {
