@@ -567,6 +567,7 @@ local disabled = {
 			{ "<Leader>ghi", mode = { "o", "x" } },
 			{ "<Leader>gh", mode = { "n" } },
 		},
+		cmd = "Gitsigns",
 		config = load_config("gitsigns"),
 	},
 	--: }}}
