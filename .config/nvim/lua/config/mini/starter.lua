@@ -18,7 +18,8 @@ local header = table.concat({
 	"\n",
 	padding .. [[TIP: To exit Neovim, just run $sudo rm -rf /*]],
 })
---: Footer text {{{
+
+-- Footer:
 local footer = function()
 	local stats = require("lazy").stats()
 	local ms = (math.floor(stats.startuptime * 100 + 0.5) / 100)
@@ -35,7 +36,6 @@ vim.api.nvim_create_autocmd("User", {
 		end
 	end,
 })
---: }}}
 --: starter.sections.recent_files_modified {{{
 
 -- This is a modified version of MiniStarter's default "recentfiles" function taken directly from the source code.
