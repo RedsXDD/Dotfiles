@@ -69,7 +69,7 @@ local toggle_map = function(modes, keys, options, desc)
 			end
 		end
 
-		vim.notify(state and "Enabled " .. desc or "Disabled " .. desc, vim.log.levels.INFO)
+		vim.notify(state and "Enabled " .. desc or "Disabled " .. desc, state and vim.log.levels.INFO or vim.log.levels.WARN)
 	end, { noremap = true, silent = true, desc = "Toggle " .. desc })
 end
 
@@ -77,7 +77,7 @@ local toggleStr_map = function(modes, keys, option, str, desc)
 	vim.keymap.set(modes, keys, function()
 		local has_str = vim.o[option]:find("" .. str) ~= nil
 		vim.opt[option] = has_str and vim.o[option]:gsub("" .. str, "") or vim.o[option] .. "" .. str
-		vim.notify(has_str and "Disabled " .. desc or "Enabled " .. desc, vim.log.levels.INFO)
+		vim.notify(has_str and "Disabled " .. desc or "Enabled " .. desc, has_str and vim.log.levels.WARN or vim.log.levels.INFO)
 	end, { noremap = true, silent = true, desc = "Toggle " .. desc })
 end
 --: }}}
