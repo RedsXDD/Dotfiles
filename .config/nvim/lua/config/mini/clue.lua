@@ -18,6 +18,9 @@ clue.setup({
 		scroll_up = "<C-k>",
 		scroll_down = "<C-j>",
 		config = {
+			anchor = "SW",
+			row = "auto",
+			col = "auto",
 			width = "auto",
 			border = border_style,
 		},
