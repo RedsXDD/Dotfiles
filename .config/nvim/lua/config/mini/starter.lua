@@ -261,7 +261,7 @@ starter.setup({
 				vim.cmd("Mason")
 			end
 		end, actions_section),
-		starter.sections.recent_files_modified(15, false, false), -- Recent files.
+		starter.sections.recent_files_modified(10, false, false), -- Recent files.
 		-- starter.sections.recent_files_modified(5, true, false), -- Recent files on CWD.
 		-- starter.sections.sessions_modified(5, true),
 	},
