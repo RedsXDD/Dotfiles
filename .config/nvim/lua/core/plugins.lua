@@ -625,7 +625,7 @@ local disabled = {
 				end,
 			},
 		},
-		branch = "0.1.x",
+		branch = "master",
 		cmd = "Telescope",
 		keys = function()
 			local builtin = require("telescope.builtin")
