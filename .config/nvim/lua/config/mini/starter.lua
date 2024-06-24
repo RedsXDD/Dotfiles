@@ -139,69 +139,69 @@ starter.sections.recent_files_modified = function(n, current_dir, show_path)
 end
 
 --: }}}
---: starter.sections.sessions_modified {{{
-
--- This is modified version of MiniStarter's default "sessions" function taken directly from the source code.
--- It had to be copied over because otherwise the section padding couldn't be modified to make it aligned with all other sections from the `new_section` function.
-starter.sections.sessions_modified = function(n, recent)
-	n = n or 5
-	if recent == nil then
-		recent = true
-	end
-
-	return function()
-		local section = padding .. icons.sections.session .. "Sessions" -- Added text padding and icon compared to original source code.
-
-		---@diagnostic disable-next-line: undefined-field
-		if _G.MiniSessions == nil then
-			return { { name = [[`mini.sessions` is not set up]], action = "", section = section } }
-		end
-
-		local items = {}
-		for session_name, session in pairs(_G.MiniSessions.detected) do
-			table.insert(items, {
-				_session = session,
-				name = ("%s%s"):format(session_name, session.type == "local" and " (local)" or ""),
-				action = ([[lua _G.MiniSessions.read('%s')]]):format(session_name),
-				section = section,
-			})
-		end
-
-		if vim.tbl_count(items) == 0 then
-			return {
-				{
-					name = [[There are no detected sessions in `mini.sessions`]],
-					action = "",
-					section = section,
-				},
-			}
-		end
-
-		local sort_fun
-		if recent then
-			sort_fun = function(a, b)
-				local a_time = a._session.type == "local" and math.huge or a._session.modify_time
-				local b_time = b._session.type == "local" and math.huge or b._session.modify_time
-				return a_time > b_time
-			end
-		else
-			sort_fun = function(a, b)
-				local a_name = a._session.type == "local" and "" or a.name
-				local b_name = b._session.type == "local" and "" or b.name
-				return a_name < b_name
-			end
-		end
-		table.sort(items, sort_fun)
-
-		-- Take only first `n` elements and remove helper fields
-		return vim.tbl_map(function(x)
-			x._session = nil
-			return x
-		end, vim.list_slice(items, 1, n))
-	end
-end
-
---: }}}
+-- --: starter.sections.sessions_modified {{{
+--
+-- -- This is modified version of MiniStarter's default "sessions" function taken directly from the source code.
+-- -- It had to be copied over because otherwise the section padding couldn't be modified to make it aligned with all other sections from the `new_section` function.
+-- starter.sections.sessions_modified = function(n, recent)
+-- 	n = n or 5
+-- 	if recent == nil then
+-- 		recent = true
+-- 	end
+--
+-- 	return function()
+-- 		local section = padding .. icons.sections.session .. "Sessions" -- Added text padding and icon compared to original source code.
+--
+-- 		---@diagnostic disable-next-line: undefined-field
+-- 		if _G.MiniSessions == nil then
+-- 			return { { name = [[`mini.sessions` is not set up]], action = "", section = section } }
+-- 		end
+--
+-- 		local items = {}
+-- 		for session_name, session in pairs(_G.MiniSessions.detected) do
+-- 			table.insert(items, {
+-- 				_session = session,
+-- 				name = ("%s%s"):format(session_name, session.type == "local" and " (local)" or ""),
+-- 				action = ([[lua _G.MiniSessions.read('%s')]]):format(session_name),
+-- 				section = section,
+-- 			})
+-- 		end
+--
+-- 		if vim.tbl_count(items) == 0 then
+-- 			return {
+-- 				{
+-- 					name = [[There are no detected sessions in `mini.sessions`]],
+-- 					action = "",
+-- 					section = section,
+-- 				},
+-- 			}
+-- 		end
+--
+-- 		local sort_fun
+-- 		if recent then
+-- 			sort_fun = function(a, b)
+-- 				local a_time = a._session.type == "local" and math.huge or a._session.modify_time
+-- 				local b_time = b._session.type == "local" and math.huge or b._session.modify_time
+-- 				return a_time > b_time
+-- 			end
+-- 		else
+-- 			sort_fun = function(a, b)
+-- 				local a_name = a._session.type == "local" and "" or a.name
+-- 				local b_name = b._session.type == "local" and "" or b.name
+-- 				return a_name < b_name
+-- 			end
+-- 		end
+-- 		table.sort(items, sort_fun)
+--
+-- 		-- Take only first `n` elements and remove helper fields
+-- 		return vim.tbl_map(function(x)
+-- 			x._session = nil
+-- 			return x
+-- 		end, vim.list_slice(items, 1, n))
+-- 	end
+-- end
+--
+-- --: }}}
 --: Return options table {{{
 starter.setup({
 	evaluate_single = true,
@@ -263,7 +263,7 @@ starter.setup({
 		end, actions_section),
 		starter.sections.recent_files_modified(15, false, false), -- Recent files.
 		-- starter.sections.recent_files_modified(5, true, false), -- Recent files on CWD.
-		starter.sections.sessions_modified(5, true),
+		-- starter.sections.sessions_modified(5, true),
 	},
 })
 --: }}}
