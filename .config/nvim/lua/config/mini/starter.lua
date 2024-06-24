@@ -27,8 +27,9 @@ local footer = function()
 end
 
 vim.api.nvim_create_autocmd("User", {
-	once = true,
+	desc = "Refresh Mini.starter footer text.",
 	group = vim.api.nvim_create_augroup("augroup_refresh_mini_starter", { clear = true }),
+	once = true,
 	callback = function(ev)
 		-- INFO: based on @echasnovski's recommendation (thanks a lot!!!)
 		if vim.bo[ev.buf].filetype == "starter" then
