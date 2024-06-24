@@ -107,7 +107,7 @@ local main = {
 	{
 		"nvim-lualine/lualine.nvim",
 		dependencies = { "nvim-tree/nvim-web-devicons" },
-		event = "LazyFile",
+		event = { "LazyFile", "BufUnload" },
 		config = function()
 			load_config("lualine")
 		end,
@@ -197,7 +197,7 @@ local main = {
 			"MunifTanjim/nui.nvim",
 			"rcarriga/nvim-notify",
 		},
-		event = { "CmdLineEnter", "LazyFile" },
+		event = "VeryLazy",
 		keys = function()
 			local noice = require("noice")
 			local noice_lsp = require("noice.lsp")
@@ -346,7 +346,7 @@ local mini = {
 	{
 		"echasnovski/mini.tabline",
 		dependencies = { "nvim-tree/nvim-web-devicons" },
-		event = "LazyFile",
+		event = { "LazyFile", "BufUnload" },
 		config = function()
 			load_config("mini.tabline")
 		end,
