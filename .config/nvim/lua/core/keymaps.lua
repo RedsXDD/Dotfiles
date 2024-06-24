@@ -34,7 +34,7 @@ local map = function(modes, keys, func, desc, opts)
 end
 
 local center_map = function(keys, desc)
-	vim.keymap.set("", keys, keys .. "zvzz", { noremap = true, silent = true, desc = "" .. desc })
+	vim.keymap.set("", keys, keys .. "<CMD>norm! zvzz<CR>", { noremap = true, silent = true, desc = "" .. desc })
 end
 
 local pum_map = function(actions, desc)
