@@ -7,9 +7,11 @@ local function load_config(plugin)
 		return
 	end
 
-	local has_config, _ = pcall(require, "config." .. plugin)
-	if not has_config then
-		return
+	return function()
+		local has_config, _ = pcall(require, "config." .. plugin)
+		if not has_config then
+			return
+		end
 	end
 end
 
@@ -60,9 +62,7 @@ local colorschemes = {
 		name = "neopywal",
 		lazy = true,
 		priority = 1000,
-		config = function()
-			load_config("neopywal")
-		end,
+		config = load_config("neopywal"),
 	},
 	--: }}}
 }
@@ -73,9 +73,7 @@ local main = {
 		"nvim-lualine/lualine.nvim",
 		dependencies = { "nvim-tree/nvim-web-devicons" },
 		event = { "LazyFile", "BufUnload" },
-		config = function()
-			load_config("lualine")
-		end,
+		config = load_config("lualine"),
 	},
 	--: }}}
 	--: conform.nvim {{{
@@ -94,9 +92,7 @@ local main = {
 				desc = "Format file.",
 			},
 		},
-		config = function()
-			load_config("conform")
-		end,
+		config = load_config("conform"),
 	},
 	--: }}}
 	--: nvim-treesitter {{{
@@ -114,9 +110,7 @@ local main = {
 			{ "<BS>", desc = "Decrement Selection", mode = "x" },
 		},
 		build = ":TSUpdate",
-		config = function()
-			load_config("treesitter")
-		end,
+		config = load_config("treesitter"),
 	},
 	--: }}}
 	--: dressing.nvim {{{
@@ -150,9 +144,7 @@ local main = {
 				end, "Open git integration."),
 			}
 		end,
-		config = function()
-			load_config("fterm")
-		end,
+		config = load_config("fterm"),
 	},
 	--: }}}
 	--: noice.nvim {{{
@@ -189,9 +181,7 @@ local main = {
 				end, "Scroll Backward", { noremap = true, silent = true, expr = true }),
 			}
 		end,
-		config = function()
-			load_config("noice")
-		end,
+		config = load_config("noice"),
 	},
 	--: }}}
 	--: nvim-cmp {{{
@@ -218,9 +208,7 @@ local main = {
 				end)(),
 			},
 		},
-		config = function()
-			load_config("nvim_cmp")
-		end,
+		config = load_config("nvim_cmp"),
 	},
 	--: }}}
 }
@@ -239,9 +227,7 @@ local lsp = {
 		},
 		cmd = "Mason",
 		build = ":MasonUpdate",
-		config = function()
-			load_config("mason")
-		end,
+		config = load_config("mason"),
 	},
 	--: }}}
 	--: nvim-lspconfig {{{
@@ -252,18 +238,14 @@ local lsp = {
 			"williamboman/mason-lspconfig.nvim",
 		},
 		event = "LazyFile",
-		config = function()
-			load_config("lsp_config")
-		end,
+		config = load_config("lsp_config"),
 	},
 	--: }}}
 	--: nvim-lint {{{
 	{
 		"mfussenegger/nvim-lint",
 		event = "LazyFile",
-		config = function()
-			load_config("nvim_lint")
-		end,
+		config = load_config("nvim_lint"),
 	},
 	--: }}}
 }
@@ -281,9 +263,7 @@ local mini = {
 			{ "a", mode = { "x", "o" } },
 			{ "i", mode = { "x", "o" } },
 		},
-		config = function()
-			load_config("mini.ai")
-		end,
+		config = load_config("mini.ai"),
 	},
 	--: }}}
 	--: mini.clue {{{
@@ -305,18 +285,14 @@ local mini = {
 			{ "[", mode = { "n", "x" } },
 			{ "]", mode = { "n", "x" } },
 		},
-		config = function()
-			load_config("mini.clue")
-		end,
+		config = load_config("mini.clue"),
 	},
 	--: }}}
 	--: mini.starter {{{
 	{
 		"echasnovski/mini.starter",
 		event = "VimEnter",
-		config = function()
-			load_config("mini.starter")
-		end,
+		config = load_config("mini.starter"),
 	},
 	--: }}}
 	--: mini.tabline {{{
@@ -324,9 +300,7 @@ local mini = {
 		"echasnovski/mini.tabline",
 		dependencies = { "nvim-tree/nvim-web-devicons" },
 		event = { "LazyFile", "BufUnload" },
-		config = function()
-			load_config("mini.tabline")
-		end,
+		config = load_config("mini.tabline"),
 	},
 	--: }}}
 	--: mini.pick {{{
@@ -387,9 +361,7 @@ local mini = {
 				-- stylua: ignore end
 			}
 		end,
-		config = function()
-			load_config("mini.pick")
-		end,
+		config = load_config("mini.pick"),
 	},
 	--: }}}
 	--: mini.diff {{{
@@ -407,18 +379,14 @@ local mini = {
 				desc = "Toggle mini.diff overlay.",
 			},
 		},
-		config = function()
-			load_config("mini.diff")
-		end,
+		config = load_config("mini.diff"),
 	},
 	--: }}}
 	--: mini.hipatterns {{{
 	{
 		"echasnovski/mini.hipatterns",
 		event = "LazyFile",
-		config = function()
-			load_config("mini.hipatterns")
-		end,
+		config = load_config("mini.hipatterns"),
 	},
 	--: }}}
 	--: mini.indentscope {{{
@@ -452,9 +420,7 @@ local mini = {
 				end,
 			})
 		end,
-		config = function()
-			load_config("mini.indentscope")
-		end,
+		config = load_config("mini.indentscope"),
 	},
 	--: }}}
 	--: mini.pairs {{{
@@ -478,9 +444,7 @@ local mini = {
 
 			return M
 		end,
-		config = function()
-			load_config("mini.pairs")
-		end,
+		config = load_config("mini.pairs"),
 	},
 	--: }}}
 	--: mini.splitjoin {{{
@@ -489,9 +453,7 @@ local mini = {
 		keys = {
 			{ "gS", desc = "Toggle splitjoining." },
 		},
-		config = function()
-			load_config("mini.splitjoin")
-		end,
+		config = load_config("mini.splitjoin"),
 	},
 	--: }}}
 	--: mini.surround {{{
@@ -506,9 +468,7 @@ local mini = {
 			{ "sh", desc = "Highlight Surrounding." },
 			{ "sn", desc = "Update `MiniSurround.config.n_lines`." },
 		},
-		config = function()
-			load_config("mini.surround")
-		end,
+		config = load_config("mini.surround"),
 	},
 	--: }}}
 }
@@ -556,9 +516,7 @@ local disabled = {
 				end, "Auto open & select first item on completion menu.", { noremap = true, silent = true, expr = true }),
 			}
 		end,
-		config = function()
-			load_config("mini.completion")
-		end,
+		config = load_config("mini.completion"),
 	},
 	--: }}}
 	--: alpha-nvim {{{
@@ -566,9 +524,7 @@ local disabled = {
 		"goolord/alpha-nvim",
 		event = "VimEnter",
 		dependencies = { "nvim-tree/nvim-web-devicons" },
-		config = function()
-			load_config("alpha")
-		end,
+		config = load_config("alpha"),
 	},
 	--: }}}
 	--: nvim-autopairs {{{
@@ -578,9 +534,7 @@ local disabled = {
 		dependencies = {
 			"hrsh7th/nvim-cmp",
 		},
-		config = function()
-			load_config("autopairs")
-		end,
+		config = load_config("autopairs"),
 	},
 	--: }}}
 	--: bufferline.nvim {{{
@@ -589,9 +543,7 @@ local disabled = {
 		dependencies = "nvim-tree/nvim-web-devicons",
 		version = "*",
 		event = "LazyFile",
-		config = function()
-			load_config("bufferline")
-		end,
+		config = load_config("bufferline"),
 	},
 	--: }}}
 	--: gitsigns.nvim {{{
@@ -606,9 +558,7 @@ local disabled = {
 			{ "<Leader>ghi", mode = { "o", "x" } },
 			{ "<Leader>gh", mode = { "n" } },
 		},
-		config = function()
-			load_config("gitsigns")
-		end,
+		config = load_config("gitsigns"),
 	},
 	--: }}}
 	--: neo-tree.nvim {{{
@@ -642,9 +592,7 @@ local disabled = {
 				end,
 			})
 		end,
-		config = function()
-			load_config("neotree")
-		end,
+		config = load_config("neotree"),
 	},
 	--: }}}
 	--: netrw.nvim {{{
@@ -734,9 +682,7 @@ local disabled = {
 				-- stylua: ignore end
 			}
 		end,
-		config = function()
-			load_config("telescope")
-		end,
+		config = load_config("telescope"),
 	},
 	--: }}}
 	--: zen-mode.nvim {{{
@@ -753,9 +699,7 @@ local disabled = {
 				desc = "Toggle Zenmode.",
 			},
 		},
-		config = function()
-			load_config("zenmode")
-		end,
+		config = load_config("zenmode"),
 	},
 	--: }}}
 	--: mini.animate {{{
@@ -794,9 +738,7 @@ local disabled = {
 
 			return M
 		end,
-		config = function()
-			load_config("mini.animate")
-		end,
+		config = load_config("mini.animate"),
 	},
 	--: }}}
 	--: mini.bracketed {{{
@@ -815,9 +757,7 @@ local disabled = {
 		keys = {
 			{ "gc", mode = { "n", "x" }, desc = "Toggle comment" },
 		},
-		config = function()
-			load_config("mini.comment")
-		end,
+		config = load_config("mini.comment"),
 	},
 	--: }}}
 	--: mini.cursorword {{{
@@ -848,9 +788,7 @@ local disabled = {
 				end,
 			})
 		end,
-		config = function()
-			load_config("mini.files")
-		end,
+		config = load_config("mini.files"),
 	},
 	--: }}}
 	--: mini.map {{{
@@ -874,9 +812,7 @@ local disabled = {
 	{
 		"echasnovski/mini.notify",
 		event = "LazyFile",
-		config = function()
-			load_config("mini.notify")
-		end,
+		config = load_config("mini.notify"),
 	},
 	--: }}}
 	--: mini.sessions {{{
