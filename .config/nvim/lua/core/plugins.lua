@@ -143,9 +143,6 @@ local main = {
 		config = load_config("fterm"),
 	},
 	--: }}}
-	--: nvim-notify {{{
-	{ "rcarriga/nvim-notify", event = "VeryLazy" },
-	--: }}}
 	--: noice.nvim {{{
 	{
 		"folke/noice.nvim",
