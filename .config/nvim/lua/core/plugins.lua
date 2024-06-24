@@ -290,7 +290,12 @@ local mini = {
 	--: mini.starter {{{
 	{
 		"echasnovski/mini.starter",
-		event = "VimEnter",
+		-- Only load when no arguments.
+		event = function()
+			if vim.fn.argc() == 0 then
+				return "VimEnter"
+			end
+		end,
 		config = load_config("mini.starter"),
 	},
 	--: }}}
@@ -521,7 +526,12 @@ local disabled = {
 	--: alpha-nvim {{{
 	{
 		"goolord/alpha-nvim",
-		event = "VimEnter",
+		-- Only load when no arguments.
+		event = function()
+			if vim.fn.argc() == 0 then
+				return "VimEnter"
+			end
+		end,
 		dependencies = { "nvim-tree/nvim-web-devicons" },
 		config = load_config("alpha"),
 	},
