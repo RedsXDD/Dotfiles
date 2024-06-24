@@ -22,8 +22,15 @@
 ]]
 
 --: Main functions {{{
-local map = function(modes, keys, func, desc)
-	vim.keymap.set(modes, keys, func, { noremap = true, desc = "" .. desc })
+local map = function(modes, keys, func, desc, opts)
+	if opts ~= nil and type(opts) ~= "table" then
+		error("expect table under 'opts' for keymap set but got " .. type(opts))
+	end
+
+	opts = opts or { noremap = true }
+	opts.desc = "" .. desc
+
+	vim.keymap.set(modes, keys, func, opts)
 end
 
 local center_map = function(keys, desc)
