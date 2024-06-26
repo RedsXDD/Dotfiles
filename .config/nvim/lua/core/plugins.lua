@@ -151,7 +151,6 @@ local lsp = {
 			"williamboman/mason-lspconfig.nvim",
 			"WhoIsSethDaniel/mason-tool-installer.nvim",
 		},
-		event = "LazyFile",
 		cmd = "Mason",
 		build = ":MasonUpdate",
 		config = load_config("mason"),
