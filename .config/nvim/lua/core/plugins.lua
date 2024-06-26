@@ -297,7 +297,7 @@ local mini = {
 	--: mini.splitjoin {{{
 	{
 		"echasnovski/mini.splitjoin",
-		keys = "g",
+		lazy = true,
 		config = load_config("mini.splitjoin"),
 	},
 	--: }}}
