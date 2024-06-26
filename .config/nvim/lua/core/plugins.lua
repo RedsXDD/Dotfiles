@@ -430,6 +430,8 @@ local disabled = {
 	},
 	--: }}}
 	--: telescope.nvim {{{
+	-- Disable "mini.pick":
+	{ "echasnovski/mini.pick", enabled = false },
 	{
 		"nvim-telescope/telescope.nvim",
 		dependencies = {
