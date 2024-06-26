@@ -56,6 +56,12 @@ clue.setup({
 		{ mode = "n", keys = "<Leader>g", desc = "+Misc" },
 		{ mode = "x", keys = "<Leader>g", desc = "+Misc" },
 
+		-- Zenmode:
+		mkclue_with_deps("zen-mode", {
+			{ mode = "n", keys = "<Leader>tz", desc = "Toggle Zenmode." },
+			{ mode = "x", keys = "<Leader>tz", desc = "Toggle Zenmode." },
+		}),
+
 		-- Noice:
 		mkclue_with_deps("noice", { mode = "n", keys = "<Leader>gn", desc = "+Noice" }),
 
