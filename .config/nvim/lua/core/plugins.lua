@@ -15,21 +15,6 @@ local function load_config(plugin)
 	end
 end
 
----@param keys string
----@param func string|function
----@param desc string
----@param opts table?
-local function map(modes, keys, func, desc, opts)
-	local mapping = { keys, func, mode = modes, desc = "" .. desc }
-
-	opts = opts or { noremap = true }
-	for k, v in pairs(opts) do
-		mapping[k] = v
-	end
-
-	return mapping
-end
-
 local colorschemes = {
 	--: catppuccin {{{
 	{
