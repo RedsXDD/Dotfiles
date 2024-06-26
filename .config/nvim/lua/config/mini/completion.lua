@@ -1,4 +1,12 @@
 local completion = require("mini.completion")
+local keymaps = require("core.utils").keymaps
+
+keymaps.pum_map({
+	key = "<C-n>",
+	pum = "<C-n>",
+	normal = [[<C-n><C-r>=pumvisible() ? "\<lt>C-n>\<lt>C-n>\<lt>C-p>" : ""<CR>]],
+}, "Auto open & select first item on completion menu.")
+
 completion.setup({
 	set_vim_settings = true,
 	delay = { completion = 100, info = 100, signature = 50 },

@@ -7,6 +7,10 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 	end,
 })
 
+vim.keymap.set({ "n", "v" }, "<Leader>lf", function()
+	conform.format()
+end, { noremap = true, desc = "Format File." })
+
 conform.setup({
 	format = {
 		timeout_ms = 3000,

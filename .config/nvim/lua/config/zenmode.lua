@@ -1,5 +1,10 @@
 local zenmode = require("zen-mode")
 
+vim.keymap.set({ "n", "v" }, "<leader>tz", function()
+	require("zen-mode").toggle()
+	vim.notify("Toggled zenmode", vim.log.levels.INFO)
+end, { noremap = true, desc = "Toggle Zenmode." })
+
 zenmode.setup({
 	window = {
 		backdrop = 0.95,

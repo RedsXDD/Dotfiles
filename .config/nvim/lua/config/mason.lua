@@ -4,6 +4,8 @@ local mason = require("mason")
 local mason_lspconfig = require("mason-lspconfig")
 local mason_tool_installer = require("mason-tool-installer")
 
+vim.keymap.set("n", "<Leader>gm", "<CMD>Mason<CR>", { noremap = true, desc = "Open Mason UI." })
+
 mason.setup({
 	log_level = vim.log.levels.INFO,
 	max_concurrent_installers = 4,

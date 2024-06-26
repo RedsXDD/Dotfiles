@@ -1,4 +1,12 @@
 local pairs = require("mini.pairs")
+local keymaps = require("core.utils").keymaps
+
+keymaps.map({ "n", "x" }, "<Leader>tp", function()
+	local state = vim.g.minipairs_disable
+	state = not state
+	vim.g.minipairs_disable = state
+	vim.notify(state and "Disabled " .. "mini.pairs" or "Enabled " .. "mini.pairs", vim.log.levels.INFO)
+end, "Toggle Mini.pairs.")
 
 pairs.setup({
 	modes = { insert = true, command = true, terminal = false },

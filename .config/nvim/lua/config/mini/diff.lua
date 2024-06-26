@@ -1,6 +1,10 @@
 local diff = require("mini.diff")
 local icons = require("core.icons").gitsigns
 
+vim.keymap.set("n", "<Leader>do", function()
+	require("mini.diff").toggle_overlay(0)
+end, { noremap = true, desc = "Toggle mini.diff overlay." })
+
 diff.setup({
 	view = {
 		style = "sign",
