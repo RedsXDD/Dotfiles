@@ -803,14 +803,14 @@ local disabled = {
 	{
 		"echasnovski/mini.map",
 		keys = function()
-			local map = require("mini.map")
+			local MiniMap = require("mini.map")
 
 			return {
 				-- stylua: ignore start
-				map("<Leader>mf", function() map.toggle_focus() end, "Focus on MiniMap."),
-				map("<Leader>ms", function() map.toggle_side() end, "Toggle MiniMap's display side."),
-				map("<Leader>mr", function() map.refresh() end, "Refresh MiniMap."),
-				map("<Leader>mt", function() map.toggle() end, "Toggle MiniMap."),
+				MiniMap("<Leader>mf", function() MiniMap.toggle_focus() end, "Focus on MiniMap."),
+				MiniMap("<Leader>ms", function() MiniMap.toggle_side() end, "Toggle MiniMap's display side."),
+				MiniMap("<Leader>mr", function() MiniMap.refresh() end, "Refresh MiniMap."),
+				MiniMap("<Leader>mt", function() MiniMap.toggle() end, "Toggle MiniMap."),
 				-- stylua ignore end
 			}
 		end,
