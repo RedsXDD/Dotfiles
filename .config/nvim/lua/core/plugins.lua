@@ -512,7 +512,7 @@ local disabled = {
 			return {
 				-- stylua: ignore
 				map("i", "<C-n>", function()
-						return vim.fn.pumvisible() ~= 0 and "<C-n>" or [[<C-n><C-r>=pumvisible() ? "\<lt>C-n>\<lt>C-n>\<lt>C-p>" : ""<CR>]]
+					return vim.fn.pumvisible() ~= 0 and "<C-n>" or [[<C-n><C-r>=pumvisible() ? "\<lt>C-n>\<lt>C-n>\<lt>C-p>" : ""<CR>]]
 				end, "Auto open & select first item on completion menu.", { noremap = true, silent = true, expr = true }),
 			}
 		end,
