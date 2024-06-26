@@ -1,15 +1,5 @@
 local files = require("mini.files")
 
--- Window options
-vim.api.nvim_create_autocmd("User", {
-	pattern = "MiniFilesWindowOpen",
-	callback = function(args)
-		local win_id = args.data.win_id
-		-- vim.wo[win_id].winblend = 90 -- Window opacity.
-		vim.api.nvim_win_set_config(win_id, { border = require("core.icons").misc.border })
-	end,
-})
-
 -- Toggle dotfiles
 local show_dotfiles = true
 
@@ -26,14 +16,6 @@ local toggle_dotfiles = function()
 	local new_filter = show_dotfiles and filter_show or filter_hide
 	files.refresh({ content = { filter = new_filter } })
 end
-
-vim.api.nvim_create_autocmd("User", {
-	pattern = "MiniFilesBufferCreate",
-	callback = function(args)
-		local buf_id = args.data.buf_id
-		vim.keymap.set("n", "g.", toggle_dotfiles, { buffer = buf_id, desc = "Toggle dotfiles displaying." })
-	end,
-})
 
 -- Open files in splits
 local map_split = function(buf_id, keys, direction)
@@ -53,19 +35,6 @@ local map_split = function(buf_id, keys, direction)
 	vim.keymap.set("n", keys, split_function, { buffer = buf_id, desc = desc })
 end
 
-vim.api.nvim_create_autocmd("User", {
-	pattern = "MiniFilesBufferCreate",
-	callback = function(args)
-		local buf_id = args.data.buf_id
-
-		-- Tweak keys to your liking
-		map_split(buf_id, "gs", "belowright horizontal")
-		map_split(buf_id, "gv", "belowright vertical")
-		map_split(buf_id, "_", "belowright horizontal")
-		map_split(buf_id, "-", "belowright vertical")
-	end,
-})
-
 -- Set current working directory
 local files_set_cwd = function()
 	-- Works only if cursor is on the valid file system entry.
@@ -74,10 +43,28 @@ local files_set_cwd = function()
 	vim.fn.chdir(cur_directory)
 end
 
+-- Window options
+vim.api.nvim_create_autocmd("User", {
+	pattern = "MiniFilesWindowOpen",
+	callback = function(args)
+		local win_id = args.data.win_id
+		-- vim.wo[win_id].winblend = 90 -- Window opacity.
+		vim.api.nvim_win_set_config(win_id, { border = require("core.icons").misc.border })
+	end,
+})
+
+-- Custom keymaps:
 vim.api.nvim_create_autocmd("User", {
 	pattern = "MiniFilesBufferCreate",
 	callback = function(args)
-		vim.keymap.set("n", "g,", files_set_cwd, { buffer = args.data.buf_id })
+		local buf_id = args.data.buf_id
+
+		vim.keymap.set("n", "g.", toggle_dotfiles, { buffer = buf_id, desc = "Toggle dotfiles displaying." })
+		vim.keymap.set("n", "g,", files_set_cwd, { buffer = buf_id })
+		map_split(buf_id, "gs", "belowright horizontal")
+		map_split(buf_id, "gv", "belowright vertical")
+		map_split(buf_id, "_", "belowright horizontal")
+		map_split(buf_id, "-", "belowright vertical")
 	end,
 })
 
