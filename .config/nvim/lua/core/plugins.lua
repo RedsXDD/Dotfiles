@@ -304,7 +304,7 @@ local mini = {
 	--: mini.surround {{{
 	{
 		"echasnovski/mini.surround",
-		keys = "s",
+		lazy = true,
 		config = load_config("mini.surround"),
 	},
 	--: }}}
