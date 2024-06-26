@@ -140,6 +140,12 @@ clue.setup({
 		{ mode = "x", keys = "[[", desc = "+Jump to previous `[`" },
 		{ mode = "x", keys = "[{", desc = "+Jump to previous `{`" },
 		--: }}}
+		--: Mini.surround {{{
+		plugin_clue("mini.surround", {
+			{ mode = "n", keys = "<Leader>s", desc = "+Surround" },
+			{ mode = "x", keys = "<Leader>s", desc = "+Surround" },
+		}),
+		--: }}}
 		--: Mini.pairs {{{
 		plugin_clue("mini.pairs", {
 			{ mode = "n", keys = "<Leader>tp", desc = "Toggle Mini.pairs." },
