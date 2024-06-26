@@ -23,7 +23,6 @@ g.netrw_keepdir = 0 -- Keep the current directory and the browsing directory syn
 g.netrw_winsize = 30 -- Netrw window size when creating a split.
 g.netrw_localcopydircmd = "cp -r" -- Enable recursive netrw copy.
 g.netrw_banner = 0 -- Enable/Disable netrw banner text.
-g.netrw_browse_split = 3 -- Open file on a new tab.
 g.netrw_altv = 1 -- Change from left splitting to right splitting.
 g.netrw_liststyle = 3 -- Tree style view in netrw.
 g.netrw_list_hide = "netrw_gitignore#Hide()"
