@@ -146,6 +146,12 @@ clue.setup({
 			{ mode = "x", keys = "<Leader>s", desc = "+Surround" },
 		}),
 		--: }}}
+		--: Mini.splitjoin {{{
+		plugin_clue("mini.splitjoin", {
+			{ mode = "n", keys = "<Leader>j", desc = "+Splitjoin" },
+			{ mode = "x", keys = "<Leader>j", desc = "+Splitjoin" },
+		}),
+		--: }}}
 		--: Mini.pairs {{{
 		plugin_clue("mini.pairs", {
 			{ mode = "n", keys = "<Leader>tp", desc = "Toggle Mini.pairs." },
