@@ -807,6 +807,7 @@ local disabled = {
 				-- stylua ignore end
 			}
 		end,
+		config = load_config("mini.map"),
 	},
 	--: }}}
 	--: mini.notify {{{
