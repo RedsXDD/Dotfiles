@@ -165,6 +165,7 @@ clue.setup({
 		--: Mini.diff {{{
 		plugin_clue("mini.diff", {
 			{ mode = "n", keys = "<Leader>d", desc = "+MiniDiff" },
+			{ mode = "x", keys = "<Leader>d", desc = "+MiniDiff" },
 			{ mode = "n", keys = "]h", postkeys = "]" },
 			{ mode = "n", keys = "]H", postkeys = "]" },
 			{ mode = "n", keys = "[h", postkeys = "[" },
