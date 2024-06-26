@@ -62,6 +62,18 @@ clue.setup({
 			submode_resize = true,
 		}),
 		--: }}}
+		--: Conform {{{
+		plugin_clue("conform", {
+			{ mode = "n", keys = "<Leader>lf", desc = "Format File." },
+			{ mode = "x", keys = "<Leader>lf", desc = "Format File." },
+		}),
+		--: }}}
+		--: FTerm {{{
+		plugin_clue("FTerm", {
+			{ mode = "n", keys = "<Leader>gt", desc = "Open a floating terminal." },
+			{ mode = "n", keys = "<Leader>gg", desc = "Open git integration." },
+		}),
+		--: }}}
 		--: General {{{
 		{ mode = "n", keys = "<Leader>b", desc = "+Buffers & Tabs" },
 		{ mode = "x", keys = "<Leader>b", desc = "+Buffers & Tabs" },
@@ -127,6 +139,12 @@ clue.setup({
 		{ mode = "x", keys = "[(", desc = "+Jump to previous `(`" },
 		{ mode = "x", keys = "[[", desc = "+Jump to previous `[`" },
 		{ mode = "x", keys = "[{", desc = "+Jump to previous `{`" },
+		--: }}}
+		--: Mini.pairs {{{
+		plugin_clue("mini.pairs", {
+			{ mode = "n", keys = "<Leader>tp", desc = "Toggle Mini.pairs." },
+			{ mode = "x", keys = "<Leader>tp", desc = "Toggle Mini.pairs." },
+		}),
 		--: }}}
 		--: Mini.map {{{
 		plugin_clue("mini.map", { mode = "n", keys = "<Leader>m", desc = "+MiniMap" }),
