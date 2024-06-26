@@ -370,8 +370,7 @@ local mini = {
 		"echasnovski/mini.diff",
 		event = "LazyFile",
 		keys = {
-			{ "[h", "]h", "[H", "]H" },
-			{ "<Leader>d" },
+			{ "[h", "]h", "[H", "]H", "<Leader>d" },
 			{
 				"<Leader>do",
 				function()
