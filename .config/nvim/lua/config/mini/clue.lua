@@ -1,7 +1,7 @@
 local clue = require("mini.clue")
 local border_style = require("core.icons").misc.border
 
-clue.mkclue_with_dependency = function(dependency, clues)
+local function mkclue_with_deps(dependency, clues)
 	if dependency and type(dependency) == "string" then
 		local success, _ = pcall(require, dependency)
 		if not success then
@@ -57,10 +57,10 @@ clue.setup({
 		{ mode = "x", keys = "<Leader>g", desc = "+Misc" },
 
 		-- Noice:
-		clue.mkclue_with_dependency("noice", { mode = "n", keys = "<Leader>gn", desc = "+Noice" }),
+		mkclue_with_deps("noice", { mode = "n", keys = "<Leader>gn", desc = "+Noice" }),
 
 		-- Lsp:
-		clue.mkclue_with_dependency("lspconfig", {
+		mkclue_with_deps("lspconfig", {
 			{ mode = "n", keys = "<Leader>l", desc = "+LSP" },
 			{ mode = "n", keys = "]d", postkeys = "]" },
 			{ mode = "n", keys = "]D", postkeys = "]" },
@@ -73,10 +73,10 @@ clue.setup({
 		}),
 
 		-- Mini.map:
-		clue.mkclue_with_dependency("mini.map", { mode = "n", keys = "<Leader>m", desc = "+MiniMap" }),
+		mkclue_with_deps("mini.map", { mode = "n", keys = "<Leader>m", desc = "+MiniMap" }),
 
 		-- Mini.diff:
-		clue.mkclue_with_dependency("mini.diff", {
+		mkclue_with_deps("mini.diff", {
 			{ mode = "n", keys = "<Leader>d", desc = "+MiniDiff" },
 			{ mode = "n", keys = "]h", postkeys = "]" },
 			{ mode = "n", keys = "]H", postkeys = "]" },
@@ -89,7 +89,7 @@ clue.setup({
 		}),
 
 		-- Mini.pick:
-		clue.mkclue_with_dependency("mini.pick", {
+		mkclue_with_deps("mini.pick", {
 			{ mode = "n", keys = "<Leader>f", desc = "+MiniPick" },
 			{ mode = "n", keys = "<Leader>fg", desc = "+Grep & Git" },
 			{ mode = "n", keys = "<Leader>fl", desc = "+LSP" },
@@ -97,7 +97,7 @@ clue.setup({
 		}),
 
 		-- Telescope:
-		clue.mkclue_with_dependency("telescope", {
+		mkclue_with_deps("telescope", {
 			{ mode = "n", keys = "<Leader>f", desc = "+Telescope" },
 			{ mode = "n", keys = "<Leader>fg", desc = "+Grep & Git" },
 			{ mode = "n", keys = "<Leader>fl", desc = "+LSP" },
@@ -105,7 +105,7 @@ clue.setup({
 		}),
 
 		-- Gitsigns:
-		clue.mkclue_with_dependency("gitsigns", {
+		mkclue_with_deps("gitsigns", {
 			{ mode = "n", keys = "<Leader>gh", desc = "+Gitsigns" },
 			{ mode = "x", keys = "<Leader>gh", desc = "+Gitsigns" },
 			{ mode = "n", keys = "]h", postkeys = "]" },
@@ -133,7 +133,7 @@ clue.setup({
 		{ mode = "x", keys = "[{", desc = "+Jump to previous `{`" },
 
 		-- Mini.bracketed:
-		clue.mkclue_with_dependency("mini.bracketed", {
+		mkclue_with_deps("mini.bracketed", {
 			-- Jump betwheen buffers.
 			{ mode = "n", keys = "]b", postkeys = "]" },
 			{ mode = "n", keys = "]B", postkeys = "]" },
