@@ -74,4 +74,10 @@ pick.setup({
 		content_from_bottom = true,
 		use_cache = true,
 	},
+	mappings = {
+		move_down = "<C-j>",
+		move_up = "<C-k>",
+		toggle_info = "<C-i>",
+		toggle_preview = "<C-p>",
+	},
 })
