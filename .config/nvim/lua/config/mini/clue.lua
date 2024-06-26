@@ -94,6 +94,7 @@ clue.setup({
 		--: Lsp {{{
 		plugin_clue("lspconfig", {
 			{ mode = "n", keys = "<Leader>l", desc = "+LSP" },
+			{ mode = "x", keys = "<Leader>l", desc = "+LSP" },
 			{ mode = "n", keys = "]d", postkeys = "]" },
 			{ mode = "n", keys = "]D", postkeys = "]" },
 			{ mode = "n", keys = "[d", postkeys = "[" },
