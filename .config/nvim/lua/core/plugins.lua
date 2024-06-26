@@ -255,10 +255,7 @@ local mini = {
 			"nvim-treesitter/nvim-treesitter-textobjects",
 			"echasnovski/mini.extra",
 		},
-		keys = {
-			{ "a", mode = { "x", "o" } },
-			{ "i", mode = { "x", "o" } },
-		},
+		event = "LazyFile",
 		config = load_config("mini.ai"),
 	},
 	--: }}}
