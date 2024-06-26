@@ -426,9 +426,9 @@ local mini = {
 	--: mini.pairs {{{
 	{
 		"echasnovski/mini.pairs",
-		event = "CmdlineEnter",
+		event = { "InsertEnter", "CmdlineEnter" },
 		keys = function()
-			local M = {
+			return {
 				map({ "n", "x" }, "<Leader>tp", function()
 					local state = vim.g.minipairs_disable
 					state = not state
@@ -436,13 +436,6 @@ local mini = {
 					vim.notify(state and "Disabled " .. "mini.pairs" or "Enabled " .. "mini.pairs", vim.log.levels.INFO)
 				end, "Toggle Mini.pairs."),
 			}
-
-			local lazy_load_keys = { "'", '"', "`", "´", "(", ")", "[", "]", "{", "}", "<", ">" }
-			for _, key in ipairs(lazy_load_keys) do
-				table.insert(M, { key, mode = { "i" } })
-			end
-
-			return M
 		end,
 		config = load_config("mini.pairs"),
 	},
