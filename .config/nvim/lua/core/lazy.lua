@@ -17,13 +17,18 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
+local status_ok, lazy = pcall(require, "lazy")
+if not status_ok then
+	return
+end
+
 -- Add support for the LazyFile event:
 local Event = require("lazy.core.handler.event")
 Event.mappings.LazyFile = { id = "LazyFile", event = { "BufReadPost", "BufNewFile", "BufWritePre" } }
 Event.mappings["User LazyFile"] = Event.mappings.LazyFile
 
 -- Initialize lazy.nvim:
-require("lazy").setup("core.plugins", {
+lazy.setup("core.plugins", {
 	defaults = {
 		lazy = false,
 		version = false, -- Always use the latest git commit.
