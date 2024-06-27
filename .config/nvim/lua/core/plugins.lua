@@ -151,6 +151,7 @@ local main = {
 	},
 	--: }}}
 	-- --: alpha-nvim {{{
+	-- { "echasnovski/mini.starter", enabled = false },
 	-- {
 	-- 	"goolord/alpha-nvim",
 	-- 	-- Only load when no arguments.
