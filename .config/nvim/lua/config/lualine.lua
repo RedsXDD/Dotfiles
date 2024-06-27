@@ -7,7 +7,7 @@ end
 
 local opts = {
 	options = {
-		theme = "auto",
+		theme = "neopywal",
 		icons_enabled = true,
 		always_divide_middle = true,
 		component_separators = "|",
