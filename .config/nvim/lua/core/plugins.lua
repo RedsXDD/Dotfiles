@@ -53,6 +53,15 @@ local colorschemes = {
 }
 
 local main = {
+	-- --: bufferline.nvim {{{
+	-- {
+	-- 	"akinsho/bufferline.nvim",
+	-- 	dependencies = "nvim-tree/nvim-web-devicons",
+	-- 	version = "*",
+	-- 	event = "LazyFile",
+	-- 	config = load_config("bufferline"),
+	-- },
+	-- --: }}}
 	--: lualine.nvim {{{
 	{
 		"nvim-lualine/lualine.nvim",
@@ -141,6 +150,98 @@ local main = {
 		config = load_config("zenmode"),
 	},
 	--: }}}
+	-- --: alpha-nvim {{{
+	-- {
+	-- 	"goolord/alpha-nvim",
+	-- 	-- Only load when no arguments.
+	-- 	event = function()
+	-- 		if vim.fn.argc() == 0 then
+	-- 			return "VimEnter"
+	-- 		end
+	-- 	end,
+	-- 	dependencies = { "nvim-tree/nvim-web-devicons" },
+	-- 	config = load_config("alpha"),
+	-- },
+	-- --: }}}
+	-- --: nvim-autopairs {{{
+	-- {
+	-- 	"windwp/nvim-autopairs",
+	-- 	event = "InsertEnter",
+	-- 	dependencies = {
+	-- 		"hrsh7th/nvim-cmp",
+	-- 	},
+	-- 	config = load_config("autopairs"),
+	-- },
+	-- --: }}}
+	-- --: gitsigns.nvim {{{
+	-- {
+	-- 	"lewis6991/gitsigns.nvim",
+	-- 	event = "LazyFile",
+	-- 	cmd = "Gitsigns",
+	-- 	config = load_config("gitsigns"),
+	-- },
+	-- --: }}}
+	-- --: neo-tree.nvim {{{
+	-- {
+	-- 	"nvim-neo-tree/neo-tree.nvim",
+	-- 	dependencies = {
+	-- 		"nvim-lua/plenary.nvim",
+	-- 		"nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
+	-- 		"MunifTanjim/nui.nvim",
+	-- 		-- "3rd/image.nvim", -- Optional image support in preview window: See `# Preview Mode` for more information
+	-- 	},
+	-- 	lazy = true,
+	-- 	branch = "v3.x",
+	-- 	cmd = "Neotree",
+	-- 	-- FIX: use `autocmd` for lazy-loading neo-tree instead of directly requiring it, because `cwd` is not set up properly.
+	-- 	init = function()
+	-- 		vim.api.nvim_create_autocmd("BufEnter", {
+	-- 			desc = "Start Neo-tree with directory",
+	-- 			group = vim.api.nvim_create_augroup("augroup_neotree_start_directory", { clear = true }),
+	-- 			once = true,
+	-- 			callback = function()
+	-- 				if package.loaded["neo-tree"] then
+	-- 					return
+	-- 				else
+	-- 					---@diagnostic disable-next-line: undefined-field
+	-- 					local stats = vim.uv.fs_stat(vim.fn.argv(0))
+	-- 					if stats and stats.type == "directory" then
+	-- 						require("neo-tree")
+	-- 					end
+	-- 				end
+	-- 			end,
+	-- 		})
+	-- 	end,
+	-- 	config = load_config("neotree"),
+	-- },
+	-- --: }}}
+	-- --: netrw.nvim {{{
+	-- {
+	-- 	"prichrd/netrw.nvim",
+	-- 	lazy = true,
+	-- },
+	-- --: }}}
+	-- --: telescope.nvim {{{
+	-- -- Disable "mini.pick":
+	-- { "echasnovski/mini.pick", enabled = false },
+	-- {
+	-- 	"nvim-telescope/telescope.nvim",
+	-- 	dependencies = {
+	-- 		"nvim-lua/plenary.nvim",
+	-- 		"nvim-tree/nvim-web-devicons",
+	-- 		{
+	-- 			"nvim-telescope/telescope-fzf-native.nvim",
+	-- 			build = "make",
+	-- 			cond = function()
+	-- 				return vim.fn.executable("make") == 1
+	-- 			end,
+	-- 		},
+	-- 	},
+	-- 	branch = "master",
+	-- 	cmd = "Telescope",
+	-- 	config = load_config("telescope"),
+	-- },
+	-- --: }}}
 }
 
 local lsp = {
@@ -308,6 +409,97 @@ local mini = {
 		config = load_config("mini.surround"),
 	},
 	--: }}}
+	-- --: mini.completion {{{
+	-- {
+	-- 	"echasnovski/mini.completion",
+	-- 	event = "InsertEnter",
+	-- 	config = load_config("mini.completion"),
+	-- },
+	-- --: }}}
+	-- --: mini.animate {{{
+	-- {
+	-- 	"echasnovski/mini.animate",
+	-- 	cond = function()
+	-- 		if vim.g.neovide then
+	-- 			return false
+	-- 		end
+	--
+	-- 		return true
+	-- 	end,
+	-- 	event = "LazyFile",
+	-- 	config = load_config("mini.animate"),
+	-- },
+	-- --: }}}
+	-- --: mini.bracketed {{{
+	-- {
+	-- 	"echasnovski/mini.bracketed",
+	-- 	keys = { "[", "]" },
+	-- },
+	-- --: }}}
+	-- --: mini.comment {{{
+	-- {
+	-- 	"echasnovski/mini.comment",
+	-- 	-- Enabled if not on version 0.10.
+	-- 	enabled = vim.fn.has("nvim-0.10.0") == 0,
+	-- 	dependencies = {
+	-- 		"nvim-treesitter/nvim-treesitter",
+	-- 		{ "JoosepAlviste/nvim-ts-context-commentstring", opts = { enable_autocmd = false } },
+	-- 	},
+	-- 	keys = "gc",
+	-- 	config = load_config("mini.comment"),
+	-- },
+	-- --: }}}
+	-- --: mini.cursorword {{{
+	-- {
+	-- 	"echasnovski/mini.cursorword",
+	-- 	event = "LazyFile",
+	-- },
+	-- --: }}}
+	-- --: mini.files {{{
+	-- {
+	-- 	"echasnovski/mini.files",
+	-- 	dependencies = { "nvim-tree/nvim-web-devicons" },
+	-- 	-- FIX: use `autocmd` for lazy-loading mini.files instead of directly requiring it, because `cwd` is not set up properly.
+	-- 	init = function()
+	-- 		vim.g.loaded_netrwPlugin = 1
+	-- 		vim.g.loaded_netrw = 1
+	-- 		vim.api.nvim_create_autocmd("VimEnter", {
+	-- 			desc = "Start Mini.files with directory",
+	-- 			group = vim.api.nvim_create_augroup("augroup_mini_files_start_directory", { clear = true }),
+	-- 			once = true,
+	-- 			callback = function()
+	-- 				---@diagnostic disable-next-line: undefined-field
+	-- 				local stats = vim.uv.fs_stat(vim.fn.argv(0))
+	-- 				if stats and stats.type == "directory" then
+	-- 					require("lazy").load({ plugins = "mini.files" })
+	-- 					require("mini.files").open(vim.api.nvim_buf_get_name(0), true)
+	-- 				end
+	-- 			end,
+	-- 		})
+	-- 	end,
+	-- 	config = load_config("mini.files"),
+	-- },
+	-- --: }}}
+	-- --: mini.map {{{
+	-- {
+	-- 	"echasnovski/mini.map",
+	-- 	keys = "<Leader>m",
+	-- 	config = load_config("mini.map"),
+	-- },
+	-- --: }}}
+	-- --: mini.notify {{{
+	-- {
+	-- 	"echasnovski/mini.notify",
+	-- 	event = "LazyFile",
+	-- 	config = load_config("mini.notify"),
+	-- },
+	-- --: }}}
+	-- --: mini.sessions {{{
+	-- {
+	-- 	"echasnovski/mini.sessions",
+	-- 	opts = {},
+	-- },
+	-- --: }}}
 }
 
 local misc = {
@@ -336,201 +528,6 @@ local misc = {
 		init = function()
 			vim.g.rustfmt_autosave = 1
 		end,
-	},
-	--: }}}
-}
-
-local disabled = {
-	--: mini.completion {{{
-	{
-		"echasnovski/mini.completion",
-		event = "InsertEnter",
-		config = load_config("mini.completion"),
-	},
-	--: }}}
-	--: alpha-nvim {{{
-	{
-		"goolord/alpha-nvim",
-		-- Only load when no arguments.
-		event = function()
-			if vim.fn.argc() == 0 then
-				return "VimEnter"
-			end
-		end,
-		dependencies = { "nvim-tree/nvim-web-devicons" },
-		config = load_config("alpha"),
-	},
-	--: }}}
-	--: nvim-autopairs {{{
-	{
-		"windwp/nvim-autopairs",
-		event = "InsertEnter",
-		dependencies = {
-			"hrsh7th/nvim-cmp",
-		},
-		config = load_config("autopairs"),
-	},
-	--: }}}
-	--: bufferline.nvim {{{
-	{
-		"akinsho/bufferline.nvim",
-		dependencies = "nvim-tree/nvim-web-devicons",
-		version = "*",
-		event = "LazyFile",
-		config = load_config("bufferline"),
-	},
-	--: }}}
-	--: gitsigns.nvim {{{
-	{
-		"lewis6991/gitsigns.nvim",
-		event = "LazyFile",
-		cmd = "Gitsigns",
-		config = load_config("gitsigns"),
-	},
-	--: }}}
-	--: neo-tree.nvim {{{
-	{
-		"nvim-neo-tree/neo-tree.nvim",
-		dependencies = {
-			"nvim-lua/plenary.nvim",
-			"nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
-			"MunifTanjim/nui.nvim",
-			-- "3rd/image.nvim", -- Optional image support in preview window: See `# Preview Mode` for more information
-		},
-		lazy = true,
-		branch = "v3.x",
-		cmd = "Neotree",
-		-- FIX: use `autocmd` for lazy-loading neo-tree instead of directly requiring it, because `cwd` is not set up properly.
-		init = function()
-			vim.api.nvim_create_autocmd("BufEnter", {
-				desc = "Start Neo-tree with directory",
-				group = vim.api.nvim_create_augroup("augroup_neotree_start_directory", { clear = true }),
-				once = true,
-				callback = function()
-					if package.loaded["neo-tree"] then
-						return
-					else
-						---@diagnostic disable-next-line: undefined-field
-						local stats = vim.uv.fs_stat(vim.fn.argv(0))
-						if stats and stats.type == "directory" then
-							require("neo-tree")
-						end
-					end
-				end,
-			})
-		end,
-		config = load_config("neotree"),
-	},
-	--: }}}
-	--: netrw.nvim {{{
-	{
-		"prichrd/netrw.nvim",
-		lazy = true,
-	},
-	--: }}}
-	--: telescope.nvim {{{
-	-- Disable "mini.pick":
-	{ "echasnovski/mini.pick", enabled = false },
-	{
-		"nvim-telescope/telescope.nvim",
-		dependencies = {
-			"nvim-lua/plenary.nvim",
-			"nvim-tree/nvim-web-devicons",
-			{
-				"nvim-telescope/telescope-fzf-native.nvim",
-				build = "make",
-				cond = function()
-					return vim.fn.executable("make") == 1
-				end,
-			},
-		},
-		branch = "master",
-		cmd = "Telescope",
-		config = load_config("telescope"),
-	},
-	--: }}}
-	--: mini.animate {{{
-	{
-		"echasnovski/mini.animate",
-		cond = function()
-			if vim.g.neovide then
-				return false
-			end
-
-			return true
-		end,
-		event = "LazyFile",
-		config = load_config("mini.animate"),
-	},
-	--: }}}
-	--: mini.bracketed {{{
-	{
-		"echasnovski/mini.bracketed",
-		keys = { "[", "]" },
-	},
-	--: }}}
-	--: mini.comment {{{
-	{
-		"echasnovski/mini.comment",
-		-- Enabled if not on version 0.10.
-		enabled = vim.fn.has("nvim-0.10.0") == 0,
-		dependencies = {
-			"nvim-treesitter/nvim-treesitter",
-			{ "JoosepAlviste/nvim-ts-context-commentstring", opts = { enable_autocmd = false } },
-		},
-		keys = "gc",
-		config = load_config("mini.comment"),
-	},
-	--: }}}
-	--: mini.cursorword {{{
-	{
-		"echasnovski/mini.cursorword",
-		event = "LazyFile",
-	},
-	--: }}}
-	--: mini.files {{{
-	{
-		"echasnovski/mini.files",
-		dependencies = { "nvim-tree/nvim-web-devicons" },
-		-- FIX: use `autocmd` for lazy-loading mini.files instead of directly requiring it, because `cwd` is not set up properly.
-		init = function()
-			vim.g.loaded_netrwPlugin = 1
-			vim.g.loaded_netrw = 1
-			vim.api.nvim_create_autocmd("VimEnter", {
-				desc = "Start Mini.files with directory",
-				group = vim.api.nvim_create_augroup("augroup_mini_files_start_directory", { clear = true }),
-				once = true,
-				callback = function()
-					---@diagnostic disable-next-line: undefined-field
-					local stats = vim.uv.fs_stat(vim.fn.argv(0))
-					if stats and stats.type == "directory" then
-						require("lazy").load({ plugins = "mini.files" })
-						require("mini.files").open(vim.api.nvim_buf_get_name(0), true)
-					end
-				end,
-			})
-		end,
-		config = load_config("mini.files"),
-	},
-	--: }}}
-	--: mini.map {{{
-	{
-		"echasnovski/mini.map",
-		keys = "<Leader>m",
-		config = load_config("mini.map"),
-	},
-	--: }}}
-	--: mini.notify {{{
-	{
-		"echasnovski/mini.notify",
-		event = "LazyFile",
-		config = load_config("mini.notify"),
-	},
-	--: }}}
-	--: mini.sessions {{{
-	{
-		"echasnovski/mini.sessions",
-		opts = {},
 	},
 	--: }}}
 }
