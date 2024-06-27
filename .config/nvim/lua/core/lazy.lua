@@ -30,7 +30,7 @@ Event.mappings["User LazyFile"] = Event.mappings.LazyFile
 -- Initialize lazy.nvim:
 lazy.setup("core.plugins", {
 	defaults = {
-		lazy = false,
+		lazy = true,
 		version = false, -- Always use the latest git commit.
 		-- version = "*", -- Try installing the latest stable version for plugins that support semver.
 	},
