@@ -47,7 +47,7 @@ lazy.setup("core.plugins", {
 		notify = true, -- Turn on/off notifications whenever plugin changes are made.
 	},
 	ui = {
-		browser = "LibreWolf",
+		browser = nil,
 		wrap = true,
 		border = require("core.icons").misc.border,
 	},
