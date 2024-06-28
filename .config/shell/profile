@@ -59,7 +59,7 @@ export VIDEO='mpv'
 #: }}}
 #: PATH {{{
 bin_files="$(find "${HOME}/.local/bin" -follow -type d -not -path "${HOME}/.local/bin/not_path/*" -not -path "${HOME}/.local/bin/not_path" -printf %p:)"
-export PATH="$PATH:${bin_files}${HOME}/Applications:${CARGO_HOME}/bin/"
+export PATH="$PATH:${bin_files}${HOME}/Applications:${CARGO_HOME}/bin/:${GOPATH}/bin/"
 unset bin_files
 #: }}}
 #: Rust sccache {{{
