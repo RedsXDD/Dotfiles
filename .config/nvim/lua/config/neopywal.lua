@@ -1,5 +1,7 @@
 local neopywal = require("neopywal")
 
+vim.g.neopywal_debug = true
+
 neopywal.setup({
 	use_wallust = true,
 	transparent_background = false,
