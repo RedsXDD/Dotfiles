@@ -6,7 +6,7 @@ neopywal.setup({
 	dim_inactive = true,
 	show_split_lines = false,
 	custom_highlights = function(colors)
-		local U = require("neopywal.util")
+		local U = require("neopywal.utils.color")
 		return {
 			CmpItemKindKeyword = { bg = colors.color1, fg = colors.background }, -- Link Keyword
 			CmpItemKindOperator = { link = "CmpItemKindKeyword" }, -- Link Operator
