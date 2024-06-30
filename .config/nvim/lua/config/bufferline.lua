@@ -1,7 +1,7 @@
 local bufferline = require("bufferline")
 
 bufferline.setup({
-	highlights = require("neopywal.bufferline").setup(),
+	highlights = require("neopywal.theme.plugins.bufferline").setup(),
 	options = {
 		numbers = "ordinal",
 		buffer_close_icon = "",
