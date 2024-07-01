@@ -119,18 +119,20 @@ return {
 		config = load_config("mini.clue"),
 	},
 	--: }}}
-	--: mini.starter {{{
-	{
-		"echasnovski/mini.starter",
-		-- Only load when no arguments.
-		event = function()
-			if vim.fn.argc() == 0 then
-				return "VimEnter"
-			end
-		end,
-		config = load_config("mini.starter"),
-	},
-	--: }}}
+	-- --: mini.starter {{{
+	-- { "goolord/alpha-nvim", enabled = false },
+	-- { "nvimdev/dashboard-nvim", enabled = false },
+	-- {
+	-- 	"echasnovski/mini.starter",
+	-- 	-- Only load when no arguments.
+	-- 	event = function()
+	-- 		if vim.fn.argc() == 0 then
+	-- 			return "VimEnter"
+	-- 		end
+	-- 	end,
+	-- 	config = load_config("mini.starter"),
+	-- },
+	-- --: }}}
 	--: mini.tabline {{{
 	{
 		"echasnovski/mini.tabline",
@@ -437,19 +439,33 @@ return {
 		config = load_config("zenmode"),
 	},
 	--: }}}
-	--: alpha-nvim {{{
+	--: dashboard-nvim {{{
+	{ "goolord/alpha-nvim", enabled = false },
 	{ "echasnovski/mini.starter", enabled = false },
 	{
-		"goolord/alpha-nvim",
-		-- Only load when no arguments.
+		"nvimdev/dashboard-nvim",
 		event = function()
 			if vim.fn.argc() == 0 then
 				return "VimEnter"
 			end
 		end,
-		config = load_config("alpha"),
+		config = load_config("dashboard"),
 	},
 	--: }}}
+	-- --: alpha-nvim {{{
+	-- { "nvimdev/dashboard-nvim", enabled = false },
+	-- { "echasnovski/mini.starter", enabled = false },
+	-- {
+	-- 	"goolord/alpha-nvim",
+	-- 	-- Only load when no arguments.
+	-- 	event = function()
+	-- 		if vim.fn.argc() == 0 then
+	-- 			return "VimEnter"
+	-- 		end
+	-- 	end,
+	-- 	config = load_config("alpha"),
+	-- },
+	-- --: }}}
 	-- --: nvim-autopairs {{{
 	-- { "echasnovski/mini.pairs", enabled = false },
 	-- {
