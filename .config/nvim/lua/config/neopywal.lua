@@ -10,6 +10,22 @@ neopywal.setup({
 	transparent_background = false,
 	dim_inactive = true,
 	show_split_lines = false,
+	default_plugins = false,
+	plugins = {
+		dashboard = true,
+		lazy = true,
+		lspconfig = true,
+		netrw = true,
+		noice = true,
+		notify = true,
+		nvim_cmp = true,
+		treesitter = true,
+		mini = {
+			hipatterns = true,
+			indentscope = true,
+			pick = true,
+		},
+	},
 	custom_highlights = function(colors)
 		local U = require("neopywal.utils.color")
 		return {
