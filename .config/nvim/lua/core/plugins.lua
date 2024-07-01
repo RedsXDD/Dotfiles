@@ -15,7 +15,8 @@ local function load_config(plugin)
 	end
 end
 
-local colorschemes = {
+return {
+	--: Colorschemes {{{
 	--: catppuccin {{{
 	{
 		"catppuccin/nvim",
@@ -50,205 +51,8 @@ local colorschemes = {
 		config = load_config("neopywal"),
 	},
 	--: }}}
-}
-
-local main = {
-	--: bufferline.nvim {{{
-	{ "echasnovski/mini.tabline", enabled = false },
-	{
-		"akinsho/bufferline.nvim",
-		dependencies = "nvim-tree/nvim-web-devicons",
-		version = "*",
-		event = { "LazyFile", "BufUnload" },
-		config = load_config("bufferline"),
-	},
 	--: }}}
-	--: lualine.nvim {{{
-	{
-		"nvim-lualine/lualine.nvim",
-		dependencies = { "nvim-tree/nvim-web-devicons" },
-		event = { "LazyFile", "BufUnload" },
-		config = load_config("lualine"),
-	},
-	--: }}}
-	--: conform.nvim {{{
-	{
-		"stevearc/conform.nvim",
-		dependencies = { "mason.nvim" },
-		lazy = true,
-		cmd = "ConformInfo",
-		keys = "<Leader>lf",
-		config = load_config("conform"),
-	},
-	--: }}}
-	--: nvim-treesitter {{{
-	{
-		"nvim-treesitter/nvim-treesitter",
-		dependencies = {
-			{ "nvim-treesitter/nvim-treesitter-textobjects" },
-			{ "windwp/nvim-ts-autotag" },
-		},
-		lazy = vim.fn.argc(-1) == 0, -- load treesitter early when opening a file from the cmdline
-		event = "LazyFile",
-		cmd = { "TSUpdateSync", "TSUpdate", "TSInstall" },
-		build = ":TSUpdate",
-		config = load_config("treesitter"),
-	},
-	--: }}}
-	--: dressing.nvim {{{
-	{ "stevearc/dressing.nvim", event = "LazyFile" },
-	--: }}}
-	--: FTerm.nvim {{{
-	{
-		"numToStr/FTerm.nvim",
-		keys = { "<Leader>gg", "<Leader>gt" },
-		config = load_config("fterm"),
-	},
-	--: }}}
-	--: noice.nvim {{{
-	{
-		"folke/noice.nvim",
-		dependencies = {
-			"MunifTanjim/nui.nvim",
-			"rcarriga/nvim-notify",
-		},
-		event = function()
-			return { "CmdlineEnter", "LazyFile" }
-		end,
-		config = load_config("noice"),
-	},
-	--: }}}
-	--: nvim-cmp {{{
-	{
-		"hrsh7th/nvim-cmp",
-		event = "InsertEnter",
-		dependencies = {
-			"hrsh7th/cmp-nvim-lsp", -- Suggestions based on neovim lsp.
-			"hrsh7th/cmp-buffer", -- Suggestions based on current buffer.
-			"hrsh7th/cmp-path", -- Suggestions based on path(directories/files etc.).
-			"hrsh7th/cmp-nvim-lua", -- Suggestions for neovim api commands.
-			"saadparwaiz1/cmp_luasnip",
-			"rafamadriz/friendly-snippets",
-			{
-				"L3MON4D3/LuaSnip",
-				-- Build Step is needed for regex support in snippets.
-				-- This step is not supported in many windows environments.
-				-- Remove the below condition to re-enable on windows.
-				build = (function()
-					if vim.fn.has("win32") == 1 or vim.fn.executable("make") == 0 then
-						return
-					end
-					return "make install_jsregexp"
-				end)(),
-			},
-		},
-		config = load_config("nvim_cmp"),
-	},
-	--: }}}
-	--: zen-mode.nvim {{{
-	{
-		"folke/zen-mode.nvim",
-		cmd = "ZenMode",
-		keys = "<Leader>tz",
-		config = load_config("zenmode"),
-	},
-	--: }}}
-	--: alpha-nvim {{{
-	{ "echasnovski/mini.starter", enabled = false },
-	{
-		"goolord/alpha-nvim",
-		-- Only load when no arguments.
-		event = function()
-			if vim.fn.argc() == 0 then
-				return "VimEnter"
-			end
-		end,
-		config = load_config("alpha"),
-	},
-	--: }}}
-	-- --: nvim-autopairs {{{
-	-- { "echasnovski/mini.pairs", enabled = false },
-	-- {
-	-- 	"windwp/nvim-autopairs",
-	-- 	event = "InsertEnter",
-	-- 	dependencies = {
-	-- 		"hrsh7th/nvim-cmp",
-	-- 	},
-	-- 	config = load_config("autopairs"),
-	-- },
-	-- --: }}}
-	-- --: gitsigns.nvim {{{
-	-- {
-	-- 	"lewis6991/gitsigns.nvim",
-	-- 	event = "LazyFile",
-	-- 	cmd = "Gitsigns",
-	-- 	config = load_config("gitsigns"),
-	-- },
-	-- --: }}}
-	-- --: neo-tree.nvim {{{
-	-- {
-	-- 	"nvim-neo-tree/neo-tree.nvim",
-	-- 	dependencies = {
-	-- 		"nvim-lua/plenary.nvim",
-	-- 		"nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
-	-- 		"MunifTanjim/nui.nvim",
-	-- 		-- "3rd/image.nvim", -- Optional image support in preview window: See `# Preview Mode` for more information
-	-- 	},
-	-- 	lazy = true,
-	-- 	branch = "v3.x",
-	-- 	cmd = "Neotree",
-	-- 	-- FIX: use `autocmd` for lazy-loading neo-tree instead of directly requiring it, because `cwd` is not set up properly.
-	-- 	init = function()
-	-- 		vim.api.nvim_create_autocmd("BufEnter", {
-	-- 			desc = "Start Neo-tree with directory",
-	-- 			group = vim.api.nvim_create_augroup("augroup_neotree_start_directory", { clear = true }),
-	-- 			once = true,
-	-- 			callback = function()
-	-- 				if package.loaded["neo-tree"] then
-	-- 					return
-	-- 				else
-	-- 					---@diagnostic disable-next-line: undefined-field
-	-- 					local stats = vim.uv.fs_stat(vim.fn.argv(0))
-	-- 					if stats and stats.type == "directory" then
-	-- 						require("neo-tree")
-	-- 					end
-	-- 				end
-	-- 			end,
-	-- 		})
-	-- 	end,
-	-- 	config = load_config("neotree"),
-	-- },
-	-- --: }}}
-	-- --: netrw.nvim {{{
-	-- {
-	-- 	"prichrd/netrw.nvim",
-	-- 	lazy = true,
-	-- },
-	-- --: }}}
-	-- --: telescope.nvim {{{
-	-- -- Disable "mini.pick":
-	-- { "echasnovski/mini.pick", enabled = false },
-	-- {
-	-- 	"nvim-telescope/telescope.nvim",
-	-- 	dependencies = {
-	-- 		"nvim-lua/plenary.nvim",
-	-- 		"nvim-tree/nvim-web-devicons",
-	-- 		{
-	-- 			"nvim-telescope/telescope-fzf-native.nvim",
-	-- 			build = "make",
-	-- 			cond = function()
-	-- 				return vim.fn.executable("make") == 1
-	-- 			end,
-	-- 		},
-	-- 	},
-	-- 	branch = "master",
-	-- 	cmd = "Telescope",
-	-- 	config = load_config("telescope"),
-	-- },
-	-- --: }}}
-}
-
-local lsp = {
+	--: LSP {{{
 	--: mason.nvim {{{
 	{
 		"williamboman/mason.nvim",
@@ -279,9 +83,8 @@ local lsp = {
 		config = load_config("nvim_lint"),
 	},
 	--: }}}
-}
-
-local mini = {
+	--: }}}
+	--: Mini {{{
 	--: mini.ai {{{
 	{
 		"echasnovski/mini.ai",
@@ -504,9 +307,8 @@ local mini = {
 	-- 	opts = {},
 	-- },
 	-- --: }}}
-}
-
-local misc = {
+	--: }}}
+	--: Fileformats {{{
 	--: hyprland-vim-syntax {{{
 	{
 		"theRealCarneiro/hyprland-vim-syntax",
@@ -534,6 +336,198 @@ local misc = {
 		end,
 	},
 	--: }}}
+	--: }}}
+	--: bufferline.nvim {{{
+	{ "echasnovski/mini.tabline", enabled = false },
+	{
+		"akinsho/bufferline.nvim",
+		dependencies = "nvim-tree/nvim-web-devicons",
+		version = "*",
+		event = { "LazyFile", "BufUnload" },
+		config = load_config("bufferline"),
+	},
+	--: }}}
+	--: lualine.nvim {{{
+	{
+		"nvim-lualine/lualine.nvim",
+		dependencies = { "nvim-tree/nvim-web-devicons" },
+		event = { "LazyFile", "BufUnload" },
+		config = load_config("lualine"),
+	},
+	--: }}}
+	--: conform.nvim {{{
+	{
+		"stevearc/conform.nvim",
+		dependencies = { "mason.nvim" },
+		lazy = true,
+		cmd = "ConformInfo",
+		keys = "<Leader>lf",
+		config = load_config("conform"),
+	},
+	--: }}}
+	--: nvim-treesitter {{{
+	{
+		"nvim-treesitter/nvim-treesitter",
+		dependencies = {
+			{ "nvim-treesitter/nvim-treesitter-textobjects" },
+			{ "windwp/nvim-ts-autotag" },
+		},
+		lazy = vim.fn.argc(-1) == 0, -- load treesitter early when opening a file from the cmdline
+		event = "LazyFile",
+		cmd = { "TSUpdateSync", "TSUpdate", "TSInstall" },
+		build = ":TSUpdate",
+		config = load_config("treesitter"),
+	},
+	--: }}}
+	--: dressing.nvim {{{
+	{ "stevearc/dressing.nvim", event = "LazyFile" },
+	--: }}}
+	--: FTerm.nvim {{{
+	{
+		"numToStr/FTerm.nvim",
+		keys = { "<Leader>gg", "<Leader>gt" },
+		config = load_config("fterm"),
+	},
+	--: }}}
+	--: noice.nvim {{{
+	{
+		"folke/noice.nvim",
+		dependencies = {
+			"MunifTanjim/nui.nvim",
+			"rcarriga/nvim-notify",
+		},
+		event = function()
+			return { "CmdlineEnter", "LazyFile" }
+		end,
+		config = load_config("noice"),
+	},
+	--: }}}
+	--: nvim-cmp {{{
+	{
+		"hrsh7th/nvim-cmp",
+		event = "InsertEnter",
+		dependencies = {
+			"hrsh7th/cmp-nvim-lsp", -- Suggestions based on neovim lsp.
+			"hrsh7th/cmp-buffer", -- Suggestions based on current buffer.
+			"hrsh7th/cmp-path", -- Suggestions based on path(directories/files etc.).
+			"hrsh7th/cmp-nvim-lua", -- Suggestions for neovim api commands.
+			"saadparwaiz1/cmp_luasnip",
+			"rafamadriz/friendly-snippets",
+			{
+				"L3MON4D3/LuaSnip",
+				-- Build Step is needed for regex support in snippets.
+				-- This step is not supported in many windows environments.
+				-- Remove the below condition to re-enable on windows.
+				build = (function()
+					if vim.fn.has("win32") == 1 or vim.fn.executable("make") == 0 then
+						return
+					end
+					return "make install_jsregexp"
+				end)(),
+			},
+		},
+		config = load_config("nvim_cmp"),
+	},
+	--: }}}
+	--: zen-mode.nvim {{{
+	{
+		"folke/zen-mode.nvim",
+		cmd = "ZenMode",
+		keys = "<Leader>tz",
+		config = load_config("zenmode"),
+	},
+	--: }}}
+	--: alpha-nvim {{{
+	{ "echasnovski/mini.starter", enabled = false },
+	{
+		"goolord/alpha-nvim",
+		-- Only load when no arguments.
+		event = function()
+			if vim.fn.argc() == 0 then
+				return "VimEnter"
+			end
+		end,
+		config = load_config("alpha"),
+	},
+	--: }}}
+	-- --: nvim-autopairs {{{
+	-- { "echasnovski/mini.pairs", enabled = false },
+	-- {
+	-- 	"windwp/nvim-autopairs",
+	-- 	event = "InsertEnter",
+	-- 	dependencies = {
+	-- 		"hrsh7th/nvim-cmp",
+	-- 	},
+	-- 	config = load_config("autopairs"),
+	-- },
+	-- --: }}}
+	-- --: gitsigns.nvim {{{
+	-- {
+	-- 	"lewis6991/gitsigns.nvim",
+	-- 	event = "LazyFile",
+	-- 	cmd = "Gitsigns",
+	-- 	config = load_config("gitsigns"),
+	-- },
+	-- --: }}}
+	-- --: neo-tree.nvim {{{
+	-- {
+	-- 	"nvim-neo-tree/neo-tree.nvim",
+	-- 	dependencies = {
+	-- 		"nvim-lua/plenary.nvim",
+	-- 		"nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
+	-- 		"MunifTanjim/nui.nvim",
+	-- 		-- "3rd/image.nvim", -- Optional image support in preview window: See `# Preview Mode` for more information
+	-- 	},
+	-- 	lazy = true,
+	-- 	branch = "v3.x",
+	-- 	cmd = "Neotree",
+	-- 	-- FIX: use `autocmd` for lazy-loading neo-tree instead of directly requiring it, because `cwd` is not set up properly.
+	-- 	init = function()
+	-- 		vim.api.nvim_create_autocmd("BufEnter", {
+	-- 			desc = "Start Neo-tree with directory",
+	-- 			group = vim.api.nvim_create_augroup("augroup_neotree_start_directory", { clear = true }),
+	-- 			once = true,
+	-- 			callback = function()
+	-- 				if package.loaded["neo-tree"] then
+	-- 					return
+	-- 				else
+	-- 					---@diagnostic disable-next-line: undefined-field
+	-- 					local stats = vim.uv.fs_stat(vim.fn.argv(0))
+	-- 					if stats and stats.type == "directory" then
+	-- 						require("neo-tree")
+	-- 					end
+	-- 				end
+	-- 			end,
+	-- 		})
+	-- 	end,
+	-- 	config = load_config("neotree"),
+	-- },
+	-- --: }}}
+	-- --: netrw.nvim {{{
+	-- {
+	-- 	"prichrd/netrw.nvim",
+	-- 	lazy = true,
+	-- },
+	-- --: }}}
+	-- --: telescope.nvim {{{
+	-- -- Disable "mini.pick":
+	-- { "echasnovski/mini.pick", enabled = false },
+	-- {
+	-- 	"nvim-telescope/telescope.nvim",
+	-- 	dependencies = {
+	-- 		"nvim-lua/plenary.nvim",
+	-- 		"nvim-tree/nvim-web-devicons",
+	-- 		{
+	-- 			"nvim-telescope/telescope-fzf-native.nvim",
+	-- 			build = "make",
+	-- 			cond = function()
+	-- 				return vim.fn.executable("make") == 1
+	-- 			end,
+	-- 		},
+	-- 	},
+	-- 	branch = "master",
+	-- 	cmd = "Telescope",
+	-- 	config = load_config("telescope"),
+	-- },
+	-- --: }}}
 }
-
-return { colorschemes, main, lsp, mini, misc }
