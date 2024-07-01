@@ -163,7 +163,6 @@ local main = {
 				return "VimEnter"
 			end
 		end,
-		dependencies = { "nvim-tree/nvim-web-devicons" },
 		config = load_config("alpha"),
 	},
 	--: }}}
