@@ -165,17 +165,17 @@ local main = {
 	-- 	config = load_config("alpha"),
 	-- },
 	-- --: }}}
-	-- --: nvim-autopairs {{{
-	-- { "echasnovski/mini.pairs", enabled = false },
-	-- {
-	-- 	"windwp/nvim-autopairs",
-	-- 	event = "InsertEnter",
-	-- 	dependencies = {
-	-- 		"hrsh7th/nvim-cmp",
-	-- 	},
-	-- 	config = load_config("autopairs"),
-	-- },
-	-- --: }}}
+	--: nvim-autopairs {{{
+	{ "echasnovski/mini.pairs", enabled = false },
+	{
+		"windwp/nvim-autopairs",
+		event = "InsertEnter",
+		dependencies = {
+			"hrsh7th/nvim-cmp",
+		},
+		config = load_config("autopairs"),
+	},
+	--: }}}
 	-- --: gitsigns.nvim {{{
 	-- {
 	-- 	"lewis6991/gitsigns.nvim",
