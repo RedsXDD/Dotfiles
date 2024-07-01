@@ -14,7 +14,6 @@
 -- Set variables for ease of typing:
 local g = vim.g
 local o = vim.opt
-local cache_dir = os.getenv("HOME") .. "/.cache/nvim/"
 
 -- Gui options:
 o.guifont = "JetBrainsMono Nerd Font,Noto_Color_Emoji:h14" -- The font used in graphical Neovim applications.
@@ -31,12 +30,12 @@ g.netrw_list_hide = "netrw_gitignore#Hide()"
 o.backup = true -- Creates a backup file.
 o.undofile = true -- Creates a undo file.
 o.swapfile = true -- Creates a swap file.
-o.undolevels = 10000 -- Maximum number of changes that can be undone.
-o.history = 10000 -- Set the amount of commands to be saved in history.
 o.writebackup = true -- Creates a backup file before overwritting a file.
-o.backupdir = cache_dir .. "backup" -- Directory to store backup files.
-o.undodir = cache_dir .. "undo" -- Directory to store undo files.
-o.directory = cache_dir .. "swap" -- Directory to store swap files.
+o.history = 10000 -- Set the amount of commands to be saved in history.
+o.undolevels = 10000 -- Maximum number of changes that can be undone.
+o.backupdir = os.getenv("HOME") .. "/cache/nvim/backup" -- Directory to store backup files.
+-- o.undodir = os.getenv("HOME") .. "/cache/nvim/undo" -- Directory to store undo files.
+-- o.directory = os.getenv("HOME") .. "/cache/nvim/swap" -- Directory to store swap files.
 --: }}}
 --: Complete menu {{{
 o.wildmenu = true -- When on, pressing <Tab> on the command-line will open a completion menu.
