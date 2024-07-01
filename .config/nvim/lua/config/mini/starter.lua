@@ -3,31 +3,21 @@ if not has_starter then
 	return
 end
 
-local icons = require("core.icons").starter
-local padding = string.rep(" ", 15) -- Padding to center sections and actions.
-
-local function lazy_load(plugin)
-	require("lazy").load({ plugins = plugin })
-end
-
-local actions_section = icons.sections.actions .. "Actions"
-starter.new_section = function(name, action, section)
-	return { name = name, action = action, section = padding .. section }
-end
-
--- Header:
-local header = table.concat({
-	table.concat(require("core.icons").header, "\n"),
-	"\n",
-	"\n",
-	padding .. [[TIP: To exit Neovim, just run $sudo rm -rf /*]],
-})
+local startpage = require("core.startpage")
 
 -- Footer:
 local footer = function()
 	local stats = require("lazy").stats()
 	local ms = (math.floor(stats.startuptime * 100 + 0.5) / 100)
-	return padding .. icons.footer .. "Neovim loaded " .. stats.count .. " plugins in " .. ms .. "ms"
+	return startpage.starter.padding
+		.. startpage.icons.footer
+		.. "Neovim loaded "
+		.. stats.loaded
+		.. "/"
+		.. stats.count
+		.. " plugins in "
+		.. ms
+		.. "ms"
 end
 
 -- This autocmd fixes an issue were the footer load time is always 0ms.
@@ -42,11 +32,12 @@ vim.api.nvim_create_autocmd("User", {
 		end
 	end,
 })
+
 --: starter.sections.recent_files_modified {{{
 
 -- This is a modified version of MiniStarter's default "recentfiles" function taken directly from the source code.
 -- It had to be copied over because otherwise the section padding couldn't be modified to make it aligned with all other sections from the `new_section` function.
-starter.sections.recent_files_modified = function(n, current_dir, show_path)
+local function recent_files_modified(n, current_dir, show_path)
 	n = n or 5
 	if current_dir == nil then
 		current_dir = false
@@ -71,7 +62,7 @@ starter.sections.recent_files_modified = function(n, current_dir, show_path)
 
 	return function()
 		local section = string.format(
-			padding .. icons.sections.recent_files .. "Recent Files%s", -- Added text padding and icon compared to original source code.
+			startpage.starter.padding .. startpage.icons.sections.recent_files .. "Recent Files%s", -- Added text padding and icon compared to original source code.
 			current_dir and " (Current directory)" or ""
 		)
 
@@ -110,7 +101,7 @@ starter.sections.recent_files_modified = function(n, current_dir, show_path)
 			-- Added a nice `` icon for all itens compared to original source code.
 			table.insert(items, {
 				action = "edit " .. f,
-				name = icons.recent_files .. name,
+				name = startpage.icons.recent_files .. name,
 				section = section,
 			})
 		end
@@ -124,7 +115,7 @@ end
 --
 -- -- This is modified version of MiniStarter's default "sessions" function taken directly from the source code.
 -- -- It had to be copied over because otherwise the section padding couldn't be modified to make it aligned with all other sections from the `new_section` function.
--- starter.sections.sessions_modified = function(n, recent)
+-- local function sessions_modified(n, recent)
 -- 	n = n or 5
 -- 	if recent == nil then
 -- 		recent = true
@@ -183,68 +174,22 @@ end
 -- end
 --
 -- --: }}}
---: Return options table {{{
+
 starter.setup({
 	evaluate_single = true,
-	header = header,
+	header = startpage.starter.header,
 	footer = footer,
 	query_updaters = "abcdefgimnopqrstuvwxyz0123456789_-.",
 	content_hooks = {
-		starter.gen_hook.adding_bullet(padding .. icons.bullet, false),
+		starter.gen_hook.adding_bullet(startpage.starter.padding .. startpage.icons.bullet, false),
 		starter.gen_hook.indexing("all", {}), -- Use numbers to index items.
 		starter.gen_hook.aligning("center", "center"),
-		starter.gen_hook.padding(6, 0),
+		starter.gen_hook.padding(5, 0),
 	},
 	items = {
-		starter.new_section(icons.actions.new_file .. "New File", "enew | startinsert", actions_section),
-		starter.new_section(icons.actions.quit .. "Quit", "q!", actions_section),
-		starter.new_section(icons.actions.file_explorer .. "Open File Explorer", function()
-			require("core.utils").toggle_file_explorer()
-		end, actions_section),
-
-		starter.new_section(icons.actions.list_buffers .. "List Buffers", function()
-			local has_pick, pick = pcall(require, "mini.pick")
-			if has_pick then
-				lazy_load("mini.pick")
-				pick.builtin.buffers()
-			end
-		end, actions_section),
-
-		starter.new_section(icons.actions.recent_files .. "Recent Files", function()
-			local has_pick, _ = pcall(require, "mini.pick")
-			local has_extra, extra = pcall(require, "mini.extra")
-			if has_pick and has_extra then
-				lazy_load({ "mini.pick", "mini.extra" })
-				extra.pickers.oldfiles()
-			end
-		end, actions_section),
-
-		starter.new_section(icons.actions.find_files .. "Find Files", function()
-			local has_pick, pick = pcall(require, "mini.pick")
-			if has_pick then
-				lazy_load("mini.pick")
-				pick.builtin.files()
-			end
-		end, actions_section),
-
-		starter.new_section(icons.actions.live_grep .. "Live Grep", function()
-			local has_pick, pick = pcall(require, "mini.pick")
-			if has_pick then
-				lazy_load("mini.pick")
-				pick.builtin.grep_live()
-			end
-		end, actions_section),
-
-		starter.new_section(icons.actions.lazy .. "Lazy", "Lazy", actions_section),
-		starter.new_section(icons.actions.mason .. "Mason", function()
-			local has_mason, _ = pcall(require, "mason")
-			if has_mason then
-				vim.cmd("Mason")
-			end
-		end, actions_section),
-		starter.sections.recent_files_modified(10, false, false), -- Recent files.
-		-- starter.sections.recent_files_modified(5, true, false), -- Recent files on CWD.
-		-- starter.sections.sessions_modified(5, true),
+		startpage.starter.sections,
+		recent_files_modified(10, false, false), -- Recent files.
+		-- recent_files_modified(5, true, false), -- Recent files on CWD.
+		-- sessions_modified(5, true),
 	},
 })
---: }}}

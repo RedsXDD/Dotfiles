@@ -4,21 +4,7 @@ if not has_alpha then
 end
 
 local dashboard = require("alpha.themes.dashboard")
-local padding = string.rep(" ", 13)
-
--- Header
-dashboard.section.header.val = function()
-	local M = {}
-
-	for _, line in ipairs(require("core.icons").header) do
-		table.insert(M, line)
-	end
-
-	table.insert(M, "")
-	table.insert(M, padding .. [[TIP: To exit Neovim, just run $sudo rm -rf /*]])
-
-	return M
-end
+local startpage = require("core.startpage")
 
 -- Footer.
 vim.api.nvim_create_autocmd("User", {
@@ -26,7 +12,8 @@ vim.api.nvim_create_autocmd("User", {
 	callback = function()
 		local stats = require("lazy").stats()
 		local ms = (math.floor(stats.startuptime * 100 + 0.5) / 100)
-		dashboard.section.footer.val = "󱐋 Neovim loaded "
+		dashboard.section.footer.val = startpage.icons.footer
+			.. "Neovim loaded "
 			.. stats.loaded
 			.. "/"
 			.. stats.count
@@ -37,20 +24,8 @@ vim.api.nvim_create_autocmd("User", {
 	end,
 })
 
--- Dashboard buttons.
-dashboard.section.buttons.val = {
-	dashboard.button("1", " New File", ":ene <BAR> startinsert <CR>"),
-	dashboard.button("2", "󰅚 Quit Neovim", ":qa<CR>"),
-	dashboard.button("3", "󰉋 Open File Explorer", function()
-		require("core.utils").toggle_file_explorer()
-	end),
-	dashboard.button("4", "󰮊 List Buffers", [[<CMD>lua require("mini.pick").builtin.buffers()<CR>]]),
-	dashboard.button("5", " Recently Files", [[<CMD>lua require("mini.extra").pickers.oldfiles()<CR>]]),
-	dashboard.button("6", "󰱼 Find Files", [[<CMD>lua require("mini.pick").builtin.files()<CR>]]),
-	dashboard.button("7", "󰈬 Live Grep", [[<CMD>lua require("mini.pick").builtin.grep_live()<CR>]]),
-	dashboard.button("8", "󰒲 Lazy", "<CMD>Lazy<CR>"),
-	dashboard.button("9", "◍ Mason", "<CMD>Mason<CR>"),
-}
+dashboard.section.header.val = startpage.alpha.header
+dashboard.section.buttons.val = startpage.alpha.sections
 
 -- Set dashboard highlight colors.
 dashboard.section.header.opts.hl = "AlphaHeader"
@@ -58,7 +33,7 @@ dashboard.section.buttons.opts.hl = "AlphaButtons"
 dashboard.section.footer.opts.hl = "AlphaFooter"
 
 -- Main options.
-dashboard.opts.layout[1].val = 8
+dashboard.opts.layout[1].val = startpage.top_padding
 dashboard.config.opts.margin = 0
 dashboard.config.opts.noautocmd = true
 
