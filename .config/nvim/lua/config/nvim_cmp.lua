@@ -34,7 +34,6 @@ cmp.setup({
 	},
 	experimental = {
 		ghost_text = false,
-		native_menu = false,
 	},
 	mapping = cmp.mapping.preset.insert({
 		["<C-k>"] = cmp.mapping.select_prev_item(),
