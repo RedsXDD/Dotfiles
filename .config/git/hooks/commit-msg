@@ -1,5 +1,6 @@
 #!/usr/bin/env sh
 
+SUBJECT_CHAR_LIMIT=50
 BODY_CAN_BE_EMPTY="${BODY_CAN_BE_EMPTY:-true}"
 UPPERCASE_BYPASS="${UPPERCASE_BYPASS:-true}"
 
@@ -114,8 +115,8 @@ COMMIT_SUBJECT_LENGHT="$(head -n1 "$COMMIT_FILE")"
 if [ "${#COMMIT_SUBJECT_LENGHT}" -eq 0 ]; then
 	echoerr 'subject cannot be empty'
 	exit 1
-elif [ "${#COMMIT_SUBJECT_LENGHT}" -gt 50 ]; then
-	echoerr 'subject cannot be longer than 50 characters.'
+elif [ "${SUBJECT_CHAR_LIMIT}" -gt 0 ] && [ "${#COMMIT_SUBJECT_LENGHT}" -gt "${SUBJECT_CHAR_LIMIT}" ]; then
+	echoerr "subject cannot be longer than '${SUBJECT_CHAR_LIMIT}' characters."
 fi
 
 # Perform empty body check only if $BODY_CAN_BE_EMPTY = false.
