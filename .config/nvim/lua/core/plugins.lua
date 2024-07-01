@@ -112,7 +112,9 @@ local main = {
 			"MunifTanjim/nui.nvim",
 			"rcarriga/nvim-notify",
 		},
-		event = "VeryLazy",
+		event = function()
+			return { "CmdlineEnter", "LazyFile" }
+		end,
 		config = load_config("noice"),
 	},
 	--: }}}
