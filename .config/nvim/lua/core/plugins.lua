@@ -153,20 +153,20 @@ local main = {
 		config = load_config("zenmode"),
 	},
 	--: }}}
-	-- --: alpha-nvim {{{
-	-- { "echasnovski/mini.starter", enabled = false },
-	-- {
-	-- 	"goolord/alpha-nvim",
-	-- 	-- Only load when no arguments.
-	-- 	event = function()
-	-- 		if vim.fn.argc() == 0 then
-	-- 			return "VimEnter"
-	-- 		end
-	-- 	end,
-	-- 	dependencies = { "nvim-tree/nvim-web-devicons" },
-	-- 	config = load_config("alpha"),
-	-- },
-	-- --: }}}
+	--: alpha-nvim {{{
+	{ "echasnovski/mini.starter", enabled = false },
+	{
+		"goolord/alpha-nvim",
+		-- Only load when no arguments.
+		event = function()
+			if vim.fn.argc() == 0 then
+				return "VimEnter"
+			end
+		end,
+		dependencies = { "nvim-tree/nvim-web-devicons" },
+		config = load_config("alpha"),
+	},
+	--: }}}
 	--: nvim-autopairs {{{
 	{ "echasnovski/mini.pairs", enabled = false },
 	{
