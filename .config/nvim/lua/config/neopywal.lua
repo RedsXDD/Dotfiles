@@ -43,3 +43,5 @@ neopywal.setup({
 		}
 	end,
 })
+
+neopywal.load()

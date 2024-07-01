@@ -46,7 +46,7 @@ return {
 		"RedsXDD/neopywal.nvim",
 		branch = "testing",
 		name = "neopywal",
-		lazy = true,
+		lazy = false,
 		priority = 1000,
 		config = load_config("neopywal"),
 	},

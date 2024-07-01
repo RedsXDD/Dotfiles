@@ -37,7 +37,7 @@ lazy.setup({
 	},
 	install = {
 		missing = true,
-		colorscheme = { "neopywal", "sorbet" },
+		colorscheme = { "neopywal" },
 	},
 	checker = {
 		enabled = true, -- Automatically check for plugin updates.
