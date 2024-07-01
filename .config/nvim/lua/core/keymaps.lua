@@ -92,9 +92,9 @@ keymaps.map("t", "<C-/>", "<C-\\><C-n><CMD>bdelete!<CR>", "Close terminal.")
 keymaps.map("t", "<C-_>", "<C-\\><C-n><CMD>bdelete!<CR>", "Close terminal.")
 --: }}}
 --: Clipboard management {{{
-keymaps.map("", "<Leader>y", '"+y', "Copy to primary clipboard.")
-keymaps.map("", "<Leader>p", '"+p', "Paste from primary clipboard.")
-keymaps.map("", "<Leader>P", '"+P', "Paste from primary clipboard.")
+keymaps.map("", "<Leader>y", '"*y', "Copy to primary clipboard.")
+keymaps.map("", "<Leader>p", '"*p', "Paste from primary clipboard.")
+keymaps.map("", "<Leader>P", '"*P', "Paste from primary clipboard.")
 --: }}}
 --: Toggles {{{
 keymaps.toggle_map("", "<Leader>ts", "spell", "spell checking.")
