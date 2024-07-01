@@ -8,7 +8,6 @@ COMMIT_FILE="$1"
 COMMIT_SUBJECT="$(head -n1 "$COMMIT_FILE")"
 COMMIT_BODY="$(tail -n+2 "$COMMIT_FILE" | sed '/^#/d')"
 
-VALID_QUOTES="'"'"''`'
 VALID_COMMIT_TYPES='build chore ci docs feat fix perf refactor revert style test'
 VALID_COMMIT_TYPES="$(echo "$VALID_COMMIT_TYPES" | sed 's/ /\\|/g')"
 VALID_COMMIT_TYPES="^\(${VALID_COMMIT_TYPES}\)"
