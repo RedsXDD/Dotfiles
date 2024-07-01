@@ -33,7 +33,7 @@ cmp.setup({
 		},
 	},
 	experimental = {
-		ghost_text = false,
+		ghost_text = true,
 	},
 	mapping = cmp.mapping.preset.insert({
 		["<C-k>"] = cmp.mapping.select_prev_item(),
