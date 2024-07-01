@@ -1,6 +1,10 @@
 -- vim:fileencoding=utf-8:foldmethod=marker
 
-local clue = require("mini.clue")
+local has_clue, clue = pcall(require, "mini.clue")
+if not has_clue then
+	return
+end
+
 local border_style = require("core.icons").misc.border
 
 local function plugin_clue(plugin, clues)

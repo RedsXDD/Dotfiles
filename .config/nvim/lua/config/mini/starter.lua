@@ -1,4 +1,8 @@
-local starter = require("mini.starter")
+local has_starter, starter = pcall(require, "mini.starter")
+if not has_starter then
+	return
+end
+
 local icons = require("core.icons").starter
 local padding = string.rep(" ", 15) -- Padding to center sections and actions.
 

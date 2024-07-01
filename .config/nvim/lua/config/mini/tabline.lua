@@ -1,4 +1,7 @@
-local tabline = require("mini.tabline")
+local has_tabline, tabline = pcall(require, "mini.tabline")
+if not has_tabline then
+	return
+end
 
 local show_icons = true
 if vim.env.DISPLAY == nil then

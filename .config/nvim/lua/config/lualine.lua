@@ -1,5 +1,9 @@
+local has_lualine, lualine = pcall(require, "lualine")
+if not has_lualine then
+	return
+end
+
 local icons = require("core.icons")
-local lualine = require("lualine")
 
 local location = function()
 	return "ln:" .. "%l" .. " " .. "cl:" .. "%v"

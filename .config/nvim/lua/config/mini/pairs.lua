@@ -1,4 +1,8 @@
-local pairs = require("mini.pairs")
+local has_pairs, pairs = pcall(require, "mini.pairs")
+if not has_pairs then
+	return
+end
+
 local keymaps = require("core.utils").keymaps
 
 keymaps.map({ "n", "x" }, "<Leader>tp", function()

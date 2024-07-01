@@ -1,3 +1,8 @@
+local has_lspconfig, lspconfig = pcall(require, "lspconfig")
+if not has_lspconfig then
+	return
+end
+
 -- Keymappings
 vim.api.nvim_create_autocmd("LspAttach", {
 	group = vim.api.nvim_create_augroup("lsp_attach", { clear = true }),
@@ -134,7 +139,7 @@ local function setup(server)
 			return
 		end
 	end
-	require("lspconfig")[server].setup(server_opts)
+	lspconfig[server].setup(server_opts)
 end
 
 local has_mason, mason_lsp = pcall(require, "mason-lspconfig")

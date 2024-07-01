@@ -1,6 +1,15 @@
-local ai = require("mini.ai")
-local gen_spec = require("mini.ai").gen_spec
-local gen_ai_spec = require("mini.extra").gen_ai_spec
+local has_ai, ai = pcall(require, "mini.ai")
+if not has_ai then
+	return
+end
+
+local has_extra, extra = pcall(require, "mini.extra")
+if not has_extra then
+	return
+end
+
+local gen_spec = ai.gen_spec
+local gen_ai_spec = extra.gen_ai_spec
 
 ai.setup({
 	n_lines = 500,

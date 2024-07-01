@@ -1,4 +1,8 @@
-local diff = require("mini.diff")
+local has_diff, diff = pcall(require, "mini.diff")
+if not has_diff then
+	return
+end
+
 local icons = require("core.icons").gitsigns
 
 vim.keymap.set("n", "<Leader>do", function()

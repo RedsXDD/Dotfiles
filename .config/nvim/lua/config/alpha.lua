@@ -1,4 +1,8 @@
-local alpha = require("alpha")
+local has_alpha, alpha = pcall(require, "alpha")
+if not has_alpha then
+	return
+end
+
 local dashboard = require("alpha.themes.dashboard")
 local padding = string.rep(" ", 13)
 

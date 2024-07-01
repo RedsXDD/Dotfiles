@@ -1,4 +1,7 @@
-local fterm = require("FTerm")
+local has_fterm, fterm = pcall(require, "FTerm")
+if not has_fterm then
+	return
+end
 
 -- stylua: ignore
 vim.keymap.set("n", "<Leader>gt", function() fterm.toggle() end, { noremap = true, desc = "Open a floating terminal." })

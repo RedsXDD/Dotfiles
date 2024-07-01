@@ -1,4 +1,7 @@
-local conform = require("conform")
+local has_conform, conform = pcall(require, "conform")
+if not has_conform then
+	return
+end
 
 vim.api.nvim_create_autocmd("BufWritePre", {
 	pattern = "*",

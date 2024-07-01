@@ -1,6 +1,9 @@
-local animate = require("mini.animate")
-local mouse_scrolled = false -- don't use animate when scrolling with the mouse.
+local has_animate, animate = pcall(require, "mini.animate")
+if not has_animate then
+	return
+end
 
+local mouse_scrolled = false -- don't use animate when scrolling with the mouse.
 for _, scroll in ipairs({ "Up", "Down" }) do
 	local key = "<ScrollWheel" .. scroll .. ">"
 	vim.keymap.set({ "", "i" }, key, function()

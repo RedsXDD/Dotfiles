@@ -1,4 +1,7 @@
-local hipatterns = require("mini.hipatterns")
+local has_hipatterns, hipatterns = pcall(require, "mini.hipatterns")
+if not has_hipatterns then
+	return
+end
 
 hipatterns.setup({
 	-- Delays (in ms) defining asynchronous highlighting process.

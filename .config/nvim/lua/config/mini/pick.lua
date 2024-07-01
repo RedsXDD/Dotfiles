@@ -1,5 +1,13 @@
-local pick = require("mini.pick")
-local extra = require("mini.extra")
+local has_pick, pick = pcall(require, "mini.pick")
+if not has_pick then
+	return
+end
+
+local has_extra, extra = pcall(require, "mini.extra")
+if not has_extra then
+	return
+end
+
 local border_style = require("core.icons").misc.border
 local icons = require("core.icons").pick
 local keymaps = require("core.utils").keymaps

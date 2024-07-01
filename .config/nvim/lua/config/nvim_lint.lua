@@ -1,4 +1,7 @@
-local lint = require("lint")
+local has_lint, lint = pcall(require, "lint")
+if not has_lint then
+	return
+end
 
 local opts = {
 	-- Event to trigger linters

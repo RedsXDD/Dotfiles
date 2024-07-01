@@ -1,4 +1,8 @@
-local gitsigns = require("gitsigns")
+local has_gitsigns, gitsigns = pcall(require, "gitsigns")
+if not has_gitsigns then
+	return
+end
+
 local icons = require("core.icons")
 
 gitsigns.setup({

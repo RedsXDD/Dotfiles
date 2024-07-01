@@ -1,4 +1,7 @@
-local neotree = require("neotree")
+local has_neotree, neotree = pcall(require, "neotree")
+if not has_neotree then
+	return
+end
 
 neotree.setup({
 	popup_border_style = require("core.icons").misc.border,

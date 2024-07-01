@@ -1,4 +1,7 @@
-local bufferline = require("bufferline")
+local has_bufferline, bufferline = pcall(require, "bufferline")
+if not has_bufferline then
+	return
+end
 
 bufferline.setup({
 	highlights = require("neopywal.theme.plugins.bufferline").setup(),

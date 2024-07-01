@@ -1,6 +1,14 @@
+local has_cmp, cmp = pcall(require, "cmp")
+if not has_cmp then
+	return
+end
+
+local has_luasnip, luasnip = pcall(require, "luasnip")
+if not has_luasnip then
+	return
+end
+
 local kind_icons = require("core.icons").kinds
-local cmp = require("cmp")
-local luasnip = require("luasnip")
 require("luasnip.loaders.from_vscode").lazy_load()
 
 cmp.setup({

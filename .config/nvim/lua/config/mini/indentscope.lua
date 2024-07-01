@@ -1,4 +1,7 @@
-local indentscope = require("mini.indentscope")
+local has_indentscope, indentscope = pcall(require, "mini.indentscope")
+if not has_indentscope then
+	return
+end
 
 indentscope.setup({
 	draw = {

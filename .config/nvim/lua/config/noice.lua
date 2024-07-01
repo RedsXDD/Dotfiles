@@ -1,4 +1,8 @@
-local noice = require("noice")
+local has_noice, noice = pcall(require, "noice")
+if not has_noice then
+	return
+end
+
 local noice_lsp = require("noice.lsp")
 local keymaps = require("core.utils").keymaps
 

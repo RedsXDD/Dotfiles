@@ -1,4 +1,7 @@
-local zenmode = require("zen-mode")
+local has_zenmode, zenmode = pcall(require, "zen-mode")
+if not has_zenmode then
+	return
+end
 
 vim.keymap.set({ "n", "v" }, "<leader>tz", function()
 	require("zen-mode").toggle()

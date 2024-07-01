@@ -1,4 +1,8 @@
-local completion = require("mini.completion")
+local has_completion, completion = pcall(require, "mini.completion")
+if not has_completion then
+	return
+end
+
 local keymaps = require("core.utils").keymaps
 
 keymaps.pum_map({

@@ -1,8 +1,20 @@
-local border_style = require("core.icons").misc.border
+local has_mason, mason = pcall(require, "mason")
+if not has_mason then
+	return
+end
+
+local has_mason_lspconfig, mason_lspconfig = pcall(require, "mason-lspconfig")
+if not has_mason_lspconfig then
+	return
+end
+
+local has_mason_tool_installer, mason_tool_installer = pcall(require, "mason-tool-installer")
+if not has_mason_tool_installer then
+	return
+end
+
 local icons = require("core.icons").mason
-local mason = require("mason")
-local mason_lspconfig = require("mason-lspconfig")
-local mason_tool_installer = require("mason-tool-installer")
+local border_style = require("core.icons").misc.border
 
 vim.keymap.set("n", "<Leader>gm", "<CMD>Mason<CR>", { noremap = true, desc = "Open Mason UI." })
 

@@ -1,10 +1,18 @@
-local telescope = require("telescope")
+local has_telescope, telescope = pcall(require, "telescope")
+if not has_telescope then
+	return
+end
+
+local has_plenary_Job, Job = pcall(require, "plenary.job")
+if not has_plenary_Job then
+	return
+end
+
 local builtin = require("telescope.builtin")
 local themes = require("telescope.themes")
 local actions = require("telescope.actions")
 local action_layout = require("telescope.actions.layout")
 local previewers = require("telescope.previewers")
-local Job = require("plenary.job")
 local icons = require("core.icons").telescope
 local keymaps = require("core.utils").keymaps
 

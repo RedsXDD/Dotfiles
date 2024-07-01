@@ -1,4 +1,7 @@
-local neopywal = require("neopywal")
+local has_neopywal, neopywal = pcall(require, "neopywal")
+if not has_neopywal then
+	return
+end
 
 vim.g.neopywal_debug = true
 

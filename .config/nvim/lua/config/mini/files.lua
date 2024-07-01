@@ -1,4 +1,7 @@
-local files = require("mini.files")
+local has_files, files = pcall(require, "mini.files")
+if not has_files then
+	return
+end
 
 -- Toggle dotfiles
 local show_dotfiles = true
