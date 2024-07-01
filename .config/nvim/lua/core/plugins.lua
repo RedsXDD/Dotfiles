@@ -166,6 +166,7 @@ local main = {
 	-- },
 	-- --: }}}
 	-- --: nvim-autopairs {{{
+	-- { "echasnovski/mini.pairs", enabled = false },
 	-- {
 	-- 	"windwp/nvim-autopairs",
 	-- 	event = "InsertEnter",
