@@ -315,18 +315,18 @@ return {
 		ft = "hypr",
 	},
 	--: }}}
-	--: lf-vim {{{
+	-- --: lf-vim {{{
 	-- {
 	-- 	"camnw/lf-vim",
 	-- 	ft = "lf",
 	-- },
-	--: }}}
-	--: vim-kitty {{{
+	-- --: }}}
+	-- --: vim-kitty {{{
 	-- {
 	-- 	"fladson/vim-kitty",
 	-- 	ft = "kitty",
 	-- },
-	--: }}}
+	-- --: }}}
 	--: rust.vim {{{
 	{
 		"rust-lang/rust.vim",
