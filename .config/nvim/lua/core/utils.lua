@@ -135,7 +135,7 @@ end
 ---@param keys string
 ---@param options string|table
 ---@param desc string
-function M.keymaps.toggle_map (modes, keys, options, desc)
+function M.keymaps.toggle_map(modes, keys, options, desc)
 	vim.keymap.set(modes, keys, function()
 		local state = false
 
@@ -153,7 +153,10 @@ function M.keymaps.toggle_map (modes, keys, options, desc)
 			end
 		end
 
-		vim.notify(state and "Enabled " .. desc or "Disabled " .. desc, state and vim.log.levels.INFO or vim.log.levels.WARN)
+		vim.notify(
+			state and "Enabled " .. desc or "Disabled " .. desc,
+			state and vim.log.levels.INFO or vim.log.levels.WARN
+		)
 	end, { noremap = true, silent = true, desc = "Toggle " .. desc })
 end
 
@@ -162,12 +165,14 @@ end
 ---@param option string
 ---@param str string
 ---@param desc string
-function M.keymaps.toggleStr_map (modes, keys, option, str, desc)
+function M.keymaps.toggleStr_map(modes, keys, option, str, desc)
 	vim.keymap.set(modes, keys, function()
 		local has_str = vim.o[option]:find("" .. str) ~= nil
 		vim.opt[option] = has_str and vim.o[option]:gsub("" .. str, "") or vim.o[option] .. "" .. str
-		vim.notify(has_str and "Disabled " .. desc or "Enabled " .. desc, has_str and vim.log.levels.WARN or vim.log.levels.INFO)
+		vim.notify(
+			has_str and "Disabled " .. desc or "Enabled " .. desc,
+			has_str and vim.log.levels.WARN or vim.log.levels.INFO
+		)
 	end, { noremap = true, silent = true, desc = "Toggle " .. desc })
-
 end
 return M
