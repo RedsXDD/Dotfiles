@@ -42,6 +42,11 @@ end
 
 ---@param directory_path string?
 function M.toggle_netrw(directory_path)
+	if directory_path == nil then
+		---@diagnostic disable-next-line: undefined-field
+		directory_path = vim.uv.cwd()
+	end
+
 	local netrw_winsize = (vim.g.netrw_winsize ~= nil) and vim.g.netrw_winsize or 30
 
 	local bufnr = vim.api.nvim_get_current_buf()
