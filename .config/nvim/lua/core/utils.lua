@@ -52,8 +52,7 @@ function M.toggle_netrw(directory_path)
 		vim.g.netrw_is_open = false
 	else
 		vim.g.netrw_is_open = true
-		vim.cmd("Lexplore" .. directory_path)
-		vim.cmd("vertical resize " .. netrw_winsize)
+		vim.cmd("Lexplore" .. directory_path .. "|" .. "vertical resize " .. netrw_winsize)
 	end
 end
 
