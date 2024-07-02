@@ -41,8 +41,6 @@ function M.maximize(state)
 end
 
 function M.toggle_netrw()
-	pcall(require, "netrw") -- Try loading netrw.nvim if it's installed.
-
 	local netrw_winsize = vim.g.netrw_winsize or 30
 
 	local bufnr = vim.api.nvim_get_current_buf()
