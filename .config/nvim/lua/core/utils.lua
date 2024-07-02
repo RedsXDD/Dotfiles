@@ -41,7 +41,7 @@ function M.maximize(state)
 end
 
 function M.toggle_netrw()
-	local netrw_winsize = vim.g.netrw_winsize or 30
+	local netrw_winsize = (vim.g.netrw_winsize ~= nil) and vim.g.netrw_winsize or 30
 
 	local bufnr = vim.api.nvim_get_current_buf()
 	local filetype = vim.api.nvim_get_option_value("filetype", { buf = bufnr })
