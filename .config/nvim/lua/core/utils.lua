@@ -84,9 +84,9 @@ function M.toggle_file_explorer(chdir)
 	---@diagnostic disable-next-line: undefined-field
 	local directory_path = vim.uv.cwd()
 
-	if has_neotree then
+	if has_neotree and not type(neotree) == "boolean" then
 		neotree.execute({ toggle = true, dir = directory_path })
-	elseif has_minifiles then
+	elseif has_minifiles and not type(files) == "boolean" then
 		toggle_mini_files(directory_path, true)
 	else
 		M.toggle_netrw()
