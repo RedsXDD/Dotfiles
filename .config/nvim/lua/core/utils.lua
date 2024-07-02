@@ -48,8 +48,11 @@ function M.toggle_netrw(directory_path)
 	local filetype = vim.api.nvim_get_option_value("filetype", { buf = bufnr })
 
 	if vim.g.netrw_is_open and filetype == "netrw" then
-		vim.api.nvim_buf_delete(0, { force = true })
 		vim.g.netrw_is_open = false
+		vim.api.nvim_buf_delete(0, { force = true })
+	elseif vim.g.netrw_is_open then
+		vim.g.netrw_is_open = false
+		vim.cmd("Lexplore")
 	else
 		vim.g.netrw_is_open = true
 		vim.cmd("Lexplore" .. directory_path .. "|" .. "vertical resize " .. netrw_winsize)
