@@ -187,6 +187,9 @@ return {
 					"notify",
 					"toggleterm",
 					"lazyterm",
+					"FTerm",
+					"fterm_lazygit",
+					"fterm_gitui",
 				},
 				callback = function()
 					vim.b.miniindentscope_disable = true
