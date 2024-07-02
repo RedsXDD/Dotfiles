@@ -40,7 +40,8 @@ function M.maximize(state)
 	})
 end
 
-function M.toggle_netrw()
+---@param directory_path string?
+function M.toggle_netrw(directory_path)
 	local netrw_winsize = (vim.g.netrw_winsize ~= nil) and vim.g.netrw_winsize or 30
 
 	local bufnr = vim.api.nvim_get_current_buf()
@@ -51,7 +52,7 @@ function M.toggle_netrw()
 		vim.g.netrw_is_open = false
 	else
 		vim.g.netrw_is_open = true
-		vim.cmd("Lexplore")
+		vim.cmd("Lexplore" .. directory_path)
 		vim.cmd("vertical resize " .. netrw_winsize)
 	end
 end
