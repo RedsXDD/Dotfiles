@@ -33,9 +33,9 @@ o.swapfile = true -- Creates a swap file.
 o.writebackup = true -- Creates a backup file before overwritting a file.
 o.history = 10000 -- Set the amount of commands to be saved in history.
 o.undolevels = 10000 -- Maximum number of changes that can be undone.
-o.backupdir = os.getenv("HOME") .. "/cache/nvim/backup" -- Directory to store backup files.
--- o.undodir = os.getenv("HOME") .. "/cache/nvim/undo" -- Directory to store undo files.
--- o.directory = os.getenv("HOME") .. "/cache/nvim/swap" -- Directory to store swap files.
+o.backupdir = vim.fn.stdpath("data") .. "/backup" -- Directory to store backup files.
+o.undodir = vim.fn.stdpath("data") .. "/undo" -- Directory to store undo files.
+o.directory = vim.fn.stdpath("data") .. "/swap" -- Directory to store swap files.
 --: }}}
 --: Complete menu {{{
 o.wildmenu = true -- When on, pressing <Tab> on the command-line will open a completion menu.
