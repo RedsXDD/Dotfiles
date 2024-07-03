@@ -497,15 +497,15 @@ return {
 	-- 	config = load_config("autopairs"),
 	-- },
 	-- --: }}}
-	-- --: gitsigns.nvim {{{
-	-- { "echasnovski/mini.diff", enabled = false },
-	-- {
-	-- 	"lewis6991/gitsigns.nvim",
-	-- 	event = "LazyFile",
-	-- 	cmd = "Gitsigns",
-	-- 	config = load_config("gitsigns"),
-	-- },
-	-- --: }}}
+	--: gitsigns.nvim {{{
+	{ "echasnovski/mini.diff", enabled = false },
+	{
+		"lewis6991/gitsigns.nvim",
+		event = "LazyFile",
+		cmd = "Gitsigns",
+		config = load_config("gitsigns"),
+	},
+	--: }}}
 	-- --: neo-tree.nvim {{{
 	-- {
 	-- 	"nvim-neo-tree/neo-tree.nvim",
