@@ -85,6 +85,23 @@ return {
 	--: }}}
 	--: }}}
 	--: Mini {{{
+	--: mini.icons {{{
+	{ "nvim-tree/nvim-web-devicons", enabled = false, optional = true },
+	{
+		"echasnovski/mini.icons",
+		opts = {},
+		lazy = false,
+		init = function()
+			---@diagnostic disable-next-line: duplicate-set-field
+			package.preload["nvim-web-devicons"] = function()
+				-- needed since it will be false when loading and mini will fail
+				package.loaded["nvim-web-devicons"] = {}
+				require("mini.icons").mock_nvim_web_devicons()
+				return package.loaded["nvim-web-devicons"]
+			end
+		end,
+	},
+	--: }}}
 	--: mini.ai {{{
 	{
 		"echasnovski/mini.ai",
