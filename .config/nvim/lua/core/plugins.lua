@@ -481,6 +481,7 @@ return {
 	-- },
 	-- --: }}}
 	-- --: gitsigns.nvim {{{
+	-- { "echasnovski/mini.diff", enabled = false },
 	-- {
 	-- 	"lewis6991/gitsigns.nvim",
 	-- 	event = "LazyFile",
