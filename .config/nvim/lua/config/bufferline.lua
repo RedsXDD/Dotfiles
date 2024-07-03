@@ -17,9 +17,9 @@ bufferline.setup({
 		diagnostics_indicator = function(_, _, diag)
 			local icons = require("core.icons").diagnostics
 			local ret = (diag.error and icons.Error .. diag.error .. " " or "")
-				.. (diag.warning and icons.Warn .. diag.warning or "")
-				.. (diag.info and icons.Info .. diag.info or "")
-				.. (diag.hint and icons.Hint .. diag.hint or "")
+				.. (diag.warning and icons.Warn .. diag.warning .. " " or "")
+				.. (diag.info and icons.Info .. diag.info .. " " or "")
+				.. (diag.hint and icons.Hint .. diag.hint .. " " or "")
 			return vim.trim(ret)
 		end,
 		offsets = {
