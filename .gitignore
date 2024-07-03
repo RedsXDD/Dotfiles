@@ -16,5 +16,4 @@
 .config/waybar/shared/clock_wallust.jsonc
 .config/waybar/shared/colors.css
 .config/zathura/zathurarc_wallust
-.config/zellij/layouts/default.kdl
 .config/zellij/themes/wallust.kdl
