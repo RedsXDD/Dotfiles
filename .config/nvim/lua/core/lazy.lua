@@ -29,7 +29,7 @@ Event.mappings["User LazyFile"] = Event.mappings.LazyFile
 
 -- Initialize lazy.nvim:
 lazy.setup({
-	spec = require("core.plugins"),
+	spec = "core.plugins",
 	defaults = {
 		lazy = true,
 		version = false, -- Always use the latest git commit.
