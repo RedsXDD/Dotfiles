@@ -11,7 +11,7 @@ MAX_BODY_LENGHT=72
 # EXCLUDE_BRANCHES="main,master" # Exclude running git-sumi linting on these branches (leave empty for no exclusion).
 BODY_CAN_BE_EMPTY=true  # True if commit body can be empty.
 UPPERCASE_BYPASS=false  # Commit messages that begins uppercase will bypass linting.
-VALID_COMMIT_TYPES="build,ci,chore,docs,feat,fix,perf,refactor,revert,style,test,enhance,improvement"
+VALID_COMMIT_TYPES="build,ci,chore,docs,feat,fix,perf,refactor,revert,style,test"
 
 # Check if git-sumi is installed.
 if ! command -v git-sumi &>/dev/null; then
