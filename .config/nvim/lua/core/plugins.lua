@@ -41,6 +41,18 @@ return {
 		},
 	},
 	--: }}}
+	--: nightfox {{{
+	{
+		"EdenEast/nightfox.nvim",
+		name = "nightfox",
+		lazy = true,
+		priority = 1000,
+		config = function()
+			vim.g.nightfox_debug = true
+			require("nightfox").setup()
+		end,
+	},
+	--: }}}
 	--: neopywal {{{
 	{
 		"RedsXDD/neopywal.nvim",
