@@ -2,6 +2,7 @@
 	email = 161394370+RedsXDD@users.noreply.github.com
 	name = RedsXDD
 	editor = neovim
+	signingkey = /home/Reds/.ssh/id_ed25519.pub
 
 [core]
 	pager = delta
@@ -59,3 +60,7 @@
 	diff-stat-align-width         = cyan
 	syntax-theme                  = none
 	width                         = variable
+[commit]
+	gpgsign = true
+[gpg]
+	format = ssh
