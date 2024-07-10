@@ -9,7 +9,7 @@ set -e # Exit on any error.
 MAX_HEADER_LENGHT=50
 MAX_BODY_LENGHT=72
 # EXCLUDE_BRANCHES="main,master" # Exclude running git-sumi linting on these branches (leave empty for no exclusion).
-BODY_CAN_BE_EMPTY=false # True if commit body can be empty.
+BODY_CAN_BE_EMPTY=true  # True if commit body can be empty.
 UPPERCASE_BYPASS=false  # Commit messages that begins uppercase will bypass linting.
 VALID_COMMIT_TYPES="build,ci,chore,docs,feat,fix,perf,refactor,revert,style,test,enhance,improvement"
 
