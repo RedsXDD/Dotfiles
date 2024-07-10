@@ -51,7 +51,7 @@ keymap = [
 	#: }}}
 	#: Make files {{{
 	{ on = [ "m", "f" ], run = "create", desc = "Create a file or directory (ends with / for directories)." },
-	{ on = [ "m", "s" ], run = 'shell --noconfirm --block "mkscript -y "', desc = "Create a new script (requires 'mkscript' script)." },
+	{ on = [ "m", "s" ], run = 'shell --noconfirm --block "ms -y "', desc = "Create a new script (requires 'mkscript' script)." },
 	#: }}}
 	#: Actions {{{
 	{ on = [ "z", "s" ], run = "linemode size",                     desc = "Set linemode to size." },
