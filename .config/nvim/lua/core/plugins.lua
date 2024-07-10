@@ -56,7 +56,6 @@ return {
 	--: neopywal {{{
 	{
 		"RedsXDD/neopywal.nvim",
-		branch = "testing",
 		name = "neopywal",
 		lazy = false,
 		priority = 1000,
