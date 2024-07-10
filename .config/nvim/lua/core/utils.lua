@@ -43,32 +43,15 @@ end
 M._already_resized_netrw = false
 ---@param directory_path string?
 function M.toggle_netrw(directory_path)
-	if directory_path == nil then
-		---@diagnostic disable-next-line: undefined-field
-		directory_path = vim.uv.cwd()
-	end
+	local netrw_winsize = vim.g.netrw_winsize or 30
 
-	local netrw_winsize = (vim.g.netrw_winsize ~= nil) and vim.g.netrw_winsize or 30
+	vim.cmd("Lexplore" .. (directory_path ~= nil and " " .. directory_path or ""))
 
-	local bufnr = vim.api.nvim_get_current_buf()
-	local filetype = vim.api.nvim_get_option_value("filetype", { buf = bufnr })
-
-	if vim.g.netrw_is_open and filetype == "netrw" then
-		vim.g.netrw_is_open = false
-		vim.api.nvim_buf_delete(0, { force = true })
-	elseif vim.g.netrw_is_open then
-		vim.g.netrw_is_open = false
-		vim.cmd("Lexplore")
-	else
-		vim.g.netrw_is_open = true
-		vim.cmd("Lexplore" .. directory_path)
-
-		local win = vim.api.nvim_get_current_win()
-		local width = vim.api.nvim_win_get_width(win)
-		if M._already_resized_netrw == false and width ~= netrw_winsize then
-			M._already_resized_netrw = true
-			vim.api.nvim_win_set_width(win, netrw_winsize)
-		end
+	local win = vim.api.nvim_get_current_win()
+	local width = vim.api.nvim_win_get_width(win)
+	if not M._already_resized_netrw and width ~= netrw_winsize then
+		M._already_resized_netrw = true
+		vim.api.nvim_win_set_width(win, netrw_winsize)
 	end
 end
 
