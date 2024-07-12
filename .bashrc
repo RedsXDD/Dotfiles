@@ -111,7 +111,8 @@ bind -m vi-insert '"\C-j": history-substring-search-forward'
 #: }}}
 
 # Shell integrations:
-eval "$(fzf --bash)"
+# eval "$(fzf --bash)"
+eval "$(atuin init bash)"
 eval "$(zoxide init --cmd cd bash)"
 eval "$(starship init bash)"
 
