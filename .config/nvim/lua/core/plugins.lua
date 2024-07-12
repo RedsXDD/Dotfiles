@@ -55,7 +55,8 @@ return {
 	--: }}}
 	--: neopywal {{{
 	{
-		"RedsXDD/neopywal.nvim",
+		-- "RedsXDD/neopywal.nvim",
+		dir = os.getenv("HOME") .. "/.local/sources/Reds/neopywal",
 		name = "neopywal",
 		lazy = false,
 		priority = 1000,
