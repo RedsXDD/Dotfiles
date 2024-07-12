@@ -50,12 +50,12 @@ o.autoindent = true -- Copy indent from current line when starting a new line.
 o.breakindent = true -- Every wrapped line will continue visually indented (same amount of space as the beginning of that line).
 o.cindent = true -- Get the amount of indent for line {lnum} according the C indenting rules, as with 'cindent'.
 o.shiftround = true -- Round indent to a multiple of 'shiftwidth'.
-o.shiftwidth = 8 -- Width for auto indents.
+o.softtabstop = -1 -- Number of spaces that a <Tab> counts for while performing editing operations, like inserting a <Tab> or using <BS> (if negative, shiftwidth value is used).
+o.shiftwidth = 0 -- Width for auto indents (if set to 0, tabstop value is used).
 o.tabstop = 8 -- Number of columns occupied by a tab.
 o.smartindent = true -- Do smart autoindenting when starting a new line.
 o.smarttab = true -- When on, a <Tab> in front of a line inserts blanks according to 'shiftwidth'.
-o.softtabstop = -1 -- Number of spaces that a <Tab> counts for while performing editing operations, like inserting a <Tab> or using <BS> (if negative, shiftwidth value is used).
--- o.expandtab = true -- Expand tabs to individual space characters.
+o.expandtab = true -- Expand tabs to individual space characters.
 --: }}}
 --: Styling {{{
 o.statusline = "%<" -- Empty statusline (Useful for cleaning starter pages from plugins).
