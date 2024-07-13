@@ -86,27 +86,23 @@ export FZF_DEFAULT_OPTS="\
 	--color=fg:-1,fg+:-1 \
 	--color=hl:blue,hl+:blue \
 	--color=border:-1 \
-	--color=label:cyan \
-	--color=prompt:cyan \
+        --color=label:yellow \
+	--color=prompt:blue \
 	--color=spinner:bright-yellow \
-	--color=info:-1 \
-	--color=marker:green \
-	--color=pointer:cyan \
+	--color=info:cyan \
+	--color=marker:red \
+	--color=pointer:blue \
 	--color=header:yellow \
-	--color=query:-1 \
 	--cycle \
 	--ansi \
-	--height='~100%'\
-	--border='rounded' \
-	--border-label='' \
 	--preview-window='border-rounded' \
 	--padding='1' \
 	--prompt='󰍉 ' \
 	--marker='>' \
 	--pointer='◆' \
 	--separator='─' \
-	--no-scrollbar \
-	--layout='reverse'"
+	--layout='reverse' \
+	--height='~62%'" # 25 line height.
 
 # Unset importted wallust colors.
 unset background foreground color0 color1 color2 color3 color4 color5 color6 color7 color8 color9 color10 color11 color12 color13 color14 color15
@@ -142,27 +138,27 @@ export LESSHISTSIZE='10000'
 
 # Less color configuration, tput information can be found at man terminfo.
 LESS_TERMCAP_mb="$(
-	tput bold
-	tput setaf 2
+        tput bold
+        tput setaf 2
 )" # Start blinking, green
 LESS_TERMCAP_md="$(
-	tput bold
-	tput setaf 6
+        tput bold
+        tput setaf 6
 )"                             # Start bold, cyan
 LESS_TERMCAP_me="$(tput sgr0)" # End bold, blinking, standout, underline
 LESS_TERMCAP_so="$(
-	tput bold
-	tput setaf 6
-	tput rev
+        tput bold
+        tput setaf 6
+        tput rev
 )" # Start stand out, cyan, reverse.
 LESS_TERMCAP_se="$(
-	tput rmso
-	tput sgr0
+        tput rmso
+        tput sgr0
 )" # End standout, reset
 LESS_TERMCAP_us="$(
-	tput smul
-	tput bold
-	tput setaf 1
+        tput smul
+        tput bold
+        tput setaf 1
 )"                              # Start underline, bold, red
 LESS_TERMCAP_ue="$(tput sgr0)"  # End Underline
 LESS_TERMCAP_mr="$(tput rev)"   # Reverse background/foreground colors.
@@ -188,12 +184,12 @@ export LESS_TERMCAP_ZW
 #: TTY stuff (must be last!) {{{
 # shellcheck source=/dev/null
 if [ -z "$DISPLAY" ]; then
-	# Start WM:
-	# [ "$(tty)" = '/dev/tty1' ] && sx "${XDG_CONFIG_HOME:-$HOME/.config}/x11/xinit"
-	[ "$(tty)" = '/dev/tty1' ] && Hyprland
+        # Start WM:
+        # [ "$(tty)" = '/dev/tty1' ] && sx "${XDG_CONFIG_HOME:-$HOME/.config}/x11/xinit"
+        [ "$(tty)" = '/dev/tty1' ] && Hyprland
 
-	export FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS} --no-unicode --pointer='*' --prompt='> '"
-	[ -f "${XDG_CONFIG_HOME:-$HOME/.config}/starship/starship_tty.toml" ] && export STARSHIP_CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/starship/starship_tty.toml"
-	[ -f "${XDG_CACHE_HOME:-$HOME/.cache}/wallust/colors_tty.sh" ] && . "${XDG_CACHE_HOME:-$HOME/.cache}/wallust/colors_tty.sh"
+        export FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS} --no-unicode --pointer='*' --prompt='> '"
+        [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/starship/starship_tty.toml" ] && export STARSHIP_CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/starship/starship_tty.toml"
+        [ -f "${XDG_CACHE_HOME:-$HOME/.cache}/wallust/colors_tty.sh" ] && . "${XDG_CACHE_HOME:-$HOME/.cache}/wallust/colors_tty.sh"
 fi
 #: }}}
