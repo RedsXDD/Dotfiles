@@ -558,25 +558,25 @@ return {
 	-- 	lazy = true,
 	-- },
 	-- --: }}}
-	-- --: telescope.nvim {{{
-	-- -- Disable "mini.pick":
-	-- { "echasnovski/mini.pick", enabled = false },
-	-- {
-	-- 	"nvim-telescope/telescope.nvim",
-	-- 	dependencies = {
-	-- 		"nvim-lua/plenary.nvim",
-	-- 		"nvim-tree/nvim-web-devicons",
-	-- 		{
-	-- 			"nvim-telescope/telescope-fzf-native.nvim",
-	-- 			build = "make",
-	-- 			cond = function()
-	-- 				return vim.fn.executable("make") == 1
-	-- 			end,
-	-- 		},
-	-- 	},
-	-- 	branch = "master",
-	-- 	cmd = "Telescope",
-	-- 	config = load_config("telescope"),
-	-- },
-	-- --: }}}
+	--: telescope.nvim {{{
+	-- Disable "mini.pick":
+	{ "echasnovski/mini.pick", enabled = false },
+	{
+		"nvim-telescope/telescope.nvim",
+		dependencies = {
+			"nvim-lua/plenary.nvim",
+			"nvim-tree/nvim-web-devicons",
+			{
+				"nvim-telescope/telescope-fzf-native.nvim",
+				build = "make",
+				cond = function()
+					return vim.fn.executable("make") == 1
+				end,
+			},
+		},
+		branch = "master",
+		cmd = "Telescope",
+		config = load_config("telescope"),
+	},
+	--: }}}
 }
