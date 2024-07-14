@@ -14,16 +14,19 @@ neopywal.setup({
 	plugins = {
 		dashboard = true,
 		lazy = true,
-		lspconfig = true,
+		lsp = true,
 		netrw = true,
 		noice = true,
 		notify = true,
 		nvim_cmp = true,
 		treesitter = true,
+		telescope = {
+			enabled = true,
+			style = "nvchad",
+		},
 		mini = {
 			hipatterns = true,
 			indentscope = true,
-			pick = true,
 		},
 	},
 	custom_highlights = function(colors)
