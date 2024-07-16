@@ -30,34 +30,34 @@ neopywal.setup({
 			indentscope = true,
 		},
 	},
-	custom_highlights = function(colors)
+	custom_highlights = function(C)
 		local U = require("neopywal.utils.color")
 		return {
-			CmpItemKindKeyword = { bg = colors.color1, fg = colors.background }, -- Link Keyword
-			CmpItemKindOperator = { link = "CmpItemKindKeyword" }, -- Link Operator
+			CmpItemKindKeyword = { fg = C.keyword, styles = { "reverse" } },
+			CmpItemKindOperator = { fg = C.operator, styles = { "reverse" } },
 			CmpItemKindEnum = { link = "CmpItemKindKeyword" },
-			CmpItemKindFunction = { bg = colors.color2, fg = colors.background }, -- Link Function
-			CmpItemKindField = { link = "CmpItemKindFunction" }, -- Link @variable.member
-			CmpItemKindProperty = { link = "CmpItemKindFunction" }, -- Link @property
+			CmpItemKindFunction = { fg = C.func, styles = { "reverse" } },
+			CmpItemKindField = { fg = C.variable, styles = { "reverse" } },
+			CmpItemKindProperty = { fg = C.func, styles = { "reverse" } },
 			CmpItemKindMethod = { link = "CmpItemKindFunction" },
-			CmpItemKindColor = { bg = colors.color3, fg = colors.background },
-			CmpItemKindInterface = { bg = colors.color4, fg = colors.background },
-			CmpItemKindFolder = { link = "CmpItemKindInterface" }, -- Link Directory
-			CmpItemKindVariable = { link = "CmpItemKindInterface" }, -- Link Variable
+			CmpItemKindColor = { fg = C.color3, styles = { "reverse" } },
+			CmpItemKindInterface = { fg = C.color4, styles = { "reverse" } },
+			CmpItemKindFolder = { fg = C.directory, styles = { "reverse" } },
+			CmpItemKindVariable = { fg = C.variable, styles = { "reverse" } },
 			CmpItemKindEvent = { link = "CmpItemKindVariable" },
-			CmpItemKindConstructor = { bg = colors.color5, fg = colors.background }, -- Link Special
-			CmpItemKindModule = { link = "CmpItemKindConstructor" }, -- Link Include
-			CmpItemKindUnit = { link = "CmpItemKindConstructor" }, -- Link Number
+			CmpItemKindConstructor = { fg = C.special, styles = { "reverse" } },
+			CmpItemKindModule = { fg = C.include, styles = { "reverse" } },
+			CmpItemKindUnit = { fg = C.number, styles = { "reverse" } },
 			CmpItemKindSnippet = { link = "CmpItemKindModule" },
-			CmpItemKindClass = { bg = colors.color6, fg = colors.background }, -- Link StorageClass
-			CmpItemKindStruct = { link = "CmpItemKindClass" }, -- Link Structure
-			CmpItemKindCopilot = { link = "CmpItemKindClass" },
-			CmpItemKindTabNine = { link = "CmpItemKindClass" },
-			CmpItemKindTypeParameter = { bg = colors.color11, fg = colors.background }, -- Link Identifier
-			CmpItemKindConstant = { link = "CmpItemKindTypeParameter" }, -- Link Constant
-			CmpItemKindValue = { link = "CmpItemKindTypeParameter" },
-			CmpItemKindEnumMember = { link = "CmpItemKindTypeParameter" },
-			CmpItemKindText = { bg = U.lighten(colors.background, 0.3), fg = colors.foreground },
+			CmpItemKindClass = { fg = C.storageclass, styles = { "reverse" } },
+			CmpItemKindStruct = { fg = C.structure, styles = { "reverse" } },
+			CmpItemKindCopilot = { fg = C.color6, styles = { "reverse" } },
+			CmpItemKindTabNine = { fg = C.color6, styles = { "reverse" } },
+			CmpItemKindTypeParameter = { fg = C.identifier, styles = { "reverse" } },
+			CmpItemKindConstant = { fg = C.constant, styles = { "reverse" } },
+			CmpItemKindValue = { link = "CmpItemKindConstant" },
+			CmpItemKindEnumMember = { link = "CmpItemKindConstant" },
+			CmpItemKindText = { bg = U.lighten(C.background, 30), fg = C.foreground },
 			CmpItemKindFile = { link = "CmpItemKindText" },
 			CmpItemKindReference = { link = "CmpItemKindText" },
 		}
