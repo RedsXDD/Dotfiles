@@ -13,6 +13,7 @@ neopywal.setup({
 	default_plugins = false,
 	plugins = {
 		dashboard = true,
+		gitsigns = true,
 		lazy = true,
 		lsp = true,
 		netrw = true,
