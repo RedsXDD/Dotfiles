@@ -119,8 +119,8 @@ clue.setup({
 		--: }}}
 		--: Gitsigns {{{
 		plugin_clue("gitsigns", {
-			{ mode = "n", keys = "<Leader>gh", desc = "+Gitsigns" },
-			{ mode = "x", keys = "<Leader>gh", desc = "+Gitsigns" },
+			{ mode = "n", keys = "<Leader>d", desc = "+Gitsigns" },
+			{ mode = "x", keys = "<Leader>d", desc = "+Gitsigns" },
 			{ mode = "n", keys = "]h", postkeys = "]" },
 			{ mode = "n", keys = "]H", postkeys = "]" },
 			{ mode = "n", keys = "[h", postkeys = "[" },
