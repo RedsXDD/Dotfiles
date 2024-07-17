@@ -224,7 +224,7 @@ unset -f zsh_add_plugin zsh_load_plugin
 
 # Shell integrations (must be after compinit is called):
 # eval "$(fzf --zsh)"
-eval "$(atuin init zsh)"
+eval "$(atuin init zsh --disable-up-arrow)"
 eval "$(zoxide init --cmd cd zsh)"
 eval "$(starship init zsh)"
 

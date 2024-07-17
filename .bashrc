@@ -112,7 +112,7 @@ bind -m vi-insert '"\C-j": history-substring-search-forward'
 
 # Shell integrations:
 # eval "$(fzf --bash)"
-eval "$(atuin init bash)"
+eval "$(atuin init bash --disable-up-arrow)"
 eval "$(zoxide init --cmd cd bash)"
 eval "$(starship init bash)"
 
