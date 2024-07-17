@@ -21,6 +21,7 @@ neopywal.setup({
 		notify = true,
 		nvim_cmp = true,
 		treesitter = true,
+		flash = true,
 		telescope = {
 			enabled = true,
 			style = "nvchad",
