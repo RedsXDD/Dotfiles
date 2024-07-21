@@ -9,15 +9,15 @@ set -e # Exit on any error.
 MAX_HEADER_LENGHT=50
 MAX_BODY_LENGHT=72
 # EXCLUDE_BRANCHES="main,master" # Exclude running git-sumi linting on these branches (leave empty for no exclusion).
-BODY_CAN_BE_EMPTY=true  # True if commit body can be empty.
-UPPERCASE_BYPASS=false  # Commit messages that begins uppercase will bypass linting.
+BODY_CAN_BE_EMPTY=true # True if commit body can be empty.
+UPPERCASE_BYPASS=false # Commit messages that begins uppercase will bypass linting.
 VALID_COMMIT_TYPES="build,ci,chore,docs,feat,fix,perf,refactor,revert,style,test"
 
 # Check if git-sumi is installed.
 if ! command -v git-sumi &>/dev/null; then
-	echo "git-sumi is not installed. Please install it. See https://sumi.rs for instructions."
-	echo "Alternatively, edit or remove the commit-msg hook in .git/hooks/commit-msg."
-	exit 1
+        echo "git-sumi is not installed. Please install it. See https://sumi.rs for instructions."
+        echo "Alternatively, edit or remove the commit-msg hook in .git/hooks/commit-msg."
+        exit 1
 fi
 
 # Main variables:
@@ -27,24 +27,24 @@ commit_body="$(tail -n+2 "${commit_file}" | sed '/^#/d')"
 
 # Bypass linting if the current branch is not 'main' or 'master'.
 if [ -n "${EXCLUDE_BRANCHES}" ]; then
-	current_branch=$(git rev-parse --abbrev-ref HEAD)
+        current_branch=$(git rev-parse --abbrev-ref HEAD)
 
-	for branch in ${EXCLUDE_BRANCHES//,/ }; do
-		if [ "${branch}" == "${current_branch}" ]; then
-			exit 0
-		fi
-	done
+        for branch in ${EXCLUDE_BRANCHES//,/ }; do
+                if [ "${branch}" == "${current_branch}" ]; then
+                        exit 0
+                fi
+        done
 fi
 
 # Bypass linting if uppercase bypass is enabled.
 if [ "${UPPERCASE_BYPASS}" = true ] && echo "${commit_header}" | grep -q '^[A-Z]'; then
-	exit 0
+        exit 0
 fi
 
 # Perform empty body check if needed.
 if [ "${BODY_CAN_BE_EMPTY}" != true ] && [ -z "${commit_body}" ]; then
-	echo "❌ Body cannot be empty."
-	exit 1
+        echo "❌ Body cannot be empty."
+        exit 1
 fi
 
 # Format commit file:
@@ -56,7 +56,7 @@ echo "${commit_header}" >"$tmp"
 
 # Add space betwheen commit header and body if needed.
 if [ -n "$(head -n2 "${commit_file}" | tail -n1)" ]; then
-	echo '' >>"$tmp"
+        echo '' >>"$tmp"
 fi
 
 # Fold commit body to make it no longer then the maximum specified body length.
@@ -67,12 +67,12 @@ sed 's/[ \t]*$//' "$tmp" >"$commit_file"
 
 # Lint formatted commit file:
 git-sumi --display \
-	--conventional \
-	--imperative \
-	--whitespace \
-	--description-case "lower" \
-	--no-period \
-	--max-header-length "${MAX_HEADER_LENGHT}" \
-	--max-body-length "${MAX_BODY_LENGHT}" \
-	--types-allowed "${VALID_COMMIT_TYPES}" \
-	-- "$(cat "${commit_file}")" # Exits with error if linting fails.
+        --conventional \
+        --imperative \
+        --whitespace \
+        --description-case "lower" \
+        --no-period \
+        --max-header-length "${MAX_HEADER_LENGHT}" \
+        --max-body-length "${MAX_BODY_LENGHT}" \
+        --types-allowed "${VALID_COMMIT_TYPES}" \
+        -- "$(cat "${commit_file}")" # Exits with error if linting fails.
