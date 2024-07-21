@@ -41,7 +41,7 @@ export HISTSIZE=100000
 export SAVEHIST="${HISTSIZE}"
 export HISTFILESIZE=''
 export HISTCONTROL='ignoreboth:erasedups'
-export HISTORY_IGNORE="(pwd|exit|q|cl|history|cd -|cd ..)"
+export HISTORY_IGNORE="(shutdown|reboot|pwd|exit|q|cl|history|cd -|cd ..)"
 export HISTDUP='erase'
 #: }}}
 #: Defaults {{{
