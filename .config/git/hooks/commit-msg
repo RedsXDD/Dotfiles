@@ -6,7 +6,7 @@
 set -e # Exit on any error.
 
 # Main linting options:
-MAX_HEADER_LENGHT=50
+MAX_HEADER_LENGHT=0
 MAX_BODY_LENGHT=72
 # EXCLUDE_BRANCHES="main,master" # Exclude running git-sumi linting on these branches (leave empty for no exclusion).
 BODY_CAN_BE_EMPTY=true # True if commit body can be empty.
