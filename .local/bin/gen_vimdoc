@@ -1,0 +1,9 @@
+#!/usr/bin/env sh
+
+cd ~/.local/sources/Reds/neopywal/ && bash ~/.local/sources/panvimdoc/panvimdoc.sh --project-name 'neopywal' \
+	--input-file ./README.md \
+	--toc false \
+	--description '(Neo)pywal for (Neo)vim' \
+	--treesitter true && git add ./doc/ && git commit -m 'docs: auto generate vimdoc'
+
+# vim:fileencoding=utf-8:foldmethod=marker
