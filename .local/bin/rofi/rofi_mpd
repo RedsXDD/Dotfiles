@@ -3,7 +3,7 @@
 killall rofi >/dev/null 2>&1
 
 # Import current theme:
-THEME="${XDG_CONFIG_HOME:-$HOME/.config}/rofi/themes/applets/type-4/style-2.rasi"
+THEME="${XDG_CONFIG_HOME:-$HOME/.config}/rofi/themes/applets/type-5/style-2.rasi"
 
 # Set default appearence:
 list_col="$(grep 'list_col' "$THEME" | cut -d'=' -f2)"
