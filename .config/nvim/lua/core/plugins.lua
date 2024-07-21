@@ -97,6 +97,14 @@ return {
 	--: }}}
 	--: }}}
 	--: Mini {{{
+	--: mini.statusline {{{
+	{
+		"echasnovski/mini.statusline",
+		dependencies = "nvim-tree/nvim-web-devicons",
+		event = { "LazyFile", "BufUnload" },
+		config = load_config("mini.statusline"),
+	},
+	--: }}}
 	--: mini.git {{{
 	{
 		"echasnovski/mini-git",
@@ -390,14 +398,15 @@ return {
 		config = load_config("bufferline"),
 	},
 	--: }}}
-	--: lualine.nvim {{{
-	{
-		"nvim-lualine/lualine.nvim",
-		dependencies = { "nvim-tree/nvim-web-devicons" },
-		event = { "LazyFile", "BufUnload" },
-		config = load_config("lualine"),
-	},
-	--: }}}
+	-- --: lualine.nvim {{{
+	-- { "echasnovski/mini.statusline", enabled = false },
+	-- {
+	-- 	"nvim-lualine/lualine.nvim",
+	-- 	dependencies = { "nvim-tree/nvim-web-devicons" },
+	-- 	event = { "LazyFile", "BufUnload" },
+	-- 	config = load_config("lualine"),
+	-- },
+	-- --: }}}
 	--: conform.nvim {{{
 	{
 		"stevearc/conform.nvim",
