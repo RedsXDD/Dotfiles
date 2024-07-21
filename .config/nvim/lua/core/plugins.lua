@@ -97,6 +97,15 @@ return {
 	--: }}}
 	--: }}}
 	--: Mini {{{
+	--: mini.git {{{
+	{
+		"echasnovski/mini-git",
+		cmd = "Git",
+		config = function()
+			require("mini.git").setup()
+		end,
+	},
+	--: }}}
 	--: mini.icons {{{
 	{ "nvim-tree/nvim-web-devicons", enabled = false, optional = true },
 	{
