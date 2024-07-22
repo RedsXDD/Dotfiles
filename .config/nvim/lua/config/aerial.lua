@@ -9,6 +9,7 @@ aerial.setup({
 	backends = { "lsp", "treesitter", "markdown", "man" },
 	show_guides = true,
 	layout = {
+                width = 30,
 		resize_to_content = false,
 		win_opts = {
 			winhl = "Normal:NormalFloat,FloatBorder:NormalFloat,SignColumn:SignColumnSB",
