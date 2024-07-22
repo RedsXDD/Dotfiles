@@ -34,6 +34,7 @@ neopywal.setup({
 			hipatterns = true,
 			indentscope = true,
 			statusline = true,
+			tabline = true,
 		},
 	},
 	custom_highlights = function(C)
