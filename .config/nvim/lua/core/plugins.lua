@@ -640,4 +640,31 @@ return {
 		config = load_config("ibl"),
 	},
 	--: }}}
+	--: aerial.nvim {{{
+	{
+		"stevearc/aerial.nvim",
+		dependencies = {
+			"nvim-treesitter/nvim-treesitter",
+			"nvim-tree/nvim-web-devicons",
+		},
+		cmd = {
+			"AerialToggle",
+			"AerialOpen",
+			"AerialOpenAll",
+			"AerialClose",
+			"AerialCloseAll",
+			"AerialNext",
+			"AerialPrev",
+			"AerialGo",
+			"AerialInfo",
+			"AerialNavToggle",
+			"AerialNavOpen",
+			"AerialNavClose",
+		},
+		keys = {
+			{ "<Leader>ta", "<cmd>AerialToggle<cr>", desc = "Toggle Aerial (Symbols)" },
+		},
+		config = load_config("aerial"),
+	},
+	--: }}}
 }

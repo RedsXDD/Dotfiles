@@ -61,6 +61,16 @@ set_icons("misc", {
 	border = { "+", "-", "+", "|", "+", "-", "+", "|" },
 })
 
+set_icons("aerial", {
+	mid_item = "├╴",
+	last_item = "└╴",
+	nested_top = "│ ",
+}, {
+	mid_item = "+",
+	last_item = "`-",
+	nested_top = "|",
+})
+
 set_icons("startpage", {
 	footer = "󱐋 ",
 	bullet = "░ ",
