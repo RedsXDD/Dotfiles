@@ -9,7 +9,7 @@ aerial.setup({
 	backends = { "lsp", "treesitter", "markdown", "man" },
 	show_guides = true,
 	layout = {
-                width = 30,
+		width = 30,
 		resize_to_content = false,
 		win_opts = {
 			winhl = "Normal:NormalFloat,FloatBorder:NormalFloat,SignColumn:SignColumnSB",
@@ -18,7 +18,21 @@ aerial.setup({
 		},
 	},
 	icons = icons.kinds,
-	-- filter_kind = filter_kind,
+	filter_kind = {
+		"Class",
+		"Constructor",
+		"Enum",
+		"Field",
+		"Function",
+		"Interface",
+		"Method",
+		"Module",
+		"Namespace",
+		"Package",
+		"Property",
+		"Struct",
+		"Trait",
+	},
 	guides = {
 		mid_item = icons.aerial.mid_item,
 		last_item = icons.aerial.last_item,
