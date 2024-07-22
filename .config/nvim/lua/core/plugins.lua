@@ -97,23 +97,23 @@ return {
 	--: }}}
 	--: }}}
 	--: Mini {{{
-	--: mini.statusline {{{
-	{
-		"echasnovski/mini.statusline",
-		dependencies = "nvim-tree/nvim-web-devicons",
-		event = { "LazyFile", "BufUnload" },
-		config = load_config("mini.statusline"),
-	},
-	--: }}}
-	--: mini.git {{{
-	{
-		"echasnovski/mini-git",
-		cmd = "Git",
-		config = function()
-			require("mini.git").setup()
-		end,
-	},
-	--: }}}
+	-- --: mini.statusline {{{
+	-- {
+	-- 	"echasnovski/mini.statusline",
+	-- 	dependencies = "nvim-tree/nvim-web-devicons",
+	-- 	event = { "LazyFile", "BufUnload" },
+	-- 	config = load_config("mini.statusline"),
+	-- },
+	-- --: }}}
+	-- --: mini.git {{{
+	-- {
+	-- 	"echasnovski/mini-git",
+	-- 	cmd = "Git",
+	-- 	config = function()
+	-- 		require("mini.git").setup()
+	-- 	end,
+	-- },
+	-- --: }}}
 	--: mini.icons {{{
 	{ "nvim-tree/nvim-web-devicons", enabled = false, optional = true },
 	{
@@ -187,21 +187,21 @@ return {
 		config = load_config("mini.tabline"),
 	},
 	--: }}}
-	--: mini.pick {{{
-	{
-		"echasnovski/mini.pick",
-		dependencies = { "echasnovski/mini.extra", opts = {} },
-		cmd = "Pick",
-		config = load_config("mini.pick"),
-	},
-	--: }}}
-	--: mini.diff {{{
-	{
-		"echasnovski/mini.diff",
-		event = "LazyFile",
-		config = load_config("mini.diff"),
-	},
-	--: }}}
+	-- --: mini.pick {{{
+	-- {
+	-- 	"echasnovski/mini.pick",
+	-- 	dependencies = { "echasnovski/mini.extra", opts = {} },
+	-- 	cmd = "Pick",
+	-- 	config = load_config("mini.pick"),
+	-- },
+	-- --: }}}
+	-- --: mini.diff {{{
+	-- {
+	-- 	"echasnovski/mini.diff",
+	-- 	event = "LazyFile",
+	-- 	config = load_config("mini.diff"),
+	-- },
+	-- --: }}}
 	--: mini.hipatterns {{{
 	{
 		"echasnovski/mini.hipatterns",
@@ -209,43 +209,43 @@ return {
 		config = load_config("mini.hipatterns"),
 	},
 	--: }}}
-	--: mini.indentscope {{{
-	{
-		"echasnovski/mini.indentscope",
-		event = "LazyFile",
-		init = function()
-			local group_name = "augroup_mini_indentscope_disable"
-			local augroup = vim.api.nvim_create_augroup(group_name, { clear = true })
-			vim.api.nvim_create_autocmd("FileType", {
-				desc = "Auto disabled mini.indentscope when opening certain filetypes.",
-				group = augroup,
-				pattern = {
-					"help",
-					"alpha",
-					"dashboard",
-					"Starter",
-					"starter",
-					"neo-tree",
-					"Trouble",
-					"trouble",
-					"lazy",
-					"mason",
-					"notify",
-					"toggleterm",
-					"lazyterm",
-					"FTerm",
-					"fterm_lazygit",
-					"fterm_gitui",
-				},
-				callback = function()
-					vim.b.miniindentscope_disable = true
-					vim.api.nvim_clear_autocmds({ group = group_name })
-				end,
-			})
-		end,
-		config = load_config("mini.indentscope"),
-	},
-	--: }}}
+	-- --: mini.indentscope {{{
+	-- {
+	-- 	"echasnovski/mini.indentscope",
+	-- 	event = "LazyFile",
+	-- 	init = function()
+	-- 		local group_name = "augroup_mini_indentscope_disable"
+	-- 		local augroup = vim.api.nvim_create_augroup(group_name, { clear = true })
+	-- 		vim.api.nvim_create_autocmd("FileType", {
+	-- 			desc = "Auto disabled mini.indentscope when opening certain filetypes.",
+	-- 			group = augroup,
+	-- 			pattern = {
+	-- 				"help",
+	-- 				"alpha",
+	-- 				"dashboard",
+	-- 				"Starter",
+	-- 				"starter",
+	-- 				"neo-tree",
+	-- 				"Trouble",
+	-- 				"trouble",
+	-- 				"lazy",
+	-- 				"mason",
+	-- 				"notify",
+	-- 				"toggleterm",
+	-- 				"lazyterm",
+	-- 				"FTerm",
+	-- 				"fterm_lazygit",
+	-- 				"fterm_gitui",
+	-- 			},
+	-- 			callback = function()
+	-- 				vim.b.miniindentscope_disable = true
+	-- 				vim.api.nvim_clear_autocmds({ group = group_name })
+	-- 			end,
+	-- 		})
+	-- 	end,
+	-- 	config = load_config("mini.indentscope"),
+	-- },
+	-- --: }}}
 	--: mini.pairs {{{
 	{
 		"echasnovski/mini.pairs",
@@ -267,13 +267,13 @@ return {
 		config = load_config("mini.surround"),
 	},
 	--: }}}
-	-- --: mini.completion {{{
-	-- {
-	-- 	"echasnovski/mini.completion",
-	-- 	event = "InsertEnter",
-	-- 	config = load_config("mini.completion"),
-	-- },
-	-- --: }}}
+	--: mini.completion {{{
+	{
+		"echasnovski/mini.completion",
+		event = "InsertEnter",
+		config = load_config("mini.completion"),
+	},
+	--: }}}
 	-- --: mini.animate {{{
 	-- {
 	-- 	"echasnovski/mini.animate",
@@ -409,25 +409,25 @@ return {
 	},
 	--: }}}
 	--: }}}
-	--: bufferline.nvim {{{
-	{ "echasnovski/mini.tabline", enabled = false },
-	{
-		"akinsho/bufferline.nvim",
-		dependencies = "nvim-tree/nvim-web-devicons",
-		version = "*",
-		event = { "LazyFile", "BufUnload" },
-		config = load_config("bufferline"),
-	},
-	--: }}}
-	-- --: lualine.nvim {{{
-	-- { "echasnovski/mini.statusline", enabled = false },
+	-- --: bufferline.nvim {{{
+	-- { "echasnovski/mini.tabline", enabled = false },
 	-- {
-	-- 	"nvim-lualine/lualine.nvim",
-	-- 	dependencies = { "nvim-tree/nvim-web-devicons" },
+	-- 	"akinsho/bufferline.nvim",
+	-- 	dependencies = "nvim-tree/nvim-web-devicons",
+	-- 	version = "*",
 	-- 	event = { "LazyFile", "BufUnload" },
-	-- 	config = load_config("lualine"),
+	-- 	config = load_config("bufferline"),
 	-- },
 	-- --: }}}
+	--: lualine.nvim {{{
+	{ "echasnovski/mini.statusline", enabled = false },
+	{
+		"nvim-lualine/lualine.nvim",
+		dependencies = { "nvim-tree/nvim-web-devicons" },
+		event = { "LazyFile", "BufUnload" },
+		config = load_config("lualine"),
+	},
+	--: }}}
 	--: conform.nvim {{{
 	{
 		"stevearc/conform.nvim",
@@ -462,54 +462,54 @@ return {
 		config = load_config("fterm"),
 	},
 	--: }}}
-	--: noice.nvim {{{
-	{
-		"folke/noice.nvim",
-		dependencies = {
-			"MunifTanjim/nui.nvim",
-			"rcarriga/nvim-notify",
-		},
-		event = function()
-			return { "CmdlineEnter", "LazyFile" }
-		end,
-		config = load_config("noice"),
-	},
-	--: }}}
-	--: nvim-cmp {{{
-	{
-		"hrsh7th/nvim-cmp",
-		event = "InsertEnter",
-		dependencies = {
-			"hrsh7th/cmp-nvim-lsp", -- Suggestions based on neovim lsp.
-			"hrsh7th/cmp-buffer", -- Suggestions based on current buffer.
-			"hrsh7th/cmp-path", -- Suggestions based on path(directories/files etc.).
-			"hrsh7th/cmp-nvim-lua", -- Suggestions for neovim api commands.
-			"saadparwaiz1/cmp_luasnip",
-			"rafamadriz/friendly-snippets",
-			{
-				"L3MON4D3/LuaSnip",
-				-- Build Step is needed for regex support in snippets.
-				-- This step is not supported in many windows environments.
-				-- Remove the below condition to re-enable on windows.
-				build = (function()
-					if vim.fn.has("win32") == 1 or vim.fn.executable("make") == 0 then
-						return
-					end
-					return "make install_jsregexp"
-				end)(),
-			},
-		},
-		config = load_config("nvim_cmp"),
-	},
-	--: }}}
-	--: zen-mode.nvim {{{
-	{
-		"folke/zen-mode.nvim",
-		cmd = "ZenMode",
-		keys = "<Leader>tz",
-		config = load_config("zenmode"),
-	},
-	--: }}}
+	-- --: noice.nvim {{{
+	-- {
+	-- 	"folke/noice.nvim",
+	-- 	dependencies = {
+	-- 		"MunifTanjim/nui.nvim",
+	-- 		"rcarriga/nvim-notify",
+	-- 	},
+	-- 	event = function()
+	-- 		return { "CmdlineEnter", "LazyFile" }
+	-- 	end,
+	-- 	config = load_config("noice"),
+	-- },
+	-- --: }}}
+	-- --: nvim-cmp {{{
+	-- {
+	-- 	"hrsh7th/nvim-cmp",
+	-- 	event = "InsertEnter",
+	-- 	dependencies = {
+	-- 		"hrsh7th/cmp-nvim-lsp", -- Suggestions based on neovim lsp.
+	-- 		"hrsh7th/cmp-buffer", -- Suggestions based on current buffer.
+	-- 		"hrsh7th/cmp-path", -- Suggestions based on path(directories/files etc.).
+	-- 		"hrsh7th/cmp-nvim-lua", -- Suggestions for neovim api commands.
+	-- 		"saadparwaiz1/cmp_luasnip",
+	-- 		"rafamadriz/friendly-snippets",
+	-- 		{
+	-- 			"L3MON4D3/LuaSnip",
+	-- 			-- Build Step is needed for regex support in snippets.
+	-- 			-- This step is not supported in many windows environments.
+	-- 			-- Remove the below condition to re-enable on windows.
+	-- 			build = (function()
+	-- 				if vim.fn.has("win32") == 1 or vim.fn.executable("make") == 0 then
+	-- 					return
+	-- 				end
+	-- 				return "make install_jsregexp"
+	-- 			end)(),
+	-- 		},
+	-- 	},
+	-- 	config = load_config("nvim_cmp"),
+	-- },
+	-- --: }}}
+	-- --: zen-mode.nvim {{{
+	-- {
+	-- 	"folke/zen-mode.nvim",
+	-- 	cmd = "ZenMode",
+	-- 	keys = "<Leader>tz",
+	-- 	config = load_config("zenmode"),
+	-- },
+	-- --: }}}
 	--: dashboard-nvim {{{
 	{ "goolord/alpha-nvim", enabled = false },
 	{ "echasnovski/mini.starter", enabled = false },
@@ -598,7 +598,6 @@ return {
 	-- },
 	-- --: }}}
 	--: telescope.nvim {{{
-	-- Disable "mini.pick":
 	{ "echasnovski/mini.pick", enabled = false },
 	{
 		"nvim-telescope/telescope.nvim",
@@ -618,19 +617,48 @@ return {
 		config = load_config("telescope"),
 	},
 	--: }}}
-	--: flash.nvim {{{
+	-- --: flash.nvim {{{
+	-- {
+	-- 	"folke/flash.nvim",
+	-- 	event = "LazyFile",
+	-- 	opts = {},
+	-- 	-- stylua: ignore
+	-- 	keys = {
+	-- 		{ "s", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "Flash" },
+	-- 		{ "S", mode = { "n", "x", "o" }, function() require("flash").treesitter() end, desc = "Flash Treesitter" },
+	-- 		{ "r", mode = "o", function() require("flash").remote() end, desc = "Remote Flash" },
+	-- 		{ "R", mode = { "o", "x" }, function() require("flash").treesitter_search() end, desc = "Treesitter Search" },
+	-- 		{ "<C-s>", mode = { "c" }, function() require("flash").toggle() end, desc = "Toggle Flash Search" },
+	-- 	},
+	-- },
+	-- --: }}}
+	--: indent-blankline.nvim {{{
 	{
-		"folke/flash.nvim",
+		"lukas-reineke/indent-blankline.nvim",
 		event = "LazyFile",
-		opts = {},
-                -- stylua: ignore
-                keys = {
-                        { "s", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "Flash" },
-                        { "S", mode = { "n", "x", "o" }, function() require("flash").treesitter() end, desc = "Flash Treesitter" },
-                        { "r", mode = "o", function() require("flash").remote() end, desc = "Remote Flash" },
-                        { "R", mode = { "o", "x" }, function() require("flash").treesitter_search() end, desc = "Treesitter Search" },
-                        { "<C-s>", mode = { "c" }, function() require("flash").toggle() end, desc = "Toggle Flash Search" },
-                },
+		opts = {
+			indent = {
+				char = "│",
+				tab_char = "│",
+			},
+			scope = { show_start = false, show_end = false },
+			exclude = {
+				filetypes = {
+					"help",
+					"alpha",
+					"dashboard",
+					"neo-tree",
+					"Trouble",
+					"trouble",
+					"lazy",
+					"mason",
+					"notify",
+					"toggleterm",
+					"lazyterm",
+				},
+			},
+		},
+		main = "ibl",
 	},
 	--: }}}
 }
