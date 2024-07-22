@@ -358,6 +358,27 @@ return {
 	-- 	opts = {},
 	-- },
 	-- --: }}}
+	--: mini.jump {{{
+	{
+		"echasnovski/mini.jump",
+		keys = { "f", "F", "t", "T" },
+		config = load_config("mini.jump"),
+	},
+	--: }}}
+	--: mini.jump2d {{{
+	{
+		"echasnovski/mini.jump2d",
+		keys = { { "s", mode = { "n", "x", "o" }, desc = "Jump" } },
+		config = load_config("mini.jump2d"),
+	},
+	--: }}}
+	-- --: mini.operators {{{
+	-- {
+	-- 	"echasnovski/mini.operators",
+	-- 	event = "LazyFile",
+	-- 	config = load_config("mini.operators"),
+	-- },
+	-- --: }}}
 	--: }}}
 	--: Fileformats {{{
 	--: hyprland-vim-syntax {{{
