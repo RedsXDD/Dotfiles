@@ -557,40 +557,40 @@ return {
 		config = load_config("gitsigns"),
 	},
 	--: }}}
-	-- --: neo-tree.nvim {{{
-	-- {
-	-- 	"nvim-neo-tree/neo-tree.nvim",
-	-- 	dependencies = {
-	-- 		"nvim-lua/plenary.nvim",
-	-- 		"nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
-	-- 		"MunifTanjim/nui.nvim",
-	-- 		-- "3rd/image.nvim", -- Optional image support in preview window: See `# Preview Mode` for more information
-	-- 	},
-	-- 	lazy = true,
-	-- 	branch = "v3.x",
-	-- 	cmd = "Neotree",
-	-- 	-- FIX: use `autocmd` for lazy-loading neo-tree instead of directly requiring it, because `cwd` is not set up properly.
-	-- 	init = function()
-	-- 		vim.api.nvim_create_autocmd("BufEnter", {
-	-- 			desc = "Start Neo-tree with directory",
-	-- 			group = vim.api.nvim_create_augroup("augroup_neotree_start_directory", { clear = true }),
-	-- 			once = true,
-	-- 			callback = function()
-	-- 				if package.loaded["neo-tree"] then
-	-- 					return
-	-- 				else
-	-- 					---@diagnostic disable-next-line: undefined-field
-	-- 					local stats = vim.uv.fs_stat(vim.fn.argv(0))
-	-- 					if stats and stats.type == "directory" then
-	-- 						require("neo-tree")
-	-- 					end
-	-- 				end
-	-- 			end,
-	-- 		})
-	-- 	end,
-	-- 	config = load_config("neotree"),
-	-- },
-	-- --: }}}
+	--: neo-tree.nvim {{{
+	{
+		"nvim-neo-tree/neo-tree.nvim",
+		dependencies = {
+			"nvim-lua/plenary.nvim",
+			"nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
+			"MunifTanjim/nui.nvim",
+			-- "3rd/image.nvim", -- Optional image support in preview window: See `# Preview Mode` for more information
+		},
+		lazy = true,
+		branch = "v3.x",
+		cmd = "Neotree",
+		-- FIX: use `autocmd` for lazy-loading neo-tree instead of directly requiring it, because `cwd` is not set up properly.
+		init = function()
+			vim.api.nvim_create_autocmd("BufEnter", {
+				desc = "Start Neo-tree with directory",
+				group = vim.api.nvim_create_augroup("augroup_neotree_start_directory", { clear = true }),
+				once = true,
+				callback = function()
+					if package.loaded["neo-tree"] then
+						return
+					else
+						---@diagnostic disable-next-line: undefined-field
+						local stats = vim.uv.fs_stat(vim.fn.argv(0))
+						if stats and stats.type == "directory" then
+							require("neo-tree")
+						end
+					end
+				end,
+			})
+		end,
+		config = load_config("neotree"),
+	},
+	--: }}}
 	-- --: netrw.nvim {{{
 	-- {
 	-- 	"prichrd/netrw.nvim",
