@@ -27,6 +27,10 @@ neopywal.setup({
 			style = "nvchad",
 		},
 		mini = {
+                        surround = true,
+			jump = true,
+			jump2d = true,
+			clue = true,
 			hipatterns = true,
 			indentscope = true,
 			statusline = true,
