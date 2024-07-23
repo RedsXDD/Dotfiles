@@ -71,16 +71,12 @@ function M.toggle_file_explorer(chdir)
 	local has_minifiles, files = pcall(require, "mini.files")
 	vim.fn.chdir(directory_path)
 
-	local toggle_mini_files = function(path, use_lastest)
-		if not files.close() then
-			files.open(path, use_lastest)
-		end
-	end
-
 	if has_neotree then
 		neotree.execute({ toggle = true, dir = directory_path })
 	elseif has_minifiles then
-		toggle_mini_files(directory_path, true)
+		if not files.close() then
+			files.open(directory_path, true)
+		end
 	else
 		M.toggle_netrw()
 	end
