@@ -1,93 +1,72 @@
-local has_neotree, neotree = pcall(require, "neotree")
+local has_neotree, neotree = pcall(require, "neo-tree")
 if not has_neotree then
 	return
 end
 
+local icons = require("core.icons")
 neotree.setup({
-	popup_border_style = require("core.icons").misc.border,
-	enable_git_status = true,
-	enable_diagnostics = true,
-	sort_case_insensitive = true,
+	close_if_last_window = true,
+	popup_border_style = icons.misc.border,
+	default_component_configs = {
+		indent = {
+			with_markers = true,
+			indent_marker = icons.misc.indent,
+			last_indent_marker = icons.misc.indent_left,
+			highlight = "NeoTreeIndentMarker",
+			expander_collapsed = icons.neotree.expander_collapsed,
+			expander_expanded = icons.neotree.expander_expanded,
+			expander_highlight = "NeoTreeExpander",
+		},
+		icon = {
+			folder_closed = icons.neotree.folder_closed,
+			folder_open = icons.neotree.folder_open,
+			folder_empty = icons.neotree.folder_empty,
+		},
+		git_status = {
+			symbols = {
+				added = icons.neotree.git.added,
+				modified = icons.neotree.git.modified,
+				deleted = icons.neotree.git.deleted,
+				renamed = icons.neotree.git.renamed,
+				untracked = icons.neotree.git.untracked,
+				ignored = icons.neotree.git.ignored,
+				unstaged = icons.neotree.git.unstaged,
+				staged = icons.neotree.git.staged,
+				conflict = icons.neotree.git.conflict,
+			},
+		},
+	},
 	window = {
+		position = "left",
+		width = 30,
 		mappings = {
 			["l"] = "open",
 			["L"] = "focus_preview",
-			["P"] = { "toggle_preview", config = { use_float = true, use_image_nvim = true } },
 			["_"] = "open_split",
 			["-"] = "open_vsplit",
-			-- ["_"] = "split_with_window_picker",
-			-- ["-"] = "vsplit_with_window_picker",
-			["t"] = "open_tabnew",
-			-- ["<cr>"] = "open_drop",
-			-- ["t"] = "open_tab_drop",
-			["w"] = "open_with_window_picker",
-			["h"] = "close_node",
-			["C"] = "close_all_nodes",
-			--["Z"] = "expand_all_nodes",
-			["a"] = {
-				"add",
-				config = {
-					show_path = "none",
-				},
-			},
-			["A"] = "add_directory",
-			["d"] = "delete",
-			["r"] = "rename",
-			["p"] = "paste_from_clipboard",
-			["x"] = "cut_to_clipboard",
-			["y"] = "copy_to_clipboard",
-			["Y"] = "copy",
-			["m"] = "move",
-			["q"] = "close_window",
-			["R"] = "refresh",
-			["?"] = "show_help",
-			["<"] = "prev_source",
-			[">"] = "next_source",
-			["i"] = "show_file_details",
 		},
 	},
 	filesystem = {
-		hijack_netrw_behavior = "open_current",
 		filtered_items = {
+			visible = true, -- when true, they will just be displayed differently than normal items
 			hide_dotfiles = false,
-			hide_gitignored = true,
 		},
+		hijack_netrw_behavior = "open_current",
 		window = {
 			mappings = {
-				[","] = "navigate_up",
-				["H"] = "toggle_hidden",
-				["."] = "set_root",
-				["/"] = "fuzzy_finder",
-				["#"] = "fuzzy_sorter",
-				-- ["D"] = "fuzzy_sorter_directory",
-				["D"] = "fuzzy_finder_directory",
-				["f"] = "filter_on_submit",
-				["<C-x>"] = "clear_filter",
-				["[g"] = "prev_git_modified",
-				["]g"] = "next_git_modified",
 				["z"] = { "show_help", nowait = false, config = { title = "Order by", prefix_key = "o" } },
 				["zc"] = { "order_by_created", nowait = false },
 				["zd"] = { "order_by_diagnostics", nowait = false },
-				["zg"] = { "order_by_git_status", nowait = false },
 				["zm"] = { "order_by_modified", nowait = false },
 				["zn"] = { "order_by_name", nowait = false },
 				["zs"] = { "order_by_size", nowait = false },
 				["zt"] = { "order_by_type", nowait = false },
-			},
-			fuzzy_finder_mappings = { -- define keymaps for filter popup window in fuzzy_finder_mode
-				["<C-k>"] = "move_cursor_up",
-				["<C-j>"] = "move_cursor_down",
-				["<C-n>"] = "move_cursor_down",
-				["<C-p>"] = "move_cursor_up",
 			},
 		},
 	},
 	buffers = {
 		window = {
 			mappings = {
-				["bd"] = "buffer_delete",
-				["h"] = "navigate_up",
-				["."] = "set_root",
 				["z"] = { "show_help", nowait = false, config = { title = "Order by", prefix_key = "o" } },
 				["zc"] = { "order_by_created", nowait = false },
 				["zd"] = { "order_by_diagnostics", nowait = false },
@@ -100,15 +79,7 @@ neotree.setup({
 	},
 	git_status = {
 		window = {
-			position = "float",
 			mappings = {
-				["A"] = "git_add_all",
-				["gu"] = "git_unstage_file",
-				["ga"] = "git_add_file",
-				["gr"] = "git_revert_file",
-				["gc"] = "git_commit",
-				["gp"] = "git_push",
-				["gg"] = "git_commit_and_push",
 				["z"] = { "show_help", nowait = false, config = { title = "Order by", prefix_key = "o" } },
 				["zc"] = { "order_by_created", nowait = false },
 				["zd"] = { "order_by_diagnostics", nowait = false },

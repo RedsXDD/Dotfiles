@@ -54,10 +54,12 @@ set_icons("fillchars", {
 set_icons("misc", {
 	dots = "󰇘",
 	indent = "│",
+	indent_left = "└",
 	border = "rounded",
 }, {
 	dots = "...",
 	indent = "|",
+	indent_left = "`-",
 	border = { "+", "-", "+", "|", "+", "-", "+", "|" },
 })
 
@@ -139,6 +141,42 @@ set_icons("startpage", {
 set_icons("mini_files", {
 	directory_icon = " ",
 }, {})
+
+set_icons("neotree", {
+	folder_closed = "",
+	folder_open = "",
+	folder_empty = "",
+	expander_collapsed = "",
+	expander_expanded = "",
+	git = {
+		added = "✚",
+		modified = "",
+		deleted = "✖",
+		renamed = "󰁕",
+		untracked = "",
+		ignored = "",
+		unstaged = "󰄱",
+		staged = "",
+		conflict = "",
+	},
+}, {
+	folder_closed = "",
+	folder_open = "",
+	folder_empty = "",
+	expander_collapsed = ">",
+	expander_expanded = "-",
+	git = {
+		added = "+",
+		modified = "~",
+		deleted = "-",
+		renamed = "~",
+		untracked = "?",
+		ignored = "#",
+		unstaged = "*",
+		staged = "=",
+		conflict = "X",
+	},
+})
 
 set_icons("dap", {
 	Stopped = { "󰁕 ", "DiagnosticWarn", "DapStoppedLine" },
