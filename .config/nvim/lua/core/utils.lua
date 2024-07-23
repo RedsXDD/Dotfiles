@@ -40,17 +40,15 @@ function M.maximize(state)
 	})
 end
 
-M._already_resized_netrw = false
 ---@param directory_path string?
 function M.toggle_netrw(directory_path)
 	local netrw_winsize = vim.g.netrw_winsize or 30
-
+	netrw_winsize = math.abs(math.floor(netrw_winsize))
 	vim.cmd("Lexplore" .. (directory_path ~= nil and " " .. directory_path or ""))
 
 	local win = vim.api.nvim_get_current_win()
-	local width = vim.api.nvim_win_get_width(win)
-	if not M._already_resized_netrw and width ~= netrw_winsize then
-		M._already_resized_netrw = true
+	local current_width = vim.api.nvim_win_get_width(win)
+	if current_width ~= netrw_winsize then
 		vim.api.nvim_win_set_width(win, netrw_winsize)
 	end
 end
