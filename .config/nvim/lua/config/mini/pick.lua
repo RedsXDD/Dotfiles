@@ -1,12 +1,8 @@
 local has_pick, pick = pcall(require, "mini.pick")
-if not has_pick then
-	return
-end
+if not has_pick then return end
 
 local has_extra, extra = pcall(require, "mini.extra")
-if not has_extra then
-	return
-end
+if not has_extra then return end
 
 local border_style = require("core.icons").misc.border
 local icons = require("core.icons").pick
@@ -60,32 +56,32 @@ keymaps.map("n", "<Leader>flw", function() extra.pickers.lsp({ scope = "workspac
 -- stylua: ignore end
 
 local win_config = function() -- Function to center mini.pick on screen.
-	local height = math.floor(0.618 * vim.o.lines)
-	local width = math.floor(0.618 * vim.o.columns)
-	return {
-		border = border_style,
-		anchor = "NW",
-		height = height,
-		width = width,
-		row = math.floor(0.5 * (vim.o.lines - height)),
-		col = math.floor(0.5 * (vim.o.columns - width)),
-	}
+    local height = math.floor(0.618 * vim.o.lines)
+    local width = math.floor(0.618 * vim.o.columns)
+    return {
+        border = border_style,
+        anchor = "NW",
+        height = height,
+        width = width,
+        row = math.floor(0.5 * (vim.o.lines - height)),
+        col = math.floor(0.5 * (vim.o.columns - width)),
+    }
 end
 
 pick.setup({
-	window = {
-		config = win_config(),
-		prompt_cursor = icons.prompt_cursor,
-		prompt_prefix = icons.prompt_prefix,
-	},
-	options = {
-		content_from_bottom = true,
-		use_cache = true,
-	},
-	mappings = {
-		move_down = "<C-j>",
-		move_up = "<C-k>",
-		toggle_info = "<C-i>",
-		toggle_preview = "<C-p>",
-	},
+    window = {
+        config = win_config(),
+        prompt_cursor = icons.prompt_cursor,
+        prompt_prefix = icons.prompt_prefix,
+    },
+    options = {
+        content_from_bottom = true,
+        use_cache = true,
+    },
+    mappings = {
+        move_down = "<C-j>",
+        move_up = "<C-k>",
+        toggle_info = "<C-i>",
+        toggle_preview = "<C-p>",
+    },
 })

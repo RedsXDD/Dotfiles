@@ -107,21 +107,21 @@ keymaps.toggleStr_map("", "<Leader>tc", "formatoptions", "cro", "newline auto co
 --: Complete menu {{{
 -- General completion mappings.
 keymaps.pum_map({
-	normal = "<Tab>",
-	pum = "<C-n>",
+    normal = "<Tab>",
+    pum = "<C-n>",
 }, "Navigate completion menu down with tab.")
 keymaps.pum_map({
-	normal = "<S-Tab>",
-	pum = "<C-p>",
+    normal = "<S-Tab>",
+    pum = "<C-p>",
 }, "Navigate completion menu up with Shift-tab.")
 keymaps.pum_map({
-	normal = "<C-c>",
-	pum = "<C-e>",
+    normal = "<C-c>",
+    pum = "<C-e>",
 }, "Cancel completion menu with Ctrl-c.")
 keymaps.pum_map({
-	key = "<C-p>",
-	pum = "<C-p>",
-	normal = "<C-x><C-o>",
+    key = "<C-p>",
+    pum = "<C-p>",
+    normal = "<C-x><C-o>",
 }, "Open omni completion menu with Ctrl-p.")
 
 --[[
@@ -130,35 +130,33 @@ keymaps.pum_map({
 	as that option changes the behaviour of the complete menu so that it no longer auto selects the first item in the completion list.
 ]]
 local ctrn_n_action = function()
-	local action = ""
-	local complete_opts = vim.opt.completeopt:get()
-	local has_longest = vim.tbl_contains(complete_opts, "longest")
-	local has_fuzzy = vim.tbl_contains(complete_opts, "fuzzy")
+    local action = ""
+    local complete_opts = vim.opt.completeopt:get()
+    local has_longest = vim.tbl_contains(complete_opts, "longest")
+    local has_fuzzy = vim.tbl_contains(complete_opts, "fuzzy")
 
-	if has_longest and has_fuzzy then
-		action = [[\<lt>C-n>\<lt>C-p>]]
-	elseif has_longest then
-		action = [[\<lt>C-n>]]
-	else
-		return "<C-n>"
-	end
+    if has_longest and has_fuzzy then
+        action = [[\<lt>C-n>\<lt>C-p>]]
+    elseif has_longest then
+        action = [[\<lt>C-n>]]
+    else
+        return "<C-n>"
+    end
 
-	return [[<C-n><C-r>=pumvisible()]] .. " ? " .. '"' .. action .. '"' .. " : " .. [[""<CR>]]
+    return [[<C-n><C-r>=pumvisible()]] .. " ? " .. '"' .. action .. '"' .. " : " .. [[""<CR>]]
 end
 
 keymaps.pum_map({
-	key = "<C-n>",
-	pum = "<C-n>",
-	normal = ctrn_n_action(),
+    key = "<C-n>",
+    pum = "<C-n>",
+    normal = ctrn_n_action(),
 }, "Auto open & select first item on completion menu.")
 --: }}}
 --: Split management {{{
 -- Create splits:
 keymaps.map("", "<Leader>-", ":vsplit | enew<CR>", "Create vertical split.")
 keymaps.map("", "<Leader>_", ":split | enew<CR>", "Create horizontal split.")
-keymaps.map("", "<Leader>z", function()
-	require("core.utils").maximize()
-end, "Maximize current window.")
+keymaps.map("", "<Leader>z", function() require("core.utils").maximize() end, "Maximize current window.")
 
 -- Move across splits:
 keymaps.map("", "<C-h>", "<CMD>wincmd h<CR>", "Move to the left split window.")
@@ -193,67 +191,71 @@ keymaps.map("n", "]B", "<CMD>blast<CR>", "Buffer last")
 keymaps.map("n", "<Leader>bb", "<CMD>e #<CR>", "Switch to previously active buffer")
 --: }}}
 --: File explorer {{{
-keymaps.map("n", "<Leader>gf", function()
-	require("core.utils").toggle_file_explorer()
-end, "Open file explorer on CWD.")
+keymaps.map(
+    "n",
+    "<Leader>gf",
+    function() require("core.utils").toggle_file_explorer() end,
+    "Open file explorer on CWD."
+)
 
-keymaps.map("n", "<Leader>gF", function()
-	require("core.utils").toggle_file_explorer(true)
-end, "Open file explorer on directory of current file.")
+keymaps.map(
+    "n",
+    "<Leader>gF",
+    function() require("core.utils").toggle_file_explorer(true) end,
+    "Open file explorer on directory of current file."
+)
 --: }}}
 --: Netrw mappings {{{
 vim.api.nvim_create_autocmd("FileType", {
-	group = vim.api.nvim_create_augroup("augroup_netrw_keymaps", { clear = true }),
-	pattern = "netrw",
-	callback = function()
-		---@param keys string
-		---@param func string
-		---@param desc string
-		local buf_map = function(keys, func, desc)
-			vim.api.nvim_buf_set_keymap(0, "n", keys, func, { noremap = true, silent = true, desc = "" .. desc })
-		end
+    group = vim.api.nvim_create_augroup("augroup_netrw_keymaps", { clear = true }),
+    pattern = "netrw",
+    callback = function()
+        ---@param keys string
+        ---@param func string
+        ---@param desc string
+        local buf_map = function(keys, func, desc)
+            vim.api.nvim_buf_set_keymap(0, "n", keys, func, { noremap = true, silent = true, desc = "" .. desc })
+        end
 
-		---@param vsplit boolean
-		---@diagnostic disable-next-line: duplicate-set-field
-		function _G.netrw_split_file(vsplit)
-			if type(vsplit) ~= "boolean" then
-				error("netrw_split_file: expected boolean, got" .. type(vsplit))
-			end
+        ---@param vsplit boolean
+        ---@diagnostic disable-next-line: duplicate-set-field
+        function _G.netrw_split_file(vsplit)
+            if type(vsplit) ~= "boolean" then error("netrw_split_file: expected boolean, got" .. type(vsplit)) end
 
-			---@param filepath string
-			local function openFile(filepath)
-				local split_method = vsplit and "vsplit " or "split "
-				require("core.utils").toggle_netrw()
-				vim.cmd(split_method .. filepath)
-				require("core.utils").toggle_netrw()
-			end
+            ---@param filepath string
+            local function openFile(filepath)
+                local split_method = vsplit and "vsplit " or "split "
+                require("core.utils").toggle_netrw()
+                vim.cmd(split_method .. filepath)
+                require("core.utils").toggle_netrw()
+            end
 
-			-- https://vi.stackexchange.com/questions/34790/how-to-get-path-in-netrw
-			vim.cmd([[let g:filepath=netrw#Call("NetrwTreePath", w:netrw_treetop)]])
+            -- https://vi.stackexchange.com/questions/34790/how-to-get-path-in-netrw
+            vim.cmd([[let g:filepath=netrw#Call("NetrwTreePath", w:netrw_treetop)]])
 
-			local filepath = vim.g.filepath
-			if vim.fn.isdirectory(filepath) ~= 0 then
-				vim.cmd([[let g:filename=netrw#Call('NetrwFile', netrw#Call('NetrwGetWord'))]])
-				filepath = filepath .. vim.g.filename
-			end
+            local filepath = vim.g.filepath
+            if vim.fn.isdirectory(filepath) ~= 0 then
+                vim.cmd([[let g:filename=netrw#Call('NetrwFile', netrw#Call('NetrwGetWord'))]])
+                filepath = filepath .. vim.g.filename
+            end
 
-			openFile(filepath)
-			vim.g.filepath = nil
-		end
+            openFile(filepath)
+            vim.g.filepath = nil
+        end
 
-		buf_map("_", "v:lua netrw_split_file(false)<CR>", "Open file under cursor on a horizontal split.")
-		buf_map("-", "v:lua netrw_split_file(true)<CR>", "Open file under cursor on a vertical split.")
-		buf_map("o", "v:lua netrw_split_file(false)<CR>", "Open file under cursor on a horizontal split.")
-		buf_map("v", "v:lua netrw_split_file(true)<CR>", "Open file under cursor on a vertical split.")
+        buf_map("_", "v:lua netrw_split_file(false)<CR>", "Open file under cursor on a horizontal split.")
+        buf_map("-", "v:lua netrw_split_file(true)<CR>", "Open file under cursor on a vertical split.")
+        buf_map("o", "v:lua netrw_split_file(false)<CR>", "Open file under cursor on a horizontal split.")
+        buf_map("v", "v:lua netrw_split_file(true)<CR>", "Open file under cursor on a vertical split.")
 
-		buf_map("q", "<CMD>wincmd q<CR>", "Close netrw with q.")
-		buf_map("<C-h>", "<CMD>wincmd h<CR>", "Move to the left split window.")
-		buf_map("<C-j>", "<CMD>wincmd j<CR>", "Move to the split window below.")
-		buf_map("<C-k>", "<CMD>wincmd k<CR>", "Move to the split window above.")
-		buf_map("<C-l>", "<CMD>wincmd l<CR>", "Move to the right split window.")
-		buf_map("[b", "<CMD>wincmd p | bprev | wincmd p<CR>", "Buffer backward")
-		buf_map("]b", "<CMD>wincmd p | bnext | wincmd p<CR>", "Buffer forward")
-		buf_map(".", "<CMD>call netrw#SetTreetop(0, netrw#Call('NetrwGetWord'))<CR>", "Buffer forward")
-	end,
+        buf_map("q", "<CMD>wincmd q<CR>", "Close netrw with q.")
+        buf_map("<C-h>", "<CMD>wincmd h<CR>", "Move to the left split window.")
+        buf_map("<C-j>", "<CMD>wincmd j<CR>", "Move to the split window below.")
+        buf_map("<C-k>", "<CMD>wincmd k<CR>", "Move to the split window above.")
+        buf_map("<C-l>", "<CMD>wincmd l<CR>", "Move to the right split window.")
+        buf_map("[b", "<CMD>wincmd p | bprev | wincmd p<CR>", "Buffer backward")
+        buf_map("]b", "<CMD>wincmd p | bnext | wincmd p<CR>", "Buffer forward")
+        buf_map(".", "<CMD>call netrw#SetTreetop(0, netrw#Call('NetrwGetWord'))<CR>", "Buffer forward")
+    end,
 })
 --: }}}

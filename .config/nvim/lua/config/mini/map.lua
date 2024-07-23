@@ -1,7 +1,5 @@
 local has_map, map = pcall(require, "mini.map")
-if not has_map then
-	return
-end
+if not has_map then return end
 
 local keymaps = require("core.utils").keymaps
 

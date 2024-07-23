@@ -120,7 +120,5 @@ o.updatetime = 250 -- If this many milliseconds nothing is typed the swap file w
 o.virtualedit = "block" -- Allow cursor to move where there is no text in visual block mode.
 o.whichwrap = "bs<>[]hl" -- Which "horizontal" keys are allowed to travel to prev/next line.
 o.winminwidth = 5 -- Minimum window width.
-if vim.fn.has("nvim-0.10") == 1 then
-	o.smoothscroll = true
-end
+if vim.fn.has("nvim-0.10") == 1 then o.smoothscroll = true end
 --: }}}
