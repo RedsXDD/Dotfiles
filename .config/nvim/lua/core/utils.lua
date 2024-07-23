@@ -57,14 +57,19 @@ end
 
 ---@param chdir boolean?
 function M.toggle_file_explorer(chdir)
-	local has_neotree, neotree = pcall(require, "neo-tree.command")
-	local has_minifiles, files = pcall(require, "mini.files")
-
 	if type(chdir) == "boolean" and chdir == true then
 		local filepath = vim.api.nvim_buf_get_name(0)
 		local current_directory = vim.fs.dirname(filepath)
 		vim.fn.chdir(current_directory)
 	end
+
+	---@diagnostic disable-next-line: undefined-field
+	local directory_path = vim.uv.cwd()
+
+	vim.fn.chdir("/tmp") -- Prevent `require` from loading local files.
+	local has_neotree, neotree = pcall(require, "neo-tree.command")
+	local has_minifiles, files = pcall(require, "mini.files")
+	vim.fn.chdir(directory_path)
 
 	local toggle_mini_files = function(path, use_lastest)
 		if not files.close() then
@@ -72,12 +77,9 @@ function M.toggle_file_explorer(chdir)
 		end
 	end
 
-	---@diagnostic disable-next-line: undefined-field
-	local directory_path = vim.uv.cwd()
-
-	if has_neotree and type(neotree) ~= "boolean" then
+	if has_neotree then
 		neotree.execute({ toggle = true, dir = directory_path })
-	elseif has_minifiles and type(neotree) ~= "boolean" then
+	elseif has_minifiles then
 		toggle_mini_files(directory_path, true)
 	else
 		M.toggle_netrw()
@@ -166,4 +168,5 @@ function M.keymaps.toggleStr_map(modes, keys, option, str, desc)
 		)
 	end, { noremap = true, silent = true, desc = "Toggle " .. desc })
 end
+
 return M
