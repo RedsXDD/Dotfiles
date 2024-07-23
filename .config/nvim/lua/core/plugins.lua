@@ -345,13 +345,13 @@ return {
 	-- 	config = load_config("mini.map"),
 	-- },
 	-- --: }}}
-	-- --: mini.notify {{{
-	-- {
-	-- 	"echasnovski/mini.notify",
-	-- 	event = "LazyFile",
-	-- 	config = load_config("mini.notify"),
-	-- },
-	-- --: }}}
+	--: mini.notify {{{
+	{
+		"echasnovski/mini.notify",
+		event = "LazyFile",
+		config = load_config("mini.notify"),
+	},
+	--: }}}
 	-- --: mini.sessions {{{
 	-- {
 	-- 	"echasnovski/mini.sessions",
