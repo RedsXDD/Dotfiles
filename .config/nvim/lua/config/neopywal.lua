@@ -18,6 +18,7 @@ neopywal.setup({
 		lsp = true,
 		neotree = true,
 		treesitter = true,
+                symbols_outline = true,
 		telescope = {
 			enabled = true,
 			style = "nvchad",
