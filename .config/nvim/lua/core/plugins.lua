@@ -346,7 +346,7 @@ return {
     --: mini.notify {{{
     {
         "echasnovski/mini.notify",
-        event = "LazyFile",
+        event = "VeryLazy",
         config = load_config("mini.notify"),
     },
     --: }}}
