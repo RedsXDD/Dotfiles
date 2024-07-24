@@ -664,4 +664,21 @@ return {
         opts = {},
     },
     --: }}}
+    --: barbecue.nvim {{{
+    {
+        "utilyre/barbecue.nvim",
+        name = "barbecue",
+        version = "*",
+        event = "LazyFile",
+        dependencies = {
+            "SmiteshP/nvim-navic",
+            "nvim-tree/nvim-web-devicons", -- optional dependency
+        },
+        config = function()
+            require("barbecue").setup({
+                theme = "neopywal",
+            })
+        end,
+    },
+    --: }}}
 }
