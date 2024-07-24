@@ -270,6 +270,9 @@ main() {
         # Error if no file/directory/option/URL was specified:
         [ -z "$wallpaper" ] && echoerr "no valid option or wallpaper path specified."
 
+        wallpaper="$(readlink -f "$wallpaper")"
+        wallpaper="$(dirname -- "$wallpaper")/$(basename -- "$wallpaper")"
+        [ ! -f "$wallpaper" ] && [ ! -d "$wallpaper" ] && echoerr "no valid wallpaper path was given."
         [ -d "$wallpaper" ] && directory_search "$wallpaper"
         set_wallpaper "$wallpaper"
 }
