@@ -13,12 +13,21 @@ reload_file="${cache_dir}/wallpaper"
 
 #: Help page {{{
 # Function to display waybg's help page:
-help_page(){
-yellow="$(tput bold; tput setaf 3)"
-blue="$(tput bold; tput setaf 4)"
-reset="$(tput sgr0; tput bold)"
+help_page() {
+        yellow="$(
+                tput bold
+                tput setaf 3
+        )"
+        blue="$(
+                tput bold
+                tput setaf 4
+        )"
+        reset="$(
+                tput sgr0
+                tput bold
+        )"
 
-cat << EOF
+        cat <<EOF
 ${yellow}DESCRIPTION:${reset}
         Waybg is a tool to set your wallpaper on wayland compositors,
         it allows the user to set images/videos/youtube videos as your wallpaper using swww and mpvpaper.
@@ -58,207 +67,211 @@ ${blue}    -h | --help)${reset}
 $(tput sgr0)
 EOF
 
-exit 0
+        exit 0
 }
 #: }}}
 #: Error/success functions: {{{
 # Function to display error messages:
-echoerr(){
-	[ -n "$QUIET" ] && exit 1
-	message="$1"
-	echo "$(tput setaf 1 bold)ERROR: $(tput sgr0; tput bold)${message}"
+echoerr() {
+        [ -n "$QUIET" ] && exit 1
+        message="$1"
+        echo "$(tput setaf 1 bold)ERROR: $(
+                tput sgr0
+                tput bold
+        )${message}"
 }
 
 # Function to display success messages:
-echo_success(){
-	[ -n "$QUIET" ] && exit 1
-	message="$1"
-	echo "$(tput setaf 2 bold)SUCESS: $(tput sgr0; tput bold)${message}"
-	exit 0
+echo_success() {
+        [ -n "$QUIET" ] && exit 1
+        message="$1"
+        echo "$(tput setaf 2 bold)SUCESS: $(
+                tput sgr0
+                tput bold
+        )${message}"
+        exit 0
 }
 #: }}}
 #: Mkreload function {{{
 # Function to create reload file:
-mkreload(){
-	echo "$1" > "$reload_file"
-	[ -n "$ENABLE_AUDIO" ] && echo 'true' >> "$reload_file"
+mkreload() {
+        echo "$1" >"$reload_file"
+        [ -n "$ENABLE_AUDIO" ] && echo 'true' >>"$reload_file"
 }
 #: }}}
 #: Directory searching functions {{{
 # Function to find a random file within a directory.
-find_random_file(){
-	directory="$1"
-	maxdepth="$2"
-	search_regex='.*\.(jpeg|jpg|png|gif|pnm|tga|tiff|webp|bmp|farbfelp|mp4|mov|wmv|flv|avi|webm|mkv)$'
+find_random_file() {
+        directory="$1"
+        maxdepth="$2"
+        search_regex='.*\.(jpeg|jpg|png|gif|pnm|tga|tiff|webp|bmp|farbfelp|mp4|mov|wmv|flv|avi|webm|mkv)$'
 
-	case "$USE_MIMES" in
-		# Search for files using regex patterns.
-		'')
-			if [ -z "$USE_FD" ]; then
-				find "$directory" -maxdepth "$maxdepth" -type f -regextype posix-extended -regex "$search_regex"
-			else
-				fd "$search_regex" "$directory" --type f --max-depth "$maxdepth"
-			fi | shuf -n1
-		;;
+        case "$USE_MIMES" in
+        # Search for files using regex patterns.
+        '')
+                if [ -z "$USE_FD" ]; then
+                        find "$directory" -maxdepth "$maxdepth" -type f -regextype posix-extended -regex "$search_regex"
+                else
+                        fd "$search_regex" "$directory" --type f --max-depth "$maxdepth"
+                fi | shuf -n1
+                ;;
 
-		# Search for files using mime-types.
-		*)
-			if [ -z "$USE_FD" ]; then
-				find "$directory" -maxdepth "$maxdepth" -type f -exec file -LF '§§' --mime-type "{}" \;
-			else
-				fd . "$directory" --type f --max-depth "$maxdepth" --exec file -LF '§§' --mime-type "{}" \;
-			fi | awk 'BEGIN { FS = "§§" } /§§\s+(image|video)\/.*/ { print $1 }' | shuf -n1
-		;;
-	esac
+        # Search for files using mime-types.
+        *)
+                if [ -z "$USE_FD" ]; then
+                        find "$directory" -maxdepth "$maxdepth" -type f -exec file -LF '§§' --mime-type "{}" \;
+                else
+                        fd . "$directory" --type f --max-depth "$maxdepth" --exec file -LF '§§' --mime-type "{}" \;
+                fi | awk 'BEGIN { FS = "§§" } /§§\s+(image|video)\/.*/ { print $1 }' | shuf -n1
+                ;;
+        esac
 }
 
 # Function that searchs for a valid wallpaper file within a directory and exports the variable "$wallpaper" with it.
-directory_search(){
-	search_directory="$1"
+directory_search() {
+        search_directory="$1"
 
-	# Determine the depth and find a random file accordingly:
-	if [ -z "$RECURSIVENESS" ]; then
-		wallpaper="$(find_random_file "$search_directory" 1)"
-	elif [ "$RECURSIVENESS" -gt 0 ]; then
-		wallpaper="$(find_random_file "$search_directory" "$RECURSIVENESS")"
-	elif [ "$RECURSIVENESS" -eq 0 ]; then
-		wallpaper="$(find_random_file "$search_directory")"
-	else
-		echoerr "the value '$RECURSIVENESS' used for --recurse is invalid, it must either be a positive integer or 0." && exit 1
-	fi
+        # Determine the depth and find a random file accordingly:
+        if [ -z "$RECURSIVENESS" ]; then
+                wallpaper="$(find_random_file "$search_directory" 1)"
+        elif [ "$RECURSIVENESS" -gt 0 ]; then
+                wallpaper="$(find_random_file "$search_directory" "$RECURSIVENESS")"
+        elif [ "$RECURSIVENESS" -eq 0 ]; then
+                wallpaper="$(find_random_file "$search_directory")"
+        else
+                echoerr "the value '$RECURSIVENESS' used for --recurse is invalid, it must either be a positive integer or 0." && exit 1
+        fi
 
-       # Error if no valid file was found inside the specified directory:
-       [ -z "$wallpaper" ] && echoerr "no valid file was found inside the specified directory, try increasing the recursiveness value for directory searches with the --recurse option." && exit 1
+        # Error if no valid file was found inside the specified directory:
+        [ -z "$wallpaper" ] && echoerr "no valid file was found inside the specified directory, try increasing the recursiveness value for directory searches with the --recurse option." && exit 1
 }
 #: }}}
 #: Wallpaper setting functions {{{
 # Function to kill mpvpaper related processes:
 kill_mpvpaper() {
-	killall -q display mpvpaper ffmpeg 2>/dev/null
-	while pgrep -x display >/dev/null || pgrep -x mpvpaper >/dev/null || pgrep -x ffmpeg >/dev/null
-	do
-		sleep 0.1
-	done
+        killall -q display mpvpaper ffmpeg 2>/dev/null
+        while pgrep -x display >/dev/null || pgrep -x mpvpaper >/dev/null || pgrep -x ffmpeg >/dev/null; do
+                sleep 0.1
+        done
 }
 
-set_image_wallpaper(){
-	image="$1"
+set_image_wallpaper() {
+        image="$1"
 
-	# Switch wallpaper to specified image.
-	kill_mpvpaper; swww img "$image" --resize crop
+        # Switch wallpaper to specified image.
+        kill_mpvpaper
+        swww img "$image" --resize crop
 
-	# Make reload image, link original wallpaper to a cache image and exit with success code:
-	ln -sf "$image" "$cache_dir/wall.png"
-	mkreload "$image"
-	echo_success "successfully changed wallpaper to image $wallpaper"
+        # Make reload image, link original wallpaper to a cache image and exit with success code:
+        ln -sf "$image" "$cache_dir/wall.png"
+        mkreload "$image"
+        echo_success "successfully changed wallpaper to image $wallpaper"
 }
 
-set_video_wallpaper(){
-	video="$1"
-	video_thumbnail="$2"
-	black_png="/tmp/waybg_black.png"
+set_video_wallpaper() {
+        video="$1"
+        video_thumbnail="$2"
+        black_png="/tmp/waybg_black.png"
 
-	if [ ! -f "$black_png" ]; then
-		tmp_svg="$(mktemp waybg_fallback_XXXXXXXXXX.svg)"
-		trap 'rm -rf "$tmp_svg"' 0 1 15
+        if [ ! -f "$black_png" ]; then
+                tmp_svg="$(mktemp waybg_fallback_XXXXXXXXXX.svg)"
+                trap 'rm -rf "$tmp_svg"' 0 1 15
 
-		printf '%s\n' \
-			'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1" height="1" version="1">' \
-			'<rect id="rectangle" style="fill:#000000" width="1" height="1"/>' \
-			'</svg>' > "$tmp_svg"
+                printf '%s\n' \
+                        '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1" height="1" version="1">' \
+                        '<rect id="rectangle" style="fill:#000000" width="1" height="1"/>' \
+                        '</svg>' >"$tmp_svg"
 
-		convert "$tmp_svg" "$black_png"
-	fi
+                convert "$tmp_svg" "$black_png"
+        fi
 
-	if ! swww query | grep -q "$black_png"; then
-		swww img "$black_png" && sleep "${SWWW_TRANSITION_DURATION:-1}"
-	fi
+        if ! swww query | grep -q "$black_png"; then
+                swww img "$black_png" && sleep "${SWWW_TRANSITION_DURATION:-1}"
+        fi
 
-	kill_mpvpaper; killall -q swww-daemon 2>/dev/null
-	while pgrep -x swww-daemon >/dev/null
-	do
-		sleep 0.1
-	done
+        kill_mpvpaper
+        killall -q swww-daemon 2>/dev/null
+        while pgrep -x swww-daemon >/dev/null; do
+                sleep 0.1
+        done
 
-	# Set specified video as the new wallpaper, enabling audio if specified.
-	[ -z "$ENABLE_AUDIO" ] && mpvpaper_opts='--no-audio'
-	mpvpaper -fo "--loop ${mpvpaper_opts}" '*' "$video"
+        # Set specified video as the new wallpaper, enabling audio if specified.
+        [ -z "$ENABLE_AUDIO" ] && mpvpaper_opts='--no-audio'
+        mpvpaper -fo "--loop ${mpvpaper_opts}" '*' "$video"
 
-	# Make reload video, link original wallpaper to a cache video and exit with success code:
-	ln -sf "$video_thumbnail" "$cache_dir/wall.png"
-	mkreload "$video"
-	echo_success "successfully changed wallpaper to the video $wallpaper"
+        # Make reload video, link original wallpaper to a cache video and exit with success code:
+        ln -sf "$video_thumbnail" "$cache_dir/wall.png"
+        mkreload "$video"
+        echo_success "successfully changed wallpaper to the video $wallpaper"
 }
 
-set_wallpaper(){
-	wallpaper="$1"
+set_wallpaper() {
+        wallpaper="$1"
 
-	case "$(file --mime-type -Lb "$wallpaper" | tr '[:upper:]' '[:lower:]')" in
-		'image/'*)
-			# If a image file is used, kill current wallpaper processes, and set as wallpaper.
-			set_image_wallpaper "$wallpaper"
-		;;
+        case "$(file --mime-type -Lb "$wallpaper" | tr '[:upper:]' '[:lower:]')" in
+        'image/'*)
+                # If a image file is used, kill current wallpaper processes, and set as wallpaper.
+                set_image_wallpaper "$wallpaper"
+                ;;
 
-		'video/'*)
-			# If a video file is used, extract thumbnail with ffmpeg, kill current wallpaper processes, and set video wallpaper:
-			video_thumbnail="${cache_imgs}/thumb-$(stat --printf '%n\0%i\0%F\0%s\0%W\0%Y' -- "$(readlink -f "$wallpaper")" | sha256sum | cut -d' ' -f1).png"
-			[ ! -f "$video_thumbnail" ] && ffmpeg -y -i "$wallpaper" -frames:v 1 "$video_thumbnail"
-			set_video_wallpaper "$wallpaper" "$video_thumbnail"
-		;;
+        'video/'*)
+                # If a video file is used, extract thumbnail with ffmpeg, kill current wallpaper processes, and set video wallpaper:
+                video_thumbnail="${cache_imgs}/thumb-$(stat --printf '%n\0%i\0%F\0%s\0%W\0%Y' -- "$(readlink -f "$wallpaper")" | sha256sum | cut -d' ' -f1).png"
+                [ ! -f "$video_thumbnail" ] && ffmpeg -y -i "$wallpaper" -frames:v 1 "$video_thumbnail"
+                set_video_wallpaper "$wallpaper" "$video_thumbnail"
+                ;;
 
+        *)
+                case "$wallpaper" in
+                # Set video wallpaper if it's a youtube url:
+                http://youtu.be/* | https://youtu.be/* | http://*www.youtube.com/* | https://*www.youtube.com/*)
+                        # If a YouTube URL is used, download thumbnail with yt-dlp, kill current wallpaper processes, and set video wallpaper:
+                        video_thumbnail="${cache_imgs}/thumb-$(echo "$wallpaper" | sha256sum | cut -d' ' -f1).png"
+                        [ ! -f "$video_thumbnail" ] && yt-dlp --write-thumbnail --convert-thumbnails png --skip-download "$wallpaper" --output "${video_thumbnail%%.png}"
+                        set_video_wallpaper "$wallpaper" "$video_thumbnail"
+                        ;;
 
-		*)
-			case "$wallpaper" in
-				# Set video wallpaper if it's a youtube url:
-				http://youtu.be/* | https://youtu.be/* | http://*www.youtube.com/* | https://*www.youtube.com/*)
-					# If a YouTube URL is used, download thumbnail with yt-dlp, kill current wallpaper processes, and set video wallpaper:
-					video_thumbnail="${cache_imgs}/thumb-$(echo "$wallpaper" | sha256sum | cut -d' ' -f1).png"
-					[ ! -f "$video_thumbnail" ] && yt-dlp --write-thumbnail --convert-thumbnails png --skip-download "$wallpaper" --output "${video_thumbnail%%.png}"
-					set_video_wallpaper "$wallpaper" "$video_thumbnail"
-				;;
-
-				*) echoerr "no valid option or wallpaper path specified." && exit 1 ;;
-			esac
-		;;
-	esac
+                *) echoerr "no valid option or wallpaper path specified." && exit 1 ;;
+                esac
+                ;;
+        esac
 }
 #: }}}
 #: Main {{{
-main(){
-	# All options are read by this while loop:
-	while [ "$1" ]
-	do
-		case "$1" in
-			'-R' | '--reload')    RELOAD='true'       ;;
-			'-a' | '--audio')     ENABLE_AUDIO='true' ;;
-			'-r' | '--recurse')   RECURSIVENESS="$2"  ;;
-			'-f' | '--use-fd')    USE_FD='true'       ;;
-			'-m' | '--use-mimes') USE_MIMES='true'    ;;
-			'-Q' | '--quiet')     QUIET='true'        ;;
-			'-h' | '--help' | '-'*)
-				echoerr "Could not load option '$1'"
-				echo ''
-				help_page
-			;;
-		esac
+main() {
+        # All options are read by this while loop:
+        while [ "$1" ]; do
+                case "$1" in
+                '-R' | '--reload') RELOAD='true' ;;
+                '-a' | '--audio') ENABLE_AUDIO='true' ;;
+                '-r' | '--recurse') RECURSIVENESS="$2" ;;
+                '-f' | '--use-fd') USE_FD='true' ;;
+                '-m' | '--use-mimes') USE_MIMES='true' ;;
+                '-Q' | '--quiet') QUIET='true' ;;
+                '-h' | '--help' | '-'*)
+                        echoerr "Could not load option '$1'"
+                        echo ''
+                        help_page
+                        ;;
+                esac
 
-		# Make sure the wallpaper path is the last argument to be read.
-		wallpaper="$1"; shift
-	done
+                # Make sure the wallpaper path is the last argument to be read.
+                wallpaper="$1"
+                shift
+        done
 
-	# Reload previous wallpaper if specified
-	if [ -n "$RELOAD" ]; then
-		[ ! -f "$reload_file" ] && echoerr "Reload file not found."
-		wallpaper="$(readlink -f -- "$(head -n1 "$reload_file")")"
-		set_wallpaper "$wallpaper"
-	fi
+        # Reload previous wallpaper if specified
+        if [ -n "$RELOAD" ]; then
+                [ ! -f "$reload_file" ] && echoerr "Reload file not found."
+                wallpaper="$(readlink -f -- "$(head -n1 "$reload_file")")"
+                set_wallpaper "$wallpaper"
+        fi
 
-	# Error if no file/directory/option/URL was specified:
-	[ -z "$wallpaper" ] && echoerr "no valid option or wallpaper path specified."
+        # Error if no file/directory/option/URL was specified:
+        [ -z "$wallpaper" ] && echoerr "no valid option or wallpaper path specified."
 
-	[ -d "$wallpaper" ] && directory_search "$wallpaper"
-
-	set_wallpaper "$wallpaper"
+        [ -d "$wallpaper" ] && directory_search "$wallpaper"
+        set_wallpaper "$wallpaper"
 }
 main "$@"
 #: }}}
