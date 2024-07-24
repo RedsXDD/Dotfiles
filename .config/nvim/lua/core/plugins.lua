@@ -405,16 +405,16 @@ return {
     },
     --: }}}
     --: }}}
-    -- --: bufferline.nvim {{{
-    -- { "echasnovski/mini.tabline", enabled = false },
-    -- {
-    -- 	"akinsho/bufferline.nvim",
-    -- 	dependencies = "nvim-tree/nvim-web-devicons",
-    -- 	version = "*",
-    -- 	event = { "LazyFile", "BufUnload" },
-    -- 	config = load_config("bufferline"),
-    -- },
-    -- --: }}}
+    --: bufferline.nvim {{{
+    { "echasnovski/mini.tabline", enabled = false },
+    {
+        "akinsho/bufferline.nvim",
+        dependencies = "nvim-tree/nvim-web-devicons",
+        version = "*",
+        event = { "LazyFile", "BufUnload" },
+        config = load_config("bufferline"),
+    },
+    --: }}}
     --: lualine.nvim {{{
     { "echasnovski/mini.statusline", enabled = false },
     {
