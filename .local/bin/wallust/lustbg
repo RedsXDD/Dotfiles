@@ -9,12 +9,12 @@ fi >/dev/null 2>&1
 
 apply_colorscheme() { wallust cs "$1" && wallust_postrun; }
 
-set_wall_theme() { wallust run -k "$(head -n1 "$HOME/.cache/waybg/wallpaper")"; }
+set_wall_theme() { wallust run -k "$1"; }
 
 apply_wallpaper() {
 	waybg "$1" && waybg_postrun &&
 		notify-send -t 2000 'Wallust theming' 'Generating wallust theme.' &&
-		set_wall_theme && wallust_postrun
+		set_wall_theme "$1" && wallust_postrun
 }
 
 # Change theme with flust if no arguments were given.
