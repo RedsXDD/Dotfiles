@@ -95,14 +95,14 @@ return {
     --: }}}
     --: }}}
     --: Mini {{{
-    -- --: mini.statusline {{{
-    -- {
-    -- 	"echasnovski/mini.statusline",
-    -- 	dependencies = "nvim-tree/nvim-web-devicons",
-    -- 	event = { "LazyFile", "BufUnload" },
-    -- 	config = load_config("mini.statusline"),
-    -- },
-    -- --: }}}
+    --: mini.statusline {{{
+    {
+        "echasnovski/mini.statusline",
+        dependencies = "nvim-tree/nvim-web-devicons",
+        event = { "LazyFile", "BufUnload" },
+        config = load_config("mini.statusline"),
+    },
+    --: }}}
     -- --: mini.git {{{
     -- {
     -- 	"echasnovski/mini-git",
@@ -207,43 +207,43 @@ return {
         config = load_config("mini.hipatterns"),
     },
     --: }}}
-    -- --: mini.indentscope {{{
-    -- {
-    -- 	"echasnovski/mini.indentscope",
-    -- 	event = "LazyFile",
-    -- 	init = function()
-    -- 		local group_name = "augroup_mini_indentscope_disable"
-    -- 		local augroup = vim.api.nvim_create_augroup(group_name, { clear = true })
-    -- 		vim.api.nvim_create_autocmd("FileType", {
-    -- 			desc = "Auto disabled mini.indentscope when opening certain filetypes.",
-    -- 			group = augroup,
-    -- 			pattern = {
-    -- 				"help",
-    -- 				"alpha",
-    -- 				"dashboard",
-    -- 				"Starter",
-    -- 				"starter",
-    -- 				"neo-tree",
-    -- 				"Trouble",
-    -- 				"trouble",
-    -- 				"lazy",
-    -- 				"mason",
-    -- 				"notify",
-    -- 				"toggleterm",
-    -- 				"lazyterm",
-    -- 				"FTerm",
-    -- 				"fterm_lazygit",
-    -- 				"fterm_gitui",
-    -- 			},
-    -- 			callback = function()
-    -- 				vim.b.miniindentscope_disable = true
-    -- 				vim.api.nvim_clear_autocmds({ group = group_name })
-    -- 			end,
-    -- 		})
-    -- 	end,
-    -- 	config = load_config("mini.indentscope"),
-    -- },
-    -- --: }}}
+    --: mini.indentscope {{{
+    {
+        "echasnovski/mini.indentscope",
+        event = "LazyFile",
+        init = function()
+            local group_name = "augroup_mini_indentscope_disable"
+            local augroup = vim.api.nvim_create_augroup(group_name, { clear = true })
+            vim.api.nvim_create_autocmd("FileType", {
+                desc = "Auto disabled mini.indentscope when opening certain filetypes.",
+                group = augroup,
+                pattern = {
+                    "help",
+                    "alpha",
+                    "dashboard",
+                    "Starter",
+                    "starter",
+                    "neo-tree",
+                    "Trouble",
+                    "trouble",
+                    "lazy",
+                    "mason",
+                    "notify",
+                    "toggleterm",
+                    "lazyterm",
+                    "FTerm",
+                    "fterm_lazygit",
+                    "fterm_gitui",
+                },
+                callback = function()
+                    vim.b.miniindentscope_disable = true
+                    vim.api.nvim_clear_autocmds({ group = group_name })
+                end,
+            })
+        end,
+        config = load_config("mini.indentscope"),
+    },
+    --: }}}
     --: mini.pairs {{{
     {
         "echasnovski/mini.pairs",
@@ -356,13 +356,13 @@ return {
     -- 	opts = {},
     -- },
     -- --: }}}
-    --: mini.jump {{{
-    {
-        "echasnovski/mini.jump",
-        keys = { "f", "F", "t", "T" },
-        config = load_config("mini.jump"),
-    },
-    --: }}}
+    -- --: mini.jump {{{
+    -- {
+    --     "echasnovski/mini.jump",
+    --     keys = { "f", "F", "t", "T" },
+    --     config = load_config("mini.jump"),
+    -- },
+    -- --: }}}
     --: mini.jump2d {{{
     {
         "echasnovski/mini.jump2d",
@@ -415,15 +415,15 @@ return {
         config = load_config("bufferline"),
     },
     --: }}}
-    --: lualine.nvim {{{
-    { "echasnovski/mini.statusline", enabled = false },
-    {
-        "nvim-lualine/lualine.nvim",
-        dependencies = { "nvim-tree/nvim-web-devicons" },
-        event = { "LazyFile", "BufUnload" },
-        config = load_config("lualine"),
-    },
-    --: }}}
+    -- --: lualine.nvim {{{
+    -- { "echasnovski/mini.statusline", enabled = false },
+    -- {
+    --     "nvim-lualine/lualine.nvim",
+    --     dependencies = { "nvim-tree/nvim-web-devicons" },
+    --     event = { "LazyFile", "BufUnload" },
+    --     config = load_config("lualine"),
+    -- },
+    -- --: }}}
     --: conform.nvim {{{
     {
         "stevearc/conform.nvim",
@@ -622,14 +622,14 @@ return {
     -- 	},
     -- },
     -- --: }}}
-    --: indent-blankline.nvim {{{
-    {
-        "lukas-reineke/indent-blankline.nvim",
-        event = "LazyFile",
-        main = "ibl",
-        config = load_config("ibl"),
-    },
-    --: }}}
+    -- --: indent-blankline.nvim {{{
+    -- {
+    --     "lukas-reineke/indent-blankline.nvim",
+    --     event = "LazyFile",
+    --     main = "ibl",
+    --     config = load_config("ibl"),
+    -- },
+    -- --: }}}
     -- --: aerial.nvim {{{
     -- {
     -- 	"stevearc/aerial.nvim",
