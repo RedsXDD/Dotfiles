@@ -12,6 +12,7 @@ gui:
     skipRewordInEditorWarning: false
     sidePanelWidth: 0.3333
     expandFocusedSidePanel: false
+    expandedSidePanelWeight: 2
     mainPanelSplitMode: flexible
     enlargedSideViewLocation: left
     language: auto
@@ -30,6 +31,8 @@ gui:
             - blue
         selectedLineBgColor:
             - blue
+        inactiveViewSelectedLineBgColor:
+            - bold
         cherryPickedCommitFgColor:
             - blue
         cherryPickedCommitBgColor:
@@ -53,14 +56,26 @@ gui:
     showIcons: false
     nerdFontsVersion: ""
     showFileIcons: true
+    commitAuthorShortLength: 2
+    commitAuthorLongLength: 17
+    commitHashLength: 8
     showBranchCommitHash: false
+    showDivergenceFromBaseBranch: none
     commandLogSize: 8
     splitDiff: auto
-    windowSize: ""
+    windowSize: normal
     border: rounded
     animateExplosion: true
     portraitMode: auto
     filterMode: substring
+    spinner:
+        frames:
+            - '|'
+            - /
+            - '-'
+            - \
+        rate: 50
+    statusPanelView: dashboard
 git:
     paging:
         colorArg: always
@@ -74,6 +89,7 @@ git:
     merging:
         manualCommit: false
         args: ""
+        squashMergeMessage: Squash merge {{selectedRef}} into {{currentBranch}}
     mainBranches:
         - master
         - main
@@ -83,9 +99,12 @@ git:
     fetchAll: true
     branchLogCmd: git log --graph --color=always --abbrev-commit --decorate --date=relative --pretty=medium {{branchName}} --
     allBranchesLogCmd: git log --graph --all --color=always --abbrev-commit --decorate --date=relative  --pretty=medium
+    allBranchesLogCmds: []
     overrideGpg: false
     disableForcePushing: false
+    commitPrefix: null
     commitPrefixes: {}
+    branchPrefix: ""
     parseEmoji: false
     log:
         order: topo-order
@@ -100,6 +119,11 @@ refresher:
     fetchInterval: 60
 confirmOnQuit: false
 quitOnTopLevelReturn: false
+disableStartupPopups: false
+customCommands: []
+services: {}
+notARepository: prompt
+promptToReturnFromSubprocess: true
 keybinding:
     universal:
         quit: q
@@ -173,6 +197,8 @@ keybinding:
         toggleWhitespaceInDiffView: <c-w>
         increaseContextInDiffView: '}'
         decreaseContextInDiffView: '{'
+        increaseRenameSimilarityThreshold: )
+        decreaseRenameSimilarityThreshold: (
         openDiffTool: <c-t>
     status:
         checkForUpdate: u
@@ -258,9 +284,4 @@ keybinding:
         bulkMenu: b
     commitMessage:
         commitMenu: <c-o>
-disableStartupPopups: false
-customCommands: []
-services: {}
-notARepository: prompt
-promptToReturnFromSubprocess: true
 
