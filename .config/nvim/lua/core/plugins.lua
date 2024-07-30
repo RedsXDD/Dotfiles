@@ -343,13 +343,13 @@ return {
     -- 	config = load_config("mini.map"),
     -- },
     -- --: }}}
-    --: mini.notify {{{
-    {
-        "echasnovski/mini.notify",
-        event = "VeryLazy",
-        config = load_config("mini.notify"),
-    },
-    --: }}}
+    -- --: mini.notify {{{
+    -- {
+    --     "echasnovski/mini.notify",
+    --     event = "VeryLazy",
+    --     config = load_config("mini.notify"),
+    -- },
+    -- --: }}}
     -- --: mini.sessions {{{
     -- {
     -- 	"echasnovski/mini.sessions",
@@ -458,19 +458,17 @@ return {
         config = load_config("fterm"),
     },
     --: }}}
-    -- --: noice.nvim {{{
-    -- {
-    -- 	"folke/noice.nvim",
-    -- 	dependencies = {
-    -- 		"MunifTanjim/nui.nvim",
-    -- 		"rcarriga/nvim-notify",
-    -- 	},
-    -- 	event = function()
-    -- 		return { "CmdlineEnter", "LazyFile" }
-    -- 	end,
-    -- 	config = load_config("noice"),
-    -- },
-    -- --: }}}
+    --: noice.nvim {{{
+    {
+        "folke/noice.nvim",
+        dependencies = {
+            "MunifTanjim/nui.nvim",
+            "rcarriga/nvim-notify",
+        },
+        event = function() return { "CmdlineEnter", "LazyFile" } end,
+        config = load_config("noice"),
+    },
+    --: }}}
     -- --: nvim-cmp {{{
     -- {
     -- 	"hrsh7th/nvim-cmp",
