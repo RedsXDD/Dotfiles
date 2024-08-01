@@ -181,7 +181,7 @@ keymaps.map("", "<C-S-Right>", "<CMD>wincmd L<CR>", "Move split window to the ri
 keymaps.map("", "<Leader>bb", "<CMD>wincmd T<CR>", "Break split into a new tab.")
 keymaps.map("", "<Leader>bc", ":badd | enew<CR>", "Open a new buffer.")
 keymaps.map("", "<Leader>bC", ":tabnew | enew<CR>", "Open a new tab.")
-keymaps.map("", "<Leader>x", "<CMD>wincmd q<CR>", "Close current buffer.")
+keymaps.map("", "<Leader>x", "<CMD>bdelete %<CR>", "Close current buffer.")
 keymaps.map("", "<Leader>.", ":tabn<CR>", "Move to the next tab.")
 keymaps.map("", "<Leader>,", ":tabp<CR>", "Move to the previous tab.")
 keymaps.map("n", "[b", "<CMD>bprev<CR>", "Buffer previous")
