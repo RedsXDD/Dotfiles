@@ -47,6 +47,7 @@ lazy.setup({
     ui = {
         border = require("core.icons").misc.border,
         title = "Lazy.nvim",
+        icons = require("core.icons").lazy,
     },
     performance = {
         rtp = {
