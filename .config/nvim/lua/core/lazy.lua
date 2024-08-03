@@ -34,7 +34,6 @@ lazy.setup({
         -- version = "*", -- Try installing the latest stable version for plugins that support semver.
     },
     install = {
-        missing = true,
         colorscheme = { "neopywal" },
     },
     checker = {
@@ -46,16 +45,10 @@ lazy.setup({
         notify = true, -- Turn on/off notifications whenever plugin changes are made.
     },
     ui = {
-        browser = nil,
-        wrap = true,
         border = require("core.icons").misc.border,
     },
     performance = {
-        cache = { enabled = true },
-        reset_packpath = true,
         rtp = {
-            reset = true,
-            paths = {},
             -- Disable some rtp plugins:
             disabled_plugins = {
                 "gzip",
