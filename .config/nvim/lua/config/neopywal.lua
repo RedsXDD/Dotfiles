@@ -10,6 +10,7 @@ neopywal.setup({
     show_split_lines = false,
     default_plugins = false,
     plugins = {
+        mason = true,
         dashboard = true,
         notify = true,
         gitsigns = true,
