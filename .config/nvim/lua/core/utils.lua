@@ -61,10 +61,13 @@ function M.toggle_file_explorer(chdir)
     vim.fn.chdir("/tmp") -- Prevent `require` from loading local files.
     local has_neotree, neotree = pcall(require, "neo-tree.command")
     local has_minifiles, files = pcall(require, "mini.files")
+    local has_nvimtree, nvimtree = pcall(require, "nvim-tree.api")
     vim.fn.chdir(directory_path)
 
     if has_neotree then
         neotree.execute({ toggle = true, dir = directory_path })
+    elseif has_nvimtree then
+        nvimtree.tree.toggle({ path = directory_path })
     elseif has_minifiles then
         if not files.close() then files.open(directory_path, true) end
     else
