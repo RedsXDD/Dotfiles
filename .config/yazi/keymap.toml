@@ -46,12 +46,12 @@ keymap = [
 	{ on = [ "<C-l>" ],  run = "open --interactive",                 desc = "Open the selected files interactively." },
 	{ on = [ "d", "d" ], run = "remove",                             desc = "Move the files to the trash." },
 	{ on = [ "d", "D" ], run = "remove --permanently",               desc = "Permanently delete the files." },
-	{ on = [ ";" ],      run = "shell",                              desc = "Run a shell command." },
-	{ on = [ ":" ],      run = "shell --block",                      desc = "Run a shell command (block the UI until the command finishes)." },
+	{ on = [ ";" ],      run = "shell --interactive",                              desc = "Run a shell --interactive command." },
+	{ on = [ ":" ],      run = "shell --interactive --block",                      desc = "Run a shell --interactive command (block the UI until the command finishes)." },
 	#: }}}
 	#: Make files {{{
 	{ on = [ "m", "f" ], run = "create", desc = "Create a file or directory (ends with / for directories)." },
-	{ on = [ "m", "s" ], run = 'shell --noconfirm --block "ms -y "', desc = "Create a new script (requires 'mkscript' script)." },
+	{ on = [ "m", "s" ], run = 'shell --interactive --noconfirm --block "ms -y "', desc = "Create a new script (requires 'mkscript' script)." },
 	#: }}}
 	#: Actions {{{
 	{ on = [ "z", "s" ], run = "linemode size",                     desc = "Set linemode to size." },
