@@ -1,4 +1,4 @@
-// vim:fileencoding=utf-8:foldmethod=marker:filetype=scss:foldenable
+// vim:fileencoding=utf-8:foldmethod=marker:foldenable
 
 // ---------------------------------------------------------------------------------------------------------------------- //
 
@@ -43,6 +43,11 @@ keybinds clear-defaults=true{
 		bind "L"            { Resize "Decrease Right"; }
 	}
 
+        // Pane mode:
+        pane {
+		bind "Ctrl c" "Esc" { SwitchToMode "Normal"; }
+        }
+
 	// Move mode:
 	move {
 		bind "Ctrl c" "Esc" { SwitchToMode "Normal"; }
@@ -54,6 +59,10 @@ keybinds clear-defaults=true{
 		bind "l"            { MovePane "Right"; }
 	}
 
+        // Tab mode:
+        tab {
+		bind "Ctrl c" "Esc" { SwitchToMode "Normal"; }
+        }
 	// Scroll mode:
 	scroll {
 		bind "Ctrl c" "Esc" "i" { ScrollToBottom; SwitchToMode "Normal"; }
@@ -99,6 +108,11 @@ keybinds clear-defaults=true{
 		bind "Ctrl c" "Esc" { UndoRenamePane; SwitchToMode "Pane"; }
 		bind "Enter"        { SwitchToMode "Normal"; }
 	}
+
+        // Session mode:
+        session {
+		bind "Ctrl c" "Esc" { SwitchToMode "Normal"; }
+        }
 
 	// Tmux mode:
 	tmux {
