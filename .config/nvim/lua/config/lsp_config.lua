@@ -47,7 +47,7 @@ local opts = {
             prefix = "icons",
         },
         float = {
-            focusable = false,
+            focusable = true,
             style = "minimal",
             border = require("core.icons").misc.border,
             source = "always",
