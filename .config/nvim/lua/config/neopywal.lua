@@ -4,7 +4,7 @@ if not has_neopywal then return end
 vim.g.neopywal_debug = true
 
 neopywal.setup({
-    use_wallust = true,
+    use_palette = "wallust",
     transparent_background = false,
     dim_inactive = true,
     show_split_lines = false,
