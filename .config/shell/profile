@@ -143,12 +143,12 @@ LESS_TERMCAP_mb="$(
 )" # Start blinking, green
 LESS_TERMCAP_md="$(
         tput bold
-        tput setaf 6
+        tput setaf 4
 )"                             # Start bold, cyan
 LESS_TERMCAP_me="$(tput sgr0)" # End bold, blinking, standout, underline
 LESS_TERMCAP_so="$(
         tput bold
-        tput setaf 6
+        tput setaf 4
         tput rev
 )" # Start stand out, cyan, reverse.
 LESS_TERMCAP_se="$(
