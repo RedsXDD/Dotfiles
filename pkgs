@@ -21,6 +21,7 @@ fzf
 gammastep
 git
 git-delta
+github-cli
 glow
 gnome-epub-thumbnailer
 gpm
@@ -34,6 +35,7 @@ keepassxc
 lazygit
 libnotify
 librewolf
+linux-zen
 man-db
 man-pages
 mediainfo
@@ -60,8 +62,8 @@ paru
 pcmanfm-gtk3
 pipewire
 pipewire-pulse
-pipr-bin
 polkit-gnome
+python-pyclip
 qt5ct
 qt6ct
 rar
@@ -72,6 +74,8 @@ rofi-emoji-git
 rofi-lbonn-wayland-git
 rustup
 sccache
+sddm
+sddm-theme-aerial-git
 shellcheck
 starship
 stow
@@ -89,8 +93,11 @@ ttf-jetbrains-mono-nerd
 ttf-symbola
 ttf-ubuntu-mono-nerd
 ttf-ubuntu-nerd
+ufw
 unarchiver
+wallust-git
 waybar
+waydroid
 webcord
 wezterm-git
 wget
