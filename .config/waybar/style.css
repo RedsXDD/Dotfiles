@@ -23,100 +23,104 @@
 
 /* Main configuration {{{ */
 * {
-	font-family: monospace;
-	font-size: 12px;
-	font-weight: bold;
-	border: none;
-	margin: 0;
-	padding: 0;
-	border-radius: 10px;
+  font-family: monospace;
+  font-size: 12px;
+  font-weight: bold;
+  border: none;
+  margin: 0;
+  padding: 0;
+  border-radius: 10px;
 }
 
 window#waybar {
-	background: mix(@background, black, 0.2);
-	border-radius: 0;
-	transition-property: background;
-	transition-duration: .2s;
+  background: mix(@background, black, 0.2);
+  border-radius: 0;
+  transition-property: background;
+  transition-duration: 0.2s;
 }
 
 window#waybar.hidden {
-	opacity: 0.2;
+  opacity: 0.2;
 }
 
 #workspaces,
 #custom-cava,
 #window,
-#mpd, #mpd.paused, #mpd.stopped, #mpd.disconnected,
+#mpd,
+#mpd.paused,
+#mpd.stopped,
+#mpd.disconnected,
 #custom-notifications,
 #clock,
-#pulseaudio, #wireplumber,
+#pulseaudio,
+#wireplumber,
 #custom-weather,
 #keyboard-state,
 #tray {
-	background: mix(@background, white, 0.05);
-	color: @foreground;
-	padding: 0 0.64em 0 0.64em;
-	margin: 0.36em 0.21em;
+  background: mix(@background, white, 0.05);
+  color: @foreground;
+  padding: 0 0.64em 0 0.64em;
+  margin: 0.36em 0.21em;
 }
 /* }}} */
 /* Tooltip {{{ */
 tooltip {
-	background: mix(@background, black, 0.1);
+  background: mix(@background, black, 0.1);
 }
 
 tooltip label {
-	color: @foreground;
-	padding: 0.64em;
+  color: @foreground;
+  padding: 0.64em;
 }
 /* }}} */
 /* Workspace {{{ */
 #workspaces {
-	padding: 0 0.36em 0 0.29em;
+  padding: 0 0.36em 0 0.29em;
 }
 
 #workspaces button,
 #workspaces button.active,
 #workspaces button.urgent,
 #workspaces button:hover {
-	color: @background;
-	padding: 0.49em 0.60em 0.49em 0.27em;
-	margin: 0.36em;
-	border-radius: 100px;
+  color: @background;
+  padding: 0.49em 0.6em 0.49em 0.27em;
+  margin: 0.36em;
+  border-radius: 100px;
 }
 
 #workspaces button {
-	color: mix(@background, @foreground, 0.3);
+  color: mix(@background, @foreground, 0.3);
 }
 
 #workspaces button.active {
-	background: @color4;
+  background: @color4;
 }
 
 #workspaces button.urgent {
-	background: @color1;
+  background: @color1;
 }
 
 #workspaces button:hover {
-	background: @color6;
+  background: @color6;
 }
 /* }}} */
 /* Cava {{{ */
 #custom-cava {
-	color: @color4;
-	padding: 0 0.43em 0 0.21em;
+  color: @color4;
+  padding: 0 0.43em 0 0.21em;
 }
 /* }}} */
 /* Window {{{ */
 #window {
-	background: @color4;
-	color: @background;
+  background: @color4;
+  color: @background;
 }
 
 #waybar.empty #window {
-	background: transparent;
-	margin: 0;
-	padding: 0;
-	border: 0;
+  background: transparent;
+  margin: 0;
+  padding: 0;
+  border: 0;
 }
 /* }}} */
 /* Mpd {{{ */
@@ -124,63 +128,64 @@ tooltip label {
 #mpd.paused,
 #mpd.stopped,
 #mpd.disconnected {
-	color: @background;
+  color: @background;
 }
 
 #mpd {
-	background: @color4;
+  background: @color4;
 }
 
 #mpd.paused {
-	background: @color3;
+  background: @color3;
 }
 
 #mpd.stopped {
-	background: mix(@color1, @color3, 0.3);
+  background: mix(@color1, @color3, 0.3);
 }
 
 #mpd.disconnected {
-	background: @color1;
+  background: @color1;
 }
 /* }}} */
 /* Notifications {{{ */
 #custom-notifications {
-	font-size: 1.29em;
-	padding: 0 0.79em 0 0.64em;
-	margin: 0.29em 0.21em;
+  font-size: 1.29em;
+  padding: 0 0.79em 0 0.64em;
+  margin: 0.29em 0.21em;
 }
 /* }}} */
 /* Pulseaudio/Wireplumber {{{ */
-#pulseaudio.muted, #wireplumber.muted {
-	color: @color3;
+#pulseaudio.muted,
+#wireplumber.muted {
+  color: @color3;
 }
 /* }}} */
 /* Keyboard state {{{ */
 #keyboard-state {
-	margin: 0.29em 0.21em;
+  margin: 0.29em 0.21em;
 }
 
 #keyboard-state,
 #keyboard-state > label,
 #keyboard-state > label.locked {
-	font-size: 1.1em;
+  font-size: 1.1em;
 }
 
 #keyboard-state > label {
-	padding: 0 0.64em 0 0.43em;
+  padding: 0 0.64em 0 0.43em;
 }
 
 #keyboard-state > label.locked {
-	color: mix(@color1, @color3, 0.3);
+  color: mix(@color1, @color3, 0.3);
 }
 /* }}} */
 /* Tray {{{ */
 #tray > .passive {
-	-gtk-icon-effect: dim;
+  -gtk-icon-effect: dim;
 }
 
 #tray > .needs-attention {
-	-gtk-icon-effect: highlight;
-	color: @color1;
+  -gtk-icon-effect: highlight;
+  color: @color1;
 }
 /* }}} */
