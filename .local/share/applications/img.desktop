@@ -1,4 +1,4 @@
 [Desktop Entry]
 Type=Application
 Name=Image viewer
-Exec=mvi_wallust --fs %f
+Exec=mvi_wallust --fs %u
