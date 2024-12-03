@@ -1,20 +1,29 @@
 #!/usr/bin/env sh
 
+# Proper fzf use on tmux.
+picker() {
+        if which tmux >/dev/null 2>&1 && [ -n "$TMUX" ]; then
+                fzf-tmux -p 75% -w 75% "$@"
+        else
+                fzf "$@"
+        fi
+}
+
 # Fallback opener function.
-file_editor(){
-	file="$*"
-	if [ -n "$EDITOR" ]; then
-		"$EDITOR" "$file"
-	else
-		for editor in nvim vim vi; do
-			[ -x "$(command -v "$editor")" ] && "$editor" "$file" && continue
-		done
-	fi
+file_editor() {
+        file="$*"
+        if [ -n "$EDITOR" ]; then
+                "$EDITOR" "$file"
+        else
+                for editor in nvim vim vi; do
+                        [ -x "$(command -v "$editor")" ] && "$editor" "$file" && continue
+                done
+        fi
 }
 
 # Generate a blacklist for files on a format that can be read by grep:
-blacklist(){
-	cat <<- EOFBc
+blacklist() {
+        cat <<-EOFBc
 		electron
 		blockbench
 		dolphin_anty
@@ -41,8 +50,8 @@ blacklist="$(blacklist | awk '!/^$/ {gsub(/\s+/, ""); printf("%s\\|",$0)}')" # R
 blacklist="${blacklist%%\\|}"                                                # Remove the trailing '\|' from the output.
 
 # Generate a whitelist for files on a format that can be read by grep:
-whitelist(){
-	cat <<- EOFWl
+whitelist() {
+        cat <<-EOFWl
 		bin
 		share/applications
 		share/bindings
@@ -53,14 +62,14 @@ whitelist="$(whitelist | awk '!/^$/ {gsub(/\s+/, ""); printf("%s\\|",$0)}')" # R
 whitelist="${whitelist%%\\|}"                                                # Remove the trailing '\|' from the output.
 
 # Generate the list of files that can be edited:
-file_list(){
-	find "$HOME"/.config/* -maxdepth 3 -type f | grep -iv "$blacklist"
-	find "$HOME"/.local/* -maxdepth 3 -type f | grep -i "$whitelist"
-	find ~/.bash_profile ~/.bashrc ~/.zshenv
+file_list() {
+        find "$HOME"/.config/* -maxdepth 3 -type f | grep -iv "$blacklist"
+        find "$HOME"/.local/* -maxdepth 3 -type f | grep -i "$whitelist"
+        find ~/.bash_profile ~/.bashrc ~/.zshenv
 }
 
 # shellcheck disable=2016
-file="$(file_list | sort | sed "s|$HOME|~|g" | fzf-tmux --preview 'cat "$(echo {} | sed "s|~|$HOME|g")"' --prompt '> Edit File > ' | sed "s|~|$HOME|g")"
+file="$(file_list | sort | sed "s|$HOME|~|g" | picker --preview 'cat "$(echo {} | sed "s|~|$HOME|g")"' --prompt '> Edit File > ' | sed "s|~|$HOME|g")"
 [ -n "$file" ] && [ -f "$file" ] && file_editor "$file"
 
 # vim:fileencoding=utf-8:foldmethod=marker

@@ -1,32 +1,41 @@
 #!/usr/bin/env sh
 
+# Proper fzf use on tmux.
+picker() {
+	if which tmux >/dev/null 2>&1 && [ -n "$TMUX" ]; then
+		fzf-tmux -p 75% -w 75% "$@"
+	else
+		fzf "$@"
+	fi
+}
+
 case "${1:--S}" in
-	'-S')
-		if [ -n "$2" ]; then
-			paru "$@"
-		else
-			paru --color=always -Sl |
-				sed 's|\s|/|; s/\s\+.*unknown-version//g; /installed/d' |
-				fzf-tmux --prompt '> Install package(s) > ' --multi --preview 'paru -Si {1}' |
-				cut -d'/' -f2 | cut -d' ' -f1 | xargs -ro paru -S
-		fi
+'-S')
+	if [ -n "$2" ]; then
+		paru "$@"
+	else
+		paru --color=always -Sl |
+			sed 's|\s|/|; s/\s\+.*unknown-version//g; /installed/d' |
+			picker --prompt '> Install package(s) > ' --multi --preview 'paru -Si {1}' |
+			cut -d'/' -f2 | cut -d' ' -f1 | xargs -ro paru -S
+	fi
 	;;
 
-	'-R')
-		paru --color=always -Qs |
-			sed '/^\s\+/d; ; s/\s\+.*unknown-version//g' |
-			fzf-tmux --prompt '> Remove package(s) > ' --multi --preview 'paru -Qi {1}' |
-			cut -d'/' -f2 | cut -d' ' -f1 | xargs -ro sudo pacman -Rusnv
+'-R')
+	paru --color=always -Qs |
+		sed '/^\s\+/d; ; s/\s\+.*unknown-version//g' |
+		picker --prompt '> Remove package(s) > ' --multi --preview 'paru -Qi {1}' |
+		cut -d'/' -f2 | cut -d' ' -f1 | xargs -ro sudo pacman -Rusnv
 	;;
 
-	'-Q')
-		paru --color=always -Qs |
-			sed '/^\s\+/d; ; s/\s\+.*unknown-version//g' |
-			fzf-tmux --prompt '> Get info from package(s) > ' --multi --preview 'paru -Qi {1}' |
-			cut -d'/' -f2 | cut -d' ' -f1 | xargs -ro paru -Qi
+'-Q')
+	paru --color=always -Qs |
+		sed '/^\s\+/d; ; s/\s\+.*unknown-version//g' |
+		picker --prompt '> Get info from package(s) > ' --multi --preview 'paru -Qi {1}' |
+		cut -d'/' -f2 | cut -d' ' -f1 | xargs -ro paru -Qi
 	;;
 
-	*) paru "$@" ;;
+*) paru "$@" ;;
 esac
 
 # vim:fileencoding=utf-8:foldmethod=marker
