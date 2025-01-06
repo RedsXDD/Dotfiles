@@ -16,6 +16,7 @@ format = """
 $os$username$hostname\
 $directory\
 $shell\
+${env_var.yazi_level}\
 $git_branch\
 $git_status\
 $all\
@@ -113,6 +114,14 @@ zsh_indicator = 'zsh'
 unknown_indicator = '?sh'
 style = "fg:green bold"
 format = 'using [$indicator ]($style)'
+#: }}}
+#: Yazi {{{
+[env_var.yazi_level]
+description = "Indicate the shell was launched by `yazi`"
+variable = "YAZI_LEVEL"
+symbol = "yazi"
+style = "fg:yellow bold"
+format = 'inside [$symbol ]($style)'
 #: }}}
 #: Git {{{
 [git_commit]
