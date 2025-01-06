@@ -1,77 +1,64 @@
----@diagnostic disable: undefined-global
--- Show symlink in status bar:
+require("zoxide"):setup({
+	update_db = true,
+})
+
+require("copy-file-contents"):setup({
+	append_char = "\n",
+	notification = true,
+})
+
+-- Git.yazi
+THEME.git = THEME.git or {}
+THEME.git.added = ui.Style():fg("green")
+THEME.git.deleted = ui.Style():fg("red")
+THEME.git.ignored = ui.Style():fg("lightmagenta")
+THEME.git.modified = ui.Style():fg("cyan")
+THEME.git.untracked = ui.Style():fg("magenta")
+THEME.git.updated = ui.Style():fg("lightcyan")
+
+if os.getenv("DISPLAY") then
+	THEME.git.added_sign = "✚"
+	THEME.git.deleted_sign = "✖"
+	THEME.git.ignored_sign = ""
+	THEME.git.modified_sign = ""
+	THEME.git.untracked_sign = ""
+	THEME.git.updated_sign = ""
+else
+	THEME.git.added_sign = "+"
+	THEME.git.deleted_sign = "-"
+	THEME.git.ignored_sign = "#"
+	THEME.git.modified_sign = "~"
+	THEME.git.untracked_sign = "?"
+	THEME.git.updated_sign = "@"
+end
+
+require("git"):setup()
+
+-- Show symlinks on status bar.
 function Status:name()
-	local h = cx.active.current.hovered
+	local h = self._current.hovered
 	if not h then
-		return ui.Span("")
+		return ""
 	end
 
 	local linked = ""
 	if h.link_to ~= nil then
 		linked = " -> " .. tostring(h.link_to)
 	end
-	return ui.Span(" " .. h.name .. linked)
+	return ui.Line(" " .. h.name .. linked)
 end
 
--- Show user/group of files in status bar
-function Status:owner()
+-- Show user/group of files in status bar.
+Status:children_add(function()
 	local h = cx.active.current.hovered
 	if h == nil or ya.target_family() ~= "unix" then
-		return ui.Line {}
+		return ""
 	end
 
-	return ui.Line {
+	return ui.Line({
 		ui.Span(ya.user_name(h.cha.uid) or tostring(h.cha.uid)):fg("magenta"),
-		ui.Span(":"),
+		":",
 		ui.Span(ya.group_name(h.cha.gid) or tostring(h.cha.gid)):fg("magenta"),
-		ui.Span(" "),
-	}
-end
-
-function Status:render(area)
-	self.area = area
-
-	local left = ui.Line { self:mode(), self:size(), self:name() }
-	local right = ui.Line { self:owner(), self:permissions(), self:percentage(), self:position() }
-	return {
-		ui.Paragraph(area, { left }),
-		ui.Paragraph(area, { right }):align(ui.Paragraph.RIGHT),
-		table.unpack(Progress:render(area, right:width())),
-	}
-end
-
--- -- Enabled full border:
--- function Manager:render(area)
--- 	local chunks = self:layout(area)
-
--- 	local bar = function(c, x, y)
--- 		x, y = math.max(0, x), math.max(0, y)
--- 		return ui.Bar(ui.Rect { x = x, y = y, w = ya.clamp(0, area.w - x, 1), h = math.min(1, area.h) }, ui.Bar.TOP)
--- 			:symbol(c)
--- 	end
-
--- 	return ya.flat {
--- 		-- Borders
--- 		ui.Border(area, ui.Border.ALL):type(ui.Border.ROUNDED),
--- 		ui.Bar(chunks[1], ui.Bar.RIGHT),
--- 		ui.Bar(chunks[3], ui.Bar.LEFT),
-
--- 		bar("┬", chunks[1].right - 1, chunks[1].y),
--- 		bar("┴", chunks[1].right - 1, chunks[1].bottom - 1),
--- 		bar("┬", chunks[2].right, chunks[2].y),
--- 		bar("┴", chunks[2].right, chunks[1].bottom - 1),
-
--- 		-- Parent
--- 		Parent:render(chunks[1]:padding(ui.Padding.xy(1))),
--- 		-- Current
--- 		Current:render(chunks[2]:padding(ui.Padding.y(1))),
--- 		-- Preview
--- 		Preview:render(chunks[3]:padding(ui.Padding.xy(1))),
--- 	}
--- end
-
-require("starship"):setup()
-
-require("zoxide"):setup {
-	update_db = true,
-}
+		" ",
+	})
+end, 500, Status.RIGHT)

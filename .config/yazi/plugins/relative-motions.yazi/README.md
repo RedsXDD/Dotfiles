@@ -2,19 +2,28 @@
 
 A [Yazi](https://github.com/sxyazi/yazi) plugin based about vim motions.
 
-> [!NOTE]
-> The latest main branch of Yazi is required at the moment.
-
 https://github.com/dedukun/relative-motions.yazi/assets/25795432/04fb186a-5efe-442d-8d7b-2dccb6eee408
+
+## Requirements
+
+- [Yazi](https://github.com/sxyazi/yazi) v0.3.0+
 
 ## Installation
 
+If you use the latest Yazi from main branch
+
+```sh
+ya pack -a dedukun/relative-motions
+```
+
+If you are using <= v0.3.3
+
 ```sh
 # Linux/macOS
-git clone https://github.com/dedukun/relative-motions.yazi.git ~/.config/yazi/plugins/relative-motions.yazi
+git clone --branch 0.3.3 https://github.com/dedukun/relative-motions.yazi.git ~/.config/yazi/plugins/relative-motions.yazi
 
 # Windows
-git clone https://github.com/dedukun/relative-motions.yazi.git %AppData%\yazi\config\plugins\relative-motions.yazi
+git clone --branch 0.3.3 https://github.com/dedukun/relative-motions.yazi.git %AppData%\yazi\config\plugins\relative-motions.yazi
 ```
 
 ## Configuration
@@ -100,23 +109,23 @@ require("relative-motions"):setup({ show_numbers="relative", show_motion = true 
 ```
 
 > [!NOTE]
-> The `show_numbers` and `show_motion` functionalities overwrite [`Current:render`](https://github.com/sxyazi/yazi/blob/e51e8ad789914b2ab4a9485da7aa7fbc7b3bb450/yazi-plugin/preset/components/current.lua#L5)
-> and [`Status:render`](https://github.com/sxyazi/yazi/blob/e51e8ad789914b2ab4a9485da7aa7fbc7b3bb450/yazi-plugin/preset/components/status.lua#L111) respectively.
+> The `show_numbers` and `show_motion` functionalities overwrite [`Current:redraw`](https://github.com/sxyazi/yazi/blob/e3c91115a2c096724303a0b364e7625691e4beba/yazi-plugin/preset/components/current.lua#L28)
+> and [`Status:children_redraw`](https://github.com/sxyazi/yazi/blob/e3c91115a2c096724303a0b364e7625691e4beba/yazi-plugin/preset/components/status.lua#L177) respectively.
 > If you have custom implementations for any of this functions
-> you can add the provided `File:number` and `Status:motion` to your implementations, just check [here](https://github.com/dedukun/relative-motions.yazi/blob/main/init.lua#L39) how we are doing things.
+> you can add the provided `Entity:number` and `Status:motion` to your implementations, just check [here](https://github.com/dedukun/relative-motions.yazi/blob/main/init.lua#L126) how we are doing things.
 
 ## Usage
 
 This plugin adds the some basic vim motions like `3k`, `12j`, `10gg`, etc.
 The following table show all the available motions:
 
-| Command | Description         |
-| ------- | ------------------- |
-| `j`     | Move `n` lines down |
-| `k`     | Move `n` lines up   |
-| `gj`    | Go `n` lines down   |
-| `gk`    | Go `n` lines up     |
-| `gg`    | Go to line          |
+| Command        | Description         |
+| -------------- | ------------------- |
+| `j`/`<Down>`   | Move `n` lines down |
+| `k`/`<Up>`     | Move `n` lines up   |
+| `gj`/`g<Down>` | Go `n` lines down   |
+| `gk`/`g<Up>`   | Go `n` lines up     |
+| `gg`           | Go to line          |
 
 Furthermore, the following operations were also added:
 
@@ -127,5 +136,19 @@ Furthermore, the following operations were also added:
 | `x`     | Cut           |
 | `d`     | Delete motion |
 
-This however must be followed by a direction, which can be `j`, `k` or repeating the command key,
+This however must be followed by a direction, which can be `j`/`<Down>`, `k`/`<Up>` or repeating the command key,
 which will operate from the cursor down, e.g. `2yy` will copy two files.
+
+Finally, we also support some tab operations:
+
+| Command | Description                          |
+| ------- | ------------------------------------ |
+| `t`     | create `n` tabs                      |
+| `H`     | Move `n` tabs left                   |
+| `L`     | Move `n` tabs right                  |
+| `gt`    | Go to the `n` tab                    |
+| `w`     | Close tab `n`                        |
+| `W`     | Close `n` tabs right                 |
+| `<`     | Swap current tab with `n` tabs left  |
+| `>`     | Swap current tab with `n` tabs right |
+| `~`     | Swap current tab with tab `n`        |

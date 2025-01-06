@@ -1,9 +1,10 @@
-local function entry(_, args)
+--- @sync entry
+local function entry(_, job)
 	local parent = cx.active.parent
 	if not parent then return end
 
-	local offset = tonumber(args[1])
-	if not offset then return ya.err(args[1], 'is not a number') end
+	local offset = tonumber(job.args[1])
+	if not offset then return ya.err(job.args[1], 'is not a number') end
 
 	local start = parent.cursor + 1 + offset
 	local end_ = offset < 0 and 1 or #parent.files

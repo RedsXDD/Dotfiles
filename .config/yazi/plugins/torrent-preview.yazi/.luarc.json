@@ -1,9 +1,0 @@
-{
-    "diagnostics.globals": [
-        "ui",
-        "Command",
-        "ya",
-        "cx",
-        "units"
-    ]
-}
