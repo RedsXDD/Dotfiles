@@ -183,7 +183,7 @@ export LESS_TERMCAP_ZW
 #: }}}
 #: TTY stuff (must be last!) {{{
 # shellcheck source=/dev/null
-if [ -z "$DISPLAY" ]; then
+if [ -z "$DISPLAY" ] && [ -z "$WAYLAND_DISPLAY" ] && [ "$(tty)" != '/dev/tty2' ]; then
         # Start WM:
         # [ "$(tty)" = '/dev/tty1' ] && sx "${XDG_CONFIG_HOME:-$HOME/.config}/x11/xinit"
         [ "$(tty)" = '/dev/tty1' ] && Hyprland
