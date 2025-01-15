@@ -5,6 +5,22 @@ if not has_clue then return end
 
 local border_style = require("core.icons").misc.border
 
+---@param modes string|table
+---@param key string
+---@param postkeys string?
+---@param desc string?
+local function add_clue(modes, key, postkeys, desc)
+    if type(modes) == "string" then
+        return { mode = modes, keys = key, postkeys = postkeys, desc = desc }
+    elseif type(modes) == "table" then
+        local ret = {}
+        for _, mode in pairs(modes) do
+            table.insert(ret, { mode = mode, keys = key, postkeys = postkeys, desc = desc })
+        end
+        return ret
+    end
+end
+
 local function plugin_clue(plugin, clues)
     if plugin and type(plugin) == "string" then
         local success, _ = pcall(require, plugin)
@@ -65,46 +81,23 @@ clue.setup({
         }),
         --: }}}
         --: Conform {{{
-        plugin_clue("conform", {
-            { mode = "n", keys = "<Leader>lf", desc = "Format File." },
-            { mode = "x", keys = "<Leader>lf", desc = "Format File." },
-        }),
-        --: }}}
-        --: FTerm {{{
-        plugin_clue("FTerm", {
-            { mode = "n", keys = "<Leader>gt", desc = "Open a floating terminal." },
-            { mode = "n", keys = "<Leader>gg", desc = "Open git integration." },
-        }),
+        plugin_clue("conform", add_clue({ "n", "x" }, "<Leader>lf", nil, "Format File.")),
         --: }}}
         --: General {{{
-        { mode = "n", keys = "<Leader>b", desc = "+Buffers & Tabs" },
-        { mode = "x", keys = "<Leader>b", desc = "+Buffers & Tabs" },
-        { mode = "n", keys = "<Leader>t", desc = "+Toggles" },
-        { mode = "x", keys = "<Leader>t", desc = "+Toggles" },
-        { mode = "n", keys = "<Leader>g", desc = "+Misc" },
-        { mode = "x", keys = "<Leader>g", desc = "+Misc" },
-        --: }}}
-        --: Zenmode {{{
-        plugin_clue("zen-mode", {
-            { mode = "n", keys = "<Leader>tz", desc = "Toggle Zenmode." },
-            { mode = "x", keys = "<Leader>tz", desc = "Toggle Zenmode." },
-        }),
+        add_clue({ "n", "x" }, "<Leader>b", nil, "+Buffers & Tabs."),
+        add_clue({ "n", "x" }, "<Leader>t", nil, "+Toggles."),
+        add_clue({ "n", "x" }, "<Leader>g", nil, "+Misc."),
         --: }}}
         --: Noice {{{
-        plugin_clue("noice", { mode = "n", keys = "<Leader>gn", desc = "+Noice" }),
+        plugin_clue("noice", add_clue("n", "<Leader>u", nil, "+Noice")),
         --: }}}
         --: Lsp {{{
         plugin_clue("lspconfig", {
-            { mode = "n", keys = "<Leader>l", desc = "+LSP" },
-            { mode = "x", keys = "<Leader>l", desc = "+LSP" },
-            { mode = "n", keys = "]d", postkeys = "]" },
-            { mode = "n", keys = "]D", postkeys = "]" },
-            { mode = "n", keys = "[d", postkeys = "[" },
-            { mode = "n", keys = "[D", postkeys = "[" },
-            { mode = "x", keys = "]d", postkeys = "]" },
-            { mode = "x", keys = "]D", postkeys = "]" },
-            { mode = "x", keys = "[d", postkeys = "[" },
-            { mode = "x", keys = "[D", postkeys = "[" },
+            add_clue({ "n", "x" }, "<Leader>l", nil, "+Lsp"),
+            add_clue({ "n", "x" }, "]d", "]", nil),
+            add_clue({ "n", "x" }, "[d", "[", nil),
+            add_clue({ "n", "x" }, "]D", "]", nil),
+            add_clue({ "n", "x" }, "[D", "[", nil),
         }),
         --: }}}
         --: Telescope {{{
@@ -115,75 +108,30 @@ clue.setup({
             { mode = "n", keys = "<Leader>fe", desc = "+Extra" },
         }),
         --: }}}
-        --: Gitsigns {{{
-        plugin_clue("gitsigns", {
-            { mode = "n", keys = "<Leader>d", desc = "+Gitsigns" },
-            { mode = "x", keys = "<Leader>d", desc = "+Gitsigns" },
-            { mode = "n", keys = "]h", postkeys = "]" },
-            { mode = "n", keys = "]H", postkeys = "]" },
-            { mode = "n", keys = "[h", postkeys = "[" },
-            { mode = "n", keys = "[H", postkeys = "[" },
-            { mode = "x", keys = "]h", postkeys = "]" },
-            { mode = "x", keys = "]H", postkeys = "]" },
-            { mode = "x", keys = "[h", postkeys = "[" },
-            { mode = "x", keys = "[H", postkeys = "[" },
-        }),
-        --: }}}
         --: Jump betwheen brackets {{{
-        { mode = "n", keys = "])", desc = "+Jump to next `)`" },
-        { mode = "n", keys = "]]", desc = "+Jump to next `]`" },
-        { mode = "n", keys = "]}", desc = "+Jump to next `}`" },
-        { mode = "n", keys = "[(", desc = "+Jump to previous `(`" },
-        { mode = "n", keys = "[[", desc = "+Jump to previous `[`" },
-        { mode = "n", keys = "[{", desc = "+Jump to previous `{`" },
-        { mode = "x", keys = "])", desc = "+Jump to next `)`" },
-        { mode = "x", keys = "]]", desc = "+Jump to next `]`" },
-        { mode = "x", keys = "]}", desc = "+Jump to next `}`" },
-        { mode = "x", keys = "[(", desc = "+Jump to previous `(`" },
-        { mode = "x", keys = "[[", desc = "+Jump to previous `[`" },
-        { mode = "x", keys = "[{", desc = "+Jump to previous `{`" },
+        add_clue({ "n", "x" }, "])", nil, "Jump to next `)`"),
+        add_clue({ "n", "x" }, "]]", nil, "Jump to next `]`"),
+        add_clue({ "n", "x" }, "]}", nil, "Jump to next `}`"),
+        add_clue({ "n", "x" }, "[(", nil, "Jump to previous `(`"),
+        add_clue({ "n", "x" }, "[[", nil, "Jump to previous `[`"),
+        add_clue({ "n", "x" }, "[{", nil, "Jump to previous `{`"),
         --: }}}
         --: Mini.surround {{{
-        plugin_clue("mini.surround", {
-            { mode = "n", keys = "<Leader>s", desc = "+Surround" },
-            { mode = "x", keys = "<Leader>s", desc = "+Surround" },
-        }),
+        plugin_clue("mini.surround", add_clue({ "n", "x" }, "<Leader>s", nil, "+Surround")),
         --: }}}
         --: Mini.splitjoin {{{
-        plugin_clue("mini.splitjoin", {
-            { mode = "n", keys = "<Leader>j", desc = "+Splitjoin" },
-            { mode = "x", keys = "<Leader>j", desc = "+Splitjoin" },
-        }),
+        plugin_clue("mini.splitjoin", add_clue({ "n", "x" }, "<Leader>j", nil, "+Splitjoin")),
         --: }}}
         --: Mini.pairs {{{
-        plugin_clue("mini.pairs", {
-            { mode = "n", keys = "<Leader>tp", desc = "Toggle Mini.pairs." },
-            { mode = "x", keys = "<Leader>tp", desc = "Toggle Mini.pairs." },
-        }),
-        --: }}}
-        --: Mini.map {{{
-        plugin_clue("mini.map", { mode = "n", keys = "<Leader>m", desc = "+MiniMap" }),
+        plugin_clue("mini.pairs", add_clue({ "n", "x" }, "<Leader>tp", nil, "Toggle Mini.pairs.")),
         --: }}}
         --: Mini.diff {{{
         plugin_clue("mini.diff", {
-            { mode = "n", keys = "<Leader>d", desc = "+MiniDiff" },
-            { mode = "x", keys = "<Leader>d", desc = "+MiniDiff" },
-            { mode = "n", keys = "]h", postkeys = "]" },
-            { mode = "n", keys = "]H", postkeys = "]" },
-            { mode = "n", keys = "[h", postkeys = "[" },
-            { mode = "n", keys = "[H", postkeys = "[" },
-            { mode = "x", keys = "]h", postkeys = "]" },
-            { mode = "x", keys = "]H", postkeys = "]" },
-            { mode = "x", keys = "[h", postkeys = "[" },
-            { mode = "x", keys = "[H", postkeys = "[" },
-        }),
-        --: }}}
-        --: Mini.pick {{{
-        plugin_clue("mini.pick", {
-            { mode = "n", keys = "<Leader>f", desc = "+MiniPick" },
-            { mode = "n", keys = "<Leader>fg", desc = "+Grep & Git" },
-            { mode = "n", keys = "<Leader>fl", desc = "+LSP" },
-            { mode = "n", keys = "<Leader>fe", desc = "+Extra" },
+            add_clue({ "n", "x" }, "<Leader>d", nil, "+MiniDiff"),
+            add_clue({ "n", "x" }, "]h", "]", nil),
+            add_clue({ "n", "x" }, "]H", "]", nil),
+            add_clue({ "n", "x" }, "[h", "[", nil),
+            add_clue({ "n", "x" }, "[H", "[", nil),
         }),
         --: }}}
         --: Mini.bracketed {{{
@@ -195,24 +143,16 @@ clue.setup({
             { mode = "n", keys = "[B", postkeys = "[" },
             --: }}}
             --: Jump betwheen comments {{{
-            { mode = "n", keys = "]c", postkeys = "]" },
-            { mode = "n", keys = "]C", postkeys = "]" },
-            { mode = "n", keys = "[c", postkeys = "[" },
-            { mode = "n", keys = "[C", postkeys = "[" },
-            { mode = "x", keys = "]c", postkeys = "]" },
-            { mode = "x", keys = "]C", postkeys = "]" },
-            { mode = "x", keys = "[c", postkeys = "[" },
-            { mode = "x", keys = "[C", postkeys = "[" },
+            add_clue({ "n", "x" }, "]c", "]", nil),
+            add_clue({ "n", "x" }, "]C", "]", nil),
+            add_clue({ "n", "x" }, "[c", "[", nil),
+            add_clue({ "n", "x" }, "[C", "[", nil),
             --: }}}
             --: Jump betwheen conflicts {{{
-            { mode = "n", keys = "]x", postkeys = "]" },
-            { mode = "n", keys = "]X", postkeys = "]" },
-            { mode = "n", keys = "[x", postkeys = "[" },
-            { mode = "n", keys = "[X", postkeys = "[" },
-            { mode = "x", keys = "]x", postkeys = "]" },
-            { mode = "x", keys = "]X", postkeys = "]" },
-            { mode = "x", keys = "[x", postkeys = "[" },
-            { mode = "x", keys = "[X", postkeys = "[" },
+            add_clue({ "n", "x" }, "]x", "]", nil),
+            add_clue({ "n", "x" }, "]X", "]", nil),
+            add_clue({ "n", "x" }, "[x", "[", nil),
+            add_clue({ "n", "x" }, "[X", "[", nil),
             --: }}}
             --: Jump betwheen files {{{
             { mode = "n", keys = "]f", postkeys = "]" },
@@ -221,14 +161,10 @@ clue.setup({
             { mode = "n", keys = "[F", postkeys = "[" },
             --: }}}
             --: Jump betwheen indentation {{{
-            { mode = "n", keys = "]i", postkeys = "]" },
-            { mode = "n", keys = "]I", postkeys = "]" },
-            { mode = "n", keys = "[i", postkeys = "[" },
-            { mode = "n", keys = "[I", postkeys = "[" },
-            { mode = "x", keys = "]i", postkeys = "]" },
-            { mode = "x", keys = "]I", postkeys = "]" },
-            { mode = "x", keys = "[i", postkeys = "[" },
-            { mode = "x", keys = "[I", postkeys = "[" },
+            add_clue({ "n", "x" }, "]i", "]", nil),
+            add_clue({ "n", "x" }, "]I", "]", nil),
+            add_clue({ "n", "x" }, "[i", "[", nil),
+            add_clue({ "n", "x" }, "[I", "[", nil),
             --: }}}
             --: Jump betwheen jumps from jump-list {{{
             { mode = "n", keys = "]j", postkeys = "]" },
@@ -255,14 +191,10 @@ clue.setup({
             { mode = "n", keys = "[Q", postkeys = "[" },
             --: }}}
             --: Jump betwheen tree-sitter node and parents {{{
-            { mode = "n", keys = "]t", postkeys = "]" },
-            { mode = "n", keys = "]T", postkeys = "]" },
-            { mode = "n", keys = "[t", postkeys = "[" },
-            { mode = "n", keys = "[T", postkeys = "[" },
-            { mode = "x", keys = "]t", postkeys = "]" },
-            { mode = "x", keys = "]T", postkeys = "]" },
-            { mode = "x", keys = "[t", postkeys = "[" },
-            { mode = "x", keys = "[T", postkeys = "[" },
+            add_clue({ "n", "x" }, "]t", "]", nil),
+            add_clue({ "n", "x" }, "]T", "]", nil),
+            add_clue({ "n", "x" }, "[t", "[", nil),
+            add_clue({ "n", "x" }, "[T", "[", nil),
             --: }}}
             --: Jump betwheen undo states {{{
             { mode = "n", keys = "]u", postkeys = "]" },

@@ -6,10 +6,10 @@ local keymaps = require("core.utils").keymaps
 
 -- stylua: ignore start
 keymaps.map("c", "<S-Enter>", function() noice.redirect(vim.fn.getcmdline()) end, "Redirect Cmdline")
-keymaps.map("n", "<Leader>gnl", function() noice.cmd("last") end, "Noice Last Message")
-keymaps.map("n", "<Leader>gnh", function() noice.cmd("history") end, "Noice History")
-keymaps.map("n", "<Leader>gna", function() noice.cmd("all") end, "Noice All")
-keymaps.map("n", "<Leader>gnd", function() noice.cmd("dismiss")  end, "Dismiss All")
+keymaps.map("n", "<Leader>ul", function() noice.cmd("last") end, "Noice Last Message")
+keymaps.map("n", "<Leader>uh", function() noice.cmd("history") end, "Noice History")
+keymaps.map("n", "<Leader>ua", function() noice.cmd("all") end, "Noice All")
+keymaps.map("n", "<Leader>ud", function() noice.cmd("dismiss")  end, "Dismiss All")
 -- stylua: ignore end
 
 keymaps.map({ "n", "i", "s" }, "<C-f>", function()

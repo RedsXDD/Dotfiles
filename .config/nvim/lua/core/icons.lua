@@ -1,3 +1,5 @@
+-- vim:fileencoding=utf-8:foldmethod=marker:foldenable
+
 local M = {}
 
 --[[
@@ -14,6 +16,7 @@ local function set_icons(table_name, normal_icons, tty_icons)
     end
 end
 
+--: listchars {{{
 set_icons("listchars", {
     tab = "» ",
     trail = "·",
@@ -27,7 +30,8 @@ set_icons("listchars", {
     extends = ">",
     precedes = "<",
 })
-
+--: }}}
+--: fillchars {{{
 set_icons("fillchars", {
     foldopen = "",
     foldclose = "",
@@ -50,7 +54,8 @@ set_icons("fillchars", {
     vertright = "|",
     verthoriz = "+",
 })
-
+--: }}}
+--: misc {{{
 set_icons("misc", {
     dots = "󰇘",
     indent = "│",
@@ -62,7 +67,8 @@ set_icons("misc", {
     indent_left = "`-",
     border = { "+", "-", "+", "|", "+", "-", "+", "|" },
 })
-
+--: }}}
+--: lazy {{{
 set_icons("lazy", {
     cmd = " ",
     config = "",
@@ -112,7 +118,8 @@ set_icons("lazy", {
         "-",
     },
 })
-
+--: }}}
+--: aerial {{{
 set_icons("aerial", {
     mid_item = "├╴",
     last_item = "└╴",
@@ -122,27 +129,22 @@ set_icons("aerial", {
     last_item = "`-",
     nested_top = "|",
 })
-
-set_icons("startpage", {
+--: }}}
+--: dashboard {{{
+set_icons("dashboard", {
+    config_files = " ",
+    file_explorer = "󰉋 ",
+    find_files = "󰱼 ",
     footer = "󱐋 ",
-    bullet = "░ ",
-    recent_files = " ",
-    sections = {
-        actions = "󱓞 ",
-        recent_files = "󰥔 ",
-        session = "󰍹 ",
-    },
-    actions = {
-        new_file = " ",
-        quit = "󰅚 ",
-        file_explorer = "󰉋 ",
-        list_buffers = "󰮊 ",
-        recent_files = " ",
-        find_files = "󰱼 ",
-        live_grep = "󰈬 ",
-        lazy = "󰒲 ",
-        mason = " ",
-    },
+    keymaps = " ",
+    lazy = "󰒲 ",
+    live_grep = "󰈬 ",
+    mason = " ",
+    new_file = " ",
+    projects = "",
+    quit = "󰅚 ",
+    recent_files = "󰥔 ",
+    sessions = "󰍹 ",
     header = {
         [[                                                                   ]],
         [[      ████ ██████           █████      ██                    ]],
@@ -152,27 +154,23 @@ set_icons("startpage", {
         [[   █████████ ██████████ █████████ █████ █████ ████ █████  ]],
         [[ ███████████ ███    ███ █████████ █████ █████ ████ █████ ]],
         [[██████  █████████████████████ ████ █████ █████ ████ ██████]],
+        [[]],
+        [[            TIP: To exit Neovim, just run $sudo rm -rf /*            ]],
     },
 }, {
+    config_files = "",
+    file_explorer = "",
+    find_files = "",
     footer = "=> ",
-    bullet = "* ",
+    keymaps = "",
+    lazy = "",
+    live_grep = "",
+    mason = "",
+    new_file = "",
+    projects = "",
+    quit = "",
     recent_files = "",
-    sections = {
-        actions = "",
-        recent_files = "",
-        session = "",
-    },
-    actions = {
-        new_file = "",
-        quit = "",
-        file_explorer = "",
-        list_buffers = "",
-        recent_files = "",
-        find_files = "",
-        live_grep = "",
-        lazy = "",
-        mason = "",
-    },
+    sessions = "",
     header = {
         [[     ___           ___           ___           ___                       ___     ]],
         [[    /\__\         /\  \         /\  \         /\__\          ___        /\__\    ]],
@@ -185,49 +183,17 @@ set_icons("startpage", {
         [[    |::/  /     \:\ \/__/     \:\/:/  /     \::::/__/    \:\__\          /:/  /  ]],
         [[    /:/  /       \:\__\        \::/  /       ~~~~         \/__/         /:/  /   ]],
         [[    \/__/         \/__/         \/__/                                   \/__/    ]],
+        [[]],
+        [[                  TIP: To exit Neovim, just run $sudo rm -rf /*                  ]],
     },
 })
-
+--: }}}
+--: mini_files {{{
 set_icons("mini_files", {
     directory_icon = " ",
 }, {})
-
-set_icons("neotree", {
-    folder_closed = "",
-    folder_open = "",
-    folder_empty = "",
-    expander_collapsed = "",
-    expander_expanded = "",
-    git = {
-        added = "✚",
-        modified = "",
-        deleted = "✖",
-        renamed = "󰁕",
-        untracked = "",
-        ignored = "",
-        unstaged = "󰄱",
-        staged = "",
-        conflict = "",
-    },
-}, {
-    folder_closed = "",
-    folder_open = "",
-    folder_empty = "",
-    expander_collapsed = ">",
-    expander_expanded = "-",
-    git = {
-        added = "+",
-        modified = "~",
-        deleted = "-",
-        renamed = "~",
-        untracked = "?",
-        ignored = "#",
-        unstaged = "*",
-        staged = "=",
-        conflict = "X",
-    },
-})
-
+--: }}}
+--: dap {{{
 set_icons("dap", {
     Stopped = { "󰁕 ", "DiagnosticWarn", "DapStoppedLine" },
     Breakpoint = " ",
@@ -241,7 +207,8 @@ set_icons("dap", {
     BreakpointRejected = { "!", "DiagnosticError" },
     LogPoint = ".>",
 })
-
+--: }}}
+--: mason {{{
 set_icons("mason", {
     installed = "✓",
     pending = "➜",
@@ -251,7 +218,8 @@ set_icons("mason", {
     pending = ">",
     uninstalled = "X",
 })
-
+--: }}}
+--: telescope {{{
 set_icons("telescope", {
     prompt_prefix = "  ",
     selection_caret = " ◆ ",
@@ -259,7 +227,8 @@ set_icons("telescope", {
     prompt_prefix = " > ",
     selection_caret = " * ",
 })
-
+--: }}}
+--: pick {{{
 set_icons("pick", {
     prompt_cursor = "▏",
     prompt_prefix = " ",
@@ -267,7 +236,8 @@ set_icons("pick", {
     prompt_cursor = "_",
     prompt_prefix = "-> ",
 })
-
+--: }}}
+--: diagnostics {{{
 set_icons("diagnostics", {
     Error = " ",
     Warn = " ",
@@ -279,7 +249,8 @@ set_icons("diagnostics", {
     Hint = "H",
     Info = "I",
 })
-
+--: }}}
+--: git {{{
 set_icons("git", {
     added = " ",
     modified = " ",
@@ -289,7 +260,8 @@ set_icons("git", {
     modified = "[~]",
     removed = "[-]",
 })
-
+--: }}}
+--: gitsigns {{{
 set_icons("gitsigns", {
     add = "▎",
     change = "▎",
@@ -305,7 +277,8 @@ set_icons("gitsigns", {
     changedelete = "<",
     untracked = "?",
 })
-
+--: }}}
+--: kinds {{{
 set_icons("kinds", {
     Array = " ",
     Boolean = "󰨙 ",
@@ -322,7 +295,7 @@ set_icons("kinds", {
     Event = " ",
     Field = " ",
     File = "󰈙 ",
-    Folder = " ",
+    Folder = " ",
     Function = "󰊕 ",
     Interface = " ",
     Key = " ",
@@ -387,5 +360,6 @@ set_icons("kinds", {
     Value = "Value",
     Variable = "Variable",
 })
+--: }}}
 
 return M

@@ -15,11 +15,12 @@ vim.api.nvim_create_autocmd("LspAttach", {
         lsp_map("<Leader>lD", vim.lsp.buf.declaration, "Goto declaration.")
         lsp_map("<Leader>ls", vim.lsp.buf.signature_help, "Display signature help.")
         lsp_map("<Leader>la", vim.lsp.buf.code_action, "List code actions.")
-        lsp_map(
-            "<Leader>li",
-            function() vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled()) end,
-            "Toggle inlay hints."
-        )
+        -- Replaced by snacks.nvim.
+        -- lsp_map(
+        --     "<Leader>li",
+        --     function() vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled()) end,
+        --     "Toggle inlay hints."
+        -- )
         lsp_map("<Leader>lI", vim.lsp.buf.implementation, "Goto implementation.")
         lsp_map("<Leader>lR", vim.lsp.buf.references, "Goto references.")
         lsp_map("<Leader>lr", vim.lsp.buf.rename, "Rename.")
@@ -83,13 +84,6 @@ local opts = {
         -- ["*"] = function(server, opts) end,
     },
 }
-
--- Hover/signatureHelp window configurations:
-if not package.loaded["noice"] then
-    local hover_opts = opts.diagnostics.float
-    vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, hover_opts)
-    vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, hover_opts)
-end
 
 -- Configure diagnostics signs:
 if vim.fn.has("nvim-0.10.0") == 0 then

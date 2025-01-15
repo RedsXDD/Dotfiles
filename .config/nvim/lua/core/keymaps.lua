@@ -86,24 +86,26 @@ keymaps.map("v", ">", ">gv", "Move selected lines to the right.")
 -- map("i", '/*', '/**/<Left><Left>', "")
 --: }}}
 --: }}}
---: Terminal mappings {{{
-keymaps.map("t", "<ESC><ESC>", "<C-\\><C-n>", "Enter normal mode.")
-keymaps.map("t", "<C-/>", "<C-\\><C-n><CMD>bdelete!<CR>", "Close terminal.")
-keymaps.map("t", "<C-_>", "<C-\\><C-n><CMD>bdelete!<CR>", "Close terminal.")
---: }}}
+-- --: Terminal mappings {{{
+-- -- Replaced by snacks.nvim.
+-- keymaps.map("t", "<ESC><ESC>", "<C-\\><C-n>", "Enter normal mode.")
+-- keymaps.map("t", "<C-/>", "<C-\\><C-n><CMD>bdelete!<CR>", "Close terminal.")
+-- keymaps.map("t", "<C-_>", "<C-\\><C-n><CMD>bdelete!<CR>", "Close terminal.")
+-- --: }}}
 --: Clipboard management {{{
 keymaps.map("", "<Leader>y", '"*y', "Copy to primary clipboard.")
 keymaps.map("", "<Leader>p", '"*p', "Paste from primary clipboard.")
 keymaps.map("", "<Leader>P", '"*P', "Paste from primary clipboard.")
 --: }}}
---: Toggles {{{
-keymaps.toggle_map("", "<Leader>ts", "spell", "spell checking.")
-keymaps.toggle_map("", "<Leader>tw", "wrap", "line wrapping.")
-keymaps.toggle_map("", "<Leader>tn", { "number", "relativenumber" }, "line numbers.")
-keymaps.toggle_map("", "<Leader>tr", "relativenumber", "relative line numbers.")
-keymaps.toggle_map("", "<Leader>tl", { "cursorline", "cursorcolumn" }, "Toggle cursorline/cursorcolumn.")
-keymaps.toggleStr_map("", "<Leader>tc", "formatoptions", "cro", "newline auto commenting.")
---: }}}
+-- --: Toggles {{{
+-- -- Replaced by snacks.nvim.
+-- keymaps.toggle_map("", "<Leader>ts", "spell", "spell checking.")
+-- keymaps.toggle_map("", "<Leader>tw", "wrap", "line wrapping.")
+-- keymaps.toggle_map("", "<Leader>tl", { "number", "relativenumber" }, "line numbers.")
+-- keymaps.toggle_map("", "<Leader>tr", "relativenumber", "relative line numbers.")
+-- keymaps.toggle_map("", "<Leader>tc", { "cursorline", "cursorcolumn" }, "Toggle cursorline/cursorcolumn.")
+-- keymaps.toggleStr_map("", "<Leader>ta", "formatoptions", "cro", "newline auto commenting.")
+-- --: }}}
 --: Complete menu {{{
 -- General completion mappings.
 keymaps.pum_map({
@@ -152,58 +154,55 @@ keymaps.pum_map({
     normal = ctrn_n_action(),
 }, "Auto open & select first item on completion menu.")
 --: }}}
---: Split management {{{
--- Create splits:
+--: Split/buffer/tab management {{{
+
+-- -- Replaced by snacks.nvim.
+-- keymaps.map("", "<Leader>z", function() require("core.utils").maximize() end, "Maximize current window.")
+-- keymaps.map("", "<Leader>x", "<CMD>bdelete %<CR>", "Delete current buffer.")
+
+-- Create splits.
 keymaps.map("", "<Leader>-", ":vsplit | enew<CR>", "Create vertical split.")
 keymaps.map("", "<Leader>_", ":split | enew<CR>", "Create horizontal split.")
-keymaps.map("", "<Leader>z", function() require("core.utils").maximize() end, "Maximize current window.")
 
--- Move across splits:
+-- Move across splits.
 keymaps.map("", "<C-h>", "<CMD>wincmd h<CR>", "Move to the left split window.")
 keymaps.map("", "<C-j>", "<CMD>wincmd j<CR>", "Move to the split window below.")
 keymaps.map("", "<C-k>", "<CMD>wincmd k<CR>", "Move to the split window above.")
 keymaps.map("", "<C-l>", "<CMD>wincmd l<CR>", "Move to the right split window.")
 
--- Resize split windows:
+-- Resize split windows.
 keymaps.map("", "<C-Left>", "<CMD>wincmd ><CR>", "Increase width of split window.")
 keymaps.map("", "<C-Down>", "<CMD>wincmd -<CR>", "Decrease height of split window.")
 keymaps.map("", "<C-Up>", "<CMD>wincmd +<CR>", "Increase height of split window.")
 keymaps.map("", "<C-Right>", "<CMD>wincmd <<CR>", "Decrease width of split window.")
 
--- Move currently actively selected split to the left/bottom/top/right:
+-- Move currently actively selected split to the left/bottom/top/right.
 keymaps.map("", "<C-S-Left>", "<CMD>wincmd H<CR>", "Move split window to the left.")
 keymaps.map("", "<C-S-Down>", "<CMD>wincmd J<CR>", "Move split window to the bottom.")
 keymaps.map("", "<C-S-Up>", "<CMD>wincmd K<CR>", "Move split window to the top.")
 keymaps.map("", "<C-S-Right>", "<CMD>wincmd L<CR>", "Move split window to the right.")
---: }}}
---: Tab & buffer management {{{
--- Buffer management:
+
+-- Buffer management.
 keymaps.map("", "<Leader>bb", "<CMD>wincmd T<CR>", "Break split into a new tab.")
 keymaps.map("", "<Leader>bc", ":badd | enew<CR>", "Open a new buffer.")
 keymaps.map("", "<Leader>bC", ":tabnew | enew<CR>", "Open a new tab.")
-keymaps.map("", "<Leader>x", "<CMD>bdelete %<CR>", "Close current buffer.")
-keymaps.map("", "<Leader>.", ":tabn<CR>", "Move to the next tab.")
-keymaps.map("", "<Leader>,", ":tabp<CR>", "Move to the previous tab.")
+
+-- Move across buffers.
 keymaps.map("n", "[b", "<CMD>bprev<CR>", "Buffer previous")
 keymaps.map("n", "]b", "<CMD>bnext<CR>", "Buffer next")
 keymaps.map("n", "[B", "<CMD>bfirst<CR>", "Buffer first")
 keymaps.map("n", "]B", "<CMD>blast<CR>", "Buffer last")
+
+-- Tab management.
+keymaps.map("", "<Leader>.", ":tabn<CR>", "Move to the next tab.")
+keymaps.map("", "<Leader>,", ":tabp<CR>", "Move to the previous tab.")
 keymaps.map("n", "<Leader>bb", "<CMD>e #<CR>", "Switch to previously active buffer")
 --: }}}
 --: File explorer {{{
-keymaps.map(
-    "n",
-    "<Leader>gf",
-    function() require("core.utils").toggle_file_explorer() end,
-    "Open file explorer on CWD."
-)
-
-keymaps.map(
-    "n",
-    "<Leader>gF",
-    function() require("core.utils").toggle_file_explorer(true) end,
-    "Open file explorer on directory of current file."
-)
+-- stylua: ignore start
+keymaps.map("n", "<Leader>gf", function() require("core.utils").toggle_file_explorer() end, "Open file explorer on CWD.")
+keymaps.map("n", "<Leader>gF", function() require("core.utils").toggle_file_explorer(true) end, "Open file explorer on directory of current file.")
+-- stylua: ignore end
 --: }}}
 --: Netrw mappings {{{
 vim.api.nvim_create_autocmd("FileType", {

@@ -5,7 +5,6 @@ if not has_files then return end
 local show_dotfiles = true
 
 local filter_show = function() return true end
-
 local filter_hide = function(fs_entry) return not vim.startswith(fs_entry.name, ".") end
 
 local toggle_dotfiles = function()

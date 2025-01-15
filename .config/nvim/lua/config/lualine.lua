@@ -2,8 +2,13 @@ local has_lualine, lualine = pcall(require, "lualine")
 if not has_lualine then return end
 
 local icons = require("core.icons")
+local C = require("neopywal.lib.palette").get()
+local U = require("neopywal.utils.color")
+vim.api.nvim_set_hl(0, "LuaLineDiffAdd", { bg = U.blend(C.color8, C.background, 0.3), fg = C.diff_added })
+vim.api.nvim_set_hl(0, "LuaLineDiffChange", { bg = U.blend(C.color8, C.background, 0.3), fg = C.diff_changed })
+vim.api.nvim_set_hl(0, "LuaLineDiffDelete", { bg = U.blend(C.color8, C.background, 0.3), fg = C.diff_removed })
 
-local location = function() return "ln:" .. "%l" .. " " .. "cl:" .. "%v" end
+local location_fn = function() return "ln:" .. "%l" .. " " .. "cl:" .. "%v" end
 
 local opts = {
     options = {
@@ -43,16 +48,14 @@ local global_sections = {
                     modified = icons.git.modified,
                     removed = icons.git.removed,
                 },
+                diff_color = {
+                    added = "LuaLineDiffAdd",
+                    modified = "LuaLineDiffChange",
+                    removed = "LuaLineDiffDelete",
+                },
                 source = function()
-                    local gitsigns = vim.b.gitsigns_status_dict
                     local summary = vim.b.minidiff_summary
-                    if gitsigns then
-                        return {
-                            added = gitsigns.added,
-                            modified = gitsigns.changed,
-                            removed = gitsigns.removed,
-                        }
-                    elseif summary then
+                    if summary then
                         return {
                             added = summary.add,
                             modified = summary.change,
@@ -71,7 +74,18 @@ local global_sections = {
                 },
             },
         },
-        lualine_x = {},
+        lualine_x = {
+            {
+                require("noice").api.status.mode.get,
+                cond = require("noice").api.status.mode.has,
+                color = { fg = C.warn },
+            },
+            {
+                require("noice").api.status.command.get,
+                cond = require("noice").api.status.command.has,
+                color = { fg = C.warn },
+            },
+        },
     },
 }
 
@@ -90,7 +104,7 @@ local theme = {
         },
         lualine_z = {
             {
-                location,
+                location_fn,
                 separator = { left = "", right = "" },
                 padding = { left = 0, right = 0 },
             },
@@ -113,7 +127,7 @@ local tty_theme = {
             "progress",
         },
         lualine_z = {
-            location,
+            location_fn,
         },
     },
 }
