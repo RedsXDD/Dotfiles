@@ -46,7 +46,7 @@ treesitter_configs.setup({
     },
     textobjects = {
         select = {
-            enable = true,
+            enable = false, -- Disabled to avoid conflicts with mini.ai.
             lookahead = true, -- Automatically jump forward to textobj, similar to targets.vim
             keymaps = {
                 -- You can use the capture groups defined in textobjects.scm
