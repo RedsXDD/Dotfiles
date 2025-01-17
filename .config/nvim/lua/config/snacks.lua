@@ -100,7 +100,7 @@ snacks.setup({
         timeout = 3000,
     },
     notify = { enabled = true },
-    profiler = { enabled = true },
+    profiler = { enabled = false },
     quickfile = { enabled = true },
     rename = { enabled = false },
     scope = { enabled = false },

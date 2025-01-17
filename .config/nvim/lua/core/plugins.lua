@@ -255,16 +255,6 @@ local misc = {
                     keymaps.map({ "n", "t" }, "<Leader>[", function() Snacks.words.jump(-vim.v.count1) end, "Previous word reference.")
                     keymaps.map({ "n", "t" },"<Leader>]", function() Snacks.words.jump(vim.v.count1) end, "Next word reference.")
 
-                    -- Profiler.
-                    Snacks.toggle.profiler():map("<leader>op")
-                    Snacks.toggle.profiler_highlights():map("<leader>oh")
-                    vim.keymap.set(
-                        "",
-                        "<Leader>os",
-                        function() Snacks.profiler.scratch() end,
-                        { noremap = true, desc = "Profiler Scratch Buffer" }
-                    )
-
                     -- Toggle mappings.
                     keymaps.map("", "<Leader>z", function() Snacks.zen.zoom() end, "Toggle Zoom.")
                     keymaps.map("", "<Leader>Z", function() Snacks.zen() end, "Toggle Zenmode.")
