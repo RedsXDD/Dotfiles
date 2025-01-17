@@ -168,6 +168,13 @@ local mini = {
         config = load_config("mini.jump2d"),
     },
     --: }}}
+    --: mini.operators {{{
+    {
+        "echasnovski/mini.operators",
+        keys = "<Leader>o",
+        config = load_config("mini.operators"),
+    },
+    --: }}}
     --: mini.pairs {{{
     {
         "echasnovski/mini.pairs",

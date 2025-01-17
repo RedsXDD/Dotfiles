@@ -119,6 +119,9 @@ clue.setup({
         --: Mini.surround {{{
         plugin_clue("mini.surround", add_clue({ "n", "x" }, "<Leader>s", nil, "+Surround")),
         --: }}}
+        --: Mini.operators {{{
+        plugin_clue("mini.operators", add_clue({ "n", "x" }, "<Leader>o", nil, "+Operators")),
+        --: }}}
         --: Mini.splitjoin {{{
         plugin_clue("mini.splitjoin", add_clue({ "n", "x" }, "<Leader>j", nil, "+Splitjoin")),
         --: }}}
