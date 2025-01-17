@@ -130,7 +130,7 @@ clue.setup({
         --: }}}
         --: Mini.diff {{{
         plugin_clue("mini.diff", {
-            add_clue({ "n", "x" }, "<Leader>d", nil, "+MiniDiff"),
+            add_clue({ "n", "x" }, "<Leader>d", nil, "+Diff"),
             add_clue({ "n", "x" }, "]h", "]", nil),
             add_clue({ "n", "x" }, "]H", "]", nil),
             add_clue({ "n", "x" }, "[h", "[", nil),
