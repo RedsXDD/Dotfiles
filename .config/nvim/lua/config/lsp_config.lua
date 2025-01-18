@@ -105,14 +105,14 @@ if type(opts.diagnostics.virtual_text) == "table" and opts.diagnostics.virtual_t
 end
 vim.diagnostic.config(vim.deepcopy(opts.diagnostics))
 
--- Nvim_cmp configuration:
+-- Blink_cmp configuration:
 local servers = opts.servers
-local has_nvim_cmp, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
+local has_blink_cmp, blink_cmp = pcall(require, "blink.cmp")
 local capabilities = vim.tbl_deep_extend(
     "force",
     {},
     vim.lsp.protocol.make_client_capabilities(),
-    has_nvim_cmp and cmp_nvim_lsp.default_capabilities() or {},
+    has_blink_cmp and blink_cmp.get_lsp_capabilities() or {},
     opts.capabilities or {}
 )
 
