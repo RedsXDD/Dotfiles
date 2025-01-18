@@ -12,20 +12,10 @@
 -- --------------------------------------------------------------------------------- --
 
 -- Set variables for ease of typing:
-local g = vim.g
 local o = vim.opt
 
 -- Gui options:
 o.guifont = "JetBrainsMono Nerd Font,Noto_Color_Emoji:h14" -- The font used in graphical Neovim applications.
---: Netrw {{{
-g.netrw_keepdir = 0 -- Keep the current directory and the browsing directory synced.
-g.netrw_winsize = 30 -- Netrw window size when creating a split.
-g.netrw_localcopydircmd = "cp -r" -- Enable recursive netrw copy.
-g.netrw_banner = 0 -- Enable/Disable netrw banner text.
-g.netrw_altv = 1 -- Change from left splitting to right splitting.
-g.netrw_liststyle = 3 -- Tree style view in netrw.
-g.netrw_list_hide = "netrw_gitignore#Hide()"
---: }}}
 --: File history {{{
 o.backup = true -- Creates a backup file.
 o.undofile = true -- Creates a undo file.

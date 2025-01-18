@@ -119,17 +119,6 @@ set_icons("lazy", {
     },
 })
 --: }}}
---: aerial {{{
-set_icons("aerial", {
-    mid_item = "├╴",
-    last_item = "└╴",
-    nested_top = "│ ",
-}, {
-    mid_item = "+",
-    last_item = "`-",
-    nested_top = "|",
-})
---: }}}
 --: dashboard {{{
 set_icons("dashboard", {
     config_files = " ",
