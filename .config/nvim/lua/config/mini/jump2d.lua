@@ -7,6 +7,6 @@ jump2d.setup({
         n_steps_ahead = 10000,
     },
     mappings = {
-        start_jumping = "s",
+        start_jumping = "<Leader>j",
     },
 })

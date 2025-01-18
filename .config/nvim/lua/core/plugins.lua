@@ -164,7 +164,7 @@ local mini = {
     --: mini.jump2d {{{
     {
         "echasnovski/mini.jump2d",
-        keys = { { "s", mode = { "n", "x", "o" }, desc = "Jump" } },
+        keys = { { "<Leader>j", mode = { "n", "x", "o" }, desc = "Jump" } },
         config = load_config("mini.jump2d"),
     },
     --: }}}
