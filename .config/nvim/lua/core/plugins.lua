@@ -319,13 +319,6 @@ local misc = {
         config = load_config("noice"),
     },
     -- --: }}}
-    --: outline.nvim {{{
-    {
-        "hedyhli/outline.nvim",
-        keys = { { "<Leader>to", "<CMD>Outline<CR>", mode = "n", desc = "Toggle Outline." } },
-        opts = {},
-    },
-    --: }}}
     --: barbecue.nvim {{{
     {
         "utilyre/barbecue.nvim",
