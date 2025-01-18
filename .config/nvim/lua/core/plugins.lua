@@ -148,7 +148,7 @@ local mini = {
     { "nvim-tree/nvim-web-devicons", enabled = false, optional = true },
     {
         "echasnovski/mini.icons",
-        opts = {},
+        opts = { style = (function() return vim.env.DISPLAY ~= nil and "glyph" or "ascii" end)() },
         event = "VeryLazy",
         init = function()
             ---@diagnostic disable-next-line: duplicate-set-field

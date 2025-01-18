@@ -68,9 +68,6 @@ files.setup({
     content = {
         -- Use different directory icon.
         prefix = function(fs_entry)
-            -- Disable icons if Neovim is being ran on a TTY.
-            if vim.env.DISPLAY == nil then return end
-
             local directory_icon = require("core.icons").mini_files.directory_icon
             if fs_entry.fs_type == "directory" then return directory_icon, "MiniFilesDirectory" end
             return require("mini.files").default_prefix(fs_entry)
