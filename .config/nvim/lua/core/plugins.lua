@@ -240,41 +240,41 @@ local misc = {
                     _G.bt = function() Snacks.debug.backtrace() end
                     vim.print = _G.dd -- Override print to use snacks for `:=` command
 
-                    local keymaps = require("core.utils").keymaps
+                    local map = require("core.utils").map
 
                     -- stylua: ignore start
                     -- Misc.
-                    keymaps.map("", "<Leader>x", function() Snacks.bufdelete() end, "Delete current buffer.")
-                    keymaps.map("", "<Leader>gr", function() Snacks.rename.rename_file() end, "Rename current file.")
-                    keymaps.map("n", "<Leader>gN", function() Snacks.win({ file = vim.api.nvim_get_runtime_file("doc/news.txt", false)[1], width = 0.6, height = 0.6, wo = { spell = false, wrap = false, signcolumn = "yes", statuscolumn = " ", conceallevel = 3, }, }) end, "Look at Neovim news.")
+                    map("", "<Leader>x", function() Snacks.bufdelete() end, "Delete current buffer.")
+                    map("", "<Leader>gr", function() Snacks.rename.rename_file() end, "Rename current file.")
+                    map("n", "<Leader>gN", function() Snacks.win({ file = vim.api.nvim_get_runtime_file("doc/news.txt", false)[1], width = 0.6, height = 0.6, wo = { spell = false, wrap = false, signcolumn = "yes", statuscolumn = " ", conceallevel = 3, }, }) end, "Look at Neovim news.")
 
                     -- Git.
-                    keymaps.map("", "<Leader>gg", function() Snacks.lazygit() end, "Open lazygit.")
-                    keymaps.map("", "<Leader>gl", function() Snacks.lazygit.log() end, "Open lazygit log (CWD).")
-                    keymaps.map("", "<Leader>gL", function() Snacks.lazygit.log_file() end, "Lazygit current file history.")
-                    keymaps.map({ "n", "v" }, "<Leader>gb", function() Snacks.gitbrowse() end, "Open gitbrowse.")
-                    keymaps.map("", "<Leader>ga", function() Snacks.git.blame_line() end, "Git blame line.")
+                    map("", "<Leader>gg", function() Snacks.lazygit() end, "Open lazygit.")
+                    map("", "<Leader>gl", function() Snacks.lazygit.log() end, "Open lazygit log (CWD).")
+                    map("", "<Leader>gL", function() Snacks.lazygit.log_file() end, "Lazygit current file history.")
+                    map({ "n", "v" }, "<Leader>gb", function() Snacks.gitbrowse() end, "Open gitbrowse.")
+                    map("", "<Leader>ga", function() Snacks.git.blame_line() end, "Git blame line.")
 
                     -- Scratch buffer.
-                    keymaps.map("", "<Leader>e", function() Snacks.scratch() end, "Toggle scratch buffer.")
-                    keymaps.map("", "<Leader>E", function() Snacks.scratch.select() end, "Select scratch buffer.")
+                    map("", "<Leader>e", function() Snacks.scratch() end, "Toggle scratch buffer.")
+                    map("", "<Leader>E", function() Snacks.scratch.select() end, "Select scratch buffer.")
 
                     -- Notifier.
-                    keymaps.map("", "<Leader>gh", function() Snacks.notifier.show_history() end, "Show notification history.")
-                    keymaps.map("", "<Leader>gn", function() Snacks.notifier.hide() end, "Dismiss all notifications")
+                    map("", "<Leader>gh", function() Snacks.notifier.show_history() end, "Show notification history.")
+                    map("", "<Leader>gn", function() Snacks.notifier.hide() end, "Dismiss all notifications")
 
                     -- Terminal.
-                    keymaps.map("", "<C-/>", function() Snacks.terminal.toggle() end, "Toggle terminal.")
-                    keymaps.map("", "<C-_>", function() Snacks.terminal.toggle() end, "Toggle terminal.")
-                    keymaps.map("t", "<A-;>", function() Snacks.terminal.open() end, "Open a new terminal window.")
+                    map("", "<C-/>", function() Snacks.terminal.toggle() end, "Toggle terminal.")
+                    map("", "<C-_>", function() Snacks.terminal.toggle() end, "Toggle terminal.")
+                    map("t", "<A-;>", function() Snacks.terminal.open() end, "Open a new terminal window.")
 
                     -- Lsp.
-                    keymaps.map({ "n", "t" }, "<Leader>[", function() Snacks.words.jump(-vim.v.count1) end, "Previous word reference.")
-                    keymaps.map({ "n", "t" },"<Leader>]", function() Snacks.words.jump(vim.v.count1) end, "Next word reference.")
+                    map({ "n", "t" }, "<Leader>[", function() Snacks.words.jump(-vim.v.count1) end, "Previous word reference.")
+                    map({ "n", "t" },"<Leader>]", function() Snacks.words.jump(vim.v.count1) end, "Next word reference.")
 
                     -- Toggle mappings.
-                    keymaps.map("", "<Leader>z", function() Snacks.zen.zoom() end, "Toggle Zoom.")
-                    keymaps.map("", "<Leader>Z", function() Snacks.zen() end, "Toggle Zenmode.")
+                    map("", "<Leader>z", function() Snacks.zen.zoom() end, "Toggle Zoom.")
+                    map("", "<Leader>Z", function() Snacks.zen() end, "Toggle Zenmode.")
                     Snacks.toggle.option("spell", { name = "Spelling" }):map("<Leader>ts")
                     Snacks.toggle.option("wrap", { name = "Wrap" }):map("<Leader>tw")
                     Snacks.toggle.line_number():map("<Leader>tl")
@@ -340,6 +340,9 @@ local misc = {
             "nvim-tree/nvim-web-devicons", -- optional dependency
         },
         config = function()
+            local neopywal_barbecue = require("neopywal.theme.plugins.barbecue")
+            if neopywal_barbecue then neopywal_barbecue.setup({ dim_background = true }) end
+
             require("barbecue").setup({
                 theme = "neopywal",
             })

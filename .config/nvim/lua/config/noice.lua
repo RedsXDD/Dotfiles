@@ -2,21 +2,21 @@ local has_noice, noice = pcall(require, "noice")
 if not has_noice then return end
 
 local noice_lsp = require("noice.lsp")
-local keymaps = require("core.utils").keymaps
+local map = require("core.utils").map
 
 -- stylua: ignore start
-keymaps.map("c", "<S-Enter>", function() noice.redirect(vim.fn.getcmdline()) end, "Redirect Cmdline")
-keymaps.map("n", "<Leader>ul", function() noice.cmd("last") end, "Noice Last Message")
-keymaps.map("n", "<Leader>uh", function() noice.cmd("history") end, "Noice History")
-keymaps.map("n", "<Leader>ua", function() noice.cmd("all") end, "Noice All")
-keymaps.map("n", "<Leader>ud", function() noice.cmd("dismiss")  end, "Dismiss All")
+map("c", "<S-Enter>", function() noice.redirect(vim.fn.getcmdline()) end, "Redirect Cmdline")
+map("n", "<Leader>ul", function() noice.cmd("last") end, "Noice Last Message")
+map("n", "<Leader>uh", function() noice.cmd("history") end, "Noice History")
+map("n", "<Leader>ua", function() noice.cmd("all") end, "Noice All")
+map("n", "<Leader>ud", function() noice.cmd("dismiss")  end, "Dismiss All")
 -- stylua: ignore end
 
-keymaps.map({ "n", "i", "s" }, "<C-f>", function()
+map({ "n", "i", "s" }, "<C-f>", function()
     if not noice_lsp.scroll(4) then return "<C-f>" end
 end, "Scroll Forward", { noremap = true, silent = true, expr = true })
 
-keymaps.map({ "n", "i", "s" }, "<C-b>", function()
+map({ "n", "i", "s" }, "<C-b>", function()
     if not noice_lsp.scroll(-4) then return "<C-b>" end
 end, "Scroll Backward", { noremap = true, silent = true, expr = true })
 
