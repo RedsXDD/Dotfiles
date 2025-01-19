@@ -12,6 +12,7 @@ local opts = {
         component_separators = "|",
         disabled_filetypes = {
             statusline = {
+                "snacks_dashboard",
                 "dashboard",
                 "alpha",
                 "starter",
