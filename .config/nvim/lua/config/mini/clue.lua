@@ -87,11 +87,6 @@ clue.setup({
         add_clue({ "n", "x" }, "<Leader>b", nil, "+Buffers & Tabs."),
         add_clue({ "n", "x" }, "<Leader>t", nil, "+Toggles."),
         add_clue({ "n", "x" }, "<Leader>g", nil, "+Misc."),
-        plugin_clue("mini.splitjoin", {
-            add_clue({ "n", "x" }, "<Leader>gj", nil, nil),
-            add_clue({ "n", "x" }, "<Leader>gt", nil, nil),
-            add_clue({ "n", "x" }, "<Leader>gT", nil, nil),
-        }),
         --: }}}
         --: Noice {{{
         plugin_clue("noice", add_clue("n", "<Leader>u", nil, "+Noice")),
@@ -126,6 +121,9 @@ clue.setup({
         --: }}}
         --: Mini.operators {{{
         plugin_clue("mini.operators", add_clue({ "n", "x" }, "<Leader>o", nil, "+Operators")),
+        --: }}}
+        --: Mini.splitjoin {{{
+        plugin_clue("mini.splitjoin", add_clue({ "n", "x" }, "<Leader>j", nil, "+Splitjoin")),
         --: }}}
         --: Mini.pairs {{{
         plugin_clue("mini.pairs", add_clue({ "n", "x" }, "<Leader>tp", nil, "Toggle Mini.pairs.")),
