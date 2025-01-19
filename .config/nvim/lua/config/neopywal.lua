@@ -31,6 +31,7 @@ neopywal.setup({
             files = true,
             hipatterns = true,
             icons = true,
+            jump = true,
             jump2d = true,
             statusline = true,
             surround = true,
