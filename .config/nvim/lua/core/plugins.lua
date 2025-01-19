@@ -425,9 +425,7 @@ local misc = {
         "m4xshen/hardtime.nvim",
         dependencies = { "MunifTanjim/nui.nvim" },
         event = "LazyFile",
-        opts = {
-            disabled_filetypes = { "qf", "netrw", "NvimTree", "lazy", "mason", "minifiles", "noice" },
-        },
+        config = load_config("hardtime"),
     },
     --: }}}
 }
