@@ -426,7 +426,7 @@ local misc = {
         dependencies = { "MunifTanjim/nui.nvim" },
         event = "LazyFile",
         opts = {
-            disabled_filetypes = { "qf", "netrw", "NvimTree", "lazy", "mason", "minifiles" },
+            disabled_filetypes = { "qf", "netrw", "NvimTree", "lazy", "mason", "minifiles", "noice" },
         },
     },
     --: }}}
