@@ -119,12 +119,16 @@ set_icons("lazy", {
     },
 })
 --: }}}
---: dashboard {{{
-set_icons("dashboard", {
+--: snacks {{{
+set_icons("snacks", {
     config_files = " ",
+    corner_bottom = "└",
+    corner_top = "┌",
     file_explorer = "󰉋 ",
     find_files = "󰱼 ",
     footer = "󱐋 ",
+    indent_horizontal = "─",
+    indent_vertical = "│",
     keymaps = " ",
     lazy = "󰒲 ",
     live_grep = "󰈬 ",
@@ -148,9 +152,13 @@ set_icons("dashboard", {
     },
 }, {
     config_files = "C ",
+    corner_bottom = "+",
+    corner_top = "+",
     file_explorer = "E ",
     find_files = "F ",
     footer = "=> ",
+    indent_horizontal = "-",
+    indent_vertical = "|",
     keymaps = "K ",
     lazy = "L ",
     live_grep = "G ",

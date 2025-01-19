@@ -1,7 +1,7 @@
 local has_snacks, snacks = pcall(require, "snacks")
 if not has_snacks then return end
 
-local icons = require("core.icons").dashboard
+local icons = require("core.icons").snacks
 
 ---@param icon string
 ---@param key string
@@ -50,7 +50,13 @@ snacks.setup({
                 indent = 2,
                 padding = { 2, 0 },
             },
-            { icon = icons.projects, title = "Projects", section = "projects", indent = 2, padding = { 2, 0 } },
+            {
+                icon = icons.projects,
+                title = "Projects",
+                section = "projects",
+                indent = 2,
+                padding = { 2, 0 },
+            },
             { icon = icons.footer, section = "startup" },
         },
     },
