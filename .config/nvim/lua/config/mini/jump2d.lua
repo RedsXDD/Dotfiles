@@ -4,9 +4,9 @@ if not has_jump2d then return end
 jump2d.setup({
     view = {
         dim = true,
-        n_steps_ahead = 10000,
+        n_steps_ahead = 0,
     },
     mappings = {
-        start_jumping = "s",
+        start_jumping = "<CR>",
     },
 })
