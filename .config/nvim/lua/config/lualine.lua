@@ -2,12 +2,6 @@ local has_lualine, lualine = pcall(require, "lualine")
 if not has_lualine then return end
 
 local icons = require("core.icons")
-local C = require("neopywal.lib.palette").get()
-local U = require("neopywal.utils.color")
-vim.api.nvim_set_hl(0, "LuaLineDiffAdd", { bg = U.blend(C.color8, C.background, 0.3), fg = C.diff_added })
-vim.api.nvim_set_hl(0, "LuaLineDiffChange", { bg = U.blend(C.color8, C.background, 0.3), fg = C.diff_changed })
-vim.api.nvim_set_hl(0, "LuaLineDiffDelete", { bg = U.blend(C.color8, C.background, 0.3), fg = C.diff_removed })
-
 local location_fn = function() return "ln:" .. "%l" .. " " .. "cl:" .. "%v" end
 
 local opts = {
@@ -78,12 +72,12 @@ local global_sections = {
             {
                 require("noice").api.status.mode.get,
                 cond = require("noice").api.status.mode.has,
-                color = { fg = C.warn },
+                color = "LuaLineNoiceKeys",
             },
             {
                 require("noice").api.status.command.get,
                 cond = require("noice").api.status.command.has,
-                color = { fg = C.warn },
+                color = "LuaLineNoiceKeys",
             },
         },
     },

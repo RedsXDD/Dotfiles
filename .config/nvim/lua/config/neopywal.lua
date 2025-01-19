@@ -40,7 +40,14 @@ neopywal.setup({
     },
     custom_highlights = {
         all = function(C)
+            local U = require("neopywal.utils.color")
             return {
+                -- For lualine diff and noice sectionc.
+                LuaLineNoiceKeys = { bg = U.blend(C.color8, C.background, 0.3), fg = C.warn },
+                LuaLineDiffAdd = { bg = U.blend(C.color8, C.background, 0.3), fg = C.diff_added },
+                LuaLineDiffChange = { bg = U.blend(C.color8, C.background, 0.3), fg = C.diff_changed },
+                LuaLineDiffDelete = { bg = U.blend(C.color8, C.background, 0.3), fg = C.diff_removed },
+
                 BlinkCmpKindArray = { bg = C.special, fg = C.background },
                 BlinkCmpKindBoolean = { bg = C.boolean, fg = C.background },
                 BlinkCmpKindClass = { bg = C.type, fg = C.background },
