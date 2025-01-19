@@ -182,6 +182,9 @@ local mini = {
         config = load_config("mini.pairs"),
     },
     --: }}}
+    --: mini.snippets {{{
+    { "echasnovski/mini.snippets", lazy = true, opts = {} },
+    --: }}}
     --: mini.splitjoin {{{
     {
         "echasnovski/mini.splitjoin",
@@ -348,7 +351,7 @@ local misc = {
     --: blink.cmp {{{
     {
         "saghen/blink.cmp",
-        dependencies = { { "echasnovski/mini.snippets", opts = {} }, "rafamadriz/friendly-snippets" },
+        dependencies = { "echasnovski/mini.snippets", "rafamadriz/friendly-snippets" },
         event = "InsertEnter",
         build = "cargo build --release",
         opts = {
