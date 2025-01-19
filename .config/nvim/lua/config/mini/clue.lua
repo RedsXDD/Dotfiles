@@ -38,7 +38,7 @@ clue.setup({
         scroll_up = "<C-k>",
         scroll_down = "<C-j>",
         config = {
-            anchor = "SE",
+            anchor = "NE",
             row = "auto",
             col = "auto",
             width = "auto",
