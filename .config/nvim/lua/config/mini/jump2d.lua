@@ -6,6 +6,12 @@ jump2d.setup({
         dim = true,
         n_steps_ahead = 10000,
     },
+    allowed_lines = {
+        cursor_at = false,
+    },
+    allowed_windows = {
+        not_current = false,
+    },
     mappings = {
         start_jumping = "s",
     },
