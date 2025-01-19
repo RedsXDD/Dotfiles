@@ -120,26 +120,3 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 		call cursor(currPos[1], currPos[2])
 	]],
 })
-
--- TODO
--- -- Auto reload waybar.
--- autocmd("BufWritePost", {
--- 	pattern = "~/.config/waybar/*",
--- 	callback = function()
--- 		vim.fn.system("pywal_postrun")
--- 	end
--- })
--- -- Auto reload swaync.
--- autocmd("BufWritePost", {
--- 	pattern = { "~/.config/swaync/*", "~/.config/wal/templates/colors.swaync.css" },
--- 	callback = function()
--- 		vim.fn.system("reload_swaync")
--- 	end
--- })
--- -- Reload pywal themes when changing configs.
--- autocmd("BufWritePost", {
--- 	pattern = "~/.config/wal/templates/*",
--- 	callback = function()
--- 		vim.fn.system("wal -Rq")
--- 	end,
--- })
