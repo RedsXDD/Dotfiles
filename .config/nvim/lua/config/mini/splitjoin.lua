@@ -4,8 +4,8 @@ if not has_splitjoin then return end
 splitjoin.setup({
     detect = { separator = "[,;]" },
     mappings = {
-        toggle = "<Leader>gj",
-        split = "<Leader>gt",
-        join = "<Leader>gT",
+        toggle = "<Leader>oo",
+        split = "<Leader>ot",
+        join = "<Leader>oj",
     },
 })

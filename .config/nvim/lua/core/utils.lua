@@ -25,13 +25,7 @@ end
 ---@param desc string
 ---@param opts table?
 function M.map(modes, keys, func, desc, opts)
-    if opts ~= nil and type(opts) ~= "table" then
-        error("expect table under 'opts' for keymap set but got " .. type(opts))
-    end
-
-    opts = opts or { noremap = true }
-    opts.desc = "" .. desc
-
+    opts = vim.tbl_deep_extend("force", { desc = "" .. desc }, opts or {}, { noremap = true })
     vim.keymap.set(modes, keys, func, opts)
 end
 

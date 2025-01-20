@@ -84,17 +84,8 @@ clue.setup({
         plugin_clue("conform", add_clue({ "n", "x" }, "<Leader>lf", nil, "Format File.")),
         --: }}}
         --: General {{{
-        add_clue({ "n", "x" }, "<Leader>b", nil, "+Buffers & Tabs."),
-        add_clue({ "n", "x" }, "<Leader>t", nil, "+Toggles."),
-        add_clue({ "n", "x" }, "<Leader>g", nil, "+Misc."),
-        plugin_clue("mini.splitjoin", {
-            add_clue({ "n", "x" }, "<Leader>gj", nil, nil),
-            add_clue({ "n", "x" }, "<Leader>gt", nil, nil),
-            add_clue({ "n", "x" }, "<Leader>gT", nil, nil),
-        }),
-        --: }}}
-        --: Noice {{{
-        plugin_clue("noice", add_clue("n", "<Leader>u", nil, "+Noice")),
+        add_clue({ "n", "x" }, "<Leader>t", nil, "+Toggles"),
+        add_clue({ "n", "x" }, "<Leader>g", nil, "+Misc"),
         --: }}}
         --: Lsp {{{
         plugin_clue("lspconfig", {
@@ -121,11 +112,20 @@ clue.setup({
         add_clue({ "n", "x" }, "[[", nil, "Jump to previous `[`"),
         add_clue({ "n", "x" }, "[{", nil, "Jump to previous `{`"),
         --: }}}
-        --: Mini.surround {{{
-        plugin_clue("mini.surround", add_clue({ "n", "x" }, "<Leader>s", nil, "+Surround")),
+        --: treesitter-textobjects {{{
+        { mode = "n", keys = "]e", postkeys = "]" },
+        { mode = "n", keys = "[e", postkeys = "[" },
         --: }}}
-        --: Mini.operators {{{
-        plugin_clue("mini.operators", add_clue({ "n", "x" }, "<Leader>o", nil, "+Operators")),
+        --: Mini.surround / replace commands {{{
+        plugin_clue("mini.surround", add_clue({ "n", "x" }, "<Leader>s", nil, "+Surround/Substitute")),
+        --: }}}
+        --: Mini.operators / mini.splitjoin {{{
+        plugin_clue("mini.operators", add_clue({ "n", "x" }, "<Leader>o", nil, "+Operators/Splitjoin")),
+        plugin_clue("mini.splitjoin", {
+            add_clue({ "n", "x" }, "<Leader>oo", nil, nil),
+            add_clue({ "n", "x" }, "<Leader>ot", nil, nil),
+            add_clue({ "n", "x" }, "<Leader>oj", nil, nil),
+        }),
         --: }}}
         --: Mini.pairs {{{
         plugin_clue("mini.pairs", add_clue({ "n", "x" }, "<Leader>tp", nil, "Toggle Mini.pairs.")),
@@ -194,6 +194,10 @@ clue.setup({
             { mode = "n", keys = "]Q", postkeys = "]" },
             { mode = "n", keys = "[q", postkeys = "[" },
             { mode = "n", keys = "[Q", postkeys = "[" },
+            --: }}}
+            --: Jump betwheen spell mistakes {{{
+            add_clue({ "n", "x" }, "]s", "]", "Spell forward"),
+            add_clue({ "n", "x" }, "[s", "[", "Spell backword"),
             --: }}}
             --: Jump betwheen tree-sitter node and parents {{{
             add_clue({ "n", "x" }, "]t", "]", nil),

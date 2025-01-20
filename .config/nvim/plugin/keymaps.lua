@@ -19,58 +19,42 @@ local function center_map(keys, desc)
     vim.keymap.set("", keys, keys .. "<CMD>norm! zvzz<CR>", { noremap = true, silent = true, desc = "" .. desc })
 end
 
+---@param modes string|table
+---@param key string -- No need to specify "<Leader>s"
+---@param sub_str string
+---@param desc string
+---@param move_count number?
+local function subs_map(modes, key, sub_str, desc, move_count)
+    -- stylua: ignore start
+    vim.keymap.set(modes, "<Leader>s" .. string.lower(key), ":s" .. sub_str .. "gc" .. string.rep("<Left>", move_count or 4), { noremap = true, desc = "" .. desc })
+    vim.keymap.set(modes, "<Leader>s" .. string.upper(key), ":%s" .. sub_str .. "gc" .. string.rep("<Left>", move_count or 4), { noremap = true, desc = "" .. desc:gsub("%.$", "") .. " on the whole file."})
+    -- stylua: ignore end
+end
+
 --: General {{{
-map("n", "<Esc>", ":noh<CR><Esc>", "Clear highlighted searches.")
-map("v", ".", ":norm .<CR>", "Perform dot commands over visual blocks.")
+map("n", "<Esc>", "<CMD>noh<CR><Esc>", "Clear highlighted searches.")
+map("v", ".", "<CMD>norm .<CR>", "Perform dot commands over visual blocks.")
 map("", "j", "gj", "Remap j to gj for better movement on warped lines.")
 map("", "k", "gk", "Remap k to gk for better movement on warped lines.")
 
--- Replace commands:
-map("n", "<Leader>gs", ":s///g<Left><Left><Left>", "Replace string on the current line.")
-map("n", "<Leader>gS", ":%s///g<Left><Left><Left>", "Replace string on the whole file.")
-map("v", "<Leader>gs", ":s///g<Left><Left><Left>", "Replace on selected text.")
-map("v", "<Leader>gS", ":s///g<Left><Left><Left>", "Replace on selected text.")
-
--- Remap left/down/up/right.
-map("", "<Up>", "<C-y>", "Scroll up.")
-map("", "<Down>", "<C-e>", "Scroll down.")
-map("", "<Left>", "<S-{>", "Move to the start of previous block.")
-map("", "<Right>", "<S-}>", "Move to the end of next block.")
-
--- Saner behavior of n and N.
--- stylua: ignore start
-vim.keymap.set("n", "n", "'Nn'[v:searchforward].'zv'", { noremap = true, silent = true, expr = true, desc = "Next Search Result" })
-vim.keymap.set("x", "n", "'Nn'[v:searchforward]",      { noremap = true, silent = true, expr = true, desc = "Next Search Result" })
-vim.keymap.set("o", "n", "'Nn'[v:searchforward]",      { noremap = true, silent = true, expr = true, desc = "Next Search Result" })
-vim.keymap.set("n", "N", "'nN'[v:searchforward].'zv'", { noremap = true, silent = true, expr = true, desc = "Prev Search Result" })
-vim.keymap.set("x", "N", "'nN'[v:searchforward]",      { noremap = true, silent = true, expr = true, desc = "Prev Search Result" })
-vim.keymap.set("o", "N", "'nN'[v:searchforward]",      { noremap = true, silent = true, expr = true, desc = "Prev Search Result" })
--- stylua: ignore end
+-- Substitute commands:
+subs_map("n", "s", "///", "Substitute string.")
+map("v", "<Leader>ss", ":s///gc" .. string.rep("<Left>", 4), "Substitute string on selection.")
+subs_map("n", "w", "/\\<<C-r><C-w>\\>//", "Substitute word under cursor.", 3)
+--: }}}
 --: Automatically center cursor {{{
-center_map("n", "Center cursor when moving to the next match during a search.")
-center_map("N", "Center cursor when moving to the previous match during a search.")
+-- stylua: ignore start
+map({"n", "x", "o"}, "n", [['Nn'[v:searchforward].'zzzv']], "Center cursor when moving to the next search result.", { silent = true, expr = true })
+map({ "n", "x", "o"}, "N", [['nN'[v:searchforward].'zzzv']], "Center cursor when moving to the previous search result.", { silent = true, expr = true })
+-- stylua: ignore end
+
 center_map("G", "Center cursor when moving to the last line of buffer.")
 center_map("<C-d>", "Center cursor when moving a half page down.")
 center_map("<C-u>", "Center cursor when moving a half page up.")
 center_map("<C-f>", "Center cursor when moving a page down.")
 center_map("<C-b>", "Center cursor when moving a page up.")
---: }}}
---: Move lines around with Alt + H/J/K/L {{{
-map("n", "<A-S-J>", ":m .+1<CR>==", "Move the current line down.")
-map("n", "<A-S-K>", ":m .-2<CR>==", "Move the current line up.")
-map("n", "<A-S-H>", "<<", "Move the current line to the left.")
-map("n", "<A-S-L>", ">>", "Move the current line to the right.")
-map("i", "<A-S-J>", "<Esc>:m .+1<CR>==gi", "Move the current line down in insert mode.")
-map("i", "<A-S-K>", "<Esc>:m .-2<CR>==gi", "Move the current line up in insert mode.")
-map("i", "<A-S-H>", "<Esc><<gi", "Move the current line to the left in insert mode.")
-map("i", "<A-S-L>", "<Esc>>>gi", "Move the current line to the right in insert mode.")
-map("v", "<A-S-J>", ":m '>+1<CR>gv=gv", "Move selected lines down.")
-map("v", "<A-S-K>", ":m '<-2<CR>gv=gv", "Move selected lines up.")
-map("v", "<A-S-H>", "<gv", "Move selected lines to the left.")
-map("v", "<A-S-L>", ">gv", "Move selected lines to the right.")
-map("v", "<", "<gv", "Move selected lines to the left.")
-map("v", ">", ">gv", "Move selected lines to the right.")
---: }}}
+center_map("}", "Center cursor when moving to the next empty line.")
+center_map("{", "Center cursor when moving to the previous empty line.")
 --: }}}
 --: Clipboard management {{{
 map("", "<Leader>y", '"*y', "Copy to primary clipboard.")
@@ -79,8 +63,8 @@ map("", "<Leader>P", '"*P', "Paste from primary clipboard.")
 --: }}}
 --: Split/buffer/tab management {{{
 -- Create splits.
-map("", "<Leader>-", ":vsplit | enew<CR>", "Create vertical split.")
-map("", "<Leader>_", ":split | enew<CR>", "Create horizontal split.")
+map("", "<Leader>-", "<CMD>vsplit | enew<CR>", "Create vertical split.")
+map("", "<Leader>_", "<CMD>split | enew<CR>", "Create horizontal split.")
 
 -- Move across splits.
 map("", "<C-h>", "<CMD>wincmd h<CR>", "Move to the left split window.")
@@ -99,22 +83,6 @@ map("", "<C-S-Left>", "<CMD>wincmd H<CR>", "Move split window to the left.")
 map("", "<C-S-Down>", "<CMD>wincmd J<CR>", "Move split window to the bottom.")
 map("", "<C-S-Up>", "<CMD>wincmd K<CR>", "Move split window to the top.")
 map("", "<C-S-Right>", "<CMD>wincmd L<CR>", "Move split window to the right.")
-
--- Buffer management.
-map("", "<Leader>bb", "<CMD>wincmd T<CR>", "Break split into a new tab.")
-map("", "<Leader>bc", ":badd | enew<CR>", "Open a new buffer.")
-map("", "<Leader>bC", ":tabnew | enew<CR>", "Open a new tab.")
-
--- Move across buffers.
-map("n", "[b", "<CMD>bprev<CR>", "Buffer previous")
-map("n", "]b", "<CMD>bnext<CR>", "Buffer next")
-map("n", "[B", "<CMD>bfirst<CR>", "Buffer first")
-map("n", "]B", "<CMD>blast<CR>", "Buffer last")
-
--- Tab management.
-map("", "<Leader>.", ":tabn<CR>", "Move to the next tab.")
-map("", "<Leader>,", ":tabp<CR>", "Move to the previous tab.")
-map("n", "<Leader>bb", "<CMD>e #<CR>", "Switch to previously active buffer")
 --: }}}
 --: File explorer {{{
 -- stylua: ignore start
