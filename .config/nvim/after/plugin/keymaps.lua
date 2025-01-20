@@ -52,8 +52,6 @@ center_map("<C-d>", "Center cursor when moving a half page down.")
 center_map("<C-u>", "Center cursor when moving a half page up.")
 center_map("<C-f>", "Center cursor when moving a page down.")
 center_map("<C-b>", "Center cursor when moving a page up.")
-center_map("}", "Center cursor when moving to the next empty line.")
-center_map("{", "Center cursor when moving to the previous empty line.")
 
 -- Clipboard management
 map("", "<Leader>y", '"*y', "Copy to primary clipboard.")
