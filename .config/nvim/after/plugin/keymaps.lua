@@ -31,7 +31,7 @@ local function subs_map(modes, key, sub_str, desc, move_count)
     -- stylua: ignore end
 end
 
---: General {{{
+-- General
 map("n", "<Esc>", "<CMD>noh<CR><Esc>", "Clear highlighted searches.")
 map("v", ".", "<CMD>norm .<CR>", "Perform dot commands over visual blocks.")
 map("", "j", "gj", "Remap j to gj for better movement on warped lines.")
@@ -41,13 +41,12 @@ map("", "k", "gk", "Remap k to gk for better movement on warped lines.")
 subs_map("n", "s", "///", "Substitute string.")
 map("v", "<Leader>ss", ":s///gc" .. string.rep("<Left>", 4), "Substitute string on selection.")
 subs_map("n", "w", "/\\<<C-r><C-w>\\>//", "Substitute word under cursor.", 3)
---: }}}
---: Automatically center cursor {{{
+
+-- Automatically center cursor
 -- stylua: ignore start
 map({"n", "x", "o"}, "n", [['Nn'[v:searchforward].'zzzv']], "Center cursor when moving to the next search result.", { silent = true, expr = true })
 map({ "n", "x", "o"}, "N", [['nN'[v:searchforward].'zzzv']], "Center cursor when moving to the previous search result.", { silent = true, expr = true })
 -- stylua: ignore end
-
 center_map("G", "Center cursor when moving to the last line of buffer.")
 center_map("<C-d>", "Center cursor when moving a half page down.")
 center_map("<C-u>", "Center cursor when moving a half page up.")
@@ -55,13 +54,12 @@ center_map("<C-f>", "Center cursor when moving a page down.")
 center_map("<C-b>", "Center cursor when moving a page up.")
 center_map("}", "Center cursor when moving to the next empty line.")
 center_map("{", "Center cursor when moving to the previous empty line.")
---: }}}
---: Clipboard management {{{
+
+-- Clipboard management
 map("", "<Leader>y", '"*y', "Copy to primary clipboard.")
 map("", "<Leader>p", '"*p', "Paste from primary clipboard.")
 map("", "<Leader>P", '"*P', "Paste from primary clipboard.")
---: }}}
---: Split/buffer/tab management {{{
+
 -- Create splits.
 map("", "<Leader>-", "<CMD>vsplit | enew<CR>", "Create vertical split.")
 map("", "<Leader>_", "<CMD>split | enew<CR>", "Create horizontal split.")
@@ -83,10 +81,9 @@ map("", "<C-S-Left>", "<CMD>wincmd H<CR>", "Move split window to the left.")
 map("", "<C-S-Down>", "<CMD>wincmd J<CR>", "Move split window to the bottom.")
 map("", "<C-S-Up>", "<CMD>wincmd K<CR>", "Move split window to the top.")
 map("", "<C-S-Right>", "<CMD>wincmd L<CR>", "Move split window to the right.")
---: }}}
---: File explorer {{{
+
+-- File explorer
 -- stylua: ignore start
 map("n", "<Leader>gf", function() require("core.utils").toggle_file_explorer() end, "Open file explorer on CWD.")
 map("n", "<Leader>gF", function() require("core.utils").toggle_file_explorer(true) end, "Open file explorer on directory of current file.")
 -- stylua: ignore end
---: }}}
