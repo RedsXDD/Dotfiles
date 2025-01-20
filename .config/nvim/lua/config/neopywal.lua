@@ -33,6 +33,7 @@ neopywal.setup({
             icons = true,
             jump = true,
             jump2d = true,
+            snippets = true,
             statusline = true,
             surround = true,
             tabline = true,
