@@ -10,9 +10,7 @@ local icons = require("core.icons").snacks
 local function new_section(icon, key, desc, action) return { icon = icon, key = key, desc = desc, action = action } end
 
 snacks.setup({
-    animate = { enabled = false },
     bigfile = { enabled = true },
-    bufdelete = { enabled = false },
     dashboard = {
         enabled = true,
         width = 45,
@@ -60,10 +58,6 @@ snacks.setup({
             { icon = icons.footer, section = "startup" },
         },
     },
-    debug = { enabled = false },
-    dim = { enabled = false },
-    git = { enabled = false },
-    gitbrowse = { enabled = false },
     indent = { enabled = true },
     input = {
         enabled = true,
@@ -106,17 +100,10 @@ snacks.setup({
         timeout = 3000,
     },
     notify = { enabled = true },
-    profiler = { enabled = false },
     quickfile = { enabled = true },
-    rename = { enabled = false },
-    scope = { enabled = false },
     scratch = { enabled = true },
-    scroll = { enabled = false },
     statuscolumn = { enabled = true },
     terminal = { enabled = true },
-    toggle = { enabled = false },
-    util = { enabled = false },
-    win = { enabled = false },
     words = { enabled = true },
     zen = { enabled = true },
     styles = {
