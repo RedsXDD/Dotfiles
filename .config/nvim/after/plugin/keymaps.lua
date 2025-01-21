@@ -32,6 +32,7 @@ map("n", "<Leader>ss", ":s///gc" .. string.rep("<Left>", 4), "Substitute string.
 map("n", "<Leader>sS", ":%s///gc" .. string.rep("<Left>", 4), "Substitute string on the whole file.")
 map("n", "<Leader>sw", ":s/\\<<C-r><C-w>\\>//gc" .. string.rep("<Left>", 3), "Substitute word under cursor.")
 map("n", "<Leader>sW", ":%s/\\<<C-r><C-w>\\>//gc" .. string.rep("<Left>", 3), "Substitute word under cursor on the whole file.")
+map("n", "<Leader>sq", ":cdo %s///gc" .. string.rep("<Left>", 4), "Substitute string on the quickfix list.")
 -- stylua: ignore end
 
 -- Automatically center cursor
