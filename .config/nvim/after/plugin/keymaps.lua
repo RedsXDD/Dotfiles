@@ -19,18 +19,6 @@ local function center_map(keys, desc)
     vim.keymap.set("", keys, keys .. "<CMD>norm! zvzz<CR>", { noremap = true, silent = true, desc = "" .. desc })
 end
 
----@param modes string|table
----@param key string -- No need to specify "<Leader>s"
----@param sub_str string
----@param desc string
----@param move_count number?
-local function subs_map(modes, key, sub_str, desc, move_count)
-    -- stylua: ignore start
-    vim.keymap.set(modes, "<Leader>s" .. string.lower(key), ":s" .. sub_str .. "gc" .. string.rep("<Left>", move_count or 4), { noremap = true, desc = "" .. desc })
-    vim.keymap.set(modes, "<Leader>s" .. string.upper(key), ":%s" .. sub_str .. "gc" .. string.rep("<Left>", move_count or 4), { noremap = true, desc = "" .. desc:gsub("%.$", "") .. " on the whole file."})
-    -- stylua: ignore end
-end
-
 -- General
 map("n", "<Esc>", "<CMD>noh<CR><Esc>", "Clear highlighted searches.")
 map("v", ".", "<CMD>norm .<CR>", "Perform dot commands over visual blocks.")
@@ -38,9 +26,13 @@ map("", "j", "gj", "Remap j to gj for better movement on warped lines.")
 map("", "k", "gk", "Remap k to gk for better movement on warped lines.")
 
 -- Substitute commands:
-subs_map("n", "s", "///", "Substitute string.")
+-- stylua: ignore start
 map("v", "<Leader>ss", ":s///gc" .. string.rep("<Left>", 4), "Substitute string on selection.")
-subs_map("n", "w", "/\\<<C-r><C-w>\\>//", "Substitute word under cursor.", 3)
+map("n", "<Leader>ss", ":s///gc" .. string.rep("<Left>", 4), "Substitute string.")
+map("n", "<Leader>sS", ":%s///gc" .. string.rep("<Left>", 4), "Substitute string on the whole file.")
+map("n", "<Leader>sw", ":s/\\<<C-r><C-w>\\>//gc" .. string.rep("<Left>", 3), "Substitute word under cursor.")
+map("n", "<Leader>sW", ":%s/\\<<C-r><C-w>\\>//gc" .. string.rep("<Left>", 3), "Substitute word under cursor on the whole file.")
+-- stylua: ignore end
 
 -- Automatically center cursor
 -- stylua: ignore start
