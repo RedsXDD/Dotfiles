@@ -1,9 +1,9 @@
 #!/usr/bin/env sh
 
-TREE_RECURSION_LEVEL='2'
+RECURSION_LVL="${RECURSION_LVL:-3}"
 if [ "${USE_LS}" ] || ! which eza >/dev/null 2>&1; then
 	if which tree; then
-		tree --dirsfirst --gitignore -aF -L "${TREE_RECURSION_LEVEL}" "$@"
+		tree --dirsfirst --gitignore -aF -L "${RECURSION_LVL}" "$@"
 		return 0
 	fi
 
@@ -26,7 +26,7 @@ if [ "${USE_LS}" ] || ! which eza >/dev/null 2>&1; then
 	return 0
 fi
 
-main_cmd() { eza --group-directories-first --color=always --git-ignore --tree -a -L "${TREE_RECURSION_LEVEL}" "$@"; }
+main_cmd() { eza --group-directories-first --color=always --git-ignore --tree -a -L "${RECURSION_LVL}" "$@"; }
 if [ -z "$DISPLAY" ]; then
 	main_cmd "$@"
 else
