@@ -9,8 +9,8 @@ local themes = require("telescope.themes")
 local actions = require("telescope.actions")
 local action_layout = require("telescope.actions.layout")
 local previewers = require("telescope.previewers")
-local icons = require("core.icons").telescope
-local map = require("core.utils").map
+local icons = require("reds.icons").telescope
+local map = require("reds.utils").map
 
 -- Load telescope extensions:
 pcall(telescope.load_extension, "fzf")

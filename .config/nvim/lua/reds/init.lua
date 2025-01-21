@@ -30,7 +30,7 @@ Event.mappings["User LazyFile"] = Event.mappings.LazyFile
 
 -- Initialize lazy.nvim:
 lazy.setup({
-    spec = "core.plugins",
+    spec = "reds.plugins",
     defaults = {
         lazy = true,
         version = false, -- Always use the latest git commit.
@@ -48,9 +48,9 @@ lazy.setup({
         notify = true, -- Turn on/off notifications whenever plugin changes are made.
     },
     ui = {
-        border = require("core.icons").misc.border,
+        border = require("reds.icons").misc.border,
         title = "Lazy.nvim",
-        icons = require("core.icons").lazy,
+        icons = require("reds.icons").lazy,
     },
     performance = {
         rtp = {

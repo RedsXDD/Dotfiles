@@ -11,7 +11,7 @@
 ]]
 
 -- Require helper keymap functions from `utils.lua`
-local map = require("core.utils").map
+local map = require("reds.utils").map
 
 ---@param keys string
 ---@param desc string
@@ -75,6 +75,6 @@ map("", "<C-S-Right>", "<CMD>wincmd L<CR>", "Move split window to the right.")
 
 -- File explorer
 -- stylua: ignore start
-map("n", "<Leader>gf", function() require("core.utils").toggle_file_explorer() end, "Open file explorer on CWD.")
-map("n", "<Leader>gF", function() require("core.utils").toggle_file_explorer(true) end, "Open file explorer on directory of current file.")
+map("n", "<Leader>gf", function() require("reds.utils").toggle_file_explorer() end, "Open file explorer on CWD.")
+map("n", "<Leader>gF", function() require("reds.utils").toggle_file_explorer(true) end, "Open file explorer on directory of current file.")
 -- stylua: ignore end

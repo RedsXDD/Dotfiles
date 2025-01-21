@@ -1,7 +1,7 @@
 local has_snacks, snacks = pcall(require, "snacks")
 if not has_snacks then return end
 
-local icons = require("core.icons").snacks
+local icons = require("reds.icons").snacks
 
 ---@param icon string
 ---@param key string
@@ -28,7 +28,7 @@ snacks.setup({
             keys = {
                 new_section(icons.new_file, "n", "New File", function() vim.cmd([[enew | startinsert]]) end),
                 new_section(icons.quit, "q", "Quit Neovim", function() vim.cmd([[qa!]]) end),
-                new_section(icons.file_explorer, "e", "Open File Explorer", function() require("core.utils").toggle_file_explorer() end),
+                new_section(icons.file_explorer, "e", "Open File Explorer", function() require("reds.utils").toggle_file_explorer() end),
                 new_section(icons.recent_files, "o", "Recent Files", function() snacks.dashboard.pick("oldfiles") end),
                 new_section(icons.find_files, "f", "Find Files", function() snacks.dashboard.pick("files") end),
                 new_section(icons.config_files, "c", "Config Files", function() snacks.dashboard.pick("files", { cwd = vim.fn.stdpath("config") }) end),

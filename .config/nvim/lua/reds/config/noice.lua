@@ -2,7 +2,7 @@ local has_noice, noice = pcall(require, "noice")
 if not has_noice then return end
 
 local noice_lsp = require("noice.lsp")
-local map = require("core.utils").map
+local map = require("reds.utils").map
 
 -- stylua: ignore start
 map("c", "<S-Enter>", function() noice.redirect(vim.fn.getcmdline()) end, "Redirect Cmdline")

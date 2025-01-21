@@ -7,8 +7,8 @@ if not has_mason_lspconfig then return end
 local has_mason_tool_installer, mason_tool_installer = pcall(require, "mason-tool-installer")
 if not has_mason_tool_installer then return end
 
-local icons = require("core.icons").mason
-local border_style = require("core.icons").misc.border
+local icons = require("reds.icons").mason
+local border_style = require("reds.icons").misc.border
 
 vim.keymap.set("n", "<Leader>gm", "<CMD>Mason<CR>", { noremap = true, desc = "Open Mason UI." })
 

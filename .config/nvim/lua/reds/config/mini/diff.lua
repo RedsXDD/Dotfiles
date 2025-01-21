@@ -1,7 +1,7 @@
 local has_diff, diff = pcall(require, "mini.diff")
 if not has_diff then return end
 
-local icons = require("core.icons").gitsigns
+local icons = require("reds.icons").gitsigns
 
 vim.keymap.set(
     "n",

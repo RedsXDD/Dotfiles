@@ -1,7 +1,7 @@
 local has_pairs, pairs = pcall(require, "mini.pairs")
 if not has_pairs then return end
 
-local map = require("core.utils").map
+local map = require("reds.utils").map
 
 map({ "n", "x" }, "<Leader>tp", function()
     local state = vim.g.minipairs_disable

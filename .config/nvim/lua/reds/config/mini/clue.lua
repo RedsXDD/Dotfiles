@@ -3,7 +3,7 @@
 local has_clue, clue = pcall(require, "mini.clue")
 if not has_clue then return end
 
-local border_style = require("core.icons").misc.border
+local border_style = require("reds.icons").misc.border
 
 ---@param modes string|table
 ---@param key string

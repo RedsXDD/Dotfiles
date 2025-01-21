@@ -8,7 +8,7 @@ local function load_config(plugin)
     end
 
     return function()
-        local has_config, _ = pcall(require, "config." .. plugin)
+        local has_config, _ = pcall(require, "reds.config." .. plugin)
         if not has_config then return end
     end
 end
@@ -240,7 +240,7 @@ local misc = {
                     _G.bt = function() Snacks.debug.backtrace() end
                     vim.print = _G.dd -- Override print to use snacks for `:=` command
 
-                    local map = require("core.utils").map
+                    local map = require("reds.utils").map
 
                     -- stylua: ignore start
                     -- Misc.
@@ -385,7 +385,7 @@ local misc = {
             appearance = {
                 use_nvim_cmp_as_default = false,
                 nerd_font_variant = "mono",
-                kind_icons = require("core.icons").kinds,
+                kind_icons = require("reds.icons").kinds,
             },
             sources = {
                 default = { "lsp", "snippets", "path", "buffer" },
