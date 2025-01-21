@@ -1,4 +1,3 @@
--- Set local variables/functions.
 local function augroup(name) return vim.api.nvim_create_augroup("augroup_" .. name, { clear = true }) end
 
 -- Check if we need to reload the file when it changed.
@@ -7,6 +6,16 @@ vim.api.nvim_create_autocmd({ "FocusGained", "TermClose", "TermLeave" }, {
     group = augroup("checktime"),
     callback = function()
         if vim.o.buftype ~= "nofile" then vim.cmd("checktime") end
+    end,
+})
+
+-- Disable line numbers inside neovim's terminal.
+vim.api.nvim_create_autocmd("TermOpen", {
+    desc = "Disable line numbers inside neovim's terminal.",
+    group = augroup("disable_linenumbers_on_term"),
+    callback = function()
+        vim.o.number = false
+        vim.o.relativenumber = false
     end,
 })
 
