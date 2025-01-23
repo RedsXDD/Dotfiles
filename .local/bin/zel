@@ -1,0 +1,191 @@
+#!/usr/bin/env sh
+
+# shellcheck disable=SC2016
+
+# Setup main variables.
+ZELLIJ_SWITCH_PATH="${XDG_CONFIG_HOME:-${HOME}/.config}/zellij/plugins"
+
+if [ -n "${DISPLAY}" ]; then
+        DIRECTORY_ICON=''
+        SESSION_ICON='󰮊'
+        FZF_PROMPT='󰍉 Select Zellij Session: '
+else
+        DIRECTORY_ICON='D'
+        SESSION_ICON='S'
+        FZF_PROMPT='* Select Zellij Session: '
+fi
+
+install_zellij_switch() {
+        printf '%s\n' \
+                "This script uses the zellij plugin \`zellij-switch\` as one of it's dependencies!" \
+                'Installing `zellij-switch` automatically (this only happens on first startup) ...'
+
+        zellij_switch_tmp_dir="$(mktemp -d '/tmp/zellij-switch-tmp-XXXXXXXXXX')"
+        trap 'rm -rf "${zellij_switch_tmp_dir}"' 0 1 15
+
+        git clone https://github.com/mostafaqanbaryan/zellij-switch.git "${zellij_switch_tmp_dir}"
+        cd "${zellij_switch_tmp_dir}" || exit 1
+        rustup target add wasm32-wasip1
+        cargo build --target wasm32-wasip1 --release || exit 1
+        [ ! -d "${ZELLIJ_SWITCH_PATH}" ] && mkdir -pv "${ZELLIJ_SWITCH_PATH}"
+        mv -vf "${zellij_switch_tmp_dir}/target/wasm32-wasip1/release/zellij-switch.wasm" "${ZELLIJ_SWITCH_PATH}"
+}
+
+# Handle the creation/attachment of zellij sessions.
+handle_sessions() {
+        session_name="${1}"
+
+        # This part checks if the session DOESN'T exist, and schedules pane/tab renaming actions for the session once it gets created.
+        session_exists="$(zellij ls --short 2>/dev/null | grep -i "${session_name}" 2>&1 | head -n1)"
+        [ -z "${session_exists}" ] && (
+                sleep 0.3
+                zellij --session "${session_name}" action rename-pane "${session_name}" && zellij --session "${session_name}" action rename-tab "${session_name}"
+        ) &
+
+        if [ -z "${ZELLIJ}" ]; then
+                zellij attach --create "${session_name}"
+        else
+                zellij attach --create-background "${session_name}"
+                zellij pipe --plugin "file:${ZELLIJ_SWITCH_PATH}/zellij-switch.wasm" -- "--session ${session_name}"
+        fi
+
+        exit 0
+}
+
+handle_dirs() {
+        session_path="${1}"
+
+        # This checks if there's a running session with a name similar to the name of the directory selected and attaches to it.
+        # e.g.: selecting `~/.config/nvim` with an already existing `nvim` session will attach to the `nvim` session instead of creating a new one.
+        directory_basename="$(basename "$(readlink -f -- "${session_path}")")"
+        zellij_basename_query="$(zellij ls --short 2>/dev/null | grep -i "${directory_basename}" 2>&1 | head -n1)"
+        [ -n "${zellij_basename_query}" ] && handle_sessions "${zellij_basename_query}"
+
+        cd -- "$(readlink -f -- "${session_path}")" || exit 1
+
+        # These lines handle the naming of the session, if the session directory happens to be inside a git repo,
+        # the name of the session will be "${git_root_basename}|${basename_of_session_directory}".
+        git_root_basename="$(basename "$(git rev-parse --show-toplevel 2>/dev/null)")"
+        session_path="${git_root_basename:-${directory_basename}}"
+        [ -n "${git_root_basename}" ] && [ "${directory_basename}" != "${git_root_basename}" ] && session_path="${session_path}|${directory_basename}"
+
+        handle_sessions "${session_path}"
+}
+
+# This function is responsible for outputting all the lines of text that will be parsed to fzf.
+# These mainly include active zellij sessions and zoxide queried paths.
+fzf_contents() {
+        # This awk command formats the output list from zellij ls so that:
+        # 1) The session icon appears green just like the zellij session names (\033[0;32m).
+        # 2) The text formatting is entirely reset at the end of the session icon (\033[0m).
+        # 3) Zellij's session names appear right after the session icon.
+        zellij ls 2>/dev/null | awk '{ print "'"\033[0;32m${SESSION_ICON} \033[0m"'" $0 }'
+
+        # This awk command formats the output list from zoxide query so that:
+        # 1) Replaces all the "$HOME" instances with "~".
+        # 2) Directory icon appears blue (\033[0;34m).
+        # 3) The text from the list is bold (\033[0;1m).
+        # 4) The text formatting is entirely reset at the end of every list item (\033[0m).
+        zoxide query -l | awk '{
+                gsub("'"${HOME}"'", "~");
+                print "'"\033[0;34m${DIRECTORY_ICON} \033[0;1m"'" $0 "\033[0m"
+        }'
+}
+
+# Fzf cannot preview the contents of zellij sessions when hovering over
+# their name in the fuzzy picker, this function outputs some text
+# so that the preview window isnt empty.
+fzf_session_preview() {
+        if [ -n "${DISPLAY}" ]; then
+                cat <<-EOF_DISPLAY
+███████╗███████╗██╗     ██╗     ██╗     ██╗
+╚══███╔╝██╔════╝██║     ██║     ██║     ██║
+  ███╔╝ █████╗  ██║     ██║     ██║     ██║
+ ███╔╝  ██╔══╝  ██║     ██║     ██║██   ██║
+███████╗███████╗███████╗███████╗██║╚█████╔╝
+╚══════╝╚══════╝╚══════╝╚══════╝╚═╝ ╚════╝
+███████╗███████╗███████╗███████╗██╗ ██████╗ ███╗   ██╗
+██╔════╝██╔════╝██╔════╝██╔════╝██║██╔═══██╗████╗  ██║
+███████╗█████╗  ███████╗███████╗██║██║   ██║██╔██╗ ██║
+╚════██║██╔══╝  ╚════██║╚════██║██║██║   ██║██║╚██╗██║
+███████║███████╗███████║███████║██║╚██████╔╝██║ ╚████║
+╚══════╝╚══════╝╚══════╝╚══════╝╚═╝ ╚═════╝ ╚═╝  ╚═══╝
+EOF_DISPLAY
+        else
+                cat <<-EOF_TTY
+ _____    _ _ _  _
+|__  /___| | (_)(_)
+  / // _ \ | | || |
+ / /|  __/ | | || |
+/____\___|_|_|_|/ |
+              |__/
+EOF_TTY
+        fi
+}
+
+get_selected_session() {
+        # Display the fuzzy finder will all active sessions and zoxide paths.
+        selected_session="$(fzf_contents | fzf --print-query --prompt "${FZF_PROMPT}" --preview "
+                grep_check=\"\$(echo {} | grep '^${SESSION_ICON}')\"
+                if [ -n \"\${grep_check}\" ]; then
+                        printf '%s\n' \"$(fzf_session_preview)\"
+                        return 0
+                fi
+
+                # This huge awk command is just a fancier way of doing cut -d' ' -f2- | sed 's|~|${HOME}|g'
+                directory_path=\$(echo {} | awk -F ' ' -v n=2 '{ gsub(/~/, \"${HOME}\"); for (i=n; i<=NF; i++) printf \"%s%s\", \$i, (i<NF ? OFS : ORS) }')
+                directory_path=\$(readlink -f -- \"\${directory_path}\")
+
+                if ! which eza >/dev/null 2>&1; then
+                        if which tree >/dev/null 2>&1; then
+                                tree --dirsfirst --gitignore -aFC -L 3 \"\${directory_path}\"
+                                return 0
+                        fi
+
+                        ls --group-directories-first --color=always -1A \${directory_path}
+                        return 0
+                fi
+
+                if [ -z \"\${DISPLAY}\" ]; then
+                        eza --group-directories-first --color=always --git-ignore --tree -a -L 3 \"\${directory_path}\"
+                else
+                        eza --group-directories-first --color=always --git-ignore --tree --icons -a -L 3 \"\${directory_path}\"
+                fi
+        " | tail -n1)"
+
+        # Exit if no directory nor active session was choosen.
+        [ -z "${selected_session}" ] && exit 1
+
+        # Generate a proper input variable for the 'attach_to_session()' function based on the output of fzf_selector().
+        selected_session="$(echo "${selected_session}" | sed "
+                        s/^${DIRECTORY_ICON}\s\+//;
+                        s/^${SESSION_ICON}\s\+//;
+                        s|~|${HOME}|;
+                        s/\s\+\[.*//g")"
+
+        echo "${selected_session}"
+}
+
+main() {
+        # This script depends on the 'zellij-switch' plugin to switch sessions while inside of a running zelllij session.
+        [ ! -f "${ZELLIJ_SWITCH_PATH}/zellij-switch.wasm" ] && install_zellij_switch
+
+        # Set session name to be the user input if any was given, otherwise fallback to fzf selection.
+        user_input="${1}"
+        session_name="${user_input:-$(get_selected_session)}"
+        [ -z "${session_name}" ] && exit 1
+
+        # If the selected session already exists inside of zellij, handle it's attachment with the `handle_sessions()` function.
+        zellij_session_query="$(zellij ls --short 2>/dev/null | grep -i "${session_name}" 2>&1 | head -n1)"
+        [ -n "${zellij_session_query}" ] && handle_sessions "${zellij_session_query}"
+
+        # If the user input matches a zoxide query, handle the queried path with the `handle_dirs()` function.
+        [ -n "${user_input}" ] && zoxide_query="$(zoxide query "${user_input}" 2>/dev/null)"
+        [ -n "${zoxide_query}" ] && handle_dirs "${zoxide_query}"
+
+        # If the session selected with fzf is a directory path, handle it with the `handle_dirs()` function.
+        [ -d "${session_name}" ] && handle_dirs "${session_name}"
+}
+main "$@"
+
+# vim:fileencoding=utf-8:foldmethod=marker
