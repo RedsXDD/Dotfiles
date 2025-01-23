@@ -37,7 +37,7 @@ multiplier = 5
 [window]
 decorations = "none"
 dynamic_padding = true
-opacity = 1
+opacity = 0.90
 startup_mode = "Maximized"
 
 [window.dimensions]
