@@ -146,8 +146,8 @@ keymap = [
 	{ on = [ "t", "l" ], run = "plugin lazygit",      desc = "Open lazygit" },
 
   # # Misc.
-	# { on = [ "z", "w" ], run = 'shell --confirm "waybg \"$1\""',    desc = "Change wallpaper" },
-	# { on = [ "z", "W" ], run = 'shell --confirm "lustbg \"$1\""',   desc = "Change wallpaper and wallust theme (requires 'lustbg' script)" },
+	{ on = [ "z", "w" ], run = 'shell --confirm "waybg \"$1\""',    desc = "Change wallpaper (requires 'waybg' script)" },
+	{ on = [ "z", "W" ], run = 'shell --confirm "lustbg \"$1\""',   desc = "Change wallpaper and wallust theme (requires 'lustbg' script)" },
   #: }}}
   #: Searching {{{
 	{ on = "n",          run = "find_arrow",                 desc = "Goto the next found" },
