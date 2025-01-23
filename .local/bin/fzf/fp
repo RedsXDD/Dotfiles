@@ -2,38 +2,41 @@
 
 # Proper fzf use on tmux.
 picker() {
-	if which tmux >/dev/null 2>&1 && [ -n "$TMUX" ]; then
-		fzf-tmux -p 75% -w 75% "$@"
-	else
-		fzf "$@"
-	fi
+        if which tmux >/dev/null 2>&1 && [ -n "$TMUX" ]; then
+                fzf-tmux -p 75% -w 75% "$@"
+        else
+                fzf "$@"
+        fi
 }
 
 case "${1:--S}" in
 '-S')
-	if [ -n "$2" ]; then
-		paru "$@"
-	else
-		paru --color=always -Sl |
-			sed 's|\s|/|; s/\s\+.*unknown-version//g; /installed/d' |
-			picker --prompt '> Install package(s) > ' --multi --preview 'paru -Si {1}' |
-			cut -d'/' -f2 | cut -d' ' -f1 | xargs -ro paru -S
-	fi
-	;;
+        [ -n "$DISPLAY" ] && FZF_PROMPT='󰍉 Install Package(s): ' || FZF_PROMPT='* Install Package(s): '
+        if [ -n "$2" ]; then
+                paru "$@"
+        else
+                paru --color=always -Sl |
+                        sed 's|\s|/|; s/\s\+.*unknown-version//g; /installed/d' |
+                        picker --prompt "$FZF_PROMPT" --multi --preview 'paru -Si {1}' |
+                        cut -d'/' -f2 | cut -d' ' -f1 | xargs -ro paru -S
+        fi
+        ;;
 
 '-R')
-	paru --color=always -Qs |
-		sed '/^\s\+/d; ; s/\s\+.*unknown-version//g' |
-		picker --prompt '> Remove package(s) > ' --multi --preview 'paru -Qi {1}' |
-		cut -d'/' -f2 | cut -d' ' -f1 | xargs -ro sudo pacman -Rusnv
-	;;
+        [ -n "$DISPLAY" ] && FZF_PROMPT='󰍉 Remove Package(s): ' || FZF_PROMPT='* Remove Package(s): '
+        paru --color=always -Qs |
+                sed '/^\s\+/d; ; s/\s\+.*unknown-version//g' |
+                picker --prompt "$FZF_PROMPT" --multi --preview 'paru -Qi {1}' |
+                cut -d'/' -f2 | cut -d' ' -f1 | xargs -ro sudo pacman -Rusnv
+        ;;
 
 '-Q')
-	paru --color=always -Qs |
-		sed '/^\s\+/d; ; s/\s\+.*unknown-version//g' |
-		picker --prompt '> Get info from package(s) > ' --multi --preview 'paru -Qi {1}' |
-		cut -d'/' -f2 | cut -d' ' -f1 | xargs -ro paru -Qi
-	;;
+        [ -n "$DISPLAY" ] && FZF_PROMPT='󰍉 Get info from package(s): ' || FZF_PROMPT='* Get info from package(s): '
+        paru --color=always -Qs |
+                sed '/^\s\+/d; ; s/\s\+.*unknown-version//g' |
+                picker --prompt "$FZF_PROMPT" --multi --preview 'paru -Qi {1}' |
+                cut -d'/' -f2 | cut -d' ' -f1 | xargs -ro paru -Qi
+        ;;
 
 *) paru "$@" ;;
 esac

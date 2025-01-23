@@ -1,5 +1,7 @@
 #!/usr/bin/env sh
 
+[ -n "$DISPLAY" ] && FZF_PROMPT='󰍉 Edit File: ' || FZF_PROMPT='* Edit File: '
+
 # Proper fzf use on tmux.
 picker() {
         if which tmux >/dev/null 2>&1 && [ -n "$TMUX" ]; then
@@ -69,7 +71,7 @@ file_list() {
 }
 
 # shellcheck disable=2016
-file="$(file_list | sort | sed "s|$HOME|~|g" | picker --preview 'cat "$(echo {} | sed "s|~|$HOME|g")"' --prompt '> Edit File > ' | sed "s|~|$HOME|g")"
+file="$(file_list | sort | sed "s|$HOME|~|g" | picker --prompt "$FZF_PROMPT" --preview 'cat "$(echo {} | sed "s|~|$HOME|g")"' | sed "s|~|$HOME|g")"
 [ -n "$file" ] && [ -f "$file" ] && file_editor "$file"
 
 # vim:fileencoding=utf-8:foldmethod=marker

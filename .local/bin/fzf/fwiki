@@ -1,21 +1,22 @@
 #!/usr/bin/env sh
 
+[ -n "$DISPLAY" ] && FZF_PROMPT='󰍉 Search Archwiki: ' || FZF_PROMPT='* Search Archwiki: '
 wikidir='/usr/share/doc/arch-wiki/html/en'
 [ -z "$DISPLAY" ] && opener='lynx' || opener="${BROWSER:-xdg-open}"
 
 # Proper fzf use on tmux.
 picker() {
-	if which tmux >/dev/null 2>&1 && [ -n "$TMUX" ]; then
-		fzf-tmux -p 75% -w 75% "$@"
-	else
-		fzf "$@"
-	fi
+        if which tmux >/dev/null 2>&1 && [ -n "$TMUX" ]; then
+                fzf-tmux -p 75% -w 75% "$@"
+        else
+                fzf "$@"
+        fi
 }
 
 fzf_cmd() {
-	find "$wikidir" -type f -iname '*.html' |
-		awk -F '/' -v n=8 'BEGIN{OFS="/"} {gsub(/\.html/, ""); for (i=n; i<=NF; i++) printf "%s%s", $i, (i<NF ? OFS : ORS)}' | # This huge awk command is just a fancier way of doing `cut -d'/' -f8- | sed 's/.html//g'`
-		sort | picker --prompt '> Search docs > '
+        find "$wikidir" -type f -iname '*.html' |
+                awk -F '/' -v n=8 'BEGIN{OFS="/"} {gsub(/\.html/, ""); for (i=n; i<=NF; i++) printf "%s%s", $i, (i<NF ? OFS : ORS)}' | # This huge awk command is just a fancier way of doing `cut -d'/' -f8- | sed 's/.html//g'`
+                sort | picker --prompt "$FZF_PROMPT"
 }
 
 doc="$(fzf_cmd)"

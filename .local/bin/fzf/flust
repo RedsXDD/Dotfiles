@@ -1,5 +1,6 @@
 #!/usr/bin/env sh
 
+[ -n "$DISPLAY" ] && FZF_PROMPT='󰍉 Select Colorscheme: ' || FZF_PROMPT='* Select Colorscheme: '
 WALLUST_COLORSCHEMES_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/wallust/colorschemes"
 
 # Proper fzf use on tmux.
@@ -51,7 +52,7 @@ file_list() {
 file_list |
 	column -ts '§' -o '->' |
 	sed "s|${WALLUST_COLORSCHEMES_DIR}/||g" |
-	picker --prompt '> Select Colorscheme > ' --preview "echo {} | sed 's/.*-> //g' | xargs -ro -I {} wallust cs -T ${WALLUST_COLORSCHEMES_DIR}/{}" |
+	picker --prompt "$FZF_PROMPT" --preview "echo {} | sed 's/.*-> //g' | xargs -ro -I {} wallust cs -T ${WALLUST_COLORSCHEMES_DIR}/{}" |
 	sed "s/.*-> //g" |
 	xargs -ro -I {} wallust cs "${WALLUST_COLORSCHEMES_DIR}/{}"
 
