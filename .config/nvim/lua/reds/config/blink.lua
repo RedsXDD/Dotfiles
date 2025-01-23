@@ -9,8 +9,8 @@ blink.setup({
 
         ["<C-j>"] = { "show", "select_next", "fallback" },
         ["<C-k>"] = { "show", "select_prev", "fallback" },
-        ["<Tab>"] = { "show", "select_next", "fallback" },
-        ["<S-Tab>"] = { "show", "select_prev", "fallback" },
+        ["<Tab>"] = { "select_next", "fallback" },
+        ["<S-Tab>"] = { "select_prev", "fallback" },
 
         ["<C-space>"] = { "show", "show_documentation", "fallback" },
         ["<C-b>"] = { "scroll_documentation_up", "fallback" },
