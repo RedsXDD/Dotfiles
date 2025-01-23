@@ -4,12 +4,14 @@ if not has_neopywal then
     return
 end
 
-vim.g.neopywal_debug = true
+-- vim.g.neopywal_debug = true
+vim.cmd.helptags(os.getenv("HOME") .. "/.local/sources/Reds/neopywal/doc")
 
 neopywal.setup({
     use_palette = "wallust",
-    transparent_background = false,
+    transparent_background = true,
     dim_inactive = true,
+    show_end_of_buffer = true,
     show_split_lines = false,
     default_plugins = false,
     plugins = {
