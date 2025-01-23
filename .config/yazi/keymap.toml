@@ -195,8 +195,8 @@ keymap = [
 	{ on = [ "g", "t" ],       run = "cd /tmp",                  desc = "Goto /tmp" },
   #: }}}
 	#: Tabs {{{
-	{ on = [ "t", "c" ], run = "plugin smart-tab",             desc = "Create a tab and enter the hovered directory" },
-	{ on = [ "t", "C" ], run = "tab_create --current",         desc = "Create a new tab on CWD" },
+	{ on = [ "t", "t" ], run = "plugin smart-tab",             desc = "Create a tab and enter the hovered directory" },
+	{ on = [ "t", "T" ], run = "tab_create --current",         desc = "Create a new tab on CWD" },
 	{ on = "[",          run = "tab_switch -1 --relative",     desc = "Switch to the previous tab" },
 	{ on = "]",          run = "tab_switch 1 --relative",      desc = "Switch to the next tab" },
 	{ on = "{",          run = "tab_swap -1",                  desc = "Swap current tab with previous tab" },
