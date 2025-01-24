@@ -21,8 +21,7 @@ local lsp_treesitter = {
             { "nvim-treesitter/nvim-treesitter-textobjects" },
             { "windwp/nvim-ts-autotag" },
         },
-        lazy = vim.fn.argc(-1) == 0, -- Dont lazy load treesitter when opening a file from the cmdline.
-        event = "LazyFile",
+        event = "VeryLazy",
         cmd = { "TSUpdateSync", "TSUpdate", "TSInstall" },
         build = ":TSUpdate",
         config = load_config("treesitter"),
@@ -64,7 +63,6 @@ local lsp_treesitter = {
         dependencies = { "mason.nvim" },
         lazy = true,
         cmd = "ConformInfo",
-        keys = "<Leader>lf",
         config = load_config("conform"),
     },
     --: }}}
@@ -79,7 +77,7 @@ local mini = {
             "nvim-treesitter/nvim-treesitter-textobjects",
             "echasnovski/mini.extra",
         },
-        event = "LazyFile",
+        event = "VeryLazy",
         config = load_config("mini.ai"),
     },
     --: }}}
@@ -108,7 +106,7 @@ local mini = {
     --: mini.diff {{{
     {
         "echasnovski/mini.diff",
-        event = "LazyFile",
+        event = "VeryLazy",
         config = load_config("mini.diff"),
     },
     --: }}}
@@ -134,13 +132,14 @@ local mini = {
                 end,
             })
         end,
+        lazy = true,
         config = load_config("mini.files"),
     },
     --: }}}
     --: mini.hipatterns {{{
     {
         "echasnovski/mini.hipatterns",
-        event = "LazyFile",
+        event = "VeryLazy",
         config = load_config("mini.hipatterns"),
     },
     --: }}}
@@ -164,28 +163,28 @@ local mini = {
     --: mini.jump {{{
     {
         "echasnovski/mini.jump",
-        keys = { "f", "F", "t", "T" },
+        event = "VeryLazy",
         config = load_config("mini.jump"),
     },
     --: }}}
     --: mini.jump2d {{{
     {
         "echasnovski/mini.jump2d",
-        keys = { { "s", mode = { "n", "x", "o" }, desc = "Jump" } },
+        event = "VeryLazy",
         config = load_config("mini.jump2d"),
     },
     --: }}}
     --: mini.operators {{{
     {
         "echasnovski/mini.operators",
-        keys = "<Leader>o",
+        lazy = true,
         config = load_config("mini.operators"),
     },
     --: }}}
     --: mini.pairs {{{
     {
         "echasnovski/mini.pairs",
-        event = { "InsertEnter", "CmdlineEnter" },
+        event = "VeryLazy",
         config = load_config("mini.pairs"),
     },
     --: }}}
@@ -210,7 +209,7 @@ local mini = {
     {
         "echasnovski/mini.tabline",
         dependencies = { "nvim-tree/nvim-web-devicons" },
-        event = { "LazyFile", "BufUnload" },
+        event = "VeryLazy",
         config = load_config("mini.tabline"),
     },
     --: }}}
@@ -306,6 +305,7 @@ local misc = {
             },
         },
         branch = "master",
+        lazy = true,
         cmd = "Telescope",
         config = load_config("telescope"),
     },
@@ -313,7 +313,7 @@ local misc = {
     --: dressing.nvim {{{
     {
         "stevearc/dressing.nvim",
-        event = "LazyFile",
+        event = "VeryLazy",
         -- Snacks.nvim input precedence.
         opts = { input = { enabled = false } },
     },
@@ -325,7 +325,7 @@ local misc = {
             "MunifTanjim/nui.nvim",
             "folke/snacks.nvim",
         },
-        event = function() return { "CmdlineEnter", "LazyFile" } end,
+        event = "VeryLazy",
         config = load_config("noice"),
     },
     -- --: }}}
@@ -334,7 +334,7 @@ local misc = {
         "utilyre/barbecue.nvim",
         name = "barbecue",
         version = "*",
-        event = "LazyFile",
+        event = "VeryLazy",
         dependencies = {
             "SmiteshP/nvim-navic",
             "nvim-tree/nvim-web-devicons", -- optional dependency
@@ -350,11 +350,10 @@ local misc = {
     },
     --: }}}
     --: lualine.nvim {{{
-    { "echasnovski/mini.statusline", enabled = false },
     {
         "nvim-lualine/lualine.nvim",
         dependencies = { "nvim-tree/nvim-web-devicons" },
-        event = { "LazyFile", "BufUnload" },
+        event = "VeryLazy",
         config = load_config("lualine"),
     },
     --: }}}
