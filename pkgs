@@ -1,10 +1,11 @@
+7zip
 act-git
 alacritty
 arch-wiki-docs
 atuin
 bat
 bc
-bottom
+brave-bin
 breeze-gtk
 breeze5
 cava-git
@@ -17,8 +18,9 @@ fastfetch
 fd
 ffmpegthumbnailer
 figlet
-fzf
+fish-git
 gammastep
+gimp
 git
 git-delta
 github-cli
@@ -26,14 +28,18 @@ glow
 gnome-epub-thumbnailer
 gpm
 grimblast-git
+hexyl
 hyprland
+hyprland-qtutils-git
 hyprlock
 hyprpicker-git
 inlyne-bin
 intel-ucode
+jmtpfs
 keepassxc
 lazygit
 libnotify
+libreoffice-fresh
 librewolf
 linux-zen
 man-db
@@ -57,7 +63,6 @@ oomox-qt6-styleplugin-git
 opendoas
 otf-firamono-nerd
 ouch
-p7zip
 paru
 pcmanfm-gtk3
 pipewire
@@ -77,6 +82,7 @@ sccache
 sddm
 sddm-theme-aerial-git
 shellcheck
+skim
 starship
 stow
 stylua
@@ -86,10 +92,12 @@ tealdeer
 terminus-font
 themix-full-git
 transmission-cli
+trash-cli
 tree
-tree-sitter-git
+tree-sitter
 ttf-firacode-nerd
 ttf-jetbrains-mono-nerd
+ttf-ms-fonts
 ttf-symbola
 ttf-ubuntu-mono-nerd
 ttf-ubuntu-nerd
@@ -116,4 +124,3 @@ zathura-ps
 zellij
 zip
 zoxide
-zsh
