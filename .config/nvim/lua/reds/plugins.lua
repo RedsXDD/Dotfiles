@@ -368,14 +368,6 @@ local misc = {
         -- opts_extend = { "sources.default" },
     },
     --: }}}
-    --: hardtime.nvim {{{
-    {
-        "m4xshen/hardtime.nvim",
-        dependencies = { "MunifTanjim/nui.nvim" },
-        event = "LazyFile",
-        config = load_config("hardtime"),
-    },
-    --: }}}
 }
 
 return { lsp_treesitter, mini, misc }
