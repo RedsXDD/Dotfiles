@@ -3,8 +3,8 @@
 # shellcheck disable=2145
 # shellcheck disable=2012
 if [ "${USE_LS}" ] || ! which eza >/dev/null 2>&1; then
-	[ -z "$1" ] && ls --group-directories-first --color -1d .* && return 0
-	ls --group-directories-first --color -1d -- "$@"/.* | awk -F '/' '{print $NF}'
+	[ -z "$1" ] && ls --group-directories-first --color=always=always -1d .* && return 0
+	ls --group-directories-first --color=always=always -1d -- "$@"/.* | awk -F '/' '{print $NF}'
 	return 0
 fi
 

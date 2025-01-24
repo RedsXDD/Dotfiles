@@ -3,7 +3,7 @@
 RECURSION_LVL="${RECURSION_LVL:-3}"
 if [ "${USE_LS}" ] || ! which eza >/dev/null 2>&1; then
 	if which tree >/dev/null 2>&1; then
-		tree --dirsfirst --gitignore -aF -L "${RECURSION_LVL}" "$@"
+		tree --dirsfirst --gitignore -aFC -L "${RECURSION_LVL}" "$@"
 		return 0
 	fi
 
@@ -16,7 +16,7 @@ if [ "${USE_LS}" ] || ! which eza >/dev/null 2>&1; then
 
 	case "$(echo "$answer" | tr '[:upper:]' '[:lower:]')" in
 	'y' | 'yes')
-		ls --group-directories-first --color -R "$@"
+		ls --group-directories-first --color=always -R "$@"
 		;;
 	*)
 		echo 'User choose to not list files.'

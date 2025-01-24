@@ -21,7 +21,7 @@ if [ "${USE_LS}" ] || ! which eza >/dev/null 2>&1; then
 		return 0
 	fi
 
-	ls --group-directories-first --color -R "$@"
+	ls --group-directories-first --color=always -R "$@"
 
 	return 0
 fi

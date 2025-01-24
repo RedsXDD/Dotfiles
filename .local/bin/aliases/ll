@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 if [ "${USE_LS}" ] || ! which eza >/dev/null 2>&1; then
-        ls --group-directories-first --color -lAhp "$@"
+        ls --group-directories-first --color=always -lAhp "$@"
         return 0
 fi
 
