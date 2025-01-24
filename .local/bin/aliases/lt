@@ -2,7 +2,7 @@
 
 RECURSION_LVL="${RECURSION_LVL:-3}"
 if [ "${USE_LS}" ] || ! which eza >/dev/null 2>&1; then
-	if which tree; then
+	if which tree >/dev/null 2>&1; then
 		tree --dirsfirst --gitignore -aF -L "${RECURSION_LVL}" "$@"
 		return 0
 	fi
