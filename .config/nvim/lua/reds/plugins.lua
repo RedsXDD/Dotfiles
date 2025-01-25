@@ -218,7 +218,7 @@ local mini = {
 local misc = {
     --: neopywal.nvim {{{
     {
-        dir = os.getenv("HOME") .. "/.local/sources/Reds/neopywal",
+        dir = os.getenv("HOME") .. "/.local/sources/Reds/neopywal.nvim",
         name = "neopywal",
         lazy = false,
         priority = 1000,

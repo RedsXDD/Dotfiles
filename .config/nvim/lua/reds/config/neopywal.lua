@@ -5,7 +5,7 @@ if not has_neopywal then
 end
 
 -- vim.g.neopywal_debug = true
-vim.cmd.helptags(os.getenv("HOME") .. "/.local/sources/Reds/neopywal/doc")
+vim.cmd.helptags(os.getenv("HOME") .. "/.local/sources/Reds/neopywal.nvim/doc")
 
 neopywal.setup({
     use_palette = "wallust",
