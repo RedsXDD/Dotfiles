@@ -12,23 +12,23 @@
 # ----------------------------------------------------- #
 
 #: XDG directory specifications {{{
-export XDG_CONFIG_HOME=${XDG_CONFIG_HOME:="$HOME/.config"}
-export XDG_CACHE_HOME=${XDG_CACHE_HOME:="$HOME/.cache"}
-export XDG_DATA_HOME=${XDG_DATA_HOME:="$HOME/.local/share"}
-export XDG_STATE_HOME=${XDG_STATE_HOME:="$HOME/.local/state"}
+export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:="$HOME/.config"}"
+export XDG_CACHE_HOME="${XDG_CACHE_HOME:="$HOME/.cache"}"
+export XDG_DATA_HOME="${XDG_DATA_HOME:="$HOME/.local/share"}"
+export XDG_STATE_HOME="${XDG_STATE_HOME:="$HOME/.local/state"}"
 
-# export RIPGREP_CONFIG_PATH="$XDG_CONFIG_HOME/ripgrep/config"
-export RUSTUP_HOME="$XDG_DATA_HOME/rustup"
+# export RIPGREP_CONFIG_PATH="${XDG_CONFIG_HOME}/ripgrep/config"
+export RUSTUP_HOME="${XDG_DATA_HOME}/rustup"
 export CARGO_HOME="${XDG_DATA_HOME}/cargo"
 export GNUPGHOME="${XDG_DATA_HOME}/gnupg"
 export GOMODCACHE="${XDG_CACHE_HOME}/go/mod"
 export GOPATH="${XDG_DATA_HOME}/go"
 export GTK2_RC_FILES="${XDG_CONFIG_HOME}/gtk-2.0/gtkrc"
 export LYNX_CFG_PATH="${XDG_CONFIG_HOME}/lynx.cfg"
-export NPM_CONFIG_USERCONFIG="${XDG_CONFIG_HOME}"/npm/npmrc
+export NPM_CONFIG_USERCONFIG="${XDG_CONFIG_HOME}/npm/npmrc"
 export SQLITE_HISTORY="${XDG_DATA_HOME}/sqlite_history"
-export TERMINFO="${XDG_DATA_HOME}"/terminfo
-export TERMINFO_DIRS="${XDG_DATA_HOME}"/terminfo:/usr/share/terminfo
+export TERMINFO="${XDG_DATA_HOME}/terminfo"
+export TERMINFO_DIRS="${XDG_DATA_HOME}/terminfo:/usr/share/terminfo"
 export TMUX_TMPDIR="${XDG_RUNTIME_DIR}"
 export WGETRC="${XDG_CONFIG_HOME}/wget/wgetrc"
 export XINITRC="${XDG_CONFIG_HOME}/X11/xinitrc"
@@ -62,22 +62,36 @@ bin_files="$(find "${HOME}/.local/bin" -follow -type d -not -path "${HOME}/.loca
 export PATH="$PATH:${bin_files}${HOME}/Applications:${CARGO_HOME}/bin/:${GOPATH}/bin/"
 unset bin_files
 #: }}}
-#: Rust sccache {{{
-export RUSTC_WRAPPER=sccache
-#: }}}
-#: Bat {{{
+#: Program configs {{{
+export RUSTC_WRAPPER='sccache'
 export BAT_THEME='ansi'
-#: }}}
-#: Zellij {{{
 export ZELLIJ_AUTO_ATTACH='true'
 export ZELLIJ_AUTO_EXIT='true'
-#: }}}
-#: Starship {{{
+export _ZO_EXCLUDE_DIRS="${XDG_CACHE_HOME:-${HOME}/.cache}:${XDG_CACHE_HOME:-${HOME}/.cache}/*"
+export QT_QPA_PLATFORMTHEME='qt6ct'
+export OOMOX_QTSTYLEPLUGIN_THEME='oomox_wallust'
+eval "$(dircolors)" # LS_COLORS.
 [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/starship/starship.toml" ] && export STARSHIP_CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/starship/starship.toml"
-#: }}}
-#: FZF {{{
+
+# Swww.
+export SWWW_TRANSITION='any'
+export SWWW_TRANSITION_STEP='90'
+export SWWW_TRANSITION_DURATION='1'
+export SWWW_TRANSITION_FPS='60'
+export SWWW_TRANSITION_ANGLE='45'
+# export SWWW_TRANSITION_POS='center'
+export SWWW_TRANSITION_BEZIER='.43,1.19,1,.4'
+# export SWWW_TRANSITION_WAVE='20,20'
+
+# Fcitx.
+# export GTK_IM_MODULE='fcitx'
+export QT_IM_MODULE='fcitx'
+export XMODIFIERS='@im=fcitx'
+export SDL_IM_MODULE='fcitx'
+export GLFW_IM_MODULE='ibus' # IME support for kitty
+
 # shellcheck source=/dev/null
-# Import wallust colors.
+# FZF.
 [ -f "${XDG_CACHE_HOME}/wallust/colors.sh" ] && . "${XDG_CACHE_HOME}/wallust/colors.sh"
 export FZF_DEFAULT_COMMAND='fd --type f --color always || find . --type f'
 export FZF_TMUX_OPTS='-p 75% -w 75%'
@@ -106,30 +120,6 @@ export FZF_DEFAULT_OPTS="\
 
 # Unset importted wallust colors.
 unset background foreground color0 color1 color2 color3 color4 color5 color6 color7 color8 color9 color10 color11 color12 color13 color14 color15
-#: }}}
-#: GTK/QT {{{
-export QT_QPA_PLATFORMTHEME='qt6ct'
-export OOMOX_QTSTYLEPLUGIN_THEME='oomox_wallust'
-#: }}}
-#: Swww {{{
-export SWWW_TRANSITION='any'
-export SWWW_TRANSITION_STEP='90'
-export SWWW_TRANSITION_DURATION='1'
-export SWWW_TRANSITION_FPS='60'
-export SWWW_TRANSITION_ANGLE='45'
-# export SWWW_TRANSITION_POS='center'
-export SWWW_TRANSITION_BEZIER='.43,1.19,1,.4'
-# export SWWW_TRANSITION_WAVE='20,20'
-#: }}}
-#: Fcitx {{{
-# export GTK_IM_MODULE="fcitx"
-export QT_IM_MODULE="fcitx"
-export XMODIFIERS="@im=fcitx"
-export SDL_IM_MODULE="fcitx"
-export GLFW_IM_MODULE="ibus" # IME support for kitty
-#: }}}
-#: Ls colors {{{
-export LS_COLORS='rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=00:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.avif=01;35:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:*~=00;90:*#=00;90:*.bak=00;90:*.old=00;90:*.orig=00;90:*.part=00;90:*.rej=00;90:*.swp=00;90:*.tmp=00;90:*.dpkg-dist=00;90:*.dpkg-old=00;90:*.ucf-dist=00;90:*.ucf-new=00;90:*.ucf-old=00;90:*.rpmnew=00;90:*.rpmorig=00;90:*.rpmsave=00;90:'
 #: }}}
 #: Less {{{
 export LESS='--exit-follow-on-close --mouse --wheel-lines=5 --wordwrap --ignore-case --quit-if-one-screen --LONG-PROMPT --RAW-CONTROL-CHARS'
@@ -186,7 +176,7 @@ export LESS_TERMCAP_ZW
 if [ -z "$DISPLAY" ] && [ -z "$WAYLAND_DISPLAY" ] && [ "$(tty)" != '/dev/tty2' ]; then
         # Start WM:
         # [ "$(tty)" = '/dev/tty1' ] && sx "${XDG_CONFIG_HOME:-$HOME/.config}/x11/xinit"
-        [ "$(tty)" = '/dev/tty1' ] && Hyprland
+        # [ "$(tty)" = '/dev/tty1' ] && Hyprland
 
         export FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS} --no-unicode --pointer='*' --prompt='> '"
         [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/starship/starship_tty.toml" ] && export STARSHIP_CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/starship/starship_tty.toml"
