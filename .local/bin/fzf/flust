@@ -52,7 +52,7 @@ file_list() {
 file_list |
 	column -ts '§' -o '->' |
 	sed "s|${WALLUST_COLORSCHEMES_DIR}/||g" |
-	picker --prompt "$FZF_PROMPT" --preview "echo {} | sed 's/.*-> //g' | xargs -ro -I {} wallust cs -T ${WALLUST_COLORSCHEMES_DIR}/{}" |
+	picker --prompt "$FZF_PROMPT" --with-shell 'sh -c' --preview "echo {} | sed 's/.*-> //g' | xargs -ro -I {} wallust cs -T ${WALLUST_COLORSCHEMES_DIR}/{}" |
 	sed "s/.*-> //g" |
 	xargs -ro -I {} wallust cs "${WALLUST_COLORSCHEMES_DIR}/{}"
 
