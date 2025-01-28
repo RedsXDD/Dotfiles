@@ -57,6 +57,9 @@ kdeglobals.target = "~/.config/kdeglobals"
 colors_sh.template = "templates/colors.sh"
 colors_sh.target = "~/.cache/wallust/colors.sh"
 
+fish.template = "templates/colors_fish.fish"
+fish.target = "~/.cache/wallust/colors_fish.fish"
+
 neopywal.template = "templates/colors_neopywal.vim"
 neopywal.target = "~/.cache/wallust/colors_neopywal.vim"
 

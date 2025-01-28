@@ -32,3 +32,6 @@
 .local/share/applications/waydroid.org.lineageos.etar.desktop
 .local/share/applications/waydroid.org.lineageos.jelly.desktop
 .local/share/applications/waydroid.org.lineageos.recorder.desktop
+.config/fish/fish_variables
+.config/fish/fish_variables
+.config/fish/config.fish
