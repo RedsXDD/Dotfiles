@@ -65,9 +65,9 @@ whitelist="${whitelist%%\\|}"                                                # R
 
 # Generate the list of files that can be edited:
 file_list() {
-        find "$HOME"/.config/* -maxdepth 3 -type f | grep -iv "$blacklist"
-        find "$HOME"/.local/* -maxdepth 3 -type f | grep -i "$whitelist"
-        find ~/.bash_profile ~/.bashrc ~/.zshenv
+        find "$HOME"/.config/* -maxdepth 3 -type f | grep -iv "$blacklist" 2>/dev/null
+        find "$HOME"/.local/* -maxdepth 3 -type f | grep -i "$whitelist" 2>/dev/null
+        find ~/.bash_profile ~/.bashrc ~/.zshenv 2>/dev/null
 }
 
 # shellcheck disable=2016
