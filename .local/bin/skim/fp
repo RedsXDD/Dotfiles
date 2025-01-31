@@ -1,11 +1,12 @@
 #!/usr/bin/env sh
 
-# Proper fzf use on tmux.
-picker() {
-        if which tmux >/dev/null 2>&1 && [ -n "$TMUX" ]; then
-                fzf-tmux -p 75% -w 75% "$@"
-        else
-                fzf "$@"
+fuzzy_finder() {
+        SHELL="$(which sh)" # This forces a posix shell to be used on preview panes.
+        [ -n "$TMUX" ] && tmux_flags='--tmux center,75%,50%'
+        if which fzf >/dev/null 2>&1; then
+                fzf ${tmux_flags} "$@"
+        elif which sk >/dev/null 2>&1; then
+                sk ${tmux_flags} "$@" 2>/dev/null
         fi
 }
 
@@ -17,7 +18,7 @@ case "${1:--S}" in
         else
                 paru --color=always -Sl |
                         sed 's|\s|/|; s/\s\+.*unknown-version//g; /installed/d' |
-                        picker --prompt "$FZF_PROMPT" --multi --with-shell 'sh -c' --preview 'paru -Si {1}' |
+                        fuzzy_finder --prompt "$FZF_PROMPT" --multi --preview 'paru -Si {1}' |
                         cut -d'/' -f2 | cut -d' ' -f1 | xargs -ro paru -S
         fi
         ;;
@@ -26,7 +27,7 @@ case "${1:--S}" in
         [ -n "$DISPLAY" ] && FZF_PROMPT='󰍉 Remove Package(s): ' || FZF_PROMPT='* Remove Package(s): '
         paru --color=always -Qs |
                 sed '/^\s\+/d; ; s/\s\+.*unknown-version//g' |
-                picker --prompt "$FZF_PROMPT" --multi --with-shell 'sh -c' --preview 'paru -Qi {1}' |
+                fuzzy_finder --prompt "$FZF_PROMPT" --multi --preview 'paru -Qi {1}' |
                 cut -d'/' -f2 | cut -d' ' -f1 | xargs -ro sudo pacman -Rusnv
         ;;
 
@@ -34,7 +35,7 @@ case "${1:--S}" in
         [ -n "$DISPLAY" ] && FZF_PROMPT='󰍉 Get info from package(s): ' || FZF_PROMPT='* Get info from package(s): '
         paru --color=always -Qs |
                 sed '/^\s\+/d; ; s/\s\+.*unknown-version//g' |
-                picker --prompt "$FZF_PROMPT" --multi --with-shell 'sh -c' --preview 'paru -Qi {1}' |
+                fuzzy_finder --prompt "$FZF_PROMPT" --multi --preview 'paru -Qi {1}' |
                 cut -d'/' -f2 | cut -d' ' -f1 | xargs -ro paru -Qi
         ;;
 

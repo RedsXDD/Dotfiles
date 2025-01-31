@@ -1,0 +1,9 @@
+#!/usr/bin/env sh
+# shellcheck disable=SC2086
+
+# This script is only meant to use skim as a replacement to fzf on programs that don't support it.
+SHELL="$(which sh)" # This forces a posix shell to be used on preview panes.
+[ -n "$TMUX" ] && tmux_flags='--tmux center,75%,50%'
+sk ${tmux_flags} "$@"
+
+# vim:fileencoding=utf-8:foldmethod=marker

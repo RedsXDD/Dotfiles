@@ -1,0 +1,60 @@
+#!/usr/bin/env sh
+
+[ -n "$DISPLAY" ] && FZF_PROMPT='󰍉 Select Colorscheme: ' || FZF_PROMPT='* Select Colorscheme: '
+WALLUST_COLORSCHEMES_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/wallust/colorschemes"
+
+fuzzy_finder() {
+        SHELL="$(which sh)" # This forces a posix shell to be used on preview panes.
+        [ -n "$TMUX" ] && tmux_flags='--tmux center,75%,50%'
+        if which fzf >/dev/null 2>&1; then
+                fzf ${tmux_flags} "$@"
+        elif which sk >/dev/null 2>&1; then
+                sk ${tmux_flags} "$@"
+        fi
+}
+
+search_dir() {
+        directory="$1"
+        find "${directory}" -type f -name '*.json' | sed "s|$directory||g" |
+                awk '{
+		# Store the original line in the "orig" variable
+		orig = "'"$directory"'" $0;
+
+		# Replace underscores and hyphens with spaces
+		gsub(/-/, " ");
+		gsub(/_/, " ");
+
+		# Remove the ".json" extension
+		sub(/\.json$/, "");
+
+		# Capitalize the first letter of the line
+		first = substr($0, 1, 1);
+		rest = substr($0, 2);
+		$0 = toupper(first) tolower(rest);
+
+		# Capitalize the first letter of each word
+		for (i=1; i<=NF; i++) {
+			if (i>1) {
+				$i = toupper(substr($i, 1, 1)) tolower(substr($i, 2));
+			}
+		}
+
+		# Add the string " § " and the original line to the end of the line
+		$0 = $0 " § " orig;
+	}1'
+}
+
+file_list() {
+        search_dir "${WALLUST_COLORSCHEMES_DIR}/dark/"
+        search_dir "${WALLUST_COLORSCHEMES_DIR}/light/"
+        search_dir "${WALLUST_COLORSCHEMES_DIR}/wallust/"
+}
+
+file_list |
+        column -ts '§' -o '->' |
+        sed "s|${WALLUST_COLORSCHEMES_DIR}/||g" |
+        fuzzy_finder --prompt "$FZF_PROMPT" --preview "echo {} | sed 's/.*-> //g' | xargs -ro -I {} wallust cs -T ${WALLUST_COLORSCHEMES_DIR}/{}" |
+        sed "s/.*-> //g" |
+        xargs -ro -I {} wallust cs "${WALLUST_COLORSCHEMES_DIR}/{}"
+
+# vim:fileencoding=utf-8:foldmethod=marker

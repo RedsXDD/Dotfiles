@@ -1,13 +1,13 @@
 #!/usr/bin/env sh
 
 [ -n "$DISPLAY" ] && FZF_PROMPT='󰍉 Edit File: ' || FZF_PROMPT='* Edit File: '
-
-# Proper fzf use on tmux.
-picker() {
-        if which tmux >/dev/null 2>&1 && [ -n "$TMUX" ]; then
-                fzf-tmux -p 75% -w 75% "$@"
-        else
-                fzf "$@"
+fuzzy_finder() {
+        SHELL="$(which sh)" # This forces a posix shell to be used on preview panes.
+        [ -n "$TMUX" ] && tmux_flags='--tmux center,75%,50%'
+        if which fzf >/dev/null 2>&1; then
+                fzf ${tmux_flags} "$@"
+        elif which sk >/dev/null 2>&1; then
+                sk ${tmux_flags} "$@"
         fi
 }
 
@@ -71,7 +71,7 @@ file_list() {
 }
 
 # shellcheck disable=2016
-file="$(file_list | sort | sed "s|$HOME|~|g" | picker --prompt "$FZF_PROMPT" --with-shell 'sh -c' --preview 'cat "$(echo {} | sed "s|~|$HOME|g")"' | sed "s|~|$HOME|g")"
+file="$(file_list | sort | sed "s|$HOME|~|g" | fuzzy_finder --prompt "$FZF_PROMPT" --preview 'cat "$(echo {} | sed "s|~|$HOME|g")"' | sed "s|~|$HOME|g")"
 [ -n "$file" ] && [ -f "$file" ] && file_editor "$file"
 
 # vim:fileencoding=utf-8:foldmethod=marker

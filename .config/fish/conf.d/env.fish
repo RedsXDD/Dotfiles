@@ -73,31 +73,22 @@ set -Ux SWWW_TRANSITION_ANGLE 45
 set -Ux SWWW_TRANSITION_BEZIER '.43,1.19,1,.4'
 # set -Ux SWWW_TRANSITION_WAVE '20,20'
 
-# FZF.
-set -Ux FZF_DEFAULT_COMMAND 'fd --type f --color always || find . --type f'
-set -Ux FZF_TMUX_OPTS '-p 75% -w 75%'
-set -Ux FZF_DEFAULT_OPTS \
-    "--color=bg:-1,bg+:0" \
-    "--color=fg:-1,fg+:-1" \
-    "--color=hl:magenta,hl+:magenta" \
-    "--color=border:-1" \
-    "--color=label:yellow" \
-    "--color=prompt:blue" \
-    "--color=spinner:yellow" \
-    "--color=info:cyan" \
-    "--color=marker:red" \
-    "--color=pointer:blue" \
-    "--color=header:yellow" \
-    --cycle \
+# Skim.
+[ -n "$DISPLAY" ] && set -l matched "matched:5,matched_bg:0" || set -l matched "matched:0,matched_bg:5"
+set -Ux SKIM_DEFAULT_COMMAND 'fd --type f --color always || find . --type f'
+set -Ux SKIM_DEFAULT_OPTIONS \
+    --color=fg:-1,bg:-1,$matched,current:-1,current_bg:0,current_match:0,current_match_bg:5,spinner:3,info:6,prompt:4,cursor:4,selected:1,header:3,border:-1 \
+    --no-clear-start \
+    --info=inline \
+    --preview-window=right:30% \
+    --layout=reverse \
+    --height=50% \
     --ansi \
-    "--preview-window='border-rounded'" \
-    "--padding='1'" \
+    --exit-0 \
+    --select-1 \
+    --no-mouse \
     "--prompt='󰍉 '" \
-    "--marker='>'" \
-    "--pointer='◆'" \
-    "--separator='─'" \
-    "--layout='reverse'" \
-    "--height='~62%'"
+    '--cmd-prompt="$ "'
 #: }}}
 #: Less {{{
 set -Ux LESS '--exit-follow-on-close --mouse --wheel-lines=5 --wordwrap --ignore-case --quit-if-one-screen --LONG-PROMPT --RAW-CONTROL-CHARS'
@@ -121,7 +112,7 @@ set -Ux LESS_TERMCAP_ZW "$(tput rsupm)" # End superscript mode.
 #: }}}
 #: TTY stuff (must be last!) {{{
 if [ -z "$DISPLAY" ] && [ -z "$WAYLAND_DISPLAY" ] && [ "$(tty)" != /dev/tty2 ]
-    set -x FZF_DEFAULT_OPTS "$FZF_DEFAULT_OPTS --no-unicode --pointer='*' --prompt='> '"
+    set -x SKIM_DEFAULT_OPTIONS "$SKIM_DEFAULT_OPTIONS --prompt='> '"
     [ -f "$XDG_CONFIG_HOME/starship/starship_tty.toml" ] && set -Ux STARSHIP_CONFIG "$XDG_CONFIG_HOME/starship/starship_tty.toml"
     [ -f "$XDG_CACHE_HOME/wallust/colors_tty.sh" ] && . "$XDG_CACHE_HOME/wallust/colors_tty.sh"
 end
