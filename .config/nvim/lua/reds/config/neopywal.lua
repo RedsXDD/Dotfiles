@@ -4,6 +4,12 @@ if not has_neopywal then
     return
 end
 
+if vim.env.DISPLAY == nil then
+    vim.cmd.colorscheme("wildcharm")
+    vim.opt.termguicolors = false
+    return
+end
+
 -- vim.g.neopywal_debug = true
 vim.cmd.helptags(os.getenv("HOME") .. "/.local/sources/Reds/neopywal.nvim/doc")
 
